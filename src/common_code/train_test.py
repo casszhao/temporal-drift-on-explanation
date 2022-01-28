@@ -98,7 +98,7 @@ with open(config.cfg.config_directory + 'instance_config.json', 'r') as f:
 
 
 def train_model(model, training, development, loss_function, optimiser, seed,
-            run,epochs = 10, cutoff = True, save_folder  = None, 
+            run, epochs = 10, cutoff = True, save_folder  = None,
             cutoff_len = 2):
     
     """ 

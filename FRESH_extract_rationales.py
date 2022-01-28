@@ -20,7 +20,7 @@ parser.add_argument(
     type = str, 
     help = "select dataset / task", 
     default = "sst", 
-    choices = ["SST","IMDB", "Yelp", "AmazDigiMu", "AmazPantry", "AmazInstr"]
+    choices = ["WS", "SST","IMDB", "Yelp", "AmazDigiMu", "AmazPantry", "AmazInstr"]
 )
 
 parser.add_argument(

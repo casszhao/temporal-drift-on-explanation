@@ -117,7 +117,7 @@ You can extract rationales from all feature attributions using the [FRESH_extrac
   Example script:
 
   ```shell
-  python evaluate_posthoc.py 
+  python FRESH_extract_rationales.py 
   	    --dataset SST 
   	    --data_dir data/ 
   	    --model_dir models/ 

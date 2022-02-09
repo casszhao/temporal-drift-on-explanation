@@ -174,8 +174,8 @@ evaluator = evaluation_pipeline.evaluate(
 
 logging.info("*********extracting oo-domain rationales")
 
-evaluator.register_importance_(data)
-evaluator.create_rationales_(data)
+evaluator.register_importance_(data) # register importance scores ()
+evaluator.create_rationales_(data) # create json for training fresh ()
 
 # delete full data not needed anymore
 del data

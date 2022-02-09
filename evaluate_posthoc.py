@@ -137,6 +137,7 @@ evaluator = evaluation_pipeline.evaluate(
     model_path = args["model_dir"], 
     output_dims = data.nu_of_labels
 )
+# will generate
 
 
 logging.info("*********conducting in-domain flip experiments")
@@ -182,14 +183,20 @@ data = BERT_HOLDER(
     ood_dataset_ = 2
 )
 
+# evaluator = evaluation_pipeline.evaluate(
+#     model_path = args["model_dir"],
+#     output_dims = data.nu_of_labels,
+#     ood = True,
+#     ood_dataset_ = 2
+# )
+
 evaluator = evaluation_pipeline.evaluate(
-    model_path = args["model_dir"], 
+    model_path = args["model_dir"],
     output_dims = data.nu_of_labels,
-    ood = True,
-    ood_dataset_ = 2
+    ood = False,
 )
 
-logging.info("*********conducting oo-domain flip experiments DATASET 2")
+logging.info("*********conducting non oo-domain flip experiments with evaluator")
 
 evaluator.faithfulness_experiments_(data)
 

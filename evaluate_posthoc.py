@@ -124,6 +124,15 @@ logging.info("config  : \n ----------------------")
 logging.info("\n ----------------------")
 
 
+
+
+
+
+
+
+
+
+
 from src.data_functions.dataholders import BERT_HOLDER 
 from src.evaluation import evaluation_pipeline
 
@@ -176,19 +185,38 @@ gc.collect()
 
 ## ood evaluation DATASET 2
 data = BERT_HOLDER(
-    path = args["data_dir"], 
+    path = args["data_dir"],
     b_size = args["batch_size"],
     stage = "eval", #args["batch_size"],
     ood = True,
     ood_dataset_ = 2
 )
 
-# evaluator = evaluation_pipeline.evaluate(
-#     model_path = args["model_dir"],
-#     output_dims = data.nu_of_labels,
-#     ood = True,
-#     ood_dataset_ = 2
-# )
+evaluator = evaluation_pipeline.evaluate(
+    model_path = args["model_dir"],
+    output_dims = data.nu_of_labels,
+    ood = True,
+    ood_dataset_ = 2
+)
+
+logging.info("*********conducting oo-domain flip experiments DATASET 2")
+
+evaluator.faithfulness_experiments_(data)
+
+# delete full data not needed anymore
+del data
+del evaluator
+gc.collect()
+
+
+
+
+data = BERT_HOLDER(
+    path = args["data_dir"],
+    b_size = args["batch_size"],
+    stage = "eval", #args["batch_size"],
+    ood = False,
+)
 
 evaluator = evaluation_pipeline.evaluate(
     model_path = args["model_dir"],

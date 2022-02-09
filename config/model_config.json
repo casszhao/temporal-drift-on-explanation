@@ -30,6 +30,33 @@
         "ood_dataset_1": "SST",
         "ood_dataset_2": "WS"
     },
+    "fc1" : {
+        "rationale_length" : 0.2,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "fc2",
+        "ood_dataset_2": "fc3"
+    },
+    "fc2" : {
+        "rationale_length" : 0.2,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "fc1",
+        "ood_dataset_2": "fc3"
+    },
+    "fc3" : {
+        "rationale_length" : 0.2,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "fc2",
+        "ood_dataset_2": "fc1"
+    },
     "Yelp" : {
         "rationale_length" : 0.1,
         "batch_size": 8,

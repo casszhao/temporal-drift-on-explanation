@@ -1,7 +1,7 @@
 
 __name__ = "rl"
 
-SST = {
+SST = fc1 = fc2 = fc3 ={
     "OPTIM_ARGS_" : {     ## for Adam Loss
         "lr" : 0.00001,
         "weight_decay" : 0.00001,
@@ -59,6 +59,9 @@ get_ = {
     "Yelp" : Yelp,
     "AmazPantry" : AmazPantry,
     "AmazInstr" : AmazInstr,
-    "AmazDigiMu" : AmazDigiMu
+    "AmazDigiMu" : AmazDigiMu,
+    "fc1": fc1,
+    "fc2": fc2,
+    "fc3": fc3,
 }
 

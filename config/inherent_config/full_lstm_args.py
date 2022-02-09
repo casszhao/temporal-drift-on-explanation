@@ -3,7 +3,7 @@ __name__ = "full_lstm"
 
 
 
-SST = IMDB = Yelp = AmazInstr = AmazDigiMu = AmazPantry = WS = {
+SST = IMDB = Yelp = AmazInstr = AmazDigiMu = AmazPantry = WS = fc1 = fc2 = fc3 = {
     "OPTIM_ARGS_" : {     ## for Adam Loss
         "lr" : 0.001, 
         "weight_decay" : 0.00001,
@@ -23,5 +23,8 @@ get_ = {
     "AmazInstr" : AmazInstr,
     "AmazDigiMu" : AmazDigiMu,
     "WS": WS,
+    "fc1": fc1,
+    "fc2": fc2,
+    "fc3": fc3,
 }
 

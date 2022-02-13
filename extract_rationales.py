@@ -106,11 +106,15 @@ logging.info("\n ----------------------")
 from src.data_functions.dataholders import BERT_HOLDER as dataholder
 from src.evaluation import evaluation_pipeline
 
+
+
+
 data = dataholder(
     args["data_dir"], 
     b_size = args["batch_size"],
     stage = "eval",
-    return_as_frames = True
+    return_as_frames = True,
+    # for_rationale = True, # ADDED 1302
 )
 
 evaluator = evaluation_pipeline.evaluate(
@@ -124,60 +128,6 @@ logging.info("*********extracting in-domain rationales")
 evaluator.register_importance_(data)
 evaluator.create_rationales_(data)
 
-del data
-del evaluator
-gc.collect()
-
-## ood evaluation DATASET 1
-data = dataholder(
-    path = args["data_dir"], 
-    b_size = args["batch_size"],
-    ood = True,
-    ood_dataset_ = 1,
-    stage = "eval",
-    return_as_frames = True
-)
-
-evaluator = evaluation_pipeline.evaluate(
-    model_path = args["model_dir"], 
-    output_dims = data.nu_of_labels,
-    ood = True,
-    ood_dataset_ = 1
-)
-
-logging.info("*********extracting oo-domain rationales")
-
-evaluator.register_importance_(data)
-evaluator.create_rationales_(data)
-
-# delete full data not needed anymore
-del data
-del evaluator
-gc.collect()
-
-## ood evaluation DATASET 2
-data = dataholder(
-    path = args["data_dir"], 
-    b_size = args["batch_size"],
-    ood = True,
-    ood_dataset_ = 2,
-    stage = "eval",
-    return_as_frames = True
-)
-
-evaluator = evaluation_pipeline.evaluate(
-    model_path = args["model_dir"], 
-    output_dims = data.nu_of_labels,
-    ood = True,
-    ood_dataset_ = 2
-)
-
-logging.info("*********extracting oo-domain rationales")
-
-evaluator.register_importance_(data) # register importance scores ()
-evaluator.create_rationales_(data) # create json for training fresh ()
-
-# delete full data not needed anymore
 del data
 del evaluator
 gc.collect()

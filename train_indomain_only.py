@@ -144,7 +144,7 @@ if args["evaluate_models"]:
 
     ## shows which model performed best on dev F1 (in-domain)
     ## if keep_models = False then will remove the rest of the models to save space
-    keep_best_model_(keep_models = False)
+    # keep_best_model_(keep_models = False)
 
 else:
 

@@ -21,8 +21,7 @@ parser.add_argument(
     type = str, 
     help = "select dataset / task", 
     default = "sst", 
-    # choices = ["WS",
-    #     "SST", "IMDB", "Yelp", "AmazDigiMu", "AmazPantry", "AmazInstr", "fc1", "fc2", "fc3"]
+    # choices = ["WS", "SST", "IMDB", "Yelp", "AmazDigiMu", "AmazPantry", "AmazInstr", "factcheck","factcheck_ood2","factcheck_ood1"]
 )
 
 parser.add_argument(

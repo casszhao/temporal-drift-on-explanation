@@ -7,11 +7,16 @@ import argparse
 import logging
 
 import torch
+
 print('torch version:', torch.__version__)
-
-device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-print(device)
-
+# # Pytorch 实际使用的运行时的 cuda 目录
+# import torch.utils.cpp_extension
+# torch.utils.cpp_extension.CUDA_HOME
+# # 编译该 Pytorch release 版本时使用的 cuda 版本
+# import torch
+# torch.version.cuda
+#
+#
 
 import datetime
 import gc

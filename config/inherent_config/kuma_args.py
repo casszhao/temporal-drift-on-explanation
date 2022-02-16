@@ -1,7 +1,7 @@
 
 __name__ = "kuma"
 
-SST = fc1 = fc2 = fc3 ={
+SST = fc1 = fc2 = fc3 = {
     "OPTIM_ARGS_" : {     ## for Adam Loss
         "lr" : 0.00001,
         "weight_decay" : 0.00001,
@@ -15,6 +15,22 @@ SST = fc1 = fc2 = fc3 ={
         "lagrange_alpha":  0.9,
     }
 }
+
+factcheck = factcheck_ood1 = factcheck_ood2 = {
+    "OPTIM_ARGS_" : {     ## for Adam Loss
+        "lr" : 0.00001,
+        "weight_decay" : 0.00001,
+        "betas" : [0.9, 0.999],
+        "amsgrad" : False,
+    },
+    "MODEL_ARGS_" : {     ## model args
+        "lasso":           0.0,
+        "lambda_init":     1e-3,
+        "lagrange_lr":     1e-2,
+        "lagrange_alpha":  0.9,
+    }
+}
+
 
 WS = {
     "OPTIM_ARGS_" : {     ## for Adam Loss
@@ -87,5 +103,8 @@ get_ = {
     "fc1": fc1,
     "fc2": fc2,
     "fc3": fc3,
+    'factcheck': factcheck,
+    'factcheck_ood1': factcheck_ood1,
+    'factcheck_ood2': factcheck_ood2,
 }
 

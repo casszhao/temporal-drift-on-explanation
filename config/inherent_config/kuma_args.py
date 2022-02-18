@@ -92,6 +92,21 @@ AmazInstr = AmazDigiMu = AmazPantry = {
     }
 }
 
+xfact = xfact_ood1 = xfact_ood2 = {
+    "OPTIM_ARGS_" : {     ## for Adam Loss
+        "lr" : 0.00001,
+        "weight_decay" : 0.00001,
+        "betas" : [0.9, 0.999],
+        "amsgrad" : False,
+    },
+    "MODEL_ARGS_" : {     ## model args
+        "lasso":           0.0,
+        "lambda_init":     1e-3,
+        "lagrange_lr":     1e-2,
+        "lagrange_alpha":  0.9,
+    }
+}
+
 get_ = {
     "SST": SST,
     "IMDB": IMDB,
@@ -103,5 +118,8 @@ get_ = {
     'factcheck': factcheck,
     'factcheck_ood1': factcheck_ood1,
     'factcheck_ood2': factcheck_ood2,
+    'xfact': xfact,
+    'xfact_ood1': xfact_ood1,
+    'xfact_ood2': xfact_ood2,
 }
 

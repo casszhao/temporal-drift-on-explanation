@@ -106,12 +106,22 @@ logging.info("\n ----------------------")
 from src.data_functions.dataholders import BERT_HOLDER as dataholder
 from src.evaluation import evaluation_pipeline
 
+
+
+
+
 data = dataholder(
-    args["data_dir"], 
+    args["data_dir"],
     b_size = args["batch_size"],
-    stage = "eval",
     return_as_frames = True
 )
+
+# data = dataholder(
+#     args["data_dir"],
+#     b_size = args["batch_size"],
+#     stage = "eval",
+#     return_as_frames = True
+# )
 
 evaluator = evaluation_pipeline.evaluate(
     model_path = args["model_dir"], 
@@ -130,13 +140,21 @@ gc.collect()
 
 ## ood evaluation DATASET 1
 data = dataholder(
-    path = args["data_dir"], 
+    path = args["data_dir"],
     b_size = args["batch_size"],
     ood = True,
     ood_dataset_ = 1,
-    stage = "eval",
     return_as_frames = True
 )
+# data = dataholder(
+#     path = args["data_dir"],
+#     b_size = args["batch_size"],
+#     ood = True,
+#     ood_dataset_ = 1,
+#     stage = "eval",
+#     return_as_frames = True
+# )
+
 
 evaluator = evaluation_pipeline.evaluate(
     model_path = args["model_dir"], 
@@ -157,13 +175,20 @@ gc.collect()
 
 ## ood evaluation DATASET 2
 data = dataholder(
-    path = args["data_dir"], 
+    path = args["data_dir"],
     b_size = args["batch_size"],
     ood = True,
     ood_dataset_ = 2,
-    stage = "eval",
     return_as_frames = True
 )
+# data = dataholder(
+#     path = args["data_dir"],
+#     b_size = args["batch_size"],
+#     ood = True,
+#     ood_dataset_ = 2,
+#     stage = "eval",
+#     return_as_frames = True
+# )
 
 evaluator = evaluation_pipeline.evaluate(
     model_path = args["model_dir"], 

@@ -129,6 +129,33 @@
         "ood_dataset_1": "xfact_ood1",
         "ood_dataset_2": "xfact"
     },
+    "complain" : {
+        "rationale_length" : 0.2,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "complain_ood1",
+        "ood_dataset_2": "complain_ood2"
+    },
+    "complain_ood1" : {
+        "rationale_length" : 0.2,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "complain",
+        "ood_dataset_2": "complain_ood2"
+    },
+    "complain_ood2" : {
+        "rationale_length" : 0.2,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "complain_ood1",
+        "ood_dataset_2": "complain"
+    },
     "Yelp" : {
         "rationale_length" : 0.1,
         "batch_size": 8,

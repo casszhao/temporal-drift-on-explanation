@@ -1,11 +1,20 @@
-
 __name__ = "full_lstm"
-
-
 
 SST = IMDB = Yelp = AmazInstr = AmazDigiMu = AmazPantry = WS = {
     "OPTIM_ARGS_" : {     ## for Adam Loss
         "lr" : 0.001, 
+        "weight_decay" : 0.00001,
+        "betas" : [0.9, 0.999],
+        "amsgrad" : False,
+    },
+    "MODEL_ARGS_" : {     ## model args
+        "dropout":         0.1,
+    }
+}
+
+complain = complain_ood1 = complain_ood2 = {
+    "OPTIM_ARGS_" : {     ## for Adam Loss
+        "lr" : 0.001,
         "weight_decay" : 0.00001,
         "betas" : [0.9, 0.999],
         "amsgrad" : False,
@@ -53,5 +62,8 @@ get_ = {
     'xfact': xfact,
     'xfact_ood1': xfact_ood1,
     'xfact_ood2': xfact_ood2,
+    'complain': complain,
+    'complain_ood2': complain_ood2,
+    'complain_ood1': complain_ood1,
 }
 

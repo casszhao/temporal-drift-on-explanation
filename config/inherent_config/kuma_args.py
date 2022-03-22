@@ -1,7 +1,7 @@
 
 __name__ = "kuma"
 
-SST = fc1 = fc2 = fc3 = {
+SST = {
     "OPTIM_ARGS_" : {     ## for Adam Loss
         "lr" : 0.00001,
         "weight_decay" : 0.00001,
@@ -107,6 +107,21 @@ xfact = xfact_ood1 = xfact_ood2 = {
     }
 }
 
+complain = complain_ood1 = complain_ood2 = {
+    "OPTIM_ARGS_" : {     ## for Adam Loss
+        "lr" : 1e-5,
+        "weight_decay" : 0.00001,
+        "betas" : [0.9, 0.999],
+        "amsgrad" : False,
+    },
+    "MODEL_ARGS_" : {     ## model args
+        "lasso":           0.0,
+        "lambda_init":     1e-3,
+        "lagrange_lr":     1e-2,
+        "lagrange_alpha":  0.9,
+    }
+}
+
 get_ = {
     "SST": SST,
     "IMDB": IMDB,
@@ -121,5 +136,8 @@ get_ = {
     'xfact': xfact,
     'xfact_ood1': xfact_ood1,
     'xfact_ood2': xfact_ood2,
+    'complain': complain,
+    'complain_ood2': complain_ood2,
+    'complain_ood1': complain_ood1,
 }
 

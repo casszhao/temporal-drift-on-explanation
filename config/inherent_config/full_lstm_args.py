@@ -67,7 +67,6 @@ get_ = {
     "AmazPantry" : AmazPantry,
     "AmazInstr" : AmazInstr,
     "AmazDigiMu" : AmazDigiMu,
-    "WS": WS,
     'factcheck': factcheck,
     'factcheck_ood1': factcheck_ood1,
     'factcheck_ood2': factcheck_ood2,

@@ -1,5 +1,6 @@
 {   "epochs" : 3,
-    "model_abbreviation" :      {"bert-base-uncased": "bert", 
+    "model_abbreviation" :      {"bert-base-uncased": "bert",
+                                 "bert-base-cased": "bert-base-cased",
                                  "allenai/scibert_scivocab_uncased": "scibert",
                                  "roberta-base": "roberta"},
     "embed_model" : "glove.840B.300d",

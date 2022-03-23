@@ -1,7 +1,7 @@
 
 __name__ = "rl"
 
-SST = fc1 = fc2 = fc3 ={
+SST ={
     "OPTIM_ARGS_" : {     ## for Adam Loss
         "lr" : 0.00001,
         "weight_decay" : 0.00001,
@@ -27,19 +27,6 @@ factcheck = factcheck_ood1 = factcheck_ood2 = {
     }
 }
 
-
-WS = {
-    "OPTIM_ARGS_" : {     ## for Adam Loss
-        "lr" : 0.00001,
-        "weight_decay" : 0.00001,
-        "betas" : [0.9, 0.999],
-        "amsgrad" : False,
-    },
-    "MODEL_ARGS_" : {     ## model args
-        "sparsity":  0.01,
-        "coherence": 0.
-    }
-}
 
 IMDB = {
     "OPTIM_ARGS_" : {     ## for Adam Loss
@@ -110,5 +97,8 @@ get_ = {
     'complain': complain,
     'complain_ood2': complain_ood2,
     'complain_ood1': complain_ood1,
+    'bragging': bragging,
+    'bragging_ood1': bragging_ood1,
+    'bragging_ood2': bragging_ood2,
 }
 

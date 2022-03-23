@@ -127,9 +127,8 @@ class evaluate():
             ## if its for rationale extraction we want all splits
             else:
 
-                for data_split_name, data_split in {"train": data.train_loader, "dev":  data.dev_loader , \
+                for data_split_name, data_split in {"train": data.train_loader, "dev":  data.dev_loader ,
                                                     "test":  data.test_loader}.items():
-                # if only want to get from testing dataset
                 # for data_split_name, data_split in {"test": data.test_loader}.items(): ## REMOVE AFTER
 
                     extract_importance_(
@@ -178,9 +177,9 @@ class evaluate():
 
         for data_split_name, data_split in data.as_dataframes_().items():
 
-            # if data_split_name in ["train", "dev"]: ## REMOVE AFTER
+            # if data_split_name in ["train", "dev"]: ## REMOVE AFTER to testing
             #
-            #     continue # if only want to get the importance score on testing
+            #     continue
 
             score_list = glob.glob(fname + f"{data_split_name}*scores-*.npy")
 

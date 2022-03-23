@@ -2,7 +2,7 @@ import spacy
 import re
 import torch
 
-nlp = spacy.load('en', disable=['parser', 'tagger', 'ner'])
+nlp = spacy.load('en_core_web_sm', disable=['parser', 'tagger', 'ner'])
 
 def cleaner(text, spacy=True) :
     text = re.sub(r'\s+', ' ', text.strip())

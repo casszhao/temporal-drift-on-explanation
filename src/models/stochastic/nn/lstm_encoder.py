@@ -30,7 +30,7 @@ class LSTMEncoder(nn.Module):
         :return:
         """
 
-        packed_sequence = pack_padded_sequence(x, lengths, batch_first=True, enforce_sorted = False)
+        packed_sequence = pack_padded_sequence(x, lengths.cpu(), batch_first=True, enforce_sorted = False)
         outputs, (hx, cx) = self.lstm(packed_sequence)
         outputs, _ = pad_packed_sequence(outputs, batch_first=True)
 

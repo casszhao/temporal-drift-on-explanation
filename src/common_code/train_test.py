@@ -98,7 +98,7 @@ with open(config.cfg.config_directory + 'instance_config.json', 'r') as f:
 
 
 def train_model(model, training, development, loss_function, optimiser, seed,
-            run, epochs = 10, cutoff = True, save_folder  = None,
+            run,epochs = 10, cutoff = True, save_folder  = None, 
             cutoff_len = 2):
     
     """ 
@@ -239,7 +239,8 @@ def train_model(model, training, development, loss_function, optimiser, seed,
                 dev_results, dev_loss = test_model(
                     model = model, 
                     loss_function = loss_function, 
-                    data = development
+                    data = development,
+                    save_output_probs=False
                 )
 
                 checkpoint_results = checkpoint._store(
@@ -256,11 +257,24 @@ def train_model(model, training, development, loss_function, optimiser, seed,
 
             checks += 1
 
-        dev_results, dev_loss = test_model(
-            model, 
-            loss_function, 
+        # test_xxx = test_model(
+        #     model,
+        #     loss_function,
+        #     development
+        # )
+        # print(len(test_xxx))
+        # print('0000000000000')
+        # print(test_xxx[0])
+        # print('0000000000000')
+        # print(test_xxx[1])
+        # print('0000000000000')
+        # print(test_xxx[2])
+        # exit
+        dev_results, dev_loss, dev_pred_prob = test_model(
+            model,
+            loss_function,
             development
-        )    
+        )
 
         results.append([epoch, dev_results["macro avg"]["f1-score"], dev_loss, dev_results])
         
@@ -279,7 +293,7 @@ def train_model(model, training, development, loss_function, optimiser, seed,
 
 from sklearn.metrics import classification_report
 
-def test_model(model, loss_function, data, save_output_probs = False, random_seed = None, for_rationale = False, ood = False, ood_dataset_ = 0):
+def test_model(model, loss_function, data, save_output_probs = True, random_seed = None, for_rationale = False, ood = False, ood_dataset_ = 0):
     
     """ 
     Model predictive performance on unseen data
@@ -301,6 +315,7 @@ def test_model(model, loss_function, data, save_output_probs = False, random_see
     if save_output_probs:
 
         to_save_probs = {}
+        print('===== to_save_probs')
   
     with torch.no_grad():
 
@@ -406,7 +421,8 @@ def test_model(model, loss_function, data, save_output_probs = False, random_see
                 )
 
 
-        else:
+        else: # not for_rationale:
+            print('not for rationales')
 
             if ood:
 
@@ -433,6 +449,15 @@ def test_model(model, loss_function, data, save_output_probs = False, random_see
 
         np.save(fname, to_save_probs)
 
-        return results, (total_loss * data.batch_size / len(data)) , to_save_probs
-       
-    return results, (total_loss * data.batch_size / len(data)) 
+        # print('------- not save probs?')
+        # print(results)
+        # print((total_loss * data.batch_size / len(data)))
+
+    if save_output_probs:
+        return results, (total_loss * data.batch_size / len(data)), to_save_probs
+    # print('============= save probs')
+    # print(results)
+    # print((total_loss * data.batch_size / len(data)))
+    # print(to_save_probs)
+    else:
+        return results, (total_loss * data.batch_size / len(data)) #, to_save_probs

@@ -5,6 +5,10 @@ import argparse
 import logging
 import gc
 
+torch.cuda.empty_cache()
+torch.cuda.memory_summary(device=None, abbreviated=False)
+
+
 
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
@@ -35,7 +39,7 @@ parser.add_argument(
     "--model_dir",   
     type = str, 
     help = "directory to save models", 
-    default = "full_text_models/"
+    default = "models/"
 )
 
 parser.add_argument(
@@ -46,7 +50,7 @@ parser.add_argument(
 )
 
 parser.add_argument(
-"--thresholder",
+    "--thresholder", 
     type = str, 
     help = "thresholder for extracting rationales", 
     default = "topk",
@@ -95,7 +99,6 @@ torch.backends.cudnn.deterministic = True
 torch.backends.cudnn.benchmark = False
 
 from src.common_code.initialiser import initial_preparations
-from src.evaluation import evaluation_pipeline
 import datetime
 
 # creating unique config from stage_config.json file and model_config.json file
@@ -105,9 +108,10 @@ logging.info("config  : \n ----------------------")
 [logging.info(k + " : " + str(v)) for k,v in args.items()]
 logging.info("\n ----------------------")
 
-
-
 from src.data_functions.dataholders import BERT_HOLDER as dataholder
+from src.evaluation import evaluation_pipeline
+
+
 
 
 
@@ -132,8 +136,8 @@ evaluator = evaluation_pipeline.evaluate(
 
 logging.info("*********extracting in-domain rationales")
 
-evaluator.register_importance_(data=data, data_split='test')
-evaluator.create_rationales_(data=data)
+evaluator.register_importance_(data, data_split='test')
+evaluator.create_rationales_(data)
 
 del data
 del evaluator
@@ -158,7 +162,7 @@ data = dataholder(
 
 
 evaluator = evaluation_pipeline.evaluate(
-    model_path = args["model_dir"], 
+    model_path = args["model_dir"],
     output_dims = data.nu_of_labels,
     ood = True,
     ood_dataset_ = 1
@@ -182,17 +186,17 @@ data = dataholder(
     ood_dataset_ = 2,
     return_as_frames = True
 )
-# data = dataholder(
-#     path = args["data_dir"],
-#     b_size = args["batch_size"],
-#     ood = True,
-#     ood_dataset_ = 2,
-#     stage = "eval",
-#     return_as_frames = True
-# )
+data = dataholder(
+    path = args["data_dir"],
+    b_size = args["batch_size"],
+    ood = True,
+    ood_dataset_ = 2,
+    stage = "eval",
+    return_as_frames = True
+)
 
 evaluator = evaluation_pipeline.evaluate(
-    model_path = args["model_dir"], 
+    model_path = args["model_dir"],
     output_dims = data.nu_of_labels,
     ood = True,
     ood_dataset_ = 2

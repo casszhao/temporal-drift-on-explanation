@@ -467,6 +467,8 @@ def test_predictive_performance(
 
     return stats_report
 
+
+## if keep_models = False then will remove the rest of the models to save space
 def keep_best_model_(keep_models = False, for_rationale = False):
 
     if for_rationale:
@@ -504,17 +506,17 @@ def keep_best_model_(keep_models = False, for_rationale = False):
 
     best_model, _ = zip(*sorted(dev_stats_cleared.items(), key=lambda item: item[1], reverse = True))
 
-    print("*** best model on dev F1 is {}".format(best_model[-1]))  
+    print("**** best model on dev F1 is {} ****".format(best_model[-1]))
 
     if keep_models == False:
+        print('keep_models = False, will remove the rest of the models to save space')
 
         ## if its the rationale models we are not interested in saving them
         if for_rationale:
-
+            print('it is for rationales, will removing non best models')
             to_rm_models = dev_stats_cleared.keys()
-
         else:
-
+            print('not for rationales, will removing non best models')
             to_rm_models, _ = zip(*sorted(dev_stats_cleared.items(), key=lambda item: item[1], reverse = True)[:-1])
 
         for rmvd_model in to_rm_models:

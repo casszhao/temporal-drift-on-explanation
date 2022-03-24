@@ -361,7 +361,8 @@ def rationale_creator_(data, data_split_name, ood, tokenizer, model_random_seed,
 
         data = data.rename(columns = {"split" : "exp_split"})
 
-    data = data[["input_ids", "annotation_id", "exp_split", "label", "label_id"]]
+    # data = data[["input_ids", "annotation_id", "exp_split", "label", "label_id"]]
+    data = data[["input_ids", "annotation_id", "exp_split", "label"]]
 
     annotation_text = dict(data[["annotation_id", "input_ids"]].values)
 

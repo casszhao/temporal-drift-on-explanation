@@ -143,33 +143,33 @@ if args["evaluate_models"]:
 
     ## ood evaluation ON OOD-DATASET 1
     data = dataholder(
-        path = args["data_dir"], 
+        path = args["data_dir"],
         b_size = args["batch_size"],
         ood = True,
         ood_dataset_ = 1
     )
 
     test_predictive_performance(
-        test_data_loader = data.test_loader, 
-        for_rationale = False, 
+        test_data_loader = data.test_loader,
+        for_rationale = False,
         output_dims = data.nu_of_labels,
         save_output_probs = True,
         ood = True,
         ood_dataset_ = 1,
         vocab_size = data.vocab_size
-    )   
+    )
 
     ## ood evaluation ON OOD-DATASET 2
     data = dataholder(
-        path = args["data_dir"], 
+        path = args["data_dir"],
         b_size = args["batch_size"],
         ood = True,
         ood_dataset_ = 2
     )
 
     test_predictive_performance(
-        test_data_loader = data.test_loader, 
-        for_rationale = False, 
+        test_data_loader = data.test_loader,
+        for_rationale = False,
         output_dims = data.nu_of_labels,
         save_output_probs = True,
         ood = True,
@@ -179,7 +179,8 @@ if args["evaluate_models"]:
 
     ## shows which model performed best on dev F1 (in-domain)
     ## if keep_models = False then will remove the rest of the models to save space
-    keep_best_model_(keep_models = True)
+    print(' ---- keep_models = False, will remove the rest of the models to save space')
+    keep_best_model_(keep_models = False)
 
 else:
 

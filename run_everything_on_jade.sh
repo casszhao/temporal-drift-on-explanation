@@ -23,7 +23,7 @@
 cd /jmain02/home/J2AD003/txk58/zxz22-txk58/extract_rationales/extract_rationales/
 module load python/anaconda3
 module load cuda/10.2
-source activate ood_faith
+source activate time_ood
 
 dataset="complain"
 model_dir="models/"
@@ -72,7 +72,7 @@ do
       do
           python FRESH_train_on_rationales.py --dataset $dataset --rationale_model_dir $rationale_model_dir --extracted_rationale_dir $extracted_rationale_dir --seed $seed --thresholder $thresholder --importance_metric $importance_metric
       done
-      python FRESH_train_on_rationales.py --dataset $dataset --rationale_model_dir $rationale_model_dir --extracted_rationale_dir $extracted_rationale_dir --seed $seed --thresholder $thresholder --importance_metric $importance_metric  --evaluate_models
+      python FRESH_train_on_rationales.py --dataset $dataset --rationale_model_dir $rationale_model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder $thresholder --importance_metric $importance_metric  --evaluate_models
 done
 ##
 echo "scaled attention"
@@ -80,7 +80,7 @@ for seed in 5 10 15 20 25
 do
     python FRESH_train_on_rationales.py --dataset $dataset --rationale_model_dir $rationale_model_dir --extracted_rationale_dir $extracted_rationale_dir --seed $seed --thresholder $thresholder --importance_metric "scaled attention"
 done
-python FRESH_train_on_rationales.py --dataset $dataset --rationale_model_dir $rationale_model_dir --extracted_rationale_dir $extracted_rationale_dir --seed $seed --thresholder $thresholder --importance_metric "scaled attention"  --evaluate_models
+python FRESH_train_on_rationales.py --dataset $dataset --rationale_model_dir $rationale_model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder $thresholder --importance_metric "scaled attention"  --evaluate_models
 
 
 
@@ -96,7 +96,7 @@ do
       do
           python FRESH_train_on_rationales.py --dataset $dataset --rationale_model_dir $rationale_model_dir --extracted_rationale_dir $extracted_rationale_dir --seed $seed --thresholder $thresholder --importance_metric $importance_metric
       done
-      python FRESH_train_on_rationales.py --dataset $dataset --rationale_model_dir $rationale_model_dir --extracted_rationale_dir $extracted_rationale_dir --seed $seed --thresholder $thresholder --importance_metric $importance_metric  --evaluate_models
+      python FRESH_train_on_rationales.py --dataset $dataset --rationale_model_dir $rationale_model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder $thresholder --importance_metric $importance_metric  --evaluate_models
 done
 #
 echo "scaled attention"
@@ -104,5 +104,5 @@ for seed in 5 10 15 20 25
 do
     python FRESH_train_on_rationales.py --dataset $dataset --rationale_model_dir $rationale_model_dir --extracted_rationale_dir $extracted_rationale_dir --seed $seed --thresholder $thresholder --importance_metric "scaled attention"
 done
-python FRESH_train_on_rationales.py --dataset $dataset --rationale_model_dir $rationale_model_dir --extracted_rationale_dir $extracted_rationale_dir --seed $seed --thresholder $thresholder --importance_metric "scaled attention"  --evaluate_models
+python FRESH_train_on_rationales.py --dataset $dataset --rationale_model_dir $rationale_model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder $thresholder --importance_metric "scaled attention"  --evaluate_models
 

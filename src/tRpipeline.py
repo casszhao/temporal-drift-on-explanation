@@ -222,7 +222,7 @@ def test_predictive_performance(
     Also keeps the best model for experimentation
     and produces statistics    
     """
-    
+
     if for_rationale: trained_models = glob.glob(os.path.join(args["model_dir"], args["thresholder"],"") + args["importance_metric"] + "*.pt")
     else: trained_models = glob.glob(args["model_dir"] + args["model_abbreviation"] +"*.pt")
     
@@ -290,7 +290,7 @@ def test_predictive_performance(
         # test_predictions = test_predictions.tolist()
         if save_output_probs:
 
-            if args["rational_model_dir"]:
+            if for_rationale:
 
                 f_name = os.path.join(
                     args["model_dir"],
@@ -520,8 +520,11 @@ def keep_best_model_(keep_models = False, for_rationale = False):
         for rmvd_model in to_rm_models:
             
             print("*** removing model {}".format(rmvd_model))
-
-            os.remove(rmvd_model)
+            try:
+                os.remove(rmvd_model)
+            except:
+                print('nothing to remove')
+                continue
 
     return
 

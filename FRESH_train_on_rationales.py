@@ -54,7 +54,7 @@ parser.add_argument(
     type = str, 
     help = "importance metric for ra.ext.", 
     default = "attention", 
-    choices = ["attention", "gradients", "scaled_attention", "ig", "deeplift", "lime"]
+    choices = ["attention", "gradients", "scaled attention", "ig", "deeplift", "lime"]
 )
 
 parser.add_argument(

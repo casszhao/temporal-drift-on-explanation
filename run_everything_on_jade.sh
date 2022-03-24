@@ -35,21 +35,24 @@ thresholder="topk"
 
 
 
-for seed in 5 10 15 20 25
-do
-   python train_fulltext_and_kuma.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --seed $seed
-done
-echo "done TRAINING bert on full text"
-python train_fulltext_and_kuma.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --evaluate_models
-echo "done EVALUATION bert on full text"
+#for seed in 5 10 15 20 25
+#do
+#   python train_fulltext_and_kuma.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --seed $seed
+#done
+#echo "done TRAINING bert on full text"
+#python train_fulltext_and_kuma.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --evaluate_models
+#echo "done EVALUATION bert on full text"
 
+
+echo "start training kuma"
 for seed in 5 10 15 20 25
 do
 python train_fulltext_and_kuma.py --dataset $dataset --model_dir "kuma_model_new" --data_dir $data_dir --seed $seed --inherently_faithful "kuma"
 done
 echo "done train kuma"
-python train_fulltext_and_kuma.py --dataset $dataset --model_dir "kuma_model_new" --data_dir $data_dir --seed $seed --inherently_faithful "kuma" --evaluate_models
+python train_fulltext_and_kuma.py --dataset $dataset --model_dir "kuma_model_new" --data_dir $data_dir --inherently_faithful "kuma" --evaluate_models
 echo "done eval kuma"
+
 
 python evaluate_posthoc.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder topk
 python evaluate_posthoc.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder contigious
@@ -58,13 +61,6 @@ echo "done evaluate faithfulness"
 python FRESH_extract_rationales_no_ood.py --dataset $dataset --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder $thresholder
 python FRESH_extract_rationales_no_ood.py --dataset $dataset --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder contigious
 echo 'done extract rationales for FRESH'
-
-############################### DONT NEED THIS PART #######################
-# python extract_rationales.py --dataset $dataset  --model_dir $model_dir --data_dir $data_dir --extracted_rationale_dir $extracted_rationale_dir --use_tasc
-# python extract_rationales.py --dataset $dataset  --model_dir $model_dir --data_dir $data_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder contigious --use_tasc
-###############################
-
-
 
 
 for importance_metric in  "attention" "ig" "gradients" "lime" "deeplift"

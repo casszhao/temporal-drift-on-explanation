@@ -289,25 +289,23 @@ def test_predictive_performance(
         # print(test_predictions)
         # test_predictions = test_predictions.tolist()
         if save_output_probs:
-            f_name = os.path.join(
-                args["model_dir"],
-                "model_run_stats",
-                f"test-pred_prob-{args.model_abbreviation}:{seed}.json"
-            )
-            np.save(f_name, test_predictions)
 
-        # test_results, test_loss = test_model(
-        #         model =classifier,
-        #         loss_function = loss_function,
-        #         data= test_data_loader,
-        #         save_output_probs = save_output_probs,
-        #         random_seed = seed,
-        #         for_rationale = for_rationale,
-        #         ood = ood,
-        #         ood_dataset_ = ood_dataset_
-        #     )
-        # print(test_results)
-        # print(test_loss)
+            if args["rational_model_dir"]:
+
+                f_name = os.path.join(
+                    args["model_dir"],
+                    args["thresholder"],
+                    "model_run_stats",
+                    f"test-pred_prob-{args.model_abbreviation}:{seed}.npy"
+                )
+            else:
+                f_name = os.path.join(
+                    args["model_dir"],
+                    "model_run_stats",
+                    f"test-pred_prob-{args.model_abbreviation}:{seed}.npy"
+                )
+
+            np.save(f_name, test_predictions)
 
         ## save stats of evaluated model
         if for_rationale:

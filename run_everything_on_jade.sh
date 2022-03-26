@@ -36,14 +36,17 @@ thresholder="topk"
 
 
 
-for seed in 5 10 15 20 25
-do
-   python train_fulltext_and_kuma.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --seed $seed
-done
-echo "done TRAINING bert on full text"
-python train_fulltext_and_kuma.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --evaluate_models
-echo "done EVALUATION bert on full text"
+#for seed in 5 10 15 20 25
+#do
+#   python train_fulltext_and_kuma.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --seed $seed
+#done
+#echo "done TRAINING bert on full text"
+#python train_fulltext_and_kuma.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --evaluate_models
+#echo "done EVALUATION bert on full text"
 
+conda deactivate
+source activate time_ood
+echo 'using glove bilstm for training kuma'
 for seed in 5 10 15 20 25
 do
 python train_fulltext_and_kuma.py --dataset $dataset --model_dir "kuma_model_new" --data_dir $data_dir --seed $seed --inherently_faithful "kuma"

@@ -69,7 +69,7 @@ fresh_final = pd.concat([thresh_list[0], thresh_list[1]], ignore_index=False)
 fresh_final.to_csv('saved_everything/' + str(args.dataset) + '/fresh_predictive_results.csv')
 '''
 
-threshold = 'topk'
+threshold = 'topk' #
 for attribute_name in ["attention", "ig", "gradients", "lime", "deeplift", "scaled attention"]:
     path = os.path.join('FRESH_classifiers/', str(args.dataset), str(threshold),
                         str(attribute_name) + '_bert_predictive_performances.json')

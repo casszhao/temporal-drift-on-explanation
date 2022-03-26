@@ -5,7 +5,7 @@
 #SBATCH --time=6-00:00
 
 # set name of job
-#SBATCH --job-name=complain
+#SBATCH --job-name=compl1
 
 # set number of GPUs
 #SBATCH --gres=gpu:1
@@ -46,19 +46,19 @@ thresholder="topk"
 
 conda deactivate
 source activate time_ood
-echo 'using glove bilstm for training kuma'
-for seed in 5 10 15 20 25
-do
-python train_fulltext_and_kuma.py --dataset $dataset --model_dir "kuma_model_new" --data_dir $data_dir --seed $seed --inherently_faithful "kuma"
-done
-echo "done train kuma"
-python train_fulltext_and_kuma.py --dataset $dataset --model_dir "kuma_model_new" --data_dir $data_dir --seed $seed --inherently_faithful "kuma" --evaluate_models
-echo "done eval kuma"
+#echo 'using glove bilstm for training kuma'
+#for seed in 5 10 15 20 25
+#do
+#python train_fulltext_and_kuma.py --dataset $dataset --model_dir "kuma_model_new" --data_dir $data_dir --seed $seed --inherently_faithful "kuma"
+#done
+#echo "done train kuma"
+#python train_fulltext_and_kuma.py --dataset $dataset --model_dir "kuma_model_new" --data_dir $data_dir --seed $seed --inherently_faithful "kuma" --evaluate_models
+#echo "done eval kuma"
+#
+#python evaluate_posthoc.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder topk
+#python evaluate_posthoc.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder contigious
+#echo "done evaluate faithfulness"
 
-python evaluate_posthoc.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder topk
-python evaluate_posthoc.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder contigious
-echo "done evaluate faithfulness"
-exit
 python FRESH_extract_rationales_no_ood.py --dataset $dataset --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder $thresholder
 python FRESH_extract_rationales_no_ood.py --dataset $dataset --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder contigious
 echo 'done extract rationales for FRESH'

@@ -5,7 +5,7 @@
 #SBATCH --time=6-00:00
 
 # set name of job
-#SBATCH --job-name=complain
+#SBATCH --job-name=comp2
 
 # set number of GPUs
 #SBATCH --gres=gpu:1

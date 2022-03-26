@@ -224,6 +224,7 @@ feature_names = features.get_feature_names(feature_set_names)
 
 
 ###################################### 5. domain similarity between:  In domain / ood1 / ood2
+#########################################################################################
 num_iterations = 2000 # for testing, original use 2000? need to check the paper
 VOCAB_SIZE = 20000
 model_dir = 'similarity_models/full_text/'+ str(args.dataset) + '/vocab/' + str(VOCAB_SIZE)
@@ -263,6 +264,7 @@ results.to_csv(datasets_dir + '/fulltext_similarity_vocab' + str(vocab.size) + '
 
 
 ################################################ 6. rationale similarity between:  In domain / ood1 / ood2
+###############################################################################################################
 num_iterations = 2000 # for testing, original use 2000? need to check the paper
 VOCAB_SIZE = 20000
 model_dir = 'similarity_models/for_rationales/'+ str(args.dataset) + '/vocab/' + str(VOCAB_SIZE)
@@ -327,5 +329,5 @@ results.to_csv(datasets_dir + '/rationale_similarity_vocab' + str(vocab.size) + 
 
 
 
-# 7. datasets metadata: train/test/ size, time span, label distribution
+####################################### 7. datasets metadata: train/test/ size, time span, label distribution
 

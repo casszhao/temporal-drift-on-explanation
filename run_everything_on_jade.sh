@@ -28,9 +28,9 @@ source activate ood_faith
 dataset="complain"
 model_dir="models/"
 data_dir="datasets/"
-evaluation_dir="evaluating_faithfulness/"
+evaluation_dir="posthoc_results/"
 extracted_rationale_dir="extracted_rationales/"
-rationale_model_dir="rationale_models/"
+rationale_model_dir="FRESH_classifiers/"
 thresholder="topk"
 
 

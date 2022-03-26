@@ -104,7 +104,7 @@ class BERT_HOLDER():
 
         # load the pretrained tokenizer
         pretrained_weights = args.model
-        self.tokenizer = AutoTokenizer.from_pretrained(pretrained_weights)
+        self.tokenizer = AutoTokenizer.from_pretrained(pretrained_weights, local_files_only=True)
 
         self.nu_of_labels = len(np.unique([x["label"] for x in train]))
         self.vocab_size = len(self.tokenizer.vocab)

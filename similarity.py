@@ -27,6 +27,7 @@ def jensen_shannon_divergence(repr1, repr2):
 
 def renyi_divergence(repr1, repr2, alpha=0.99):
     """Calculates Renyi divergence (https://en.wikipedia.org/wiki/R%C3%A9nyi_entropy#R.C3.A9nyi_divergence)."""
+    np.seterr(divide='ignore')
     log_sum = np.sum([np.power(p, alpha) / np.power(q, alpha-1) for (p, q) in zip(repr1, repr2)])
     sim = 1 / (alpha - 1) * np.log(log_sum)
     if np.isinf(sim):
@@ -78,6 +79,41 @@ def bhattacharyya_distance(repr1, repr2):
         return 0
     return sim
 
+
+rep = np.array([0.5, 1.0])
+very_similar = np.array([0.6, 1.0])
+less_similar = np.array([0.6, 0.5])
+same_rep = np.array([0.5, 1.0])
+similar_rep = np.array([0.5, 0.5])
+different_rep = np.array([1.0, 0.5])
+rep_neg = np.array([-0.5, -1.0])
+orth = np.array([1.0, -0.5])
+rep2 = very_similar
+rep3 = less_similar
+
+print('jensen_shannon_divergence',jensen_shannon_divergence(rep, same_rep))
+print('renyi_divergence',renyi_divergence(rep, same_rep))
+print('cosine_similarity',cosine_similarity(rep, same_rep))
+print('euclidean_distance',euclidean_distance(rep, same_rep))
+print('variational_distance',variational_distance(rep, same_rep))
+print('kl_divergence',kl_divergence(rep, same_rep))
+print('bhattacharyya_distance',bhattacharyya_distance(rep, same_rep))
+print('-----------------------very_similar----------------------')
+print('jensen_shannon_divergence',jensen_shannon_divergence(rep, rep2))
+print('renyi_divergence',renyi_divergence(rep, rep2))
+print('cosine_similarity',cosine_similarity(rep, rep2))
+print('euclidean_distance',euclidean_distance(rep, rep2))
+print('variational_distance',variational_distance(rep, rep2))
+print('kl_divergence',kl_divergence(rep, rep2))
+print('bhattacharyya_distance',bhattacharyya_distance(rep, rep2))
+print('-----------------------less_similar----------------------')
+print('jensen_shannon_divergence',jensen_shannon_divergence(rep, rep3))
+print('renyi_divergence',renyi_divergence(rep, rep3))
+print('cosine_similarity',cosine_similarity(rep, rep3))
+print('euclidean_distance',euclidean_distance(rep, rep3))
+print('variational_distance',variational_distance(rep, rep3))
+print('kl_divergence',kl_divergence(rep, rep3))
+print('bhattacharyya_distance',bhattacharyya_distance(rep, rep3))
 
 def similarity_name2value(s_name, repr1, repr2):
     """Given a similarity function name, return the corresponding similarity function value."""

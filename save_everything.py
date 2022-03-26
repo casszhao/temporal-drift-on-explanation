@@ -30,6 +30,111 @@ datasets_dir = 'saved_everything/' + str(args.dataset)
 os.makedirs(datasets_dir, exist_ok = True)
 
 
+
+
+# 3. FRESH results
+select_columns = ['mean-acc','std-acc','mean-f1','std-f1','mean-ece','std-ece']
+'''
+thresh_list = []
+for threshold in ['topk', 'contigious']:
+    for attribute_name in ["attention", "ig", "gradients", "lime", "deeplift", "scaled attention"]:
+        path = os.path.join('FRESH_classifiers/', str(args.dataset), str(threshold),
+                            str(attribute_name) + '_bert_predictive_performances.json')
+        print(path)
+        # fresh_InDomain = pd.read_json('./FRESH_classifiers/complain/topk/attention_bert_predictive_performances.json')
+        fresh_InDomain = pd.read_json(path)
+        fresh_InDomain = fresh_InDomain[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[1]
+        fresh_InDomain['domain'] = 'InDomain'
+
+        fresh_OOD1 = pd.read_json(os.path.join('./FRESH_classifiers/', str(args.dataset), str(threshold),
+                                               str(attribute_name) + '_bert_predictive_performances-OOD-' + str(
+                                                   args.dataset) + '_ood1.json'))
+        # fresh_OOD1 = pd.read_json('./FRESH_classifiers/' + str(args.dataset) + '/' + str(threshold) + '/' + str(attribute_name) + '_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
+        fresh_OOD1 = fresh_OOD1[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[1]
+        fresh_OOD1['domain'] = 'OOD1'
+
+        fresh_OOD2 = pd.read_json(os.path.join('./FRESH_classifiers/', str(args.dataset), str(threshold),
+                                               str(attribute_name) + '_bert_predictive_performances-OOD-' + str(
+                                                   args.dataset) + '_ood2.json'))
+        # fresh_OOD2 = pd.read_json('./FRESH_classifiers/' + str(args.dataset) + '/' + str(threshold) + '/' + str(attribute_name) + '_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood2.json')
+        fresh_OOD2 = fresh_OOD2[select_columns].iloc[1]
+        fresh_OOD2['domain'] = 'OOD2'
+
+        fresh_result = pd.concat([fresh_InDomain, fresh_OOD1, fresh_OOD2], axis=1, ignore_index=False).T.reset_index()[
+            ['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece', 'domain']]
+        fresh_result['attribute_name'] = str(attribute_name)
+    fresh_result['threshold'] = str(threshold)
+    thresh_list.append(fresh_result)
+fresh_final = pd.concat([thresh_list[0], thresh_list[1]], ignore_index=False)
+fresh_final.to_csv('saved_everything/' + str(args.dataset) + '/fresh_predictive_results.csv')
+'''
+
+threshold = 'topk'
+for attribute_name in ["attention", "ig", "gradients", "lime", "deeplift", "scaled attention"]:
+    path = os.path.join('FRESH_classifiers/', str(args.dataset), str(threshold),
+                        str(attribute_name) + '_bert_predictive_performances.json')
+    print(path)
+    fresh_InDomain = pd.read_json(path)
+    fresh_InDomain = fresh_InDomain[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[1]
+    fresh_InDomain['domain'] = 'InDomain'
+
+    path1 = os.path.join('FRESH_classifiers/', str(args.dataset), str(threshold), str(attribute_name) + '_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
+    print(path1)
+    # fresh_OOD1 = pd.read_json(path1)
+    path1 = './FRESH_classifiers/complain/topk/attention_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json'
+    fresh_OOD1 = pd.read_json(path1)
+    # fresh_OOD1 = pd.read_json('./FRESH_classifiers/' + str(args.dataset) + '/topk/' + str(attribute_name) + '_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
+    fresh_OOD1 = fresh_OOD1[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[1]
+    fresh_OOD1['domain'] = 'OOD1'
+
+    fresh_OOD2 = pd.read_json(os.path.join('./FRESH_classifiers/', str(args.dataset), str(threshold),
+                                           str(attribute_name) + '_bert_predictive_performances-OOD-' + str(
+                                               args.dataset) + '_ood2.json'))
+    # fresh_OOD2 = pd.read_json('./FRESH_classifiers/' + str(args.dataset) + '/' + str(threshold) + '/' + str(attribute_name) + '_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood2.json')
+    fresh_OOD2 = fresh_OOD2[select_columns].iloc[1]
+    fresh_OOD2['domain'] = 'OOD2'
+
+    fresh_result1 = pd.concat([fresh_InDomain, fresh_OOD1, fresh_OOD2], axis=1, ignore_index=False).T.reset_index()[
+        ['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece', 'domain']]
+    fresh_result1['attribute_name'] = str(attribute_name)
+fresh_result1['threshold'] = str(threshold)
+
+
+
+threshold = 'contigious'
+for attribute_name in ["attention", "ig", "gradients", "lime", "deeplift", "scaled attention"]:
+    path = os.path.join('./FRESH_classifiers/', str(args.dataset), str(threshold), str(attribute_name) + '_bert_predictive_performances.json')
+    print(path)
+    # fresh_InDomain = pd.read_json('./FRESH_classifiers/complain/topk/attention_bert_predictive_performances.json')
+    fresh_InDomain = pd.read_json(path)
+    fresh_InDomain = fresh_InDomain[['mean-acc','std-acc','mean-f1','std-f1','mean-ece','std-ece']].iloc[1]
+    fresh_InDomain['domain'] = 'InDomain'
+
+    fresh_OOD1 = pd.read_json(os.path.join('./FRESH_classifiers/', str(args.dataset), str(threshold), str(attribute_name) + '_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json'))
+    # fresh_OOD1 = pd.read_json('./FRESH_classifiers/' + str(args.dataset) + '/' + str(threshold) + '/' + str(attribute_name) + '_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
+    fresh_OOD1 = fresh_OOD1[['mean-acc','std-acc','mean-f1','std-f1','mean-ece','std-ece']].iloc[1]
+    fresh_OOD1['domain'] = 'OOD1'
+
+    fresh_OOD2 = pd.read_json(os.path.join('./FRESH_classifiers/', str(args.dataset), str(threshold), str(attribute_name) + '_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood2.json'))
+    # fresh_OOD2 = pd.read_json('./FRESH_classifiers/' + str(args.dataset) + '/' + str(threshold) + '/' + str(attribute_name) + '_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood2.json')
+    fresh_OOD2 = fresh_OOD2[select_columns].iloc[1]
+    fresh_OOD2['domain'] = 'OOD2'
+
+    fresh_result2 = pd.concat([fresh_InDomain, fresh_OOD1, fresh_OOD2], axis=1, ignore_index=False).T.reset_index()[['mean-acc','std-acc','mean-f1','std-f1','mean-ece','std-ece','domain']]
+    fresh_result2['attribute_name'] = str(attribute_name)
+
+fresh_result2 = pd.concat([fresh_InDomain, fresh_OOD1, fresh_OOD2], axis=1, ignore_index=False).T.reset_index()[['mean-acc','std-acc','mean-f1','std-f1','mean-ece','std-ece','domain']]
+fresh_result2['attribute_name'] = str(attribute_name)
+print('done ', str(attribute_name))
+fresh_result2['threshold'] = str(threshold)
+exit()
+
+
+fresh_final_result = pd.concat([fresh_result1,fresh_result2])
+fresh_final_result.to_csv('saved_everything/' + str(args.dataset) + '/fresh_predictive_results.csv')
+
+
+
 ######################## 1. bert predictive resultes -- on In domain / ood1 / ood2
 
 InDomain = pd.read_json('./models/' + str(args.dataset) + '/bert_predictive_performances.json')
@@ -96,9 +201,7 @@ posthoc_faithfulness.to_csv('saved_everything/' + str(args.dataset) + '/posthoc_
 
 #############################################################################################################################################
 
-
-# 3. FRESH results
-
+#3
 
 
 ############################################################ 4. kuma predictive results

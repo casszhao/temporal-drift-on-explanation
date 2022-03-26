@@ -194,6 +194,8 @@ class evaluate():
             model_seeds = [x.split(".npy")[0].split("-")[-1] for x in score_list]
             
             if len(model_seeds) > 1:
+                print(' model seeds includes: -------')
+                print(model_seeds)
 
                 raise NotImplementedError("""
 

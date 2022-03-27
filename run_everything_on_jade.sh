@@ -135,3 +135,4 @@ done
 
 
 python save_everything.py --dataset $dataset
+python save_everything_part2.py --dataset $dataset

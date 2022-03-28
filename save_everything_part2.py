@@ -1,5 +1,5 @@
-
-
+# 5. domain similarity between:  In domain / ood1 / ood2
+## 6. rationale similarity between:  In domain / ood1 / ood2
 import pandas as pd
 import os
 import argparse

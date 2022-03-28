@@ -60,6 +60,77 @@ else: faith_args = full_lstm_args
 def count_parameters(model):
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
 
+
+def train_searchPara_and_save(lr, train_data_loader, dev_data_loader, output_dims=2):
+    """
+    Trains the models depending on the number of random seeds
+    a user supplied, saves the best performing models depending
+    on dev loss and returns also stats
+    """
+
+
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+
+    torch.manual_seed(args["seed"])
+    torch.cuda.manual_seed(args["seed"])
+    np.random.seed(args["seed"])
+
+
+    classifier = BertClassifier(output_dim=output_dims, tasc=None).to(device)
+
+
+    loss_function = nn.CrossEntropyLoss()
+
+
+    assert sum(p.numel() for p in classifier.parameters() if p.requires_grad) == sum(
+                p.numel() for p in classifier.parameters()), ("""
+            some of the parameters in this model are not trainable (Note: They should all be trainable)
+            """)
+
+    optimiser = AdamW([
+                {'params': [p for p in classifier.wrapper.parameters() if p.requires_grad], 'lr': lr},
+                {'params': classifier.output_layer.parameters(), 'lr': lr}],
+                correct_bias=False
+            )
+
+    saving_model = os.path.join(
+            args["model_dir"],
+            f"{args.model_abbreviation}{args.seed}.pt"
+        )
+
+    _, results_to_save = train_model(
+        classifier,
+        train_data_loader,
+        dev_data_loader,
+        loss_function,
+        optimiser,
+        epochs=args["epochs"],
+        cutoff=False,
+        save_folder=saving_model,
+        run=str(args["seed"]),
+        seed=str(args["seed"])
+    )
+
+    text_file = open(
+            os.path.join(
+                args["model_dir"],
+                f"model_run_stats/{args.model_abbreviation}_seed_{args.seed}.txt"
+            ),
+            "ab")
+    text_file.write('learning rate is: '.encode())
+    text_file.write(str(lr).encode())
+    text_file.write('\n'.encode())
+    text_file.write(results_to_save.encode())
+    text_file.close()
+
+    del classifier
+    gc.collect()
+    torch.cuda.empty_cache()
+
+    return
+
+
 def train_and_save(train_data_loader, dev_data_loader, for_rationale = False, output_dims = 2, ood = False, vocab_size = None):
 
   

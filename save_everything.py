@@ -35,14 +35,15 @@ os.makedirs(datasets_dir, exist_ok = True)
 
 ######################## 1. bert predictive resultes -- on In domain / ood1 / ood2
 
+Full_data = pd.read_json('./models/' + str(args.dataset) + '_full/bert_predictive_performances.json')
+Full_data['domain'] = 'Full size'
 InDomain = pd.read_json('./models/' + str(args.dataset) + '/bert_predictive_performances.json')
 InDomain['domain'] = 'InDomain'
 OOD1 = pd.read_json('./models/' + str(args.dataset) + '/bert_predictive_performances-OOD-complain_ood1.json')
 OOD1['domain'] = 'OOD1'
-print(OOD1)
 OOD2 = pd.read_json('./models/' + str(args.dataset) + '/bert_predictive_performances-OOD-complain_ood2.json')
 OOD2['domain'] = 'OOD2'
-result = pd.concat([InDomain, OOD1, OOD2])
+result = pd.concat([Full_data, InDomain, OOD1, OOD2])
 result.to_csv('saved_everything/' + str(args.dataset) + '/bert_predictive_on_fulltext.csv')
 
 ####################################################################################

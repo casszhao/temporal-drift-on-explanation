@@ -12,7 +12,7 @@ SST = IMDB = Yelp = AmazInstr = AmazDigiMu = AmazPantry = {
     }
 }
 
-complain = complain_ood1 = complain_ood2 = {
+complain_full = complain = complain_ood1 = complain_ood2 = {
     "OPTIM_ARGS_" : {     ## for Adam Loss
         "lr" : 0.001,
         "weight_decay" : 0.00001,
@@ -24,7 +24,7 @@ complain = complain_ood1 = complain_ood2 = {
     }
 }
 
-bragging = bragging_ood1 = bragging_ood2 = {
+bragging_full = bragging = bragging_ood1 = bragging_ood2 = {
     "OPTIM_ARGS_" : {     ## for Adam Loss
         "lr" : 0.001,
         "weight_decay" : 0.00001,
@@ -36,7 +36,7 @@ bragging = bragging_ood1 = bragging_ood2 = {
     }
 }
 
-factcheck = factcheck_ood1 = factcheck_ood2 = {
+factcheck_full = factcheck = factcheck_ood1 = factcheck_ood2 = {
     "OPTIM_ARGS_" : {     ## for Adam Loss
         "lr" : 0.001,
         "weight_decay" : 0.00001,
@@ -48,7 +48,7 @@ factcheck = factcheck_ood1 = factcheck_ood2 = {
     }
 }
 
-xfact = xfact_ood1 = xfact_ood2 = {
+xfact_full = xfact = xfact_ood1 = xfact_ood2 = {
     "OPTIM_ARGS_" : {     ## for Adam Loss
         "lr" : 0.001,
         "weight_decay" : 0.00001,
@@ -67,16 +67,20 @@ get_ = {
     "AmazPantry" : AmazPantry,
     "AmazInstr" : AmazInstr,
     "AmazDigiMu" : AmazDigiMu,
+    'factcheck_full': factcheck_full,
     'factcheck': factcheck,
     'factcheck_ood1': factcheck_ood1,
     'factcheck_ood2': factcheck_ood2,
     'xfact': xfact,
+    'xfact_full': xfact_full,
     'xfact_ood1': xfact_ood1,
     'xfact_ood2': xfact_ood2,
     'complain': complain,
+    'complain_full': complain_full,
     'complain_ood2': complain_ood2,
     'complain_ood1': complain_ood1,
     'bragging': bragging,
+    'bragging_full': bragging_full,
     'bragging_ood1': bragging_ood1,
     'bragging_ood2': bragging_ood2,
 }

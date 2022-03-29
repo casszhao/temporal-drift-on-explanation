@@ -5,7 +5,7 @@
 #SBATCH --time=6-00:00
 
 # set name of job
-#SBATCH --job-name=compl1
+#SBATCH --job-name=compl
 
 # set number of GPUs
 #SBATCH --gres=gpu:1
@@ -25,8 +25,8 @@ module load python/anaconda3
 module load cuda/10.2
 source activate ood_faith
 
-dataset="factcheck"
-dataset_full = "factcheck_full"
+dataset="complain"
+dataset_full = "complain_full"
 
 model_dir="models/"
 kuma_model = "kuma_model/"

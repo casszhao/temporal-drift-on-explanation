@@ -26,10 +26,7 @@ module load cuda/10.2
 source activate ood_faith
 
 dataset="complain"
-dataset_full = "complain_full"
-
 model_dir="models/"
-kuma_model = "kuma_model/"
 data_dir="datasets/"
 evaluation_dir="posthoc_results/"
 extracted_rationale_dir="extracted_rationales/"
@@ -40,10 +37,10 @@ thresholder="topk"
 ## train and test on full dataset
 for seed in 5 10 15 20 25
 do
-   python train_fulltext_and_kuma.py --dataset $dataset_full --model_dir $model_dir --data_dir $data_dir --seed $seed
+   python train_fulltext_and_kuma.py --dataset $dataset$"_full" --model_dir $model_dir --data_dir $data_dir --seed $seed
 done
 echo "done TRAINING bert on full data"
-python train_fulltext_and_kuma.py --dataset $dataset_full --model_dir $model_dir --data_dir $data_dir --evaluate_models
+python train_fulltext_and_kuma.py --dataset $dataset$"_full" --model_dir $model_dir --data_dir $data_dir --evaluate_models
 echo "done EVALUATION bert on full data"
 
 
@@ -129,10 +126,10 @@ source activate time_ood
 echo '-------- start training kuma ------------'
 for seed in 5 10 15 20 25
 do
-python train_fulltext_and_kuma.py --dataset $dataset --model_dir $kuma_model --data_dir $data_dir --seed $seed --inherently_faithful "kuma"
+python train_fulltext_and_kuma.py --dataset $dataset --model_dir "kuma_model/" --data_dir $data_dir --seed $seed --inherently_faithful "kuma"
 done
 echo "done train kuma"
-python train_fulltext_and_kuma.py --dataset $dataset --model_dir $kuma_model --data_dir $data_dir --seed $seed --inherently_faithful "kuma" --evaluate_models
+python train_fulltext_and_kuma.py --dataset $dataset --model_dir "kuma_model/" --data_dir $data_dir --seed $seed --inherently_faithful "kuma" --evaluate_models
 echo "done eval kuma"
 
 

@@ -78,7 +78,7 @@
     },
     "complain_full" : {
         "rationale_length" : 0.2,
-        "batch_size": 16,
+        "batch_size": 32,
         "lr_bert" : 3e-05,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",
@@ -114,7 +114,7 @@
     },
     "bragging_full" : {
         "rationale_length" : 0.2,
-        "batch_size": 32,
+        "batch_size": 16,
         "lr_bert" : 3e-6,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",

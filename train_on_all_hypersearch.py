@@ -148,26 +148,26 @@ if args["evaluate_models"]:
 
 else:
 
-    # train_searchPara_and_save(
-    #     train_data_loader=data.train_loader,
-    #     dev_data_loader=data.dev_loader,
-    #     output_dims=data.nu_of_labels,
-    #     lr = 5e-5, #3e-5, 2e-5
-    # )
-    #
-    # train_searchPara_and_save(
-    #     train_data_loader=data.train_loader,
-    #     dev_data_loader=data.dev_loader,
-    #     output_dims=data.nu_of_labels,
-    #     lr = 3e-5, #,
-    # )
-    #
-    # train_searchPara_and_save(
-    #     train_data_loader=data.train_loader,
-    #     dev_data_loader=data.dev_loader,
-    #     output_dims=data.nu_of_labels,
-    #     lr = 2e-5, #3e-5, 2e-5
-    # )
+    train_searchPara_and_save(
+        train_data_loader=data.train_loader,
+        dev_data_loader=data.dev_loader,
+        output_dims=data.nu_of_labels,
+        lr = 5e-5, #3e-5, 2e-5
+    )
+
+    train_searchPara_and_save(
+        train_data_loader=data.train_loader,
+        dev_data_loader=data.dev_loader,
+        output_dims=data.nu_of_labels,
+        lr = 3e-5, #,
+    )
+
+    train_searchPara_and_save(
+        train_data_loader=data.train_loader,
+        dev_data_loader=data.dev_loader,
+        output_dims=data.nu_of_labels,
+        lr = 2e-5, #3e-5, 2e-5
+    )
 
     train_searchPara_and_save(
         train_data_loader=data.train_loader,

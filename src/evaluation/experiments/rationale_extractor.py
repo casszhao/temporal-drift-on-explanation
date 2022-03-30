@@ -89,18 +89,18 @@ def extract_importance_(model, data, data_split_name, model_random_seed, ood, oo
 
         gradients = torch.norm(g* em, dim = -1)
 
-        integrated_grads = model.integrated_grads(
-                original_grad = g, 
-                original_pred = yhat.max(-1),
-                **batch    
-        )
+        # integrated_grads = model.integrated_grads(
+        #         original_grad = g,
+        #         original_pred = yhat.max(-1),
+        #         **batch
+        # )
 
         normalised_random = torch.randn(attentions.shape).to(device)
 
         normalised_random = torch.masked_fill(normalised_random, ~batch["query_mask"].bool(), float("-inf"))
 
         # normalised integrated gradients of input
-        normalised_ig = torch.masked_fill(integrated_grads, ~batch["query_mask"].bool(), float("-inf"))
+        # normalised_ig = torch.masked_fill(integrated_grads, ~batch["query_mask"].bool(), float("-inf"))
 
         # normalised gradients of input
         normalised_grads = torch.masked_fill(gradients, ~batch["query_mask"].bool(), float("-inf"))
@@ -129,7 +129,7 @@ def extract_importance_(model, data, data_split_name, model_random_seed, ood, oo
                 "random" : normalised_random[_i_].cpu().detach().numpy(),
                 "attention" : normalised_attentions[_i_].cpu().detach().numpy(),
                 "gradients" : normalised_grads[_i_].cpu().detach().numpy(),
-                "ig" : normalised_ig[_i_].cpu().detach().numpy(),
+                # "ig" : normalised_ig[_i_].cpu().detach().numpy(),
                 "scaled attention" : normalised_attention_grads[_i_].cpu().detach().numpy()
             }
 

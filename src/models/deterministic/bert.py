@@ -93,7 +93,7 @@ class BertClassifier(nn.Module):
 
                 baseline = pred[rows, original_pred[1]]
 
-            pred[rows, original_pred[1]].sum().backward()
+            pred[rows, original_pred[1]].sum().backward() #CUDA out of memory
 
             #embedding gradients
             embed_grad = self.wrapper.model.embeddings.word_embeddings.weight.grad

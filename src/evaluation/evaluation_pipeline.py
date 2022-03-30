@@ -244,6 +244,7 @@ class evaluate():
             model.to(device)
 
             logging.info(f" *** succesfully loaded model - {model_name}")
+            print('successfully loaded model for evaluating faithfulness')
 
             model_random_seed = re.sub("bert", "", model_name.split(".pt")[0].split("/")[-1])
 

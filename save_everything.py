@@ -106,7 +106,7 @@ select_columns = ['mean-acc','std-acc','mean-f1','std-f1','mean-ece','std-ece']
 thresh_hold_list = []
 for threshold in ['topk', 'contigious']: #
     attribute_list = []
-    for attribute_name in ["attention", "ig", "gradients", "lime", "deeplift", "scaled_attention"]:
+    for attribute_name in ["attention", "gradients", "lime", "deeplift", "scaled_attention"]:
         path = os.path.join('FRESH_classifiers/', str(args.dataset), str(threshold),
                             str(attribute_name) + '_bert_predictive_performances.json')
         #fresh_InDomain = pd.read_json('FRESH_classifiers/complain/topk/attention_bert_predictive_performances.json')

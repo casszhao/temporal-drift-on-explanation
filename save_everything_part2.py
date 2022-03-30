@@ -276,7 +276,7 @@ os.makedirs(model_dir, exist_ok=True)
 thresh_list = []
 for threshold in ['topk', 'contigious']:
     attributes_list = []
-    for attribute_name in ['attention', 'ig', 'lime', 'deeplift', 'gradients', 'scaled attention']:
+    for attribute_name in ['attention', 'lime', 'deeplift', 'gradients', 'scaled attention']:
 
         InD_path_train = './extracted_rationales/'+str(args.dataset)+'/data/'+str(threshold)+'/'+str(attribute_name)+'-train.json'
         InD_path_test = './extracted_rationales/'+str(args.dataset)+'/data/'+str(threshold)+'/'+str(attribute_name)+'-test.json'

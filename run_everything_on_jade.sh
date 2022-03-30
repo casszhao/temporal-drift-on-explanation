@@ -5,7 +5,7 @@
 #SBATCH --time=6-00:00
 
 # set name of job
-#SBATCH --job-name=factcheck
+#SBATCH --job-name=complain
 
 # set number of GPUs
 #SBATCH --gres=gpu:1
@@ -25,7 +25,7 @@ module load python/anaconda3
 module load cuda/10.2
 source activate ood_faith
 
-dataset="factcheck"
+dataset="complain"
 model_dir="models/"
 data_dir="datasets/"
 evaluation_dir="posthoc_results/"
@@ -144,6 +144,6 @@ do
     mv "$file" "${file// /_}"
 done
 
-
+cd ../../
 python save_everything.py --dataset $dataset
 python save_everything_part2.py --dataset $dataset

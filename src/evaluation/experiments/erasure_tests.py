@@ -142,7 +142,7 @@ def conduct_experiments_(model, data, model_random_seed, ood = False, ood_datase
                 faithfulness_results[annot_id]["full text prediction"] = original_prediction[_j_] 
                 faithfulness_results[annot_id]["true label"] = batch["labels"][_j_].detach().cpu().item()
             
-            for feat_name in {"random", "attention", "gradients", "ig" , "scaled attention", "lime", "deeplift"}:
+            for feat_name in {"random", "attention", "gradients", "scaled attention", "lime", "deeplift"}: #"ig" ,
 
                 feat_score =  batch_from_dict_(
                     batch_data = batch, 
@@ -234,7 +234,7 @@ def conduct_experiments_(model, data, model_random_seed, ood = False, ood_datase
             
     descriptor = {}
     # filling getting averages
-    for feat_attr in {"attention", "gradients", "ig", "random", "scaled attention", "lime", "deeplift"}:
+    for feat_attr in {"attention", "gradients", "random", "scaled attention", "lime", "deeplift"}: #"ig",
         
         sufficiencies = np.asarray([faithfulness_results[k][feat_attr][f"sufficiency @ {desired_rationale_length}"] for k in faithfulness_results.keys()])
         comprehensivenesses = np.asarray([faithfulness_results[k][feat_attr][f"comprehensiveness @ {desired_rationale_length}"] for k in faithfulness_results.keys()])

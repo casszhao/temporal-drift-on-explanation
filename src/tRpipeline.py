@@ -60,7 +60,7 @@ else: faith_args = full_lstm_args
 def count_parameters(model):
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
 
-
+# change from train_and_save()
 def train_searchPara_and_save(lr, train_data_loader, dev_data_loader, output_dims=2):
     """
     Trains the models depending on the number of random seeds

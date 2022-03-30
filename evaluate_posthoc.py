@@ -11,12 +11,14 @@ import argparse
 import json
 import logging
 import gc
+import datetime
+import sys
+
 
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 print(device)
 
-import datetime
-import sys
+
 
 
 date_time = str(datetime.date.today()) + "_" + ":".join(str(datetime.datetime.now()).split()[1].split(":")[:2])
@@ -51,7 +53,7 @@ parser.add_argument(
     "--evaluation_dir",   
     type = str, 
     help = "directory to save faithfulness results", 
-    default = "evaluating_faith/"
+    default = "posthoc_results/"
 )
 
 parser.add_argument(
@@ -123,9 +125,6 @@ args = initial_preparations(user_args, stage = "evaluate")
 logging.info("config  : \n ----------------------")
 [logging.info(k + " : " + str(v)) for k,v in args.items()]
 logging.info("\n ----------------------")
-
-
-
 
 
 

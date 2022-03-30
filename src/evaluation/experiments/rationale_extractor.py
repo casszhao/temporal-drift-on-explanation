@@ -377,7 +377,7 @@ def rationale_creator_(data, data_split_name, ood, tokenizer, model_random_seed,
         desired_rationale_length = args.rationale_length
 
     ## time to register rationales
-    for feature_attribution in {"attention", "gradients", "ig", "scaled attention", "deeplift", "lime"}:
+    for feature_attribution in {"attention", "gradients", "scaled attention", "deeplift", "lime"}: #"ig",
         
         temp_registry = {}
 

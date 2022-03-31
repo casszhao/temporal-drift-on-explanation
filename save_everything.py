@@ -53,8 +53,13 @@ result.to_csv('saved_everything/' + str(args.dataset) + '/bert_predictive_on_ful
 
 def json2df(df, domain):
     df.rename(columns={"": "Task"})
+    # num_of_attribute = len(df.iloc[0, :])
+    # print(df)
+    # print(df.iloc[0, 1])
     list_of_list = []
-    for col in range(0, 7):
+
+    for col in range(0, len(df.columns)): # the range length equals to the number of attributes, if remove ig
+
         rationales_sufficiency = df.iloc[0, col].get('mean')
         rationales_comprehensiveness = df.iloc[1, col].get('mean')
         rationales_AOPCsufficiency = df.iloc[2, col].get('mean')
@@ -137,7 +142,7 @@ for threshold in ['topk', 'contigious']: #
         attribute_df['attribute_name'] = str(attribute_name)
         attribute_list.append(attribute_df)
 
-    attribute_results = pd.concat([attribute_list[0], attribute_list[1], attribute_list[2], attribute_list[3], attribute_list[4], attribute_list[5]], ignore_index=False)
+    attribute_results = pd.concat([attribute_list[0], attribute_list[1], attribute_list[2], attribute_list[3], attribute_list[4]], ignore_index=False)
     attribute_results['threshold'] = str(threshold)
     thresh_hold_list.append(attribute_results)
 

@@ -23,7 +23,7 @@
 cd /jmain02/home/J2AD003/txk58/zxz22-txk58/extract_rationales/extract_rationales/
 module load python/anaconda3
 module load cuda/10.2
-source activate ood_faith
+#source activate ood_faith
 
 dataset="factcheck"
 model_dir="models/"
@@ -126,7 +126,7 @@ thresholder="topk"
 #
 ################# kuma
 #conda deactivate
-#source activate time_ood
+source activate time_ood
 echo '-------- start training kuma ------------'
 for seed in 5 10 15 20 25
 do

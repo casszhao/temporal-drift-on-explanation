@@ -317,7 +317,7 @@ for threshold in ['topk', 'contigious']:
         results['attribute_name'] = str(attribute_name)
 
         attributes_list.append(results)
-    all_attributes_df = pd.concat([attributes_list[0], attributes_list[1], attributes_list[2], attributes_list[3], attributes_list[4], attributes_list[5]], ignore_index=False)
+    all_attributes_df = pd.concat([attributes_list[0], attributes_list[1], attributes_list[2], attributes_list[3], attributes_list[4]], ignore_index=False)
     all_attributes_df['threshold'] = str(threshold)
 
     thresh_list.append(all_attributes_df)

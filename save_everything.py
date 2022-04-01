@@ -39,10 +39,16 @@ Full_data = pd.read_json('./models/' + str(args.dataset) + '_full/bert_predictiv
 Full_data['domain'] = 'Full size'
 InDomain = pd.read_json('./models/' + str(args.dataset) + '/bert_predictive_performances.json')
 InDomain['domain'] = 'InDomain'
-OOD1 = pd.read_json('./models/' + str(args.dataset) + '/bert_predictive_performances-OOD-complain_ood1.json')
+
+path = os.path.join('./models/', str(args.dataset),'bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
+OOD1 = pd.read_json(path)
 OOD1['domain'] = 'OOD1'
-OOD2 = pd.read_json('./models/' + str(args.dataset) + '/bert_predictive_performances-OOD-complain_ood2.json')
+
+path = os.path.join('./models/', str(args.dataset),'bert_predictive_performances-OOD-' + str(args.dataset) + '_ood2.json')
+OOD2 = pd.read_json(path)
+# OOD2 = pd.read_json('./models/' + str(args.dataset) + '/bert_predictive_performances-OOD-' + str(args.dataset) + '/_ood2.json')
 OOD2['domain'] = 'OOD2'
+
 result = pd.concat([Full_data, InDomain, OOD1, OOD2])
 result.to_csv('saved_everything/' + str(args.dataset) + '/bert_predictive_on_fulltext.csv')
 
@@ -86,10 +92,22 @@ for seed in [5,10,15,20,25]:
         json = pd.read_json('./posthoc_results/' + str(args.dataset) + '/' + str(thresh) + '-faithfulness-scores-averages-5-description.json')
         df = json2df(json, 'InDomain')
 
-        json1 = pd.read_json('./posthoc_results/' + str(args.dataset) + '/' + str(thresh) + '-faithfulness-scores-averages-OOD-complain_ood1-5-description.json')
+        path = os.path.join('./models/', str(args.dataset),
+                            'bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
+        OOD1 = pd.read_json(path)
+
+        path = os.path.join('./posthoc_results/', str(args.dataset), str(thresh) + '-faithfulness-scores-averages-OOD-' + str(args.dataset) + '_ood1-' + str(seed) + '-description.json')
+        # print(path)
+        json1 = pd.read_json(path)
+        # json1 = pd.read_json('./posthoc_results/' + str(args.dataset) + '/' + str(thresh) + '-faithfulness-scores-averages-OOD-complain_ood1-5-description.json')
         df1 = json2df(json, 'OOD1')
 
-        json2 = pd.read_json('./posthoc_results/' + str(args.dataset) + '/' + str(thresh) + '-faithfulness-scores-averages-OOD-complain_ood2-5-description.json')
+        path = os.path.join('./posthoc_results/', str(args.dataset),
+                            str(thresh) + '-faithfulness-scores-averages-OOD-' + str(args.dataset) + '_ood2-' + str(
+                                seed) + '-description.json')
+        # print(path)
+        json2 = pd.read_json(path)
+        # json2 = pd.read_json('./posthoc_results/' + str(args.dataset) + '/' + str(thresh) + '-faithfulness-scores-averages-OOD-complain_ood2-5-description.json')
         df2 = json2df(json, 'OOD2')
 
         final = pd.concat([df, df1, df2], ignore_index=False)
@@ -122,7 +140,7 @@ for threshold in ['topk', 'contigious']: #
 
         path1 = os.path.join('FRESH_classifiers/', str(args.dataset), str(threshold), str(attribute_name) + '_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
         # fresh_OOD1 = pd.read_json(path1)
-        path1 = './FRESH_classifiers/complain/topk/attention_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json'
+        path1 = './FRESH_classifiers/' + str(args.dataset) + '/topk/attention_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json'
         fresh_OOD1 = pd.read_json(path1)
 
         # fresh_OOD1 = pd.read_json('./FRESH_classifiers/' + str(args.dataset) + '/topk/' + str(attribute_name) + '_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')

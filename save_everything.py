@@ -1,7 +1,7 @@
 # 1. bert predictive resultes -- on In domain / ood1 / ood2
 # 2. different measures of different attributes rationales for both top / contigious -- on In domain / ood1 / ood2
 # 3. FRESH results
-# 4. kuma results
+# 4. kuma results (another script)
 # 5. domain similarity between:  In domain / ood1 / ood2
 # 6. rationale similarity between:  In domain / ood1 / ood2
 # 7. datasets metadata: train/test/ size, time span, label distribution
@@ -151,17 +151,7 @@ fresh_final_result.to_csv('saved_everything/' + str(args.dataset) + '/fresh_pred
 
 
 
-############################################################ 4. kuma predictive results
 
-
-kuma_InDomain = pd.read_json('./kuma_model_new/' + str(args.dataset) + '/kuma-bert_predictive_performances.json')
-kuma_InDomain['domain'] = 'InDomain'
-kuma_OOD1 = pd.read_json('./kuma_model_new/' + str(args.dataset) + '/kuma-bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
-kuma_OOD1['domain'] = 'OOD1'
-kuma_OOD2 = pd.read_json('./kuma_model_new/' + str(args.dataset) + '/kuma-bert_predictive_performances-OOD-' + str(args.dataset) + '_ood2.json')
-kuma_OOD2['domain'] = 'OOD2'
-kuma_result = pd.concat([kuma_InDomain, kuma_OOD1, kuma_OOD2], ignore_index=False)
-kuma_result.to_csv('saved_everything/' + str(args.dataset) + '/kuma_predictive_on_fulltext.csv')
 
 ################################################################################################
 

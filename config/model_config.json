@@ -6,7 +6,7 @@
     "embed_model" : "glove.840B.300d",
     "factcheck_full" : {
         "rationale_length" : 0.2,
-        "batch_size": 16,
+        "batch_size": 32,
         "lr_bert" : 3e-5,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",
@@ -15,7 +15,7 @@
     },
     "factcheck" : {
         "rationale_length" : 0.2,
-        "batch_size": 16,
+        "batch_size": 32,
         "lr_bert" : 3e-5,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",
@@ -24,7 +24,7 @@
     },
     "factcheck_ood1" : {
         "rationale_length" : 0.2,
-        "batch_size": 16,
+        "batch_size": 32,
         "lr_bert" : 3e-5,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",
@@ -33,7 +33,7 @@
     },
     "factcheck_ood2" : {
         "rationale_length" : 0.2,
-        "batch_size": 16,
+        "batch_size": 32,
         "lr_bert" : 3e-5,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",

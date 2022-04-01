@@ -89,7 +89,8 @@ seed_list = []
 for seed in [5,10,15,20,25]:
     df_list = []
     for thresh in ['topk', 'contigious']:
-        json = pd.read_json('./posthoc_results/' + str(args.dataset) + '/' + str(thresh) + '-faithfulness-scores-averages-5-description.json')
+        path = os.path.join('posthoc_results', str(args.dataset), str(thresh) + '-faithfulness-scores-averages-5-description.json')
+        json = pd.read_json(path)
         df = json2df(json, 'InDomain')
 
         path = os.path.join('./models/', str(args.dataset),

@@ -1,9 +1,10 @@
 # 1. bert predictive resultes -- on In domain / ood1 / ood2
-# 2. different measures of different attributes rationales for both top / contigious -- on In domain / ood1 / ood2
+# 2. faithful: for both top / contigious -- on In domain / ood1 / ood2
 # 3. FRESH results
 # 4. kuma results (another script)
 # 5. domain similarity between:  In domain / ood1 / ood2
 # 6. rationale similarity between:  In domain / ood1 / ood2
+
 # 7. datasets metadata: train/test/ size, time span, label distribution
 
 import pandas as pd
@@ -12,7 +13,7 @@ import csv
 import config.cfg
 import os
 import argparse
-
+import fnmatch
 
 
 
@@ -46,7 +47,6 @@ OOD1['domain'] = 'OOD1'
 
 path = os.path.join('./models/', str(args.dataset),'bert_predictive_performances-OOD-' + str(args.dataset) + '_ood2.json')
 OOD2 = pd.read_json(path)
-# OOD2 = pd.read_json('./models/' + str(args.dataset) + '/bert_predictive_performances-OOD-' + str(args.dataset) + '/_ood2.json')
 OOD2['domain'] = 'OOD2'
 
 result = pd.concat([Full_data, InDomain, OOD1, OOD2])
@@ -59,13 +59,9 @@ result.to_csv('saved_everything/' + str(args.dataset) + '/bert_predictive_on_ful
 
 def json2df(df, domain):
     df.rename(columns={"": "Task"})
-    # num_of_attribute = len(df.iloc[0, :])
-    # print(df)
-    # print(df.iloc[0, 1])
     list_of_list = []
 
     for col in range(0, len(df.columns)): # the range length equals to the number of attributes, if remove ig
-
         rationales_sufficiency = df.iloc[0, col].get('mean')
         rationales_comprehensiveness = df.iloc[1, col].get('mean')
         rationales_AOPCsufficiency = df.iloc[2, col].get('mean')
@@ -85,30 +81,28 @@ def json2df(df, domain):
     return df_tf
 
 
+
+
+
 seed_list = []
 for seed in [5,10,15,20,25]:
     df_list = []
     for thresh in ['topk', 'contigious']:
-        path = os.path.join('posthoc_results', str(args.dataset), str(thresh) + '-faithfulness-scores-averages-5-description.json')
-        json = pd.read_json(path)
+
+        for fname in os.listdir('posthoc_results/' + str(args.dataset)):
+            if str(thresh) in fname and 'description.json' in fname:
+                if 'ood1' in fname:
+                    ood1_path = os.path.join('posthoc_results', str(args.dataset), fname)
+                elif 'ood2' in fname:
+                    ood2_path = os.path.join('posthoc_results', str(args.dataset), fname)
+                else:
+                    indomain_path = os.path.join('posthoc_results', str(args.dataset), fname)
+
+        json = pd.read_json(indomain_path)
         df = json2df(json, 'InDomain')
-
-        path = os.path.join('./models/', str(args.dataset),
-                            'bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
-        OOD1 = pd.read_json(path)
-
-        path = os.path.join('./posthoc_results/', str(args.dataset), str(thresh) + '-faithfulness-scores-averages-OOD-' + str(args.dataset) + '_ood1-' + str(seed) + '-description.json')
-        # print(path)
-        json1 = pd.read_json(path)
-        # json1 = pd.read_json('./posthoc_results/' + str(args.dataset) + '/' + str(thresh) + '-faithfulness-scores-averages-OOD-complain_ood1-5-description.json')
+        OOD1 = pd.read_json(ood1_path)
         df1 = json2df(json, 'OOD1')
-
-        path = os.path.join('./posthoc_results/', str(args.dataset),
-                            str(thresh) + '-faithfulness-scores-averages-OOD-' + str(args.dataset) + '_ood2-' + str(
-                                seed) + '-description.json')
-        # print(path)
-        json2 = pd.read_json(path)
-        # json2 = pd.read_json('./posthoc_results/' + str(args.dataset) + '/' + str(thresh) + '-faithfulness-scores-averages-OOD-complain_ood2-5-description.json')
+        OOD2 = pd.read_json(ood2_path)
         df2 = json2df(json, 'OOD2')
 
         final = pd.concat([df, df1, df2], ignore_index=False)
@@ -133,27 +127,19 @@ for threshold in ['topk', 'contigious']: #
     for attribute_name in ["attention", "gradients", "lime", "deeplift", "scaled_attention"]:
         path = os.path.join('FRESH_classifiers/', str(args.dataset), str(threshold),
                             str(attribute_name) + '_bert_predictive_performances.json')
-        #fresh_InDomain = pd.read_json('FRESH_classifiers/complain/topk/attention_bert_predictive_performances.json')
+        print(path)
         fresh_InDomain = pd.read_json(path)
-
         fresh_InDomain = fresh_InDomain[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[1]
         fresh_InDomain['domain'] = 'InDomain'
-
-        path1 = os.path.join('FRESH_classifiers/', str(args.dataset), str(threshold), str(attribute_name) + '_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
-        # fresh_OOD1 = pd.read_json(path1)
         path1 = './FRESH_classifiers/' + str(args.dataset) + '/topk/attention_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json'
         fresh_OOD1 = pd.read_json(path1)
-
-        # fresh_OOD1 = pd.read_json('./FRESH_classifiers/' + str(args.dataset) + '/topk/' + str(attribute_name) + '_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
         fresh_OOD1 = fresh_OOD1[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[1]
         fresh_OOD1['domain'] = 'OOD1'
 
-        fresh_OOD2 = pd.read_json(os.path.join('./FRESH_classifiers/', str(args.dataset), str(threshold),
-                                               str(attribute_name) + '_bert_predictive_performances-OOD-' + str(
-                                                   args.dataset) + '_ood2.json'))
-
-        # fresh_OOD2 = pd.read_json('./FRESH_classifiers/' + str(args.dataset) + '/' + str(threshold) + '/' + str(attribute_name) + '_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood2.json')
-        fresh_OOD2 = fresh_OOD2[select_columns].iloc[1]
+        path2 = './FRESH_classifiers/' + str(args.dataset) + '/topk/attention_bert_predictive_performances-OOD-' + str(
+            args.dataset) + '_ood2.json'
+        fresh_OOD2 = pd.read_json(path2)
+        fresh_OOD2 = fresh_OOD2[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[1]
         fresh_OOD2['domain'] = 'OOD2'
 
         attribute_df = pd.concat([fresh_InDomain, fresh_OOD1, fresh_OOD2], axis=1, ignore_index=False).T.reset_index()[

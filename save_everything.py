@@ -37,7 +37,7 @@ os.makedirs(datasets_dir, exist_ok = True)
 from datetime import datetime
 
 
-
+'''
 def df2stat_df(df, domain):
     df = df[pd.to_datetime(df['date'], errors='coerce').notna()]
     df = df.dropna().sort_values(by='date', na_position='first')
@@ -92,7 +92,7 @@ result.to_csv('saved_everything/' + str(args.dataset) + '/bert_predictive_on_ful
 
 ####################################################################################
 
-
+'''
 ######################################## 2. faithful of different measures & different attributes rationales for both top / contigious -- on In domain / ood1 / ood2 #########################
 
 def json2df(df, domain):
@@ -111,6 +111,7 @@ def json2df(df, domain):
         list_of_list.append(four_eval_metrics)
 
     df_tf = pd.DataFrame.from_records(list_of_list).transpose()
+    print(df_tf)
     df_tf.columns = df.columns  # ['random','scaled_attention','attention','ig','lime','gradients','deeplift']
 
     df_tf['Rationales_metrics'] = ['Sufficiency', 'Comprehensiveness', 'AOPC_sufficiency', 'AOPC_comprehensiveness']
@@ -123,12 +124,12 @@ def json2df(df, domain):
 
 
 seed_list = []
-for seed in [5,10,15,20,25]:
+for seed in [10]: #[5,10,15,20,25]:
     df_list = []
     for thresh in ['topk', 'contigious']:
 
         for fname in os.listdir('posthoc_results/' + str(args.dataset)):
-            if str(thresh) in fname and 'description.json' in fname:
+            if str(thresh) in fname and 'description.json' in fname and str(seed) in fname:
                 if 'ood1' in fname:
                     ood1_path = os.path.join('posthoc_results', str(args.dataset), fname)
                 elif 'ood2' in fname:
@@ -139,9 +140,9 @@ for seed in [5,10,15,20,25]:
         json = pd.read_json(indomain_path)
         df = json2df(json, 'InDomain')
         OOD1 = pd.read_json(ood1_path)
-        df1 = json2df(json, 'OOD1')
+        df1 = json2df(OOD1, 'OOD1')
         OOD2 = pd.read_json(ood2_path)
-        df2 = json2df(json, 'OOD2')
+        df2 = json2df(OOD2, 'OOD2')
 
         final = pd.concat([df, df1, df2], ignore_index=False)
         final['thresholder'] = str(thresh)
@@ -153,7 +154,7 @@ for seed in [5,10,15,20,25]:
 
 posthoc_faithfulness = pd.concat([seed_list[0],seed_list[1],seed_list[2],seed_list[3],seed_list[4]], ignore_index=False)
 posthoc_faithfulness.to_csv('saved_everything/' + str(args.dataset) + '/posthoc_faithfulness.csv')
-
+exit()
 #############################################################################################################################################
 
 

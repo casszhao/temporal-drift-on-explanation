@@ -111,7 +111,7 @@ def json2df(df, domain):
         list_of_list.append(four_eval_metrics)
 
     df_tf = pd.DataFrame.from_records(list_of_list).transpose()
-    print(df_tf)
+    # print(df_tf)
     df_tf.columns = df.columns  # ['random','scaled_attention','attention','ig','lime','gradients','deeplift']
 
     df_tf['Rationales_metrics'] = ['Sufficiency', 'Comprehensiveness', 'AOPC_sufficiency', 'AOPC_comprehensiveness']
@@ -122,37 +122,37 @@ def json2df(df, domain):
 
 
 
+#
+# seed_list = []
+# for seed in [10]: #[5,10,15,20,25]:
+df_list = []
+for thresh in ['topk', 'contigious']:
 
-seed_list = []
-for seed in [10]: #[5,10,15,20,25]:
-    df_list = []
-    for thresh in ['topk', 'contigious']:
+    for fname in os.listdir('posthoc_results/' + str(args.dataset)):
+        if str(thresh) in fname and 'description.json' in fname:
+            if 'ood1' in fname:
+                ood1_path = os.path.join('posthoc_results', str(args.dataset), fname)
+            elif 'ood2' in fname:
+                ood2_path = os.path.join('posthoc_results', str(args.dataset), fname)
+            else:
+                indomain_path = os.path.join('posthoc_results', str(args.dataset), fname)
 
-        for fname in os.listdir('posthoc_results/' + str(args.dataset)):
-            if str(thresh) in fname and 'description.json' in fname and str(seed) in fname:
-                if 'ood1' in fname:
-                    ood1_path = os.path.join('posthoc_results', str(args.dataset), fname)
-                elif 'ood2' in fname:
-                    ood2_path = os.path.join('posthoc_results', str(args.dataset), fname)
-                else:
-                    indomain_path = os.path.join('posthoc_results', str(args.dataset), fname)
+    json = pd.read_json(indomain_path)
+    df = json2df(json, 'InDomain')
+    OOD1 = pd.read_json(ood1_path)
+    df1 = json2df(OOD1, 'OOD1')
+    OOD2 = pd.read_json(ood2_path)
+    df2 = json2df(OOD2, 'OOD2')
 
-        json = pd.read_json(indomain_path)
-        df = json2df(json, 'InDomain')
-        OOD1 = pd.read_json(ood1_path)
-        df1 = json2df(OOD1, 'OOD1')
-        OOD2 = pd.read_json(ood2_path)
-        df2 = json2df(OOD2, 'OOD2')
+    final = pd.concat([df, df1, df2], ignore_index=False)
+    final['thresholder'] = str(thresh)
+    df_list.append(final)
 
-        final = pd.concat([df, df1, df2], ignore_index=False)
-        final['thresholder'] = str(thresh)
-        df_list.append(final)
+posthoc_faithfulness = pd.concat([df_list[0], df_list[1]], ignore_index=False)
+    # seed_n['seed'] = seed
+    # seed_list.append(seed_n)
 
-    seed_n = pd.concat([df_list[0], df_list[1]], ignore_index=False)
-    seed_n['seed'] = seed
-    seed_list.append(seed_n)
-
-posthoc_faithfulness = pd.concat([seed_list[0],seed_list[1],seed_list[2],seed_list[3],seed_list[4]], ignore_index=False)
+# posthoc_faithfulness = pd.concat([seed_list[0],seed_list[1],seed_list[2],seed_list[3],seed_list[4]], ignore_index=False)
 posthoc_faithfulness.to_csv('saved_everything/' + str(args.dataset) + '/posthoc_faithfulness.csv')
 exit()
 #############################################################################################################################################

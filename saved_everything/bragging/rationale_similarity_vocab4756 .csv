@@ -1,0 +1,361 @@
+,Similarity,Representations,Measure,Rep_Mea,Domain,attribute_name,threshold
+0,0.2396169456136617,Term distribution,jensen-shannon,Term jensen-shannon,In Domain(Baseline),attention,topk
+1,46.63232659539369,Term distribution,renyi,Term renyi,In Domain(Baseline),attention,topk
+2,0.01825855891504513,Term distribution,cosine,Term cosine,In Domain(Baseline),attention,topk
+3,0.021386586986709994,Term distribution,euclidean,Term euclidean,In Domain(Baseline),attention,topk
+4,0.866432451228359,Term distribution,variational,Term variational,In Domain(Baseline),attention,topk
+5,0.4065783451351849,Term distribution,bhattacharyya,Term bhattacharyya,In Domain(Baseline),attention,topk
+6,0.002778989262878895,Topic distribution,jensen-shannon,Topic jensen-shannon,In Domain(Baseline),attention,topk
+7,0.010486868066508746,Topic distribution,renyi,Topic renyi,In Domain(Baseline),attention,topk
+8,0.007222354412078857,Topic distribution,cosine,Topic cosine,In Domain(Baseline),attention,topk
+9,0.022334772065034942,Topic distribution,euclidean,Topic euclidean,In Domain(Baseline),attention,topk
+10,0.12688246369361877,Topic distribution,variational,Topic variational,In Domain(Baseline),attention,topk
+11,0.0027825168799608946,Topic distribution,bhattacharyya,Topic bhattacharyya,In Domain(Baseline),attention,topk
+12,0.24342698254271272,Term distribution,jensen-shannon,Term jensen-shannon,OOD1,attention,topk
+13,46.278959736134986,Term distribution,renyi,Term renyi,OOD1,attention,topk
+14,0.017030209243150796,Term distribution,cosine,Term cosine,OOD1,attention,topk
+15,0.021866849217287623,Term distribution,euclidean,Term euclidean,OOD1,attention,topk
+16,0.8840286074511261,Term distribution,variational,Term variational,OOD1,attention,topk
+17,0.41435861545231745,Term distribution,bhattacharyya,Term bhattacharyya,OOD1,attention,topk
+18,0.003359830705448985,Topic distribution,jensen-shannon,Topic jensen-shannon,OOD1,attention,topk
+19,0.012796693456503383,Topic distribution,renyi,Topic renyi,OOD1,attention,topk
+20,0.010075867176055908,Topic distribution,cosine,Topic cosine,OOD1,attention,topk
+21,0.02625322885174907,Topic distribution,euclidean,Topic euclidean,OOD1,attention,topk
+22,0.12643462419509888,Topic distribution,variational,Topic variational,OOD1,attention,topk
+23,0.0033677839674055576,Topic distribution,bhattacharyya,Topic bhattacharyya,OOD1,attention,topk
+24,0.23649044632413319,Term distribution,jensen-shannon,Term jensen-shannon,OOD2,attention,topk
+25,45.40146592043814,Term distribution,renyi,Term renyi,OOD2,attention,topk
+26,0.01539723122113723,Term distribution,cosine,Term cosine,OOD2,attention,topk
+27,0.01965102657774012,Term distribution,euclidean,Term euclidean,OOD2,attention,topk
+28,0.8644768119855346,Term distribution,variational,Term variational,OOD2,attention,topk
+29,0.3977190345405742,Term distribution,bhattacharyya,Term bhattacharyya,OOD2,attention,topk
+30,0.005717352032661438,Topic distribution,jensen-shannon,Topic jensen-shannon,OOD2,attention,topk
+31,0.02216374979654375,Topic distribution,renyi,Topic renyi,OOD2,attention,topk
+32,0.017217576503753662,Topic distribution,cosine,Topic cosine,OOD2,attention,topk
+33,0.03479987126617929,Topic distribution,euclidean,Topic euclidean,OOD2,attention,topk
+34,0.17203272879123688,Topic distribution,variational,Topic variational,OOD2,attention,topk
+35,0.005744174588471651,Topic distribution,bhattacharyya,Topic bhattacharyya,OOD2,attention,topk
+36,0.17836096732438575,Term distribution,jensen-shannon,Term jensen-shannon,In Domain(Baseline),lime,topk
+37,30.747885477580247,Term distribution,renyi,Term renyi,In Domain(Baseline),lime,topk
+38,0.022696826239167134,Term distribution,cosine,Term cosine,In Domain(Baseline),lime,topk
+39,0.02185754314395735,Term distribution,euclidean,Term euclidean,In Domain(Baseline),lime,topk
+40,0.7081419303994946,Term distribution,variational,Term variational,In Domain(Baseline),lime,topk
+41,0.28304241368653427,Term distribution,bhattacharyya,Term bhattacharyya,In Domain(Baseline),lime,topk
+42,0.004895568825304508,Topic distribution,jensen-shannon,Topic jensen-shannon,In Domain(Baseline),lime,topk
+43,0.019066515096835993,Topic distribution,renyi,Topic renyi,In Domain(Baseline),lime,topk
+44,0.01507568359375,Topic distribution,cosine,Topic cosine,In Domain(Baseline),lime,topk
+45,0.02824294885977989,Topic distribution,euclidean,Topic euclidean,In Domain(Baseline),lime,topk
+46,0.1581660807132721,Topic distribution,variational,Topic variational,In Domain(Baseline),lime,topk
+47,0.004916036035865545,Topic distribution,bhattacharyya,Topic bhattacharyya,In Domain(Baseline),lime,topk
+48,0.18224581923083233,Term distribution,jensen-shannon,Term jensen-shannon,OOD1,lime,topk
+49,30.630531223812635,Term distribution,renyi,Term renyi,OOD1,lime,topk
+50,0.027057296071930748,Term distribution,cosine,Term cosine,OOD1,lime,topk
+51,0.024046743470018873,Term distribution,euclidean,Term euclidean,OOD1,lime,topk
+52,0.7229541796551243,Term distribution,variational,Term variational,OOD1,lime,topk
+53,0.28997034465311133,Term distribution,bhattacharyya,Term bhattacharyya,OOD1,lime,topk
+54,0.004153136629611254,Topic distribution,jensen-shannon,Topic jensen-shannon,OOD1,lime,topk
+55,0.016265280336146184,Topic distribution,renyi,Topic renyi,OOD1,lime,topk
+56,0.013283193111419678,Topic distribution,cosine,Topic cosine,OOD1,lime,topk
+57,0.026397901026461414,Topic distribution,euclidean,Topic euclidean,OOD1,lime,topk
+58,0.14064663648605347,Topic distribution,variational,Topic variational,OOD1,lime,topk
+59,0.004167347215116024,Topic distribution,bhattacharyya,Topic bhattacharyya,OOD1,lime,topk
+60,0.17823626044794194,Term distribution,jensen-shannon,Term jensen-shannon,OOD2,lime,topk
+61,30.20495028759643,Term distribution,renyi,Term renyi,OOD2,lime,topk
+62,0.0389302189599775,Term distribution,cosine,Term cosine,OOD2,lime,topk
+63,0.02896934760073855,Term distribution,euclidean,Term euclidean,OOD2,lime,topk
+64,0.7144100442288487,Term distribution,variational,Term variational,OOD2,lime,topk
+65,0.2818527613896999,Term distribution,bhattacharyya,Term bhattacharyya,OOD2,lime,topk
+66,0.004134601913392544,Topic distribution,jensen-shannon,Topic jensen-shannon,OOD2,lime,topk
+67,0.016009223676268225,Topic distribution,renyi,Topic renyi,OOD2,lime,topk
+68,0.017226576805114746,Topic distribution,cosine,Topic cosine,OOD2,lime,topk
+69,0.0292318585399994,Topic distribution,euclidean,Topic euclidean,OOD2,lime,topk
+70,0.14893309772014618,Topic distribution,variational,Topic variational,OOD2,lime,topk
+71,0.004147954750806093,Topic distribution,bhattacharyya,Topic bhattacharyya,OOD2,lime,topk
+72,0.10749715728648518,Term distribution,jensen-shannon,Term jensen-shannon,In Domain(Baseline),deeplift,topk
+73,18.009443291124494,Term distribution,renyi,Term renyi,In Domain(Baseline),deeplift,topk
+74,0.011289817562282978,Term distribution,cosine,Term cosine,In Domain(Baseline),deeplift,topk
+75,0.022314382670112543,Term distribution,euclidean,Term euclidean,In Domain(Baseline),deeplift,topk
+76,0.4970663399623244,Term distribution,variational,Term variational,In Domain(Baseline),deeplift,topk
+77,0.15687988676325412,Term distribution,bhattacharyya,Term bhattacharyya,In Domain(Baseline),deeplift,topk
+78,0.00412051472812891,Topic distribution,jensen-shannon,Topic jensen-shannon,In Domain(Baseline),deeplift,topk
+79,0.01592788604445327,Topic distribution,renyi,Topic renyi,In Domain(Baseline),deeplift,topk
+80,0.012833893299102783,Topic distribution,cosine,Topic cosine,In Domain(Baseline),deeplift,topk
+81,0.03098974826571841,Topic distribution,euclidean,Topic euclidean,In Domain(Baseline),deeplift,topk
+82,0.15376369655132294,Topic distribution,variational,Topic variational,In Domain(Baseline),deeplift,topk
+83,0.00413430854678154,Topic distribution,bhattacharyya,Topic bhattacharyya,In Domain(Baseline),deeplift,topk
+84,0.11008527844993596,Term distribution,jensen-shannon,Term jensen-shannon,OOD1,deeplift,topk
+85,18.856115957459476,Term distribution,renyi,Term renyi,OOD1,deeplift,topk
+86,0.00918177586164104,Term distribution,cosine,Term cosine,OOD1,deeplift,topk
+87,0.02231132603372012,Term distribution,euclidean,Term euclidean,OOD1,deeplift,topk
+88,0.4994745560813878,Term distribution,variational,Term variational,OOD1,deeplift,topk
+89,0.1620833041308915,Term distribution,bhattacharyya,Term bhattacharyya,OOD1,deeplift,topk
+90,0.002774137072265148,Topic distribution,jensen-shannon,Topic jensen-shannon,OOD1,deeplift,topk
+91,0.010696225140311249,Topic distribution,renyi,Topic renyi,OOD1,deeplift,topk
+92,0.006858527660369873,Topic distribution,cosine,Topic cosine,OOD1,deeplift,topk
+93,0.024512785078196785,Topic distribution,euclidean,Topic euclidean,OOD1,deeplift,topk
+94,0.1285776048898697,Topic distribution,variational,Topic variational,OOD1,deeplift,topk
+95,0.002778153633698821,Topic distribution,bhattacharyya,Topic bhattacharyya,OOD1,deeplift,topk
+96,0.10717526055685986,Term distribution,jensen-shannon,Term jensen-shannon,OOD2,deeplift,topk
+97,18.57985808362981,Term distribution,renyi,Term renyi,OOD2,deeplift,topk
+98,0.016663518110579756,Term distribution,cosine,Term cosine,OOD2,deeplift,topk
+99,0.027254023882064733,Term distribution,euclidean,Term euclidean,OOD2,deeplift,topk
+100,0.5005724340252026,Term distribution,variational,Term variational,OOD2,deeplift,topk
+101,0.15681025432769446,Term distribution,bhattacharyya,Term bhattacharyya,OOD2,deeplift,topk
+102,0.004001333378255367,Topic distribution,jensen-shannon,Topic jensen-shannon,OOD2,deeplift,topk
+103,0.015651913311866387,Topic distribution,renyi,Topic renyi,OOD2,deeplift,topk
+104,0.011510252952575684,Topic distribution,cosine,Topic cosine,OOD2,deeplift,topk
+105,0.028501140647001072,Topic distribution,euclidean,Topic euclidean,OOD2,deeplift,topk
+106,0.1320200115442276,Topic distribution,variational,Topic variational,OOD2,deeplift,topk
+107,0.00401616794988513,Topic distribution,bhattacharyya,Topic bhattacharyya,OOD2,deeplift,topk
+108,0.151302022834555,Term distribution,jensen-shannon,Term jensen-shannon,In Domain(Baseline),gradients,topk
+109,25.772356042463517,Term distribution,renyi,Term renyi,In Domain(Baseline),gradients,topk
+110,0.013588196552470233,Term distribution,cosine,Term cosine,In Domain(Baseline),gradients,topk
+111,0.03621754402063114,Term distribution,euclidean,Term euclidean,In Domain(Baseline),gradients,topk
+112,0.59474192323293,Term distribution,variational,Term variational,In Domain(Baseline),gradients,topk
+113,0.23754259590236693,Term distribution,bhattacharyya,Term bhattacharyya,In Domain(Baseline),gradients,topk
+114,0.005165328737348318,Topic distribution,jensen-shannon,Topic jensen-shannon,In Domain(Baseline),gradients,topk
+115,0.020213192944074386,Topic distribution,renyi,Topic renyi,In Domain(Baseline),gradients,topk
+116,0.015057921409606934,Topic distribution,cosine,Topic cosine,In Domain(Baseline),gradients,topk
+117,0.03886431473075247,Topic distribution,euclidean,Topic euclidean,In Domain(Baseline),gradients,topk
+118,0.15860283374786377,Topic distribution,variational,Topic variational,In Domain(Baseline),gradients,topk
+119,0.005189809482544661,Topic distribution,bhattacharyya,Topic bhattacharyya,In Domain(Baseline),gradients,topk
+120,0.13815263857820873,Term distribution,jensen-shannon,Term jensen-shannon,OOD1,gradients,topk
+121,26.67950923921686,Term distribution,renyi,Term renyi,OOD1,gradients,topk
+122,0.014959967246585881,Term distribution,cosine,Term cosine,OOD1,gradients,topk
+123,0.04558672024535177,Term distribution,euclidean,Term euclidean,OOD1,gradients,topk
+124,0.5671512698459262,Term distribution,variational,Term variational,OOD1,gradients,topk
+125,0.2132712424702815,Term distribution,bhattacharyya,Term bhattacharyya,OOD1,gradients,topk
+126,0.009729127399623394,Topic distribution,jensen-shannon,Topic jensen-shannon,OOD1,gradients,topk
+127,0.039127949483200815,Topic distribution,renyi,Topic renyi,OOD1,gradients,topk
+128,0.02789527177810669,Topic distribution,cosine,Topic cosine,OOD1,gradients,topk
+129,0.060460049181189954,Topic distribution,euclidean,Topic euclidean,OOD1,gradients,topk
+130,0.22731733322143555,Topic distribution,variational,Topic variational,OOD1,gradients,topk
+131,0.009819760918617249,Topic distribution,bhattacharyya,Topic bhattacharyya,OOD1,gradients,topk
+132,0.13446955585790601,Term distribution,jensen-shannon,Term jensen-shannon,OOD2,gradients,topk
+133,27.122782915210145,Term distribution,renyi,Term renyi,OOD2,gradients,topk
+134,0.009568374017886905,Term distribution,cosine,Term cosine,OOD2,gradients,topk
+135,0.04189884614591241,Term distribution,euclidean,Term euclidean,OOD2,gradients,topk
+136,0.5562739582756056,Term distribution,variational,Term variational,OOD2,gradients,topk
+137,0.20641478973808988,Term distribution,bhattacharyya,Term bhattacharyya,OOD2,gradients,topk
+138,0.012388437986373901,Topic distribution,jensen-shannon,Topic jensen-shannon,OOD2,gradients,topk
+139,0.0507427744573744,Topic distribution,renyi,Topic renyi,OOD2,gradients,topk
+140,0.027737200260162354,Topic distribution,cosine,Topic cosine,OOD2,gradients,topk
+141,0.07095232723529149,Topic distribution,euclidean,Topic euclidean,OOD2,gradients,topk
+142,0.26369205117225647,Topic distribution,variational,Topic variational,OOD2,gradients,topk
+143,0.012527285143733025,Topic distribution,bhattacharyya,Topic bhattacharyya,OOD2,gradients,topk
+144,0.16846783602087065,Term distribution,jensen-shannon,Term jensen-shannon,In Domain(Baseline),scaled attention,topk
+145,30.982035424628865,Term distribution,renyi,Term renyi,In Domain(Baseline),scaled attention,topk
+146,0.017744452421381784,Term distribution,cosine,Term cosine,In Domain(Baseline),scaled attention,topk
+147,0.021863273304124735,Term distribution,euclidean,Term euclidean,In Domain(Baseline),scaled attention,topk
+148,0.6671067664557975,Term distribution,variational,Term variational,In Domain(Baseline),scaled attention,topk
+149,0.26526875865080707,Term distribution,bhattacharyya,Term bhattacharyya,In Domain(Baseline),scaled attention,topk
+150,0.0031536687165498734,Topic distribution,jensen-shannon,Topic jensen-shannon,In Domain(Baseline),scaled attention,topk
+151,0.012233232792702001,Topic distribution,renyi,Topic renyi,In Domain(Baseline),scaled attention,topk
+152,0.011511802673339844,Topic distribution,cosine,Topic cosine,In Domain(Baseline),scaled attention,topk
+153,0.02723427884133138,Topic distribution,euclidean,Topic euclidean,In Domain(Baseline),scaled attention,topk
+154,0.1265692412853241,Topic distribution,variational,Topic variational,In Domain(Baseline),scaled attention,topk
+155,0.003160817315801978,Topic distribution,bhattacharyya,Topic bhattacharyya,In Domain(Baseline),scaled attention,topk
+156,0.1711106172852454,Term distribution,jensen-shannon,Term jensen-shannon,OOD1,scaled attention,topk
+157,30.62142196714002,Term distribution,renyi,Term renyi,OOD1,scaled attention,topk
+158,0.0147802117916217,Term distribution,cosine,Term cosine,OOD1,scaled attention,topk
+159,0.01970443479865127,Term distribution,euclidean,Term euclidean,OOD1,scaled attention,topk
+160,0.6634386991467767,Term distribution,variational,Term variational,OOD1,scaled attention,topk
+161,0.27138428759192984,Term distribution,bhattacharyya,Term bhattacharyya,OOD1,scaled attention,topk
+162,0.004637980833649635,Topic distribution,jensen-shannon,Topic jensen-shannon,OOD1,scaled attention,topk
+163,0.018049383781200034,Topic distribution,renyi,Topic renyi,OOD1,scaled attention,topk
+164,0.013332724571228027,Topic distribution,cosine,Topic cosine,OOD1,scaled attention,topk
+165,0.02997186338987911,Topic distribution,euclidean,Topic euclidean,OOD1,scaled attention,topk
+166,0.15972866117954254,Topic distribution,variational,Topic variational,OOD1,scaled attention,topk
+167,0.004655032884329557,Topic distribution,bhattacharyya,Topic bhattacharyya,OOD1,scaled attention,topk
+168,0.1717293280860604,Term distribution,jensen-shannon,Term jensen-shannon,OOD2,scaled attention,topk
+169,31.010680196852533,Term distribution,renyi,Term renyi,OOD2,scaled attention,topk
+170,0.015339361210010005,Term distribution,cosine,Term cosine,OOD2,scaled attention,topk
+171,0.020106025047561663,Term distribution,euclidean,Term euclidean,OOD2,scaled attention,topk
+172,0.6688122355083017,Term distribution,variational,Term variational,OOD2,scaled attention,topk
+173,0.2714759320225214,Term distribution,bhattacharyya,Term bhattacharyya,OOD2,scaled attention,topk
+174,0.0042359428480267525,Topic distribution,jensen-shannon,Topic jensen-shannon,OOD2,scaled attention,topk
+175,0.01657095415958531,Topic distribution,renyi,Topic renyi,OOD2,scaled attention,topk
+176,0.014229416847229004,Topic distribution,cosine,Topic cosine,OOD2,scaled attention,topk
+177,0.030470567955557477,Topic distribution,euclidean,Topic euclidean,OOD2,scaled attention,topk
+178,0.14349627494812012,Topic distribution,variational,Topic variational,OOD2,scaled attention,topk
+179,0.0042528812773525715,Topic distribution,bhattacharyya,Topic bhattacharyya,OOD2,scaled attention,topk
+180,0.17222540530470548,Term distribution,jensen-shannon,Term jensen-shannon,In Domain(Baseline),attention,contigious
+181,30.96997078606551,Term distribution,renyi,Term renyi,In Domain(Baseline),attention,contigious
+182,0.014991522916430133,Term distribution,cosine,Term cosine,In Domain(Baseline),attention,contigious
+183,0.01877204767247139,Term distribution,euclidean,Term euclidean,In Domain(Baseline),attention,contigious
+184,0.6707995582568576,Term distribution,variational,Term variational,In Domain(Baseline),attention,contigious
+185,0.2725107059252381,Term distribution,bhattacharyya,Term bhattacharyya,In Domain(Baseline),attention,contigious
+186,0.0037754299119114876,Topic distribution,jensen-shannon,Topic jensen-shannon,In Domain(Baseline),attention,contigious
+187,0.014455455077790594,Topic distribution,renyi,Topic renyi,In Domain(Baseline),attention,contigious
+188,0.00989830493927002,Topic distribution,cosine,Topic cosine,In Domain(Baseline),attention,contigious
+189,0.024019714421326457,Topic distribution,euclidean,Topic euclidean,In Domain(Baseline),attention,contigious
+190,0.13674350082874298,Topic distribution,variational,Topic variational,In Domain(Baseline),attention,contigious
+191,0.0037854944821447134,Topic distribution,bhattacharyya,Topic bhattacharyya,In Domain(Baseline),attention,contigious
+192,0.17649477943855424,Term distribution,jensen-shannon,Term jensen-shannon,OOD1,attention,contigious
+193,30.826584793640606,Term distribution,renyi,Term renyi,OOD1,attention,contigious
+194,0.017790117450214638,Term distribution,cosine,Term cosine,OOD1,attention,contigious
+195,0.02091269304118074,Term distribution,euclidean,Term euclidean,OOD1,attention,contigious
+196,0.6960457353366662,Term distribution,variational,Term variational,OOD1,attention,contigious
+197,0.27985588816057116,Term distribution,bhattacharyya,Term bhattacharyya,OOD1,attention,contigious
+198,0.0032714910339564085,Topic distribution,jensen-shannon,Topic jensen-shannon,OOD1,attention,contigious
+199,0.012519600975034025,Topic distribution,renyi,Topic renyi,OOD1,attention,contigious
+200,0.009550213813781738,Topic distribution,cosine,Topic cosine,OOD1,attention,contigious
+201,0.02267648100620745,Topic distribution,euclidean,Topic euclidean,OOD1,attention,contigious
+202,0.1337488442659378,Topic distribution,variational,Topic variational,OOD1,attention,contigious
+203,0.0032783783972263336,Topic distribution,bhattacharyya,Topic bhattacharyya,OOD1,attention,contigious
+204,0.17070121331878318,Term distribution,jensen-shannon,Term jensen-shannon,OOD2,attention,contigious
+205,30.358499266857198,Term distribution,renyi,Term renyi,OOD2,attention,contigious
+206,0.013684542676902889,Term distribution,cosine,Term cosine,OOD2,attention,contigious
+207,0.017936429087408553,Term distribution,euclidean,Term euclidean,OOD2,attention,contigious
+208,0.66268764245262,Term distribution,variational,Term variational,OOD2,attention,contigious
+209,0.2697196065394788,Term distribution,bhattacharyya,Term bhattacharyya,OOD2,attention,contigious
+210,0.004906903021037579,Topic distribution,jensen-shannon,Topic jensen-shannon,OOD2,attention,contigious
+211,0.019046105307884094,Topic distribution,renyi,Topic renyi,OOD2,attention,contigious
+212,0.013370990753173828,Topic distribution,cosine,Topic cosine,OOD2,attention,contigious
+213,0.028056289868621923,Topic distribution,euclidean,Topic euclidean,OOD2,attention,contigious
+214,0.14950594305992126,Topic distribution,variational,Topic variational,OOD2,attention,contigious
+215,0.004927895963191986,Topic distribution,bhattacharyya,Topic bhattacharyya,OOD2,attention,contigious
+216,0.16658529051196294,Term distribution,jensen-shannon,Term jensen-shannon,In Domain(Baseline),lime,contigious
+217,29.289424238877046,Term distribution,renyi,Term renyi,In Domain(Baseline),lime,contigious
+218,0.020497367738549155,Term distribution,cosine,Term cosine,In Domain(Baseline),lime,contigious
+219,0.019288541762817878,Term distribution,euclidean,Term euclidean,In Domain(Baseline),lime,contigious
+220,0.6562041729881942,Term distribution,variational,Term variational,In Domain(Baseline),lime,contigious
+221,0.2623627530834264,Term distribution,bhattacharyya,Term bhattacharyya,In Domain(Baseline),lime,contigious
+222,0.005172652192413807,Topic distribution,jensen-shannon,Topic jensen-shannon,In Domain(Baseline),lime,contigious
+223,0.02078422693287459,Topic distribution,renyi,Topic renyi,In Domain(Baseline),lime,contigious
+224,0.014829456806182861,Topic distribution,cosine,Topic cosine,In Domain(Baseline),lime,contigious
+225,0.02822535078409365,Topic distribution,euclidean,Topic euclidean,In Domain(Baseline),lime,contigious
+226,0.15436720848083496,Topic distribution,variational,Topic variational,In Domain(Baseline),lime,contigious
+227,0.005200294312089682,Topic distribution,bhattacharyya,Topic bhattacharyya,In Domain(Baseline),lime,contigious
+228,0.1686821178026257,Term distribution,jensen-shannon,Term jensen-shannon,OOD1,lime,contigious
+229,28.96093120285522,Term distribution,renyi,Term renyi,OOD1,lime,contigious
+230,0.02221355558193261,Term distribution,cosine,Term cosine,OOD1,lime,contigious
+231,0.020047712163510718,Term distribution,euclidean,Term euclidean,OOD1,lime,contigious
+232,0.6641532488649387,Term distribution,variational,Term variational,OOD1,lime,contigious
+233,0.26550168776268324,Term distribution,bhattacharyya,Term bhattacharyya,OOD1,lime,contigious
+234,0.004352860618382692,Topic distribution,jensen-shannon,Topic jensen-shannon,OOD1,lime,contigious
+235,0.017323448039638662,Topic distribution,renyi,Topic renyi,OOD1,lime,contigious
+236,0.013336479663848877,Topic distribution,cosine,Topic cosine,OOD1,lime,contigious
+237,0.025912835798443053,Topic distribution,euclidean,Topic euclidean,OOD1,lime,contigious
+238,0.13870355486869812,Topic distribution,variational,Topic variational,OOD1,lime,contigious
+239,0.004374640993773937,Topic distribution,bhattacharyya,Topic bhattacharyya,OOD1,lime,contigious
+240,0.16217000236253729,Term distribution,jensen-shannon,Term jensen-shannon,OOD2,lime,contigious
+241,27.923046736726384,Term distribution,renyi,Term renyi,OOD2,lime,contigious
+242,0.040198532961527866,Term distribution,cosine,Term cosine,OOD2,lime,contigious
+243,0.02682580204418813,Term distribution,euclidean,Term euclidean,OOD2,lime,contigious
+244,0.6679814264776457,Term distribution,variational,Term variational,OOD2,lime,contigious
+245,0.25312288884890904,Term distribution,bhattacharyya,Term bhattacharyya,OOD2,lime,contigious
+246,0.005552383605390787,Topic distribution,jensen-shannon,Topic jensen-shannon,OOD2,lime,contigious
+247,0.022192563888237947,Topic distribution,renyi,Topic renyi,OOD2,lime,contigious
+248,0.018671691417694092,Topic distribution,cosine,Topic cosine,OOD2,lime,contigious
+249,0.030848111599038334,Topic distribution,euclidean,Topic euclidean,OOD2,lime,contigious
+250,0.1657627373933792,Topic distribution,variational,Topic variational,OOD2,lime,contigious
+251,0.00558736314997077,Topic distribution,bhattacharyya,Topic bhattacharyya,OOD2,lime,contigious
+252,0.12787800394211865,Term distribution,jensen-shannon,Term jensen-shannon,In Domain(Baseline),deeplift,contigious
+253,22.19397013929448,Term distribution,renyi,Term renyi,In Domain(Baseline),deeplift,contigious
+254,0.013370748793047227,Term distribution,cosine,Term cosine,In Domain(Baseline),deeplift,contigious
+255,0.021082754231214803,Term distribution,euclidean,Term euclidean,In Domain(Baseline),deeplift,contigious
+256,0.5579352152309487,Term distribution,variational,Term variational,In Domain(Baseline),deeplift,contigious
+257,0.19176985381319564,Term distribution,bhattacharyya,Term bhattacharyya,In Domain(Baseline),deeplift,contigious
+258,0.004284313414245844,Topic distribution,jensen-shannon,Topic jensen-shannon,In Domain(Baseline),deeplift,contigious
+259,0.016609575600179286,Topic distribution,renyi,Topic renyi,In Domain(Baseline),deeplift,contigious
+260,0.012781620025634766,Topic distribution,cosine,Topic cosine,In Domain(Baseline),deeplift,contigious
+261,0.026931823554792858,Topic distribution,euclidean,Topic euclidean,In Domain(Baseline),deeplift,contigious
+262,0.1450677514076233,Topic distribution,variational,Topic variational,In Domain(Baseline),deeplift,contigious
+263,0.004301069304347038,Topic distribution,bhattacharyya,Topic bhattacharyya,In Domain(Baseline),deeplift,contigious
+264,0.13202053110618395,Term distribution,jensen-shannon,Term jensen-shannon,OOD1,deeplift,contigious
+265,22.54148854552242,Term distribution,renyi,Term renyi,OOD1,deeplift,contigious
+266,0.013474607096435443,Term distribution,cosine,Term cosine,OOD1,deeplift,contigious
+267,0.021051636637939377,Term distribution,euclidean,Term euclidean,OOD1,deeplift,contigious
+268,0.5684353701160844,Term distribution,variational,Term variational,OOD1,deeplift,contigious
+269,0.198559479571203,Term distribution,bhattacharyya,Term bhattacharyya,OOD1,deeplift,contigious
+270,0.0036469665355980396,Topic distribution,jensen-shannon,Topic jensen-shannon,OOD1,deeplift,contigious
+271,0.014488622408409067,Topic distribution,renyi,Topic renyi,OOD1,deeplift,contigious
+272,0.009208142757415771,Topic distribution,cosine,Topic cosine,OOD1,deeplift,contigious
+273,0.023513748126465832,Topic distribution,euclidean,Topic euclidean,OOD1,deeplift,contigious
+274,0.12289348989725113,Topic distribution,variational,Topic variational,OOD1,deeplift,contigious
+275,0.003661652561277151,Topic distribution,bhattacharyya,Topic bhattacharyya,OOD1,deeplift,contigious
+276,0.12802190217050624,Term distribution,jensen-shannon,Term jensen-shannon,OOD2,deeplift,contigious
+277,22.23217969741154,Term distribution,renyi,Term renyi,OOD2,deeplift,contigious
+278,0.01514258672634361,Term distribution,cosine,Term cosine,OOD2,deeplift,contigious
+279,0.022326948210211882,Term distribution,euclidean,Term euclidean,OOD2,deeplift,contigious
+280,0.5662360613096031,Term distribution,variational,Term variational,OOD2,deeplift,contigious
+281,0.1912212259719473,Term distribution,bhattacharyya,Term bhattacharyya,OOD2,deeplift,contigious
+282,0.0035481322556734085,Topic distribution,jensen-shannon,Topic jensen-shannon,OOD2,deeplift,contigious
+283,0.013754363467932938,Topic distribution,renyi,Topic renyi,OOD2,deeplift,contigious
+284,0.010329961776733398,Topic distribution,cosine,Topic cosine,OOD2,deeplift,contigious
+285,0.023835744068515494,Topic distribution,euclidean,Topic euclidean,OOD2,deeplift,contigious
+286,0.12181228399276733,Topic distribution,variational,Topic variational,OOD2,deeplift,contigious
+287,0.003561333753168583,Topic distribution,bhattacharyya,Topic bhattacharyya,OOD2,deeplift,contigious
+288,0.15717232372551737,Term distribution,jensen-shannon,Term jensen-shannon,In Domain(Baseline),gradients,contigious
+289,27.32580966101038,Term distribution,renyi,Term renyi,In Domain(Baseline),gradients,contigious
+290,0.019910543351196575,Term distribution,cosine,Term cosine,In Domain(Baseline),gradients,contigious
+291,0.02858219652441501,Term distribution,euclidean,Term euclidean,In Domain(Baseline),gradients,contigious
+292,0.6401928732171343,Term distribution,variational,Term variational,In Domain(Baseline),gradients,contigious
+293,0.24396045431159394,Term distribution,bhattacharyya,Term bhattacharyya,In Domain(Baseline),gradients,contigious
+294,0.005365844815969467,Topic distribution,jensen-shannon,Topic jensen-shannon,In Domain(Baseline),gradients,contigious
+295,0.02120933705329202,Topic distribution,renyi,Topic renyi,In Domain(Baseline),gradients,contigious
+296,0.013918697834014893,Topic distribution,cosine,Topic cosine,In Domain(Baseline),gradients,contigious
+297,0.03396937555707611,Topic distribution,euclidean,Topic euclidean,In Domain(Baseline),gradients,contigious
+298,0.16079974174499512,Topic distribution,variational,Topic variational,In Domain(Baseline),gradients,contigious
+299,0.00539246154949069,Topic distribution,bhattacharyya,Topic bhattacharyya,In Domain(Baseline),gradients,contigious
+300,0.14823818895660196,Term distribution,jensen-shannon,Term jensen-shannon,OOD1,gradients,contigious
+301,27.63190587771562,Term distribution,renyi,Term renyi,OOD1,gradients,contigious
+302,0.010771729707101274,Term distribution,cosine,Term cosine,OOD1,gradients,contigious
+303,0.02376300295356746,Term distribution,euclidean,Term euclidean,OOD1,gradients,contigious
+304,0.5908300550864772,Term distribution,variational,Term variational,OOD1,gradients,contigious
+305,0.2301014295899835,Term distribution,bhattacharyya,Term bhattacharyya,OOD1,gradients,contigious
+306,0.006455026566982269,Topic distribution,jensen-shannon,Topic jensen-shannon,OOD1,gradients,contigious
+307,0.02627836912737656,Topic distribution,renyi,Topic renyi,OOD1,gradients,contigious
+308,0.014755964279174805,Topic distribution,cosine,Topic cosine,OOD1,gradients,contigious
+309,0.037641208905748146,Topic distribution,euclidean,Topic euclidean,OOD1,gradients,contigious
+310,0.17996880412101746,Topic distribution,variational,Topic variational,OOD1,gradients,contigious
+311,0.006501964759081602,Topic distribution,bhattacharyya,Topic bhattacharyya,OOD1,gradients,contigious
+312,0.14718962105727892,Term distribution,jensen-shannon,Term jensen-shannon,OOD2,gradients,contigious
+313,27.951471236564334,Term distribution,renyi,Term renyi,OOD2,gradients,contigious
+314,0.012100547976250375,Term distribution,cosine,Term cosine,OOD2,gradients,contigious
+315,0.03127158772146231,Term distribution,euclidean,Term euclidean,OOD2,gradients,contigious
+316,0.6123000357273825,Term distribution,variational,Term variational,OOD2,gradients,contigious
+317,0.22722715749083372,Term distribution,bhattacharyya,Term bhattacharyya,OOD2,gradients,contigious
+318,0.00798482820391655,Topic distribution,jensen-shannon,Topic jensen-shannon,OOD2,gradients,contigious
+319,0.03195028052336651,Topic distribution,renyi,Topic renyi,OOD2,gradients,contigious
+320,0.023813366889953613,Topic distribution,cosine,Topic cosine,OOD2,gradients,contigious
+321,0.05799651132792636,Topic distribution,euclidean,Topic euclidean,OOD2,gradients,contigious
+322,0.21200969815254211,Topic distribution,variational,Topic variational,OOD2,gradients,contigious
+323,0.008041741326451302,Topic distribution,bhattacharyya,Topic bhattacharyya,OOD2,gradients,contigious
+324,0.1431062485645202,Term distribution,jensen-shannon,Term jensen-shannon,In Domain(Baseline),scaled attention,contigious
+325,24.621733034932802,Term distribution,renyi,Term renyi,In Domain(Baseline),scaled attention,contigious
+326,0.023754837814807583,Term distribution,cosine,Term cosine,In Domain(Baseline),scaled attention,contigious
+327,0.024119549029177362,Term distribution,euclidean,Term euclidean,In Domain(Baseline),scaled attention,contigious
+328,0.6083412718068324,Term distribution,variational,Term variational,In Domain(Baseline),scaled attention,contigious
+329,0.21918428771219375,Term distribution,bhattacharyya,Term bhattacharyya,In Domain(Baseline),scaled attention,contigious
+330,0.0039144884794950485,Topic distribution,jensen-shannon,Topic jensen-shannon,In Domain(Baseline),scaled attention,contigious
+331,0.015168392461160083,Topic distribution,renyi,Topic renyi,In Domain(Baseline),scaled attention,contigious
+332,0.013233959674835205,Topic distribution,cosine,Topic cosine,In Domain(Baseline),scaled attention,contigious
+333,0.02681814321952452,Topic distribution,euclidean,Topic euclidean,In Domain(Baseline),scaled attention,contigious
+334,0.14493469893932343,Topic distribution,variational,Topic variational,In Domain(Baseline),scaled attention,contigious
+335,0.0039256876334548,Topic distribution,bhattacharyya,Topic bhattacharyya,In Domain(Baseline),scaled attention,contigious
+336,0.14448351326432762,Term distribution,jensen-shannon,Term jensen-shannon,OOD1,scaled attention,contigious
+337,24.798522201975924,Term distribution,renyi,Term renyi,OOD1,scaled attention,contigious
+338,0.02283090571908919,Term distribution,cosine,Term cosine,OOD1,scaled attention,contigious
+339,0.023618528125796123,Term distribution,euclidean,Term euclidean,OOD1,scaled attention,contigious
+340,0.6077708008923295,Term distribution,variational,Term variational,OOD1,scaled attention,contigious
+341,0.222237333887008,Term distribution,bhattacharyya,Term bhattacharyya,OOD1,scaled attention,contigious
+342,0.004126975312829018,Topic distribution,jensen-shannon,Topic jensen-shannon,OOD1,scaled attention,contigious
+343,0.016213178159433985,Topic distribution,renyi,Topic renyi,OOD1,scaled attention,contigious
+344,0.011607646942138672,Topic distribution,cosine,Topic cosine,OOD1,scaled attention,contigious
+345,0.025222506435761162,Topic distribution,euclidean,Topic euclidean,OOD1,scaled attention,contigious
+346,0.1467093974351883,Topic distribution,variational,Topic variational,OOD1,scaled attention,contigious
+347,0.004142448306083679,Topic distribution,bhattacharyya,Topic bhattacharyya,OOD1,scaled attention,contigious
+348,0.14167686651521438,Term distribution,jensen-shannon,Term jensen-shannon,OOD2,scaled attention,contigious
+349,24.745532515537697,Term distribution,renyi,Term renyi,OOD2,scaled attention,contigious
+350,0.01626837005266102,Term distribution,cosine,Term cosine,OOD2,scaled attention,contigious
+351,0.02022240343995813,Term distribution,euclidean,Term euclidean,OOD2,scaled attention,contigious
+352,0.5899872242182129,Term distribution,variational,Term variational,OOD2,scaled attention,contigious
+353,0.21724866827766803,Term distribution,bhattacharyya,Term bhattacharyya,OOD2,scaled attention,contigious
+354,0.006256572902202606,Topic distribution,jensen-shannon,Topic jensen-shannon,OOD2,scaled attention,contigious
+355,0.024814125461606613,Topic distribution,renyi,Topic renyi,OOD2,scaled attention,contigious
+356,0.018538594245910645,Topic distribution,cosine,Topic cosine,OOD2,scaled attention,contigious
+357,0.03454292455077552,Topic distribution,euclidean,Topic euclidean,OOD2,scaled attention,contigious
+358,0.18821315467357635,Topic distribution,variational,Topic variational,OOD2,scaled attention,contigious
+359,0.00629074964672327,Topic distribution,bhattacharyya,Topic bhattacharyya,OOD2,scaled attention,contigious

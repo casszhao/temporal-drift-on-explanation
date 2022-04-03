@@ -32,6 +32,44 @@ os.makedirs(datasets_dir, exist_ok = True)
 
 
 
+######################## data statistic
+
+from datetime import datetime
+
+
+
+def df2stat_df(df, domain):
+    df = df[pd.to_datetime(df['date'], errors='coerce').notna()]
+    df = df.dropna().sort_values(by='date', na_position='first')
+    df['date'] = pd.to_datetime(df['date'])
+    start_date1 = df['date'][0]
+    end_date1 = df['date'][len(df)-1]
+    # print(start_date1)
+    # print(end_date1)
+    duration1 = end_date1-start_date1
+    if int(duration1.days) <= 0:
+        start_date1 = df['date'][len(df)-1]
+        end_date1 = df['date'][0]
+        duration1 = end_date1 - start_date1
+    temporal_density1 = int(duration1.days)/len(df)
+    stat_df = pd.DataFrame({'Domain': [str(domain)], 'Oldest Date': [start_date1], 'Newest Date': [end_date1], 'Duration in Days': [duration1],
+               'Data Num': [len(df)], 'Temporal Density': [temporal_density1]})
+    return stat_df
+
+
+indomain_train_df = pd.read_json('datasets/'+ str(args.dataset) +'/data/train.json')
+indomain_test_df = pd.read_json('datasets/'+ str(args.dataset) +'/data/test.json')
+ood1_df = pd.read_json('datasets/'+ str(args.dataset) +'_ood1/data/test.json')
+ood2_df = pd.read_json('datasets/'+ str(args.dataset) +'_ood2/data/test.json')
+
+indomain_train = df2stat_df(indomain_train_df, 'In Domain Train')
+indomain_test = df2stat_df(indomain_test_df, 'In Domain Test')
+ood1 = df2stat_df(ood1_df, 'OOD1')
+ood2 = df2stat_df(ood2_df, 'OOD2')
+
+df = pd.concat([indomain_train, indomain_test, ood1, ood2])
+
+df.to_csv('./saved_everything/'+ str(args.dataset) +'/dataset_stats.csv')
 
 
 ######################## 1. bert predictive resultes -- on In domain / ood1 / ood2

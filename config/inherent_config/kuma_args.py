@@ -86,7 +86,7 @@ xfact_full = xfact = xfact_ood1 = xfact_ood2 = {
     },
     "MODEL_ARGS_" : {     ## model args
         "lasso":           0.0,
-        "lambda_init":     1e-3,
+        "lambda_init":     1e-3, # how short or long rationales are # compare to lstm standard
         "lagrange_lr":     1e-2,
         "lagrange_alpha":  0.9,
     }

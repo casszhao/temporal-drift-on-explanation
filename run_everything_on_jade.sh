@@ -5,7 +5,7 @@
 #SBATCH --time=6-00:00
 
 # set name of job
-#SBATCH --job-name=bragging
+#SBATCH --job-name=factcheck
 
 # set number of GPUs
 #SBATCH --gres=gpu:1
@@ -25,13 +25,59 @@ module load python/anaconda3
 module load cuda/10.2
 source activate ood_faith
 
-dataset="bragging"
+dataset="factcheck"
 model_dir="models/"
 data_dir="datasets/"
 evaluation_dir="posthoc_results/"
 extracted_rationale_dir="extracted_rationales/"
 rationale_model_dir="FRESH_classifiers/"
 thresholder="topk"
+
+
+
+
+####### Train LSTM
+
+## train and test on full dataset
+for seed in 5 10 15 20 25
+do
+   python train_fulltext_and_kuma.py --dataset $dataset$"_full" --model_dir $model_dir --data_dir $data_dir --seed $seed --inherently_faithful "full_lstm"
+done
+echo "done TRAINING LSTM on full data"
+python train_fulltext_and_kuma.py --dataset $dataset$"_full" --model_dir $model_dir --data_dir $data_dir --evaluate_models --inherently_faithful "full_lstm"
+echo "done EVALUATION LSTM on full data"
+## train and test on indomain dataset
+for seed in 5 10 15 20 25
+do
+   python train_fulltext_and_kuma.py --dataset $dataset$ --model_dir $model_dir --data_dir $data_dir --seed $seed --inherently_faithful "full_lstm"
+done
+echo "done TRAINING LSTM on full data"
+python train_fulltext_and_kuma.py --dataset $dataset$ --model_dir $model_dir --data_dir $data_dir --evaluate_models --inherently_faithful "full_lstm"
+echo "done EVALUATION LSTM on full data"
+
+
+############## train kuma on FULL DATASET ###### run locally
+#conda deactivate
+#source activate time_ood
+echo '-------- start training kuma on full data------------'
+for seed in 5 10 15 20 25
+do
+python train_fulltext_and_kuma.py --dataset $dataset$"_full" --model_dir "kuma_model/" --data_dir $data_dir --seed $seed --inherently_faithful "kuma"
+done
+echo "done train kuma"
+python train_fulltext_and_kuma.py --dataset $dataset$"_full" --model_dir "kuma_model/" --data_dir $data_dir --seed $seed --inherently_faithful "kuma" --evaluate_models
+echo "done eval kuma"
+
+echo '-------- start training kuma on in domain------------'
+for seed in 5 10 15 20 25
+do
+python train_fulltext_and_kuma.py --dataset $dataset$ --model_dir "kuma_model/" --data_dir $data_dir --seed $seed --inherently_faithful "kuma"
+done
+echo "done train kuma"
+python train_fulltext_and_kuma.py --dataset $dataset$ --model_dir "kuma_model/" --data_dir $data_dir --seed $seed --inherently_faithful "kuma" --evaluate_models
+echo "done eval kuma"
+
+
 
 #
 ### train and test on full dataset
@@ -123,29 +169,19 @@ thresholder="topk"
 #
 
 
-############## kuma ###### run locally
-conda deactivate
-source activate time_ood
-echo '-------- start training kuma ------------'
-for seed in 5 10 15 20 25
-do
-python train_fulltext_and_kuma.py --dataset $dataset --model_dir "kuma_model/" --data_dir $data_dir --seed $seed --inherently_faithful "kuma"
-done
-echo "done train kuma"
-python train_fulltext_and_kuma.py --dataset $dataset --model_dir "kuma_model/" --data_dir $data_dir --seed $seed --inherently_faithful "kuma" --evaluate_models
-echo "done eval kuma"
+
 
 #
 #
-cd ./FRESH_classifiers/$dataset/
-echo 'in'
-shopt -s globstar
-for file in **/*\ *
-do
-    mv "$file" "${file// /_}"
-done
-cd ../../
+#cd ./FRESH_classifiers/$dataset/
+#echo 'in'
+#shopt -s globstar
+#for file in **/*\ *
+#do
+#    mv "$file" "${file// /_}"
+#done
+#cd ../../
 
-python save_everything.py --dataset $dataset
-python save_everything_part2.py --dataset $dataset
-python save_kuma.py --dataset $dataset
+#python save_everything.py --dataset $dataset
+#python save_everything_part2.py --dataset $dataset
+#python save_kuma.py --dataset $dataset

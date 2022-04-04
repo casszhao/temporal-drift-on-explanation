@@ -69,8 +69,8 @@ thresholder="topk"
 #python FRESH_extract_rationales_no_ood.py --dataset $dataset --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder contigious
 #echo 'done extract rationales for FRESH'
 #
-#for importance_metric in  "attention" "gradients" "lime" "deeplift"
-#do
+for importance_metric in  "attention" "gradients" "lime" "deeplift"
+do
 #  echo 'starting training FRESH with: '
 #  echo $importance_metric
 #  echo $thresholder
@@ -78,24 +78,24 @@ thresholder="topk"
 #      do
 #          python FRESH_train_on_rationales.py --dataset $dataset --rationale_model_dir $rationale_model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder $thresholder --importance_metric $importance_metric --seed $seed
 #      done
-#      echo 'evaluate FRESH for:'
-#      echo $importance_metric
-#      echo $thresholder
-#      python FRESH_train_on_rationales.py --dataset $dataset --rationale_model_dir $rationale_model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder $thresholder --importance_metric $importance_metric  --evaluate_models
-#done
+      echo 'evaluate FRESH for:'
+      echo $importance_metric
+      echo $thresholder
+      python FRESH_train_on_rationales.py --dataset $dataset --rationale_model_dir $rationale_model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder $thresholder --importance_metric $importance_metric  --evaluate_models
+done
 #### scaled attention
 #echo "starting training FRESH with: scaled attention"
 #for seed in 5 10 15 20 25
 #do
 #    python FRESH_train_on_rationales.py --dataset $dataset --extracted_rationale_dir $extracted_rationale_dir --rationale_model_dir $rationale_model_dir --thresholder $thresholder --importance_metric "scaled attention" --seed $seed
 #done
-#echo "starting evaluating FRESH with: scaled attention"
-#python FRESH_train_on_rationales.py --dataset $dataset --extracted_rationale_dir $extracted_rationale_dir --rationale_model_dir $rationale_model_dir --thresholder $thresholder --importance_metric "scaled attention" --evaluate_models
-#
+echo "starting evaluating FRESH with: scaled attention"
+python FRESH_train_on_rationales.py --dataset $dataset --extracted_rationale_dir $extracted_rationale_dir --rationale_model_dir $rationale_model_dir --thresholder $thresholder --importance_metric "scaled attention" --evaluate_models
+
 ##
-#thresholder="contigious"
-#for importance_metric in  "attention" "gradients" "lime" "deeplift"
-#do
+thresholder="contigious"
+for importance_metric in  "attention" "gradients" "lime" "deeplift"
+do
 #  echo 'starting training FRESH with: '
 #  echo $importance_metric
 #  echo $thresholder
@@ -103,30 +103,30 @@ thresholder="topk"
 #      do
 #          python FRESH_train_on_rationales.py --dataset $dataset --rationale_model_dir $rationale_model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder $thresholder --importance_metric $importance_metric --seed $seed
 #      done
-#      echo 'evaluate FRESH for:'
-#      echo $importance_metric
-#      echo $thresholder
-#      python FRESH_train_on_rationales.py --dataset $dataset --rationale_model_dir $rationale_model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder $thresholder --importance_metric $importance_metric  --evaluate_models
-#done
+      echo 'evaluate FRESH for:'
+      echo $importance_metric
+      echo $thresholder
+      python FRESH_train_on_rationales.py --dataset $dataset --rationale_model_dir $rationale_model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder $thresholder --importance_metric $importance_metric  --evaluate_models
+done
 #### scaled attention
 #echo "starting training FRESH with: scaled attention"
 #for seed in 5 10 15 20 25
 #do
 #    python FRESH_train_on_rationales.py --dataset $dataset --extracted_rationale_dir $extracted_rationale_dir --rationale_model_dir $rationale_model_dir --thresholder $thresholder --importance_metric "scaled attention" --seed $seed
 #done
-#echo "starting evaluating FRESH with: scaled attention"
-#
-#echo " ---------- START EVALUATING FRESH WITH scaled attention"
-#python FRESH_train_on_rationales.py --dataset $dataset --extracted_rationale_dir $extracted_rationale_dir --rationale_model_dir $rationale_model_dir --thresholder $thresholder --importance_metric "scaled attention" --evaluate_models
-#echo "----------- DONE EVALUATING FRESH WITH scaled attention"
-#
+echo "starting evaluating FRESH with: scaled attention"
+
+echo " ---------- START EVALUATING FRESH WITH scaled attention"
+python FRESH_train_on_rationales.py --dataset $dataset --extracted_rationale_dir $extracted_rationale_dir --rationale_model_dir $rationale_model_dir --thresholder $thresholder --importance_metric "scaled attention" --evaluate_models
+echo "----------- DONE EVALUATING FRESH WITH scaled attention"
+
 #
 #
 #
 #
 ################# kuma
 #conda deactivate
-source activate time_ood
+#source activate time_ood
 #echo '-------- start training kuma ------------'
 #for seed in 5 10 15 20 25
 #do
@@ -148,5 +148,5 @@ source activate time_ood
 #cd ../../
 
 
-python save_everything.py --dataset $dataset
+#python save_everything.py --dataset $dataset
 #python save_everything_part2.py --dataset $dataset

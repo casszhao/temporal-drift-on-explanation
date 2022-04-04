@@ -222,7 +222,7 @@ feature_names = features.get_feature_names(feature_set_names)
 
 
 
-
+'''
 ###################################### 5. domain similarity between:  In domain / ood1 / ood2
 #########################################################################################
 num_iterations = 2000 # for testing, original use 2000? need to check the paper
@@ -261,7 +261,7 @@ OOD2_similarity = pre_post_process(OOD2_reps, 'OOD2')
 results = pd.concat([baseline_similarity,OOD1_similarity,OOD2_similarity],ignore_index=True)
 
 results.to_csv(datasets_dir + '/fulltext_similarity_vocab' + str(vocab.size) + ' .csv')
-
+'''
 
 ################################################ 6. rationale similarity between:  In domain / ood1 / ood2
 ###############################################################################################################
@@ -274,11 +274,12 @@ os.makedirs(model_dir, exist_ok=True)
 ##### get rationales ####
 
 thresh_list = []
-for threshold in ['topk', 'contigious']:
+for threshold in ['topk', 'contigious']: #'topk',
     attributes_list = []
-    for attribute_name in ['attention', 'lime', 'deeplift', 'gradients', 'scaled attention']:
+    for attribute_name in ['scaled attention','attention', 'lime', 'deeplift', 'gradients']:
 
-        InD_path_train = './extracted_rationales/'+str(args.dataset)+'/data/'+str(threshold)+'/'+str(attribute_name)+'-train.json'
+        # InD_path_train = './extracted_rationales/'+str(args.dataset)+'/data/'+str(threshold)+'/'+str(attribute_name)+'-train.json'
+        InD_path_train = os.path.join('extracted_rationales',str(args.dataset),'data',str(threshold),str(attribute_name)+'-train.json')
         InD_path_test = './extracted_rationales/'+str(args.dataset)+'/data/'+str(threshold)+'/'+str(attribute_name)+'-test.json'
         OOD1_path = 'extracted_rationales/'+str(args.dataset)+'/data/'+str(threshold)+'/OOD-'+str(args.dataset)+'_ood1-'+str(attribute_name)+'-test.json'
         OOD2_path = 'extracted_rationales/'+str(args.dataset)+'/data/'+str(threshold)+'/OOD-'+str(args.dataset)+'_ood2-'+str(attribute_name)+'-test.json'
@@ -316,6 +317,8 @@ for threshold in ['topk', 'contigious']:
 
         results['attribute_name'] = str(attribute_name)
 
+        print('done for ', str(attribute_name), str(threshold) )
+
         attributes_list.append(results)
     all_attributes_df = pd.concat([attributes_list[0], attributes_list[1], attributes_list[2], attributes_list[3], attributes_list[4]], ignore_index=False)
     all_attributes_df['threshold'] = str(threshold)
@@ -325,6 +328,8 @@ for threshold in ['topk', 'contigious']:
 results = pd.concat([thresh_list[0], thresh_list[1]], ignore_index=True)
 
 results.to_csv(datasets_dir + '/rationale_similarity_vocab' + str(vocab.size) + ' .csv')
+print('saved as:')
+print(datasets_dir + '/rationale_similarity_vocab' + str(vocab.size) + ' .csv')
 
 
 

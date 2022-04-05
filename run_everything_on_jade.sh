@@ -5,7 +5,7 @@
 #SBATCH --time=6-00:00
 
 # set name of job
-#SBATCH --job-name=factcheck
+#SBATCH --job-name=complain
 
 # set number of GPUs
 #SBATCH --gres=gpu:1
@@ -25,7 +25,7 @@ module load python/anaconda3
 module load cuda/10.2
 source activate ood_faith
 
-dataset="factcheck"
+dataset="complain"
 model_dir="models/"
 data_dir="datasets/"
 evaluation_dir="posthoc_results/"
@@ -36,7 +36,7 @@ thresholder="topk"
 
 
 
-####### Train LSTM
+############################ Train LSTM
 
 ## train and test on full dataset
 for seed in 5 10 15 20 25
@@ -56,7 +56,7 @@ python train_fulltext_and_kuma.py --dataset $dataset$ --model_dir $model_dir --d
 echo "done EVALUATION LSTM on full data"
 
 
-############## train kuma on FULL DATASET ###### run locally
+############## train kuma(LSTM) on FULL DATASET ###### run locally
 #conda deactivate
 #source activate time_ood
 echo '-------- start training kuma on full data------------'

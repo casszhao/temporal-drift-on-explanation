@@ -156,7 +156,7 @@ result.to_csv('saved_everything/' + str(args.dataset) + '/bert_predictive_on_ful
 
 
 
-'''
+
 ######################################## 2. faithful of different measures & different attributes rationales for both top / contigious -- on In domain / ood1 / ood2 #########################
 
 def json2df(df, domain):
@@ -220,7 +220,7 @@ posthoc_faithfulness = pd.concat([df_list[0], df_list[1]], ignore_index=False)
 posthoc_faithfulness.to_csv('saved_everything/' + str(args.dataset) + '/posthoc_faithfulness.csv')
 exit()
 #############################################################################################################################################
-
+'''
 
 # 3. FRESH results
 select_columns = ['mean-acc','std-acc','mean-f1','std-f1','mean-ece','std-ece']

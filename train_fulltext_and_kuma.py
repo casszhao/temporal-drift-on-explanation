@@ -7,6 +7,7 @@ import argparse
 import logging
 
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+CUDA_VISIBLE_DEVICES = 0
 print(device)
 
 import datetime

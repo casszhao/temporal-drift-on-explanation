@@ -20,10 +20,11 @@
 #SBATCH --mail-user=zhixue.zhao@sheffield.ac.uk
 
 # run the application
-cd /jmain02/home/J2AD003/txk58/zxz22-txk58/extract_rationales/extract_rationales/
-module load python/anaconda3
-module load cuda/10.2
-source activate ood_faith
+#cd /jmain02/home/J2AD003/txk58/zxz22-txk58/extract_rationales/extract_rationales/
+#module load python/anaconda3
+#module load cuda/10.2
+#source activate ood_faith
+
 
 dataset="factcheck"
 model_dir="models/"
@@ -58,8 +59,8 @@ thresholder="topk"
 ## 开始报错
 #python evaluate_posthoc.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder topk
 #echo "done evaluate faithfulness for topk"
-#python evaluate_posthoc.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder contigious
-#echo "done evaluate faithfulness for contigious"
+python evaluate_posthoc.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder contigious
+echo "done evaluate faithfulness for contigious"
 #
 #
 #

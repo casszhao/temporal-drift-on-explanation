@@ -1,4 +1,4 @@
-{   "epochs" : 4,
+{   "epochs" : 3,
     "model_abbreviation" :      {"bert-base-uncased": "bert",
                                  "bert-base-cased": "bert-cased",
                                  "allenai/scibert_scivocab_uncased": "scibert",
@@ -114,17 +114,17 @@
     },
     "binarybragging_full" : {
         "rationale_length" : 0.2,
-        "batch_size": 32,
+        "batch_size": 16,
         "lr_bert" : 3e-5,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",
         "ood_dataset_1": "binarybragging_ood1",
         "ood_dataset_2": "binarybragging_ood2",
-        "epochs" : 4
+        "epochs" : 3
     },
     "binarybragging" : {
         "rationale_length" : 0.2,
-        "batch_size": 32,
+        "batch_size": 16,
         "lr_bert" : 3e-5,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",
@@ -133,7 +133,7 @@
     },
     "binarybragging_ood1" : {
         "rationale_length" : 0.2,
-        "batch_size": 32,
+        "batch_size": 16,
         "lr_bert" : 3e-5,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",
@@ -142,7 +142,7 @@
     },
     "binarybragging_ood2" : {
         "rationale_length" : 0.2,
-        "batch_size": 32,
+        "batch_size": 16,
         "lr_bert" : 3e-5,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",

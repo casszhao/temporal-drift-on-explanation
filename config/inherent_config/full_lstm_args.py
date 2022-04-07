@@ -36,6 +36,18 @@ bragging_full = bragging = bragging_ood1 = bragging_ood2 = {
     }
 }
 
+binarybragging_full = binarybragging = binarybragging_ood1 = binarybragging_ood2 = {
+    "OPTIM_ARGS_" : {     ## for Adam Loss
+        "lr" : 0.001,
+        "weight_decay" : 0.00001,
+        "betas" : [0.9, 0.999],
+        "amsgrad" : False,
+    },
+    "MODEL_ARGS_" : {     ## model args
+        "dropout":         0.1,
+    }
+}
+
 factcheck_full = factcheck = factcheck_ood1 = factcheck_ood2 = {
     "OPTIM_ARGS_" : {     ## for Adam Loss
         "lr" : 0.001,
@@ -83,5 +95,10 @@ get_ = {
     'bragging_full': bragging_full,
     'bragging_ood1': bragging_ood1,
     'bragging_ood2': bragging_ood2,
+    'binarybragging': binarybragging,
+    'binarybragging_full': binarybragging_full,
+    'binarybragging_ood1': binarybragging_ood1,
+    'binarybragging_ood2': binarybragging_ood2,
+
 }
 

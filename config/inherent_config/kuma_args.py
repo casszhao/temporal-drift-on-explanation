@@ -122,6 +122,21 @@ bragging_full = bragging = bragging_ood1 = bragging_ood2 = {
     }
 }
 
+binarybragging_full = binarybragging = binarybragging_ood1 = binarybragging_ood2 = {
+    "OPTIM_ARGS_" : {     ## for Adam Loss
+        "lr" : 0.00001,
+        "weight_decay" : 0.00001,
+        "betas" : [0.9, 0.999],
+        "amsgrad" : False,
+    },
+    "MODEL_ARGS_" : {     ## model args
+        "lasso":           0.0,
+        "lambda_init":     1e-3,
+        "lagrange_lr":     1e-2,
+        "lagrange_alpha":  0.9,
+    }
+}
+
 get_ = {
     "SST": SST,
     "IMDB": IMDB,
@@ -145,5 +160,9 @@ get_ = {
     'bragging_full': bragging_full,
     'bragging_ood1': bragging_ood1,
     'bragging_ood2': bragging_ood2,
+    'binarybragging': binarybragging,
+    'binarybragging_full': binarybragging_full,
+    'binarybragging_ood1': binarybragging_ood1,
+    'binarybragging_ood2': binarybragging_ood2,
 }
 

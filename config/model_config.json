@@ -118,8 +118,8 @@
         "lr_bert" : 3e-5,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",
-        "ood_dataset_1": "bragging_ood1",
-        "ood_dataset_2": "bragging_ood2"
+        "ood_dataset_1": "binarybragging_ood1",
+        "ood_dataset_2": "binarybragging_ood2"
     },
     "binarybragging" : {
         "rationale_length" : 0.2,
@@ -127,8 +127,8 @@
         "lr_bert" : 3e-5,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",
-        "ood_dataset_1": "bragging_ood1",
-        "ood_dataset_2": "bragging_ood2"
+        "ood_dataset_1": "binarybragging_ood1",
+        "ood_dataset_2": "binarybragging_ood2"
     },
     "binarybragging_ood1" : {
         "rationale_length" : 0.2,
@@ -136,8 +136,8 @@
         "lr_bert" : 3e-5,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",
-        "ood_dataset_1": "bragging",
-        "ood_dataset_2": "bragging_ood2"
+        "ood_dataset_1": "binarybragging",
+        "ood_dataset_2": "binarybragging_ood2"
     },
     "binarybragging_ood2" : {
         "rationale_length" : 0.2,
@@ -145,8 +145,8 @@
         "lr_bert" : 3e-5,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",
-        "ood_dataset_1": "bragging_ood1",
-        "ood_dataset_2": "bragging"
+        "ood_dataset_1": "binarybragging_ood1",
+        "ood_dataset_2": "binarybragging"
     },
     "bragging_full" : {
         "rationale_length" : 0.2,

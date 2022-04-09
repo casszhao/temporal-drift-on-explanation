@@ -222,7 +222,7 @@ feature_names = features.get_feature_names(feature_set_names)
 
 
 
-'''
+
 ###################################### 5. domain similarity between:  In domain / ood1 / ood2
 #########################################################################################
 num_iterations = 2000 # for testing, original use 2000? need to check the paper
@@ -261,7 +261,9 @@ OOD2_similarity = pre_post_process(OOD2_reps, 'OOD2')
 results = pd.concat([baseline_similarity,OOD1_similarity,OOD2_similarity],ignore_index=True)
 
 results.to_csv(datasets_dir + '/fulltext_similarity_vocab' + str(vocab.size) + ' .csv')
-'''
+
+
+
 
 ################################################ 6. rationale similarity between:  In domain / ood1 / ood2
 ###############################################################################################################

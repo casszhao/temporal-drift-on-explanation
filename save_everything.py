@@ -121,6 +121,8 @@ df.to_csv('./saved_everything/'+ str(args.dataset) +'/dataset_stats.csv')
 
 
 
+
+
 ######################## 1. bert predictive resultes -- on In domain / ood1 / ood2
 
 Full_data = pd.read_json('./models/' + str(args.dataset) + '_full/bert_predictive_performances.json')

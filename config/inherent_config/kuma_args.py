@@ -87,8 +87,8 @@ xfact_full = xfact = xfact_ood1 = xfact_ood2 = {
     "MODEL_ARGS_" : {     ## model args
         "lasso":           0.0,
         "lambda_init":     1e-3, # how short or long rationales are # compare to lstm standard
-        "lagrange_lr":     1e-2, #
-        "lagrange_alpha":  0.9,
+        "lagrange_lr":     1e-3, # have tried 1e-2, 1e-3
+        "lagrange_alpha":  0.8, # have tried 0.9
     }
 }
 
@@ -102,8 +102,8 @@ complain_full = complain = complain_ood1 = complain_ood2 = {
     "MODEL_ARGS_" : {     ## model args
         "lasso":           0.0,
         "lambda_init":     1e-3,
-        "lagrange_lr":     1e-2,
-        "lagrange_alpha":  0.9,
+        "lagrange_lr":     1e-3, # have tried 1e-2, 1e-3
+        "lagrange_alpha":  0.8, # have tried 0.9
     }
 }
 

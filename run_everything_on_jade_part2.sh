@@ -36,7 +36,7 @@ thresholder="topk"
 
 
 
-
+'''
 ######## Train BERT #########  on full dataset and In Domain
 ############################################################
 for seed in 5 10 15 20 25
@@ -136,7 +136,7 @@ echo "starting evaluating FRESH with: scaled attention"
 python FRESH_train_on_rationales.py --dataset $dataset$"_full" --extracted_rationale_dir $extracted_rationale_dir --rationale_model_dir "FRESH_classifiers/" --thresholder $thresholder --importance_metric "scaled attention" --evaluate_models
 python FRESH_train_on_rationales.py --dataset $dataset --extracted_rationale_dir $extracted_rationale_dir --rationale_model_dir "FRESH_classifiers/" --thresholder $thresholder --importance_metric "scaled attention" --evaluate_models
 
-
+'''
 
 
 #### jade 上要运行
@@ -150,7 +150,7 @@ done
 cd ../../
 
 
-
+'''
 
 ####conda deactivate
 ####source activate time_ood
@@ -197,9 +197,9 @@ cd ../../
 #python train_fulltext_and_kuma.py --dataset $dataset --model_dir "kuma_model/" --data_dir $data_dir --seed $seed --inherently_faithful "kuma" --evaluate_models
 #echo "done eval kuma"
 
+'''
 
 
-
-#python save_everything.py --dataset $dataset
+python save_everything.py --dataset $dataset
 #python save_everything_part2.py --dataset $dataset
 #python save_kuma.py --dataset $dataset

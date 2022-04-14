@@ -86,13 +86,13 @@ def df2stat_df(df, domain):
     return stat_df
 
 ############################# read data in ##################
-# full_df_1 = pd.read_json('datasets/'+ str(args.dataset) +'_full/data/train.json')
-# full_df_2 = pd.read_json('datasets/'+ str(args.dataset) +'_full/data/test.json')
-# full_df_3 = pd.read_json('datasets/'+ str(args.dataset) +'_full/data/dev.json')
-# full_df = pd.concat([full_df_1, full_df_2, full_df_3], ignore_index=False)
+full_df_1 = pd.read_json('datasets/'+ str(args.dataset) +'_full/data/train.json')
+full_df_2 = pd.read_json('datasets/'+ str(args.dataset) +'_full/data/test.json')
+full_df_3 = pd.read_json('datasets/'+ str(args.dataset) +'_full/data/dev.json')
+full_df = pd.concat([full_df_1, full_df_2, full_df_3], ignore_index=False)
 
 # for factcheck
-full_df = pd.read_csv('./datasets/factcheck_full/data/'+str(args.dataset)+'_full.csv')
+# full_df = pd.read_csv('./datasets/'+str(args.dataset)+'_full/data/'+str(args.dataset)+'_full.csv')
 
 # for xfact only, only read in adding, to make a dataset for full data
 # full_df_1 = pd.read_json('datasets/'+ str(args.dataset) +'/data/train.json')

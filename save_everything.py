@@ -86,21 +86,22 @@ def df2stat_df(df, domain):
     return stat_df
 
 ############################# read data in ##################
-full_df_1 = pd.read_json('datasets/'+ str(args.dataset) +'_full/data/train.json')
-full_df_2 = pd.read_json('datasets/'+ str(args.dataset) +'_full/data/test.json')
-full_df_3 = pd.read_json('datasets/'+ str(args.dataset) +'_full/data/dev.json')
-full_df = pd.concat([full_df_1, full_df_2, full_df_3], ignore_index=False)
+if "xfact" in str(args.dataset):
+    # for xfact only, only read in adding, to make a dataset for full data
+    full_df_1 = pd.read_json('datasets/'+ str(args.dataset) +'/data/train.json')
+    full_df_2 = pd.read_json('datasets/'+ str(args.dataset) +'/data/test.json')
+    full_df_3 = pd.read_json('datasets/'+ str(args.dataset) +'/data/dev.json')
+    full_df_4 = pd.read_json('datasets/'+ str(args.dataset) +'_ood1/data/test.json')
+    full_df_5 = pd.read_json('datasets/'+ str(args.dataset) +'_ood2/data/test.json')
+    full_df = pd.concat([full_df_1, full_df_2, full_df_3, full_df_4, full_df_5], ignore_index=False)
 
-# for factcheck
-# full_df = pd.read_csv('./datasets/'+str(args.dataset)+'_full/data/'+str(args.dataset)+'_full.csv')
-
-# for xfact only, only read in adding, to make a dataset for full data
-# full_df_1 = pd.read_json('datasets/'+ str(args.dataset) +'/data/train.json')
-# full_df_2 = pd.read_json('datasets/'+ str(args.dataset) +'/data/test.json')
-# full_df_3 = pd.read_json('datasets/'+ str(args.dataset) +'/data/dev.json')
-# full_df_4 = pd.read_json('datasets/'+ str(args.dataset) +'_ood1/data/test.json')
-# full_df_5 = pd.read_json('datasets/'+ str(args.dataset) +'_ood2/data/test.json')
-# full_df = pd.concat([full_df_1, full_df_2, full_df_3, full_df_4, full_df_5], ignore_index=False)
+elif "factcheck" in str(args.dataset):
+    full_df = pd.read_csv('./datasets/'+str(args.dataset)+'_full/data/'+str(args.dataset)+'_full.csv')
+else:
+    full_df_1 = pd.read_json('datasets/'+ str(args.dataset) +'_full/data/train.json')
+    full_df_2 = pd.read_json('datasets/'+ str(args.dataset) +'_full/data/test.json')
+    full_df_3 = pd.read_json('datasets/'+ str(args.dataset) +'_full/data/dev.json')
+    full_df = pd.concat([full_df_1, full_df_2, full_df_3], ignore_index=False)
 
 
 #################################################################

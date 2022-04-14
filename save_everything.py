@@ -42,7 +42,7 @@ os.makedirs(datasets_dir, exist_ok = True)
 
 from datetime import datetime
 
-'''
+
 def df2stat_df(df, domain):
     df = df[pd.to_datetime(df['date'], errors='coerce').notna()] # claimDate  for xfact
     df = df.dropna().sort_values(by='date', na_position='first') # claimDate  for xfact
@@ -222,7 +222,7 @@ posthoc_faithfulness = pd.concat([df_list[0], df_list[1]], ignore_index=False)
 posthoc_faithfulness.to_csv('saved_everything/' + str(args.dataset) + '/posthoc_faithfulness.csv')
 exit()
 #############################################################################################################################################
-'''
+
 
 # 3. FRESH results
 select_columns = ['mean-acc','std-acc','mean-f1','std-f1','mean-ece','std-ece']

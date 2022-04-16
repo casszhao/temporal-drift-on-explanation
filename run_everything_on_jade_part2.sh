@@ -63,10 +63,10 @@ echo "done evaluate faithfulness for contigious for both full and indmain"
 #######################################################################
 
 ##### extract rationales
-python FRESH_extract_rationales_no_ood.py --dataset $dataset$"_full" --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder $thresholder
-python FRESH_extract_rationales_no_ood.py --dataset $dataset$"_full" --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder contigious
-python FRESH_extract_rationales_no_ood.py --dataset $dataset --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder $thresholder
-python FRESH_extract_rationales_no_ood.py --dataset $dataset --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder contigious
+python FRESH_extract_rationales_cass.py --dataset $dataset$"_full" --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder $thresholder
+python FRESH_extract_rationales_cass.py --dataset $dataset$"_full" --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder contigious
+python FRESH_extract_rationales_cass.py --dataset $dataset --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder $thresholder
+python FRESH_extract_rationales_cass.py --dataset $dataset --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder contigious
 echo 'done extract rationales for FRESH'
 
 
@@ -174,32 +174,33 @@ cd ../../
 #echo "done TRAINING LSTM on indomain data"
 #python train_fulltext_and_kuma.py --dataset $dataset --model_dir LSTM_model --data_dir $data_dir --evaluate_models --inherently_faithful "full_lstm"
 #echo "done EVALUATION LSTM on indomain data"
-
+'''
 
 
 ############# train kuma(LSTM) on FULL DATASET ###### run locally
 
-#echo '-------- start training kuma on full data------------'
-#for seed in 5 10 15 20 25
-#do
-#python train_fulltext_and_kuma.py --dataset $dataset$"_full" --model_dir "kuma_model/" --data_dir $data_dir --seed $seed --inherently_faithful "kuma"
-#done
-#echo "done train kuma on full data"
-#python train_fulltext_and_kuma.py --dataset $dataset$"_full" --model_dir "kuma_model/" --data_dir $data_dir --inherently_faithful "kuma" --evaluate_models
-#echo "done eval kuma on full data"
-#
-#echo '-------- start training kuma on in domain------------'
-#for seed in 5 10 15 20 25
-#do
-#python train_fulltext_and_kuma.py --dataset $dataset --model_dir "kuma_model/" --data_dir $data_dir --seed $seed --inherently_faithful "kuma"
-#done
-#echo "done train kuma"
-#python train_fulltext_and_kuma.py --dataset $dataset --model_dir "kuma_model/" --data_dir $data_dir --seed $seed --inherently_faithful "kuma" --evaluate_models
-#echo "done eval kuma"
+echo '-------- start training kuma on full data------------'
+for seed in 5 10 15 20 25
+do
+python train_fulltext_and_kuma.py --dataset $dataset$"_full" --model_dir "kuma_model/" --data_dir $data_dir --seed $seed --inherently_faithful "kuma"
+done
+echo "done train kuma on full data"
+python train_fulltext_and_kuma.py --dataset $dataset$"_full" --model_dir "kuma_model/" --data_dir $data_dir --inherently_faithful "kuma" --evaluate_models
+echo "done eval kuma on full data"
 
-'''
+echo '-------- start training kuma on in domain------------'
+for seed in 5 10 15 20 25
+do
+python train_fulltext_and_kuma.py --dataset $dataset --model_dir "kuma_model/" --data_dir $data_dir --seed $seed --inherently_faithful "kuma"
+done
+echo "done train kuma"
+python train_fulltext_and_kuma.py --dataset $dataset --model_dir "kuma_model/" --data_dir $data_dir --seed $seed --inherently_faithful "kuma" --evaluate_models
+echo "done eval kuma"
 
 
-python save_everything.py --dataset $dataset
-#python save_everything_part2.py --dataset $dataset
-#python save_kuma.py --dataset $dataset
+
+
+#python save_everything.py --dataset $dataset
+#python save_similarity.py --dataset $dataset
+python save_kuma.py --dataset $dataset
+python save_kuma.py --dataset $dataset$"_full"

@@ -27,7 +27,8 @@ os.makedirs(datasets_dir, exist_ok = True)
 
 
 ## get KUMA of FULL / IN D / OOD1 / OOD2
-kuma_FullData = pd.read_json('./kuma_model/' + str(args.dataset) + '_full/kuma-bert_predictive_performances.json')
+kuma_FullData = pd.read_json('./kuma_model/complain_full/kuma-bert_predictive_performances.json')
+# kuma_FullData = pd.read_json('./kuma_model/' + str(args.dataset) + '_full/kuma-bert_predictive_performances.json')
 kuma_InDomain = pd.read_json('./kuma_model/' + str(args.dataset) + '/kuma-bert_predictive_performances.json')
 kuma_OOD1 = pd.read_json('./kuma_model/' + str(args.dataset) + '/kuma-bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
 kuma_OOD2 = pd.read_json('./kuma_model/' + str(args.dataset) + '/kuma-bert_predictive_performances-OOD-' + str(args.dataset) + '_ood2.json')

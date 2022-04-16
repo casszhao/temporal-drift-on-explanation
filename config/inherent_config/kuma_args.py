@@ -86,11 +86,11 @@ xfact_full = xfact = xfact_ood1 = xfact_ood2 = {
     },
     "MODEL_ARGS_" : {     ## model args
         "lasso":           0.0,
-        "lambda_init":     1e-5, # how short or long rationales are # compare to lstm standard,
+        "lambda_init":     5e-5, # how short or long rationales are # compare to lstm standard,
                                  # penalise when a rationale is long. So if they low they will select more text and therefore closer accuracy to only lstm
 
-        "lagrange_lr":     1e-3, # have tried 1e-2, 1e-3
-        "lagrange_alpha":  0.7, # have tried 0.9, 0.8
+        "lagrange_lr":     1e-4, # have tried 1e-2, 1e-3
+        "lagrange_alpha":  0.8, # have tried 0.9, 0.8
     }
 }
 
@@ -103,9 +103,9 @@ complain_full = complain = complain_ood1 = complain_ood2 = {
     },
     "MODEL_ARGS_" : {     ## model args
         "lasso":           0.0,
-        "lambda_init":     1e-5,
-        "lagrange_lr":     1e-3, # have tried 1e-2, 1e-3
-        "lagrange_alpha":  0.7, # have tried 0.9, 0.8
+        "lambda_init":     5e-5,
+        "lagrange_lr":     1e-4, # have tried 1e-2, 1e-3
+        "lagrange_alpha":  0.8, # have tried 0.9, 0.8, 0.7
     }
 }
 

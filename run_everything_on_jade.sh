@@ -19,11 +19,15 @@
 # send mail to this address
 #SBATCH --mail-user=zhixue.zhao@sheffield.ac.uk
 
+
+
+
+
 # run the application
-#cd /jmain02/home/J2AD003/txk58/zxz22-txk58/extract_rationales/extract_rationales/
-#module load python/anaconda3
-#module load cuda/10.2
-#source activate ood_faith
+cd /jmain02/home/J2AD003/txk58/zxz22-txk58/extract_rationales/extract_rationales/
+module load python/anaconda3
+module load cuda/10.2
+source activate ood_faith
 
 dataset="complain"
 model_dir="models/"
@@ -31,9 +35,6 @@ data_dir="datasets/"
 evaluation_dir="posthoc_results/"
 extracted_rationale_dir="extracted_rationales/"
 thresholder="topk"
-
-
-
 
 
 ####### Train BERT #########  on full dataset and In Domain

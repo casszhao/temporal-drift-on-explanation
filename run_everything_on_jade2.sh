@@ -39,24 +39,24 @@ thresholder="topk"
 
 ####### Train BERT #########  on full dataset and In Domain
 ###########################################################
-for seed in 5 10 15 20 25
-do
-   python train_fulltext_and_kuma.py --dataset $dataset$"_full" --model_dir $model_dir --data_dir $data_dir --seed $seed
-   python train_fulltext_and_kuma.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --seed $seed
-done
-echo "done TRAINING BERT on full data and In Domain"
-python train_fulltext_and_kuma.py --dataset $dataset$"_full" --model_dir $model_dir --data_dir $data_dir --evaluate_models
-python train_fulltext_and_kuma.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --evaluate_models
-echo "done EVALUATION BERT on full data and In Domain"
-
-
-##### evaluate POSTHOC BERT for full data and in domain
-python evaluate_posthoc.py --dataset $dataset$"_full" --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder topk
-python evaluate_posthoc.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder topk
-echo "done evaluate faithfulness for topk for both full and indmain"
-python evaluate_posthoc.py --dataset $dataset$"_full" --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder contigious
-python evaluate_posthoc.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder contigious
-echo "done evaluate faithfulness for contigious for both full and indmain"
+#for seed in 5 10 15 20 25
+#do
+#   python train_fulltext_and_kuma.py --dataset $dataset$"_full" --model_dir $model_dir --data_dir $data_dir --seed $seed
+#   python train_fulltext_and_kuma.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --seed $seed
+#done
+#echo "done TRAINING BERT on full data and In Domain"
+#python train_fulltext_and_kuma.py --dataset $dataset$"_full" --model_dir $model_dir --data_dir $data_dir --evaluate_models
+#python train_fulltext_and_kuma.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --evaluate_models
+#echo "done EVALUATION BERT on full data and In Domain"
+#
+#
+###### evaluate POSTHOC BERT for full data and in domain
+#python evaluate_posthoc.py --dataset $dataset$"_full" --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder topk
+#python evaluate_posthoc.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder topk
+#echo "done evaluate faithfulness for topk for both full and indmain"
+#python evaluate_posthoc.py --dataset $dataset$"_full" --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder contigious
+#python evaluate_posthoc.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder contigious
+#echo "done evaluate faithfulness for contigious for both full and indmain"
 
 
 ######## Train Fresh ################### on full dataset and In Domain

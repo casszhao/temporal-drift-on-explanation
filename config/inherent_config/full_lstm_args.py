@@ -2,7 +2,7 @@ __name__ = "full_lstm"
 
 SST = IMDB = Yelp = AmazInstr = AmazDigiMu = AmazPantry = {
     "OPTIM_ARGS_" : {     ## for Adam Loss
-        "lr" : 0.001, 
+        "lr" : 0.001,
         "weight_decay" : 0.00001,
         "betas" : [0.9, 0.999],
         "amsgrad" : False,
@@ -14,13 +14,13 @@ SST = IMDB = Yelp = AmazInstr = AmazDigiMu = AmazPantry = {
 
 complain_full = complain = complain_ood1 = complain_ood2 = {
     "OPTIM_ARGS_" : {     ## for Adam Loss
-        "lr" : 0.001,
+        "lr" : 0.001, # tried 0.001
         "weight_decay" : 0.00001,
         "betas" : [0.9, 0.999],
         "amsgrad" : False,
     },
     "MODEL_ARGS_" : {     ## model args
-        "dropout":         0.1,
+        "dropout":         0.2,
     }
 }
 

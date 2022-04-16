@@ -105,7 +105,7 @@
     },
     "complain_ood2" : {
         "rationale_length" : 0.2,
-        "batch_size": 16,
+        "batch_size": 64,
         "lr_bert" : 5e-6,
         "lr_classifier" : 5e-6,
         "model" : "bert-base-uncased",

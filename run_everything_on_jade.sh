@@ -187,7 +187,7 @@ echo "done eval kuma"
 
 
 ##### change name for scaled attention
-cd ./FRESH_classifiers/$dataset/
+cd ./FRESH_classifiers/
 echo 'go change name for scaled attention'
 shopt -s globstar
 for file in **/*\ *

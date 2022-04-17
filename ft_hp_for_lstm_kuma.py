@@ -68,7 +68,7 @@ parser.add_argument(
 user_args = vars(parser.parse_args())
 user_args["importance_metric"] = None
 
-log_dir = "experiment_logs/train_" + user_args["dataset"] + "_seed-" + str(user_args["seed"]) + "_" +  date_time + "/"
+log_dir = "experiment_logs/ft_" + user_args["dataset"] + "_lstm_kuma-" + str(user_args["seed"]) + "_" +  date_time + "/"
 config_dir = "experiment_config/train_" + user_args["dataset"] + "_seed-" + str(user_args["seed"]) + "_" + date_time + "/"
 
 

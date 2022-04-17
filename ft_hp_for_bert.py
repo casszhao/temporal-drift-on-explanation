@@ -147,7 +147,7 @@ if args["evaluate_models"]:
     keep_best_model_(keep_models=False)
 
 else:
-    logging.info("Training for finetune: {}".format(str(user_args["dataset"])))
+    logging.info("Finetune BERT for: {}".format(str(user_args["dataset"])))
     logging.info("batch size: {}".format(str(args["batch_size"])))
 
     logging.info(" -------------------- learning rate: {}".format('5e-4'))

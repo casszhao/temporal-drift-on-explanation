@@ -7,7 +7,7 @@
     "factcheck_full" : {
         "rationale_length" : 0.2,
         "batch_size": 64,
-        "lr_bert" : 3e-5,
+        "lr_bert" : 1e-5,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",
         "ood_dataset_1": "factcheck_ood1",
@@ -16,7 +16,7 @@
     "factcheck" : {
         "rationale_length" : 0.2,
         "batch_size": 64,
-        "lr_bert" : 3e-5,
+        "lr_bert" : 1e-5,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",
         "ood_dataset_1": "factcheck_ood1",
@@ -25,7 +25,7 @@
     "factcheck_ood1" : {
         "rationale_length" : 0.2,
         "batch_size": 64,
-        "lr_bert" : 3e-5,
+        "lr_bert" : 1e-5,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",
         "ood_dataset_1": "factcheck",
@@ -34,7 +34,7 @@
     "factcheck_ood2" : {
         "rationale_length" : 0.2,
         "batch_size": 64,
-        "lr_bert" : 3e-5,
+        "lr_bert" : 1e-5,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",
         "ood_dataset_1": "factcheck_ood1",
@@ -42,7 +42,7 @@
     },
     "xfact_full" : {
         "rationale_length" : 0.2,
-        "batch_size": 32,
+        "batch_size": 64,
         "lr_bert" : 2e-5,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",
@@ -51,7 +51,7 @@
     },
     "xfact" : {
         "rationale_length" : 0.2,
-        "batch_size": 32,
+        "batch_size": 64,
         "lr_bert" : 2e-5,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",
@@ -60,7 +60,7 @@
     },
     "xfact_ood1" : {
         "rationale_length" : 0.2,
-        "batch_size": 32,
+        "batch_size": 64,
         "lr_bert" : 2e-5,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",
@@ -69,7 +69,7 @@
     },
     "xfact_ood2" : {
         "rationale_length" : 0.2,
-        "batch_size": 32,
+        "batch_size": 64,
         "lr_bert" : 2e-5,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",

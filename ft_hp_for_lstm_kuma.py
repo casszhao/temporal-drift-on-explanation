@@ -128,22 +128,24 @@ data = dataholder(
     )
 
 
+logging.info("model is  : \n ----------------------")
+logging.info(str(user_args["inherently_faithful"]))
 
 train_and_save(
-    train_data_loader = data.train_loader,
-    dev_data_loader = data.dev_loader,
-    for_rationale = False,
-    output_dims = data.nu_of_labels,
-    vocab_size = data.vocab_size
+    train_data_loader=data.train_loader,
+    dev_data_loader=data.dev_loader,
+    for_rationale=False,
+    output_dims=data.nu_of_labels,
+    vocab_size=data.vocab_size,
 )
 
 ## in domain evaluation
 test_stats = test_predictive_performance(
-    test_data_loader = data.test_loader,
-    for_rationale = False,
-    output_dims = data.nu_of_labels,
-    save_output_probs = True,
-    vocab_size = data.vocab_size
+    test_data_loader=data.test_loader,
+    for_rationale=False,
+    output_dims=data.nu_of_labels,
+    save_output_probs=True,
+    vocab_size=data.vocab_size
 )
 
 print(test_stats)

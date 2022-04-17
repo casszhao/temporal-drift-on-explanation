@@ -37,7 +37,7 @@ extracted_rationale_dir="extracted_rationales/"
 thresholder="topk"
 
 
-python ft_bert.py --dataset factcheck
+python ft_bert.py --dataset factcheck --seed 5 --model_dir ft_bert_
 
 
 

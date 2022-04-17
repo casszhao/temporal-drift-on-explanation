@@ -107,8 +107,8 @@ if args.save_data_stat:
 
         stat_df = pd.DataFrame({'Domain': [str(domain)], 'Label distribution': [label_dist], 'Interquartile - Oldest': [Interquartile_start],
                                 'Median': [Interquartile_Mid], 'Interquartile - Newest': [Interquartile_end],
-                                'Interquartile Time Span in Days': [inter_duration],
-                                'Oldest Date': [start_date], 'Newest Date': [end_date], 'Time Span in Days': [duration],
+                                'Interquartile Time Span in Days': [inter_duration.days],
+                                'Oldest Date': [start_date], 'Newest Date': [end_date], 'Time Span in Days': [duration.days],
                                 'Data Num': [len(df)],
                                 })
         print('done for :', str(domain))

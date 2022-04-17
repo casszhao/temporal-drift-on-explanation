@@ -103,8 +103,8 @@ complain_full = complain = complain_ood1 = complain_ood2 = {
     },
     "MODEL_ARGS_" : {     ## model args
         "lasso":           0.0,
-        "lambda_init":     5e-5,
-        "lagrange_lr":     1e-4, # have tried 1e-2, 1e-3
+        "lambda_init":     1e-6,
+        "lagrange_lr":     1e-5, # have tried 1e-2, 1e-3
         "lagrange_alpha":  0.8, # have tried 0.9, 0.8, 0.7
     }
 }

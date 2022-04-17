@@ -186,8 +186,8 @@ echo "done eval kuma"
 
 
 
-##### change name for scaled attention
-cd ./FRESH_classifiers/$dataset/
+##### change name for
+cd ./FRESH_classifiers/
 echo 'go change name for scaled attention'
 shopt -s globstar
 for file in **/*\ *
@@ -197,7 +197,7 @@ done
 cd ../../
 
 
-
+##### scaled\ attention
 python save_predictive.py --dataset complain
 
 

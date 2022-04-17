@@ -87,8 +87,8 @@
     },
     "complain" : {
         "rationale_length" : 0.2,
-        "batch_size": 64,
-        "lr_bert" : 5e-65,
+        "batch_size": 32,
+        "lr_bert" : 5e-6,
         "lr_classifier" : 5e-6,
         "model" : "bert-base-uncased",
         "ood_dataset_1": "complain_ood1",
@@ -96,7 +96,7 @@
     },
     "complain_ood1" : {
         "rationale_length" : 0.2,
-        "batch_size": 64,
+        "batch_size": 32,
         "lr_bert" : 5e-6,
         "lr_classifier" : 5e-6,
         "model" : "bert-base-uncased",
@@ -105,7 +105,7 @@
     },
     "complain_ood2" : {
         "rationale_length" : 0.2,
-        "batch_size": 64,
+        "batch_size": 32,
         "lr_bert" : 5e-6,
         "lr_classifier" : 5e-6,
         "model" : "bert-base-uncased",
@@ -114,7 +114,7 @@
     },
     "binarybragging_full" : {
         "rationale_length" : 0.2,
-        "batch_size": 16,
+        "batch_size": 32,
         "lr_bert" : 3e-5,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",
@@ -123,7 +123,7 @@
     },
     "binarybragging" : {
         "rationale_length" : 0.2,
-        "batch_size": 16,
+        "batch_size": 32,
         "lr_bert" : 3e-5,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",
@@ -132,7 +132,7 @@
     },
     "binarybragging_ood1" : {
         "rationale_length" : 0.2,
-        "batch_size": 16,
+        "batch_size": 32,
         "lr_bert" : 3e-5,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",
@@ -141,7 +141,7 @@
     },
     "binarybragging_ood2" : {
         "rationale_length" : 0.2,
-        "batch_size": 16,
+        "batch_size": 32,
         "lr_bert" : 3e-5,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",

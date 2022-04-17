@@ -152,26 +152,26 @@ else:
         train_data_loader=data.train_loader,
         dev_data_loader=data.dev_loader,
         output_dims=data.nu_of_labels,
-        lr = 0.0001, #3e-5, 2e-5
+        lr = 1e-5, #3e-5, 2e-5
     )
 
     train_searchPara_and_save(
         train_data_loader=data.train_loader,
         dev_data_loader=data.dev_loader,
         output_dims=data.nu_of_labels,
-        lr = 0.00001, #,
+        lr = 5e-5, #,
     )
 
     train_searchPara_and_save(
         train_data_loader=data.train_loader,
         dev_data_loader=data.dev_loader,
         output_dims=data.nu_of_labels,
-        lr = 0.00001, #3e-5, 2e-5
+        lr = 1e-6, #3e-5, 2e-5
     )
 
     train_searchPara_and_save(
         train_data_loader=data.train_loader,
         dev_data_loader=data.dev_loader,
         output_dims=data.nu_of_labels,
-        lr = 0.00001, #3e-5, 2e-5
+        lr = 5e-6, #3e-5, 2e-5
     )

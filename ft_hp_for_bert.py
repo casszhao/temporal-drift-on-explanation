@@ -69,7 +69,7 @@ parser.add_argument(
 user_args = vars(parser.parse_args())
 user_args["importance_metric"] = None
 
-log_dir = "experiment_logs/train_" + user_args["dataset"] + "_seed-" + str(user_args["seed"]) + "_" + date_time + "/"
+log_dir = "experiment_logs/ft_" + user_args["dataset"] + "_seed-" + str(user_args["seed"]) + "_bert" + date_time + "/"
 config_dir = "experiment_config/train_" + user_args["dataset"] + "_seed-" + str(
     user_args["seed"]) + "_" + date_time + "/"
 
@@ -147,7 +147,18 @@ if args["evaluate_models"]:
     keep_best_model_(keep_models=False)
 
 else:
+    logging.info("Training for finetune: {}".format(str(user_args["dataset"])))
+    logging.info("batch size: {}".format(str(args["batch_size"])))
 
+    logging.info(" -------------------- learning rate: {}".format('5e-4'))
+    train_searchPara_and_save(
+        train_data_loader=data.train_loader,
+        dev_data_loader=data.dev_loader,
+        output_dims=data.nu_of_labels,
+        lr = 5e-4, #3e-5, 2e-5
+    )
+
+    logging.info(" -------------------- learning rate: {}".format('1e-5'))
     train_searchPara_and_save(
         train_data_loader=data.train_loader,
         dev_data_loader=data.dev_loader,
@@ -155,6 +166,7 @@ else:
         lr = 1e-5, #3e-5, 2e-5
     )
 
+    logging.info(" -------------------- learning rate: {}".format('5e-5'))
     train_searchPara_and_save(
         train_data_loader=data.train_loader,
         dev_data_loader=data.dev_loader,
@@ -162,6 +174,7 @@ else:
         lr = 5e-5, #,
     )
 
+    logging.info(" -------------------- learning rate: {}".format('1e-6'))
     train_searchPara_and_save(
         train_data_loader=data.train_loader,
         dev_data_loader=data.dev_loader,
@@ -169,6 +182,7 @@ else:
         lr = 1e-6, #3e-5, 2e-5
     )
 
+    logging.info(" -------------------- learning rate: {}".format('5e-6'))
     train_searchPara_and_save(
         train_data_loader=data.train_loader,
         dev_data_loader=data.dev_loader,

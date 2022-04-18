@@ -39,7 +39,7 @@ import gc
 
 TEMP_DATA_DIR=".temp_data/"
 
-nlp = spacy.load('en', disable=['parser', 'tagger', 'ner'])
+nlp = spacy.load('en_core_web_sm', disable=['parser', 'tagger', 'ner'])
 
 def download_raw_data():
 

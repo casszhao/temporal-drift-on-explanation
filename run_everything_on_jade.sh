@@ -198,8 +198,8 @@ cd ../
 
 
 
-python save_predictive.py --dataset complain
-python save_similarity.py --dataset complain
+python save_predictive.py --dataset $dataset
+python save_similarity.py --dataset $dataset
 
 
 

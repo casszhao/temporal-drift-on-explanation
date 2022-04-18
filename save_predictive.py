@@ -112,12 +112,12 @@ fresh_InDomain = fresh_InDomain[select_columns].iloc[1]
 fresh_InDomain['domain'] = 'InDomain'
 
 fresh_OOD1 = pd.read_json(
-    './FRESH_classifiers/' + str(args.dataset) + '/topk/scaled_attention_bert_predictive_performances-OOD-complain_ood1.json')
+    './FRESH_classifiers/' + str(args.dataset) + '/topk/scaled_attention_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
 fresh_OOD1 = fresh_OOD1[select_columns].iloc[1]
 fresh_OOD1['domain'] = 'OOD1'
 
 fresh_OOD2 = pd.read_json(
-    './FRESH_classifiers/' + str(args.dataset) + '/topk/scaled_attention_bert_predictive_performances-OOD-complain_ood2.json')
+    './FRESH_classifiers/' + str(args.dataset) + '/topk/scaled_attention_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood2.json')
 fresh_OOD2 = fresh_OOD2[select_columns].iloc[1]
 fresh_OOD2['domain'] = 'OOD2'
 

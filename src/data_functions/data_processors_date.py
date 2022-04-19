@@ -427,9 +427,9 @@ class ProcessAmazonDatasets():
         for split, data in {"train": in_domain_train, "test": in_domain_test, "dev":in_domain_dev}.items():
 
             ## save our dataset
-            os.makedirs(path_to_data, exist_ok = True)
+            os.makedirs(path_to_data + "in_domain/data/", exist_ok = True)
 
-            with open(path_to_data + "./in_domain/data/" + f"{split}.json", "w") as file:
+            with open(path_to_data + "in_domain/data/" + f"{split}.json", "w") as file:
                 json.dump(
                     data.to_dict("records"),
                     file,
@@ -439,7 +439,7 @@ class ProcessAmazonDatasets():
         for split, data in {"ood1": ood1, "ood2": ood2}.items():
 
             ## save our dataset
-            os.makedirs(path_to_data, exist_ok = True)
+
             ood_data_directory = os.path.join(
                 os.getcwd(),
                 args.data_directory,
@@ -448,6 +448,7 @@ class ProcessAmazonDatasets():
                 "data",
                 ""
             )
+            os.makedirs(ood_data_directory, exist_ok=True)
 
             with open(ood_data_directory + "test.json", "w") as file:
                 json.dump(

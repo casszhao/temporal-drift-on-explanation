@@ -41,7 +41,7 @@ IMDB = {
     }
 }
 
-Yelp = AmazInstr = AmazDigiMu = AmazPantry = {
+Yelp = {
     "OPTIM_ARGS_" : {     ## for Adam Loss
         "lr" : 0.0001, ##0.00001
         "weight_decay" : 0.00001,
@@ -107,13 +107,49 @@ binarybragging_full = binarybragging = binarybragging_ood1 = binarybragging_ood2
     }
 }
 
+AmazInstr = AmazInstr_full = AmazInstr_ood1 = AmazInstr_ood2 = {
+    "OPTIM_ARGS_" : {     ## for Adam Loss
+        "lr" : 0.0001, ##0.00001
+        "weight_decay" : 0.00001,
+        "betas" : [0.9, 0.999],
+        "amsgrad" : False,
+    },
+    "MODEL_ARGS_" : {     ## model args
+        "sparsity":  0.0,
+        "coherence": 0.0
+    }
+}
+
+AmazDigiMu = AmazDigiMu_full = AmazDigiMu_ood1 = AmazDigiMu_ood2 = {
+    "OPTIM_ARGS_" : {     ## for Adam Loss
+        "lr" : 0.0001, ##0.00001
+        "weight_decay" : 0.00001,
+        "betas" : [0.9, 0.999],
+        "amsgrad" : False,
+    },
+    "MODEL_ARGS_" : {     ## model args
+        "sparsity":  0.0,
+        "coherence": 0.0
+    }
+}
+
+AmazPantry = AmazPantry_full = AmazPantry_ood1 = AmazPantry_ood2 = {
+    "OPTIM_ARGS_" : {     ## for Adam Loss
+        "lr" : 0.0001, ##0.00001
+        "weight_decay" : 0.00001,
+        "betas" : [0.9, 0.999],
+        "amsgrad" : False,
+    },
+    "MODEL_ARGS_" : {     ## model args
+        "sparsity":  0.0,
+        "coherence": 0.0
+    }
+}
+
 get_ = {
     "SST": SST,
     "IMDB": IMDB,
     "Yelp" : Yelp,
-    "AmazPantry" : AmazPantry,
-    "AmazInstr" : AmazInstr,
-    "AmazDigiMu" : AmazDigiMu,
     'factcheck_full': factcheck_full,
     'factcheck': factcheck,
     'factcheck_ood1': factcheck_ood1,
@@ -138,5 +174,13 @@ get_ = {
     'AmazDigiMu_full': AmazDigiMu_full,
     'AmazDigiMu_ood1': AmazDigiMu_ood1,
     'AmazDigiMu_ood2': AmazDigiMu_ood2,
+    "AmazPantry": AmazPantry,
+    "AmazPantry_full": AmazPantry_full,
+    "AmazPantry_ood1": AmazPantry_ood1,
+    "AmazPantry_ood2": AmazPantry_ood2,
+    "AmazInstr": AmazInstr,
+    "AmazInstr_full": AmazInstr_full,
+    "AmazInstr_ood1": AmazInstr_ood1,
+    "AmazInstr_ood2": AmazInstr_ood2,
 }
 

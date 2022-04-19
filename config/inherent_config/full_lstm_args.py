@@ -24,29 +24,29 @@ AmazDigiMu_full = AmazDigiMu_ood1 = AmazDigiMu_ood2 = AmazDigiMu = {
     }
 }
 
-AmazInstr_full = AmazInstr_ood1 = AmazInstr_ood2 = AmazInstr = {
-    "OPTIM_ARGS_" : {     ## for Adam Loss
-        "lr" : 0.001,
-        "weight_decay" : 0.00001,
-        "betas" : [0.9, 0.999],
-        "amsgrad" : False,
-    },
-    "MODEL_ARGS_" : {     ## model args
-        "dropout":         0.1,
-    }
-}
-
-AmazPantry_full = AmazPantry_ood1 = AmazPantry_ood2 = AmazPantry = {
-    "OPTIM_ARGS_" : {     ## for Adam Loss
-        "lr" : 0.001,
-        "weight_decay" : 0.00001,
-        "betas" : [0.9, 0.999],
-        "amsgrad" : False,
-    },
-    "MODEL_ARGS_" : {     ## model args
-        "dropout":         0.1,
-    }
-}
+# AmazInstr_full = AmazInstr_ood1 = AmazInstr_ood2 = AmazInstr = {
+#     "OPTIM_ARGS_" : {     ## for Adam Loss
+#         "lr" : 0.001,
+#         "weight_decay" : 0.00001,
+#         "betas" : [0.9, 0.999],
+#         "amsgrad" : False,
+#     },
+#     "MODEL_ARGS_" : {     ## model args
+#         "dropout":         0.1,
+#     }
+# }
+#
+# AmazPantry_full = AmazPantry_ood1 = AmazPantry_ood2 = AmazPantry = {
+#     "OPTIM_ARGS_" : {     ## for Adam Loss
+#         "lr" : 0.001,
+#         "weight_decay" : 0.00001,
+#         "betas" : [0.9, 0.999],
+#         "amsgrad" : False,
+#     },
+#     "MODEL_ARGS_" : {     ## model args
+#         "dropout":         0.1,
+#     }
+# }
 
 complain_full = complain = complain_ood1 = complain_ood2 = {
     "OPTIM_ARGS_" : {     ## for Adam Loss
@@ -135,7 +135,6 @@ get_ = {
     'binarybragging_full': binarybragging_full,
     'binarybragging_ood1': binarybragging_ood1,
     'binarybragging_ood2': binarybragging_ood2,
-    'AmazDigiMu': AmazDigiMu,
     'AmazDigiMu_full': AmazDigiMu_full,
     'AmazDigiMu_ood1': AmazDigiMu_ood1,
     'AmazDigiMu_ood2': AmazDigiMu_ood2,

@@ -16,6 +16,13 @@ import sys
 import shutil 
 import pandas as pd
 from sklearn.utils import shuffle
+import gzip
+
+# d = {'col1': [0, 1, 2, 3], 'col2': pd.Series([2, 3], index=[2, 3])}
+# df = pd.DataFrame(data=d, index=[0, 1, 2, 3])
+# print(df['col1'][:1])
+# print(df['col1'][-2:])
+# exit()
 
 csv.field_size_limit(sys.maxsize)
 
@@ -38,15 +45,13 @@ AMAZ_DATA_ = {
 
 import gc
 
-TEMP_DATA_DIR=".temp_data/"
+TEMP_DATA_DIR="temp_data/"
 
 nlp = spacy.load('en_core_web_sm', disable=['parser', 'tagger', 'ner'])
 
 def download_raw_data():
-
     ## create our temp data directory
     os.makedirs(TEMP_DATA_DIR, exist_ok = True)
-
     """
     Amazon datasets retrieved from Retrieved from 
     https://nijianmo.github.io/amazon/index.html#complete-data
@@ -54,287 +59,45 @@ def download_raw_data():
     Jianmo Ni, Jiacheng Li, Julian McAuley
     Empirical Methods in Natural Language Processing (EMNLP), 2019
     """
-
     for dataset, url in AMAZ_DATA_.items():
 
         name = url.split("/")[-1]
-        fname = f"{TEMP_DATA_DIR}{name}"
+        fname = os.path.join(
+            os.getcwd(),
+            TEMP_DATA_DIR,
+            AMAZ_DATA_[task_name].split("/")[-1]
+        ) # /home/cass/PycharmProjects/extract_rationales/temp_data/AmazDigiMu/
 
+        #f"{TEMP_DATA_DIR}{name}" # eg ./src/data_functinos/temp_data/Digital_Music_5.json.gz
+        print('current fname is :', fname)
         print(f"*** downloading and extracting data for {dataset}")
         if os.path.exists(fname):
             print(f"**** {TEMP_DATA_DIR}{name} allready exists")
             pass
-
         else:
-
+            print(f"*** start downloading and extracting data for {dataset}")
             urllib.request.urlretrieve(
                 url, 
-                f"{TEMP_DATA_DIR}{name}"
-            )
-# ''''''
-#     ### YELP
-#     fname = f"{TEMP_DATA_DIR}yelp_review_polarity_csv.tgz"
-#
-#     print("*** downloading and extracting data for  YELP")
-#     if os.path.exists(fname):
-#         print(f"**** {TEMP_DATA_DIR}yelp_review_polarity_csv.tgz allready exists")
-#         pass
-#
-#     else:
-#
-#         # download raw for MNLI, QNLI, QQP, TwitterPPDB, SWAG, HELLASWAG
-#         ## file_id from Desai & Durret, Calibration of Pre-trained Transformers github page
-#         urllib.request.urlretrieve(
-#             "https://s3.amazonaws.com/fast-ai-nlp/yelp_review_polarity_csv.tgz",
-#             f"{TEMP_DATA_DIR}yelp_review_polarity_csv.tgz"
-#         )
-#
-#         if fname.endswith("tgz"):
-#
-#             tar = tarfile.open(fname, "r:gz")
-#             tar.extractall(path = TEMP_DATA_DIR)
-#             tar.close()
-#
-#     ## download data for IMDB
-#     # Download the files from `url` and save it locally under `file_name`
-#     print("*** downloading and extracting data for IMDB")
-#     if os.path.exists(f"{TEMP_DATA_DIR}imdb_full.pkl"):
-#
-#         print(f"*** {TEMP_DATA_DIR}imdb_full.pkl allready exists")
-#         pass
-#
-#     else:
-#
-#         urllib.request.urlretrieve(
-#             "https://s3.amazonaws.com/text-datasets/imdb_full.pkl",
-#             f"{TEMP_DATA_DIR}imdb_full.pkl"
-#         )
-#
-#     if os.path.exists(f"{TEMP_DATA_DIR}imdb_word_index.json"):
-#
-#         print(f"*** {TEMP_DATA_DIR}imdb_word_index.json allready exists")
-#
-#         pass
-#
-#     else:
-#
-#         urllib.request.urlretrieve(
-#             "https://s3.amazonaws.com/text-datasets/imdb_word_index.json",
-#             f"{TEMP_DATA_DIR}imdb_word_index.json"
-#         )
-#
-#     ## Download raw for SST
-#     # Download the file from `url` and save it locally under `file_name`
-#     print("*** downloading and extracting data for SST")
-#     if os.path.exists(f"{TEMP_DATA_DIR}sst_data.zip"):
-#
-#         print(f"*** {TEMP_DATA_DIR}sst_data.zip allready exists")
-#
-#         pass
-#
-#     else:
-#
-#         urllib.request.urlretrieve(
-#             "https://nlp.stanford.edu/sentiment/trainDevTestTrees_PTB.zip",
-#             f"{TEMP_DATA_DIR}sst_data.zip"
-#         )
-# ''''''
-#         # extract files
-#         with zipfile.ZipFile(f"{TEMP_DATA_DIR}sst_data.zip", 'r') as zip_ref:
-#             zip_ref.extractall(TEMP_DATA_DIR)
-
+                f"{TEMP_DATA_DIR}{name}")
     print("*** downloaded and extracted all temp files succesfully")
-
     return
 
-class SSTProcessor():
 
-    """Processor for SST"""
-
-    def load_samples_(self, path_to_data):
-
-        a = nltk.corpus.BracketParseCorpusReader(f"{TEMP_DATA_DIR}trees/", "(train|dev|test)\.txt")
-
-        text = {}
-        labels = {}
-        label_ids = {}
-        annotation_ids = {}
-        keys = ['train', 'dev', 'test']
-
-        for split in keys :
-            ## parse text
-            text[split] = [x.leaves() for x in a.parsed_sents(split+'.txt') if x.label() != '2']
-            ## tokenize text
-            text[split] = [tokenize(t) for t in text[split]]
-
-            ## prepare labels
-            labels[split] = [int(x.label()) for x in a.parsed_sents(split+'.txt') if x.label() != '2']
-            labels[split] = [1 if x >= 3 else 0 for x in labels[split]]
-
-            ## label ids for better clarity
-            label_ids[split] = ["positive" if x == 1 else "negative" for x in labels[split]]
-
-            ## place unique identifiers
-            annotation_ids[split] = [f"{split}_{r}" for r in range(len(text[split]))]
-
-            dataset = []
-
-            for _i_ in range(len(text[split])):
-                
-                dataset.append({
-                    "annotation_id" : annotation_ids[split][_i_],
-                    "exp_split" : split,
-                    "text" : text[split][_i_],
-                    "label" : labels[split][_i_],
-                    "label_id" : label_ids[split][_i_]
-                })
-
-            print(f"{split} -> {len(text[split])}")
-
-            ## save our dataset
-            os.makedirs(path_to_data, exist_ok = True)
-
-            with open(path_to_data + f"{split}.json", "w") as file:
-
-                json.dump(
-                    dataset,
-                    file,
-                    indent = 4
-                )
-
-        return
-
-class IMDBProcessor():
-
-    """Processor for IMDB"""
-
-    def load_samples_(self, path_to_data):
-
-        data = pickle.load(open(f"{TEMP_DATA_DIR}imdb_full.pkl", "rb"))
-        vocab = json.load(open(f"{TEMP_DATA_DIR}imdb_word_index.json"))
-
-        inv = {idx:word for word, idx in vocab.items()}
-
-        (X_train, y_train), (Xt, yt) = data
-
-        trainidx = np.arange(len(X_train)) 
-
-        trainidx, testdevidx = train_test_split(trainidx, train_size=0.8, random_state=1378)
-        devidx, testidx =  train_test_split(testdevidx, train_size=0.5, random_state=1378)
-
-        for split , indxs in {"train" : trainidx, "dev" : devidx, "test" : testidx}.items():
-            
-            X = [X_train[i] for i in indxs]
-            y = [y_train[i] for i in indxs]
-
-            X = invert_and_join(X, idx_to_word = inv)
-            
-            dataset = []
-
-            for _i_ in tqdm(range(len(X)), desc = f"registering for -> {split}"):
-
-                dataset.append({
-                    "annotation_id" : f"{split}_{_i_}",
-                    "exp_split" : split,
-                    "text" : " ".join(cleaner(X[_i_])),
-                    "label" : y[_i_],
-                    "label_id" : "positive" if  y[_i_] == 1 else "negative"
-                })
-            
-            print(f"{split} -> {len(y)}")
-
-            ## save our dataset
-            os.makedirs(path_to_data, exist_ok = True)
-
-            with open(path_to_data + f"{split}.json", "w") as file:
-                json.dump(
-                    dataset,
-                    file,
-                    indent = 4
-                )
-
-        return
-
-class YelpProcessor():
-
-    """Processor for IMDB"""
-
-    def load_samples_(self, path_to_data):
-
-        df = pd.read_csv(f"{TEMP_DATA_DIR}yelp_review_polarity_csv/train.csv", header = None)
-        df = df.rename(columns = {0:"label", 1:"text"})
-        from sklearn.model_selection import train_test_split
-        X_train, X_dev, y_train, y_dev = train_test_split(
-            df["text"], 
-            df["label"], 
-            stratify=df["label"], 
-            test_size=0.15,
-            random_state = 18
-        )
-
-
-        df = pd.read_csv(f"{TEMP_DATA_DIR}yelp_review_polarity_csv/test.csv", header = None)
-        df = df.rename(columns = {0:"label", 1:"text"})
-        X_test, y_test = df["text"], df["label"]
-
-
-        for split , (X,y) in {"train" : (X_train, y_train), "dev" : (X_dev,y_dev), "test" : (X_test, y_test)}.items():
-            
-            dataset = []
-            
-            X, y = X.values, y.values
-            
-            for _i_ in tqdm(range(len(X)), desc = f"registering for -> {split}"):
-                
-                dataset.append({
-                    "annotation_id" : f"{split}_{_i_}",
-                    "exp_split" : split,
-                    "text" : " ".join(cleaner(X[_i_].replace("\\n", ""))),
-                    "label" : 1 if y[_i_] == 2 else 0,
-                    "label_id" : "positive" if  y[_i_] == 2 else "negative"
-                })
-
-            print(f"{split} -> {len(y)}")
-
-            ## save our dataset
-            os.makedirs(path_to_data, exist_ok = True)
-
-            with open(path_to_data + f"{split}.json", "w") as file:
-                json.dump(
-                    dataset,
-                    file,
-                    indent = 4
-                )
-        
-        
-        del df
-        gc.collect()
-
-        return
-
-import gzip
 
 class ProcessAmazonDatasets():
-
     """Processor for All Amazon datasets"""
-
-    def load_samples_(self, task_name, path_to_data):
-
+    def load_samples_(self, task_name, path_to_data): ##  path_to_data eg. ./datasets/AmazDigiMu/data/
         sent_lab = {2: "positive", 1: "neutral", 0:"negative"}
-
         data = []
         counter = 0
-
         print(' now processing: ', str(AMAZ_DATA_[task_name]))
-
         file_loc = os.path.join(
             os.getcwd(),
             TEMP_DATA_DIR,
             AMAZ_DATA_[task_name].split("/")[-1]
-        )
-
+        )  ## e.g.  '/home/cass/PycharmProjects/extract_rationales/temp_data/Digital_Music_5.json.gz'
         with gzip.open(file_loc, "rb") as file: 
-            
+
             for line in tqdm(file.readlines()):
                 
                 try:
@@ -361,6 +124,13 @@ class ProcessAmazonDatasets():
         print(f"*** failed to convert {counter} instances. This is due to KeyError (i.e. no review text found)")
 
         df = pd.DataFrame(data)
+
+        with open(path_to_data + "fullset.json", "w") as file: ##  path_to_data eg. ./datasets/AmazDigiMu/data/
+            json.dump(
+                df.to_dict("records"),
+                file,
+                indent=4
+            )
 
         train_indx, testdev_indx = train_test_split(df.index, test_size=0.2, stratify=df["label"])
         train = df.iloc[train_indx]
@@ -395,41 +165,58 @@ class ProcessAmazonDatasets():
         for split, data in {"train": train, "dev": dev, "test":test}.items():
 
             ## save our dataset
-            os.makedirs(path_to_data, exist_ok = True)
+            full_data_directory = os.path.join(
+                os.getcwd(),
+                args.data_directory,
+                task_name + '_full',
+                "data",
+                ""
+            ) ##  ./datasets/AmazDigiMu_full/data/
 
-            with open(path_to_data + f"{split}.json", "w") as file:
+            os.makedirs(full_data_directory, exist_ok=True)
+            print('full_data_directory: ', str(full_data_directory))
+
+            with open(full_data_directory + f"{split}.json", "w") as file:
                 json.dump(
                     data.to_dict("records"),
                     file,
                     indent = 4
                 )
 
-        ### sorted dataset
 
-        df_sorted = df.copy()
-        df_sorted['date'] = pd.to_datetime(df_sorted['date']).dt.date
-        df_sorted = df.sort_values(by='date', na_position='first')
-        ood1_len = ood2_len = indomain_test_len = indomain_dev_len = int(len(df_sorted) * 0.1)
-        in_domain_len = len(df_sorted) - ood1_len * 2
-        assert len(df_sorted) == in_domain_len + ood2_len + ood1_len
+        ### sorted dataset
+        df['date'] = pd.to_datetime(df['date']).dt.date
+        df = df.sort_values(by='date', na_position='first')
+        print(' full data oldest: ')
+        print(df['date'][:5])
+        print(' full data newst: ')
+        print(df['date'][-5:])
+
+        ood1_len = ood2_len = indomain_test_len = indomain_dev_len = int(len(df) * 0.1)
+        in_domain_len = len(df) - ood1_len * 2
+        assert len(df) == in_domain_len + ood2_len + ood1_len
         print('full in domain length: ', in_domain_len)
         print('ood length: ', ood1_len)
+        print('full data after sorted === ')
+        print(df.head())
 
-        in_domain = df_sorted.iloc[:in_domain_len]
+        in_domain = df.iloc[:in_domain_len]
         in_domain = shuffle(in_domain)
-        ood1 = df_sorted.iloc[in_domain_len:in_domain_len + ood1_len]
-        ood2 = df_sorted.iloc[in_domain_len + ood1_len:]
+        ood1 = df.iloc[in_domain_len:in_domain_len + ood1_len]
+        ood2 = df.iloc[in_domain_len + ood1_len:]
+        print('   ====   ood1 head')
+        print(ood1['date'][:5])
+        print('   ====   ood2 head')
+        print(ood2['date'][-5:])
 
         in_domain_train, in_domain_test = train_test_split(in_domain, train_size=0.75, stratify=in_domain['label'])
         in_domain_dev, in_domain_test = train_test_split(in_domain_test, train_size=0.5,
                                                          stratify=in_domain_test['label'])
 
         for split, data in {"train": in_domain_train, "test": in_domain_test, "dev":in_domain_dev}.items():
+            os.makedirs(path_to_data, exist_ok = True) ##  path_to_data eg. ./datasets/AmazDigiMu/data/
 
-            ## save our dataset
-            os.makedirs(path_to_data + "in_domain/data/", exist_ok = True)
-
-            with open(path_to_data + "in_domain/data/" + f"{split}.json", "w") as file:
+            with open(path_to_data + f"{split}.json", "w") as file:
                 json.dump(
                     data.to_dict("records"),
                     file,
@@ -443,12 +230,14 @@ class ProcessAmazonDatasets():
             ood_data_directory = os.path.join(
                 os.getcwd(),
                 args.data_directory,
-                task_name,
+                task_name + '_' + str(split),
                 str(split),
                 "data",
                 ""
-            )
+            ) ### e.g. ./datasets/AmazDigiMu_ood1/ood1/
+
             os.makedirs(ood_data_directory, exist_ok=True)
+            print('ood dataset directory: ', str(ood_data_directory))
 
             with open(ood_data_directory + "test.json", "w") as file:
                 json.dump(
@@ -468,7 +257,6 @@ class ProcessAmazonDatasets():
                     file,
                     indent = 4
                 )
-
         return
 
 
@@ -513,7 +301,7 @@ def describe_data_stats(path_to_data, path_to_stats):
     
     for split_name in descriptions.keys():
 
-        with open(f"{path_to_data}{split_name}.json", "r") as file: data = json.load(file)
+        with open(f"{path_to_data}{split_name}.json", "r") as file: data = json.load(file) #  path_to_data eg. ./datasets/AmazDigiMu/data/
 
         if "query" in data[0].keys(): 
 
@@ -558,18 +346,18 @@ def describe_data_stats(path_to_data, path_to_stats):
 
 
 if __name__ == "__main__":
-    
     ## download the raw temp data
     if os.path.isdir(TEMP_DATA_DIR):
-
+        print(TEMP_DATA_DIR, ' already exist, no need download raw data again')
         pass
-
     else:
-
+        print('starting download raw data')
         download_raw_data()
 
-    for task_name in {"AmazDigiMu", "AmazPantry", "AmazInstr"}: #"SST","IMDB", "Yelp",
 
+    ## processing raw data
+    for task_name in {"AmazDigiMu", "AmazPantry", "AmazInstr"}: #"SST","IMDB", "Yelp",
+        print(task_name)
         print(f"** processing -> {task_name}")
 
         processor = globals()[f'{task_name}Processor']()
@@ -579,18 +367,16 @@ if __name__ == "__main__":
             args.data_directory,
             task_name, 
             "data",
-            ""
+            "", # eg. ./datasets/AmazDigiMu/data/
         )
+        print('data_directory / path_to_data: ', data_directory)
         
         if "Amaz" in task_name:
-            
             dataset = processor.load_samples_(
                 task_name = task_name,
-                path_to_data = data_directory
+                path_to_data = data_directory,
             )
-
         else:
-
             dataset = processor.load_samples_(data_directory)
 
         ## save stats in 

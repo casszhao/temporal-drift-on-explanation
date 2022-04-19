@@ -142,6 +142,8 @@ evaluator.create_rationales_(data)
 del data
 del evaluator
 gc.collect()
+torch.cuda.empty_cache()
+
 
 ## ood evaluation DATASET 1
 data = dataholder(
@@ -159,8 +161,6 @@ data = dataholder(
 #     stage = "eval",
 #     return_as_frames = True
 # )
-
-
 evaluator = evaluation_pipeline.evaluate(
     model_path = args["model_dir"],
     output_dims = data.nu_of_labels,
@@ -177,6 +177,7 @@ evaluator.create_rationales_(data)
 del data
 del evaluator
 gc.collect()
+torch.cuda.empty_cache()
 
 ## ood evaluation DATASET 2
 data = dataholder(

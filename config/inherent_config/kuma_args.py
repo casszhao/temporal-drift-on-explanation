@@ -62,6 +62,21 @@ AmazInstr = AmazDigiMu = AmazPantry = {
     }
 }
 
+AmazInstr_full = AmazInstr_ood1 = AmazInstr_ood2 = {
+    "OPTIM_ARGS_" : {     ## for Adam Loss
+        "lr" : 0.0001, ##0.00001
+        "weight_decay" : 0.00001,
+        "betas" : [0.9, 0.999],
+        "amsgrad" : False,
+    },
+    "MODEL_ARGS_" : {     ## model args
+        "lasso":           0.0,
+        "lambda_init":     5e-4,
+        "lagrange_lr":     5e-3,
+        "lagrange_alpha":  0.9,
+    }
+}
+
 factcheck_full = factcheck = factcheck_ood1 = factcheck_ood2 = {
     "OPTIM_ARGS_" : {     ## for Adam Loss
         "lr" : 0.00001,
@@ -166,5 +181,9 @@ get_ = {
     'binarybragging_full': binarybragging_full,
     'binarybragging_ood1': binarybragging_ood1,
     'binarybragging_ood2': binarybragging_ood2,
+    'AmazDigiMu': AmazDigiMu,
+    'AmazDigiMu_full': AmazDigiMu_full,
+    'AmazDigiMu_ood1': AmazDigiMu_ood1,
+    'AmazDigiMu_ood2': AmazDigiMu_ood2,
 }
 

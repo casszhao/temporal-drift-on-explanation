@@ -134,5 +134,9 @@ get_ = {
     'binarybragging_full': binarybragging_full,
     'binarybragging_ood1': binarybragging_ood1,
     'binarybragging_ood2': binarybragging_ood2,
+    'AmazDigiMu': AmazDigiMu,
+    'AmazDigiMu_full': AmazDigiMu_full,
+    'AmazDigiMu_ood1': AmazDigiMu_ood1,
+    'AmazDigiMu_ood2': AmazDigiMu_ood2,
 }
 

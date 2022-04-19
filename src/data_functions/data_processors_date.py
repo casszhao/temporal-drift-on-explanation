@@ -136,11 +136,9 @@ class ProcessAmazonDatasets():
         train = df.iloc[train_indx]
         testdev = df.loc[testdev_indx, :]
         train["split"] = "train"
-
         assert len([x for x in testdev.index if x in train.index]) == 0, ("""
         data leakage
         """)
-
         test_indx, dev_indx = train_test_split(testdev.index, test_size=0.5, stratify=testdev["label"])
         test = df.loc[test_indx, :]
         test["split"] = "test"
@@ -161,7 +159,7 @@ class ProcessAmazonDatasets():
         test["annotation_id"] = test.apply(lambda row: "test_" + str(row.name), axis = 1)
 
 
-
+        # 存 xxx_full
         for split, data in {"train": train, "dev": dev, "test":test}.items():
 
             ## save our dataset
@@ -180,7 +178,7 @@ class ProcessAmazonDatasets():
                 json.dump(
                     data.to_dict("records"),
                     file,
-                    indent = 4
+                    indent = 4,
                 )
 
 
@@ -195,38 +193,57 @@ class ProcessAmazonDatasets():
         ood1_len = ood2_len = indomain_test_len = indomain_dev_len = int(len(df) * 0.1)
         in_domain_len = len(df) - ood1_len * 2
         assert len(df) == in_domain_len + ood2_len + ood1_len
-        print('full in domain length: ', in_domain_len)
-        print('ood length: ', ood1_len)
-        print('full data after sorted === ')
-        print(df.head())
 
         in_domain = df.iloc[:in_domain_len]
         in_domain = shuffle(in_domain)
+        in_domain.reset_index(inplace=True)
         ood1 = df.iloc[in_domain_len:in_domain_len + ood1_len]
         ood2 = df.iloc[in_domain_len + ood1_len:]
         print('   ====   ood1 head')
         print(ood1['date'][:5])
+        print('   ====   ood1 tail')
+        print(ood1['date'][-5:])
         print('   ====   ood2 head')
         print(ood2['date'][-5:])
+        print('   ====   ood1 tail')
+        print(ood1['date'][-5:])
 
-        in_domain_train, in_domain_test = train_test_split(in_domain, train_size=0.75, stratify=in_domain['label'])
-        in_domain_dev, in_domain_test = train_test_split(in_domain_test, train_size=0.5,
-                                                         stratify=in_domain_test['label'])
+        in_domain_train_index, in_domain_test_index = train_test_split(in_domain.index, test_size=0.75)
+        in_domain_train = in_domain.iloc[in_domain_train_index]
+        in_domain_test = in_domain.loc[in_domain_test_index, :]
+        in_domain_train["split"] = "train"
 
+        in_domain_dev_index, in_domain_test_index = train_test_split(in_domain_test.index, train_size=0.5)
+        in_domain_dev = in_domain_test.iloc[in_domain_dev_index]
+        in_domain_test = in_domain_test.loc[in_domain_test_index, :]
+        in_domain_test["split"] = "test"
+        in_domain_dev["split"] = "dev"
+
+        in_domain_train.reset_index(inplace = True)
+        in_domain_train["annotation_id"] = in_domain_train.apply(lambda row: "train_" + str(row.name), axis = 1)
+
+        in_domain_dev.reset_index(inplace = True)
+        in_domain_dev["annotation_id"] = in_domain_dev.apply(lambda row: "dev_" + str(row.name), axis = 1)
+
+        in_domain_test.reset_index(inplace = True)
+        in_domain_test["annotation_id"] = in_domain_test.apply(lambda row: "test_" + str(row.name), axis = 1)
+
+
+        # 存 xxx
         for split, data in {"train": in_domain_train, "test": in_domain_test, "dev":in_domain_dev}.items():
             os.makedirs(path_to_data, exist_ok = True) ##  path_to_data eg. ./datasets/AmazDigiMu/data/
-
+            print(split, 'is at : ', path_to_data)
             with open(path_to_data + f"{split}.json", "w") as file:
                 json.dump(
                     data.to_dict("records"),
                     file,
-                    indent = 4
+                    indent = 4,
                 )
+            print('saved train / test/ dev in domain at ', path_to_data)
 
+        # 存 xxx_ood
         for split, data in {"ood1": ood1, "ood2": ood2}.items():
-
             ## save our dataset
-
             ood_data_directory = os.path.join(
                 os.getcwd(),
                 args.data_directory,
@@ -257,6 +274,7 @@ class ProcessAmazonDatasets():
                     file,
                     indent = 4
                 )
+            print('saved ', str(split), 'at: ', ood_data_directory)
         return
 
 

@@ -87,6 +87,7 @@ def download_raw_data():
 class ProcessAmazonDatasets():
     """Processor for All Amazon datasets"""
     def load_samples_(self, task_name, path_to_data): ##  path_to_data eg. ./datasets/AmazDigiMu/data/
+        print(' ============ start load ================', task_name)
         sent_lab = {2: "positive", 1: "neutral", 0:"negative"}
         data = []
         counter = 0
@@ -179,6 +180,7 @@ class ProcessAmazonDatasets():
                     data.to_dict("records"),
                     file,
                     indent = 4,
+
                 )
 
 
@@ -199,6 +201,11 @@ class ProcessAmazonDatasets():
         in_domain.reset_index(inplace=True)
         ood1 = df.iloc[in_domain_len:in_domain_len + ood1_len]
         ood2 = df.iloc[in_domain_len + ood1_len:]
+        ood1.reset_index(inplace = True)
+        ood1["annotation_id"] = ood1.apply(lambda row: "test_" + str(row.name), axis = 1)
+        ood2.reset_index(inplace = True)
+        ood2["annotation_id"] = ood2.apply(lambda row: "train_" + str(row.name), axis = 1)
+
         print('   ====   ood1 head')
         print(ood1['date'][:5])
         print('   ====   ood1 tail')
@@ -208,13 +215,13 @@ class ProcessAmazonDatasets():
         print('   ====   ood1 tail')
         print(ood1['date'][-5:])
 
-        in_domain_train_index, in_domain_test_index = train_test_split(in_domain.index, test_size=0.75)
+        in_domain_train_index, in_domain_test_index = train_test_split(in_domain.index, train_size=0.75)
         in_domain_train = in_domain.iloc[in_domain_train_index]
         in_domain_test = in_domain.loc[in_domain_test_index, :]
         in_domain_train["split"] = "train"
 
         in_domain_dev_index, in_domain_test_index = train_test_split(in_domain_test.index, train_size=0.5)
-        in_domain_dev = in_domain_test.iloc[in_domain_dev_index]
+        in_domain_dev = in_domain_test.loc[in_domain_dev_index,:]
         in_domain_test = in_domain_test.loc[in_domain_test_index, :]
         in_domain_test["split"] = "test"
         in_domain_dev["split"] = "dev"
@@ -238,6 +245,7 @@ class ProcessAmazonDatasets():
                     data.to_dict("records"),
                     file,
                     indent = 4,
+                    default=str
                 )
             print('saved train / test/ dev in domain at ', path_to_data)
 
@@ -248,10 +256,9 @@ class ProcessAmazonDatasets():
                 os.getcwd(),
                 args.data_directory,
                 task_name + '_' + str(split),
-                str(split),
                 "data",
                 ""
-            ) ### e.g. ./datasets/AmazDigiMu_ood1/ood1/
+            ) ### e.g. ./datasets/AmazDigiMu_ood1/
 
             os.makedirs(ood_data_directory, exist_ok=True)
             print('ood dataset directory: ', str(ood_data_directory))
@@ -260,21 +267,25 @@ class ProcessAmazonDatasets():
                 json.dump(
                     data.to_dict("records"),
                     file,
-                    indent = 4
+                    indent = 4,
+                    default=str
                 )
             with open(ood_data_directory + "train.json", "w") as file:
                 json.dump(
                     data.to_dict("records"),
                     file,
-                    indent = 4
+                    indent = 4,
+                    default=str
                 )
             with open(ood_data_directory + "dev.json", "w") as file:
                 json.dump(
                     data.to_dict("records"),
                     file,
-                    indent = 4
+                    indent = 4,
+                    default=str
                 )
             print('saved ', str(split), 'at: ', ood_data_directory)
+        print(' ============ done load ================', task_name)
         return
 
 
@@ -371,7 +382,6 @@ if __name__ == "__main__":
     else:
         print('starting download raw data')
         download_raw_data()
-
 
     ## processing raw data
     for task_name in {"AmazDigiMu", "AmazPantry", "AmazInstr"}: #"SST","IMDB", "Yelp",

@@ -312,7 +312,7 @@ for threshold in ['topk', 'contigious']: #'topk',
         OOD1_reps = features.get_reps_for_one_domain(OOD1_test_list_list, vocab, feature_names, topic_vectorizer, lda_model, lowercase=True)
         OOD2_reps = features.get_reps_for_one_domain(OOD2_test_list_list, vocab, feature_names, topic_vectorizer, lda_model, lowercase=True)
 
-        baseline_similarity = pre_post_process(InD_test_reps, 'In Domain(Baseline)')
+        baseline_similarity = pre_post_process(InD_test_reps, 'InDomain')
         OOD1_similarity = pre_post_process(OOD1_reps, 'OOD1')
         OOD2_similarity = pre_post_process(OOD2_reps, 'OOD2')
         results = pd.concat([baseline_similarity,OOD1_similarity,OOD2_similarity],ignore_index=True)

@@ -84,15 +84,15 @@ OOD1 = OOD1[select_columns].iloc[0]
 OOD2 = OOD2[select_columns].iloc[0]
 
 
-Full_data['domain'] = 'Full size'
-InDomain['domain'] = 'InDomain'
-OOD1['domain'] = 'OOD1'
-OOD2['domain'] = 'OOD2'
+Full_data['Domain'] = 'Full'
+InDomain['Domain'] = 'InDomain'
+OOD1['Domain'] = 'OOD1'
+OOD2['Domain'] = 'OOD2'
 bert_result = pd.concat([Full_data, InDomain, OOD1, OOD2], ignore_index=False, axis=1).T
 cols = bert_result.columns.tolist()
 cols = cols[-1:] + cols[:-1]
 bert_result = bert_result[cols]
-bert_result = bert_result.reset_index()[['domain', 'mean-f1', 'std-f1']]
+bert_result = bert_result.reset_index()[['Domain', 'mean-f1', 'std-f1']]
 bert_result = bert_result.rename(columns={"mean-f1":"Bert F1", "std-f1":"Bert std"})
 
 ####################################################################################
@@ -104,22 +104,22 @@ bert_result = bert_result.rename(columns={"mean-f1":"Bert F1", "std-f1":"Bert st
 fresh_full_data = pd.read_json(
     './FRESH_classifiers/' + str(args.dataset) + '_full/topk/scaled_attention_bert_predictive_performances.json')
 fresh_full_data = fresh_full_data[select_columns].iloc[1]
-fresh_full_data['domain'] = 'Fullsize data'
+fresh_full_data['Domain'] = 'Fullsize data'
 
 fresh_InDomain = pd.read_json(
     './FRESH_classifiers/' + str(args.dataset) + '/topk/scaled_attention_bert_predictive_performances.json')
 fresh_InDomain = fresh_InDomain[select_columns].iloc[1]
-fresh_InDomain['domain'] = 'InDomain'
+fresh_InDomain['Domain'] = 'InDomain'
 
 fresh_OOD1 = pd.read_json(
     './FRESH_classifiers/' + str(args.dataset) + '/topk/scaled_attention_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
 fresh_OOD1 = fresh_OOD1[select_columns].iloc[1]
-fresh_OOD1['domain'] = 'OOD1'
+fresh_OOD1['Domain'] = 'OOD1'
 
 fresh_OOD2 = pd.read_json(
     './FRESH_classifiers/' + str(args.dataset) + '/topk/scaled_attention_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood2.json')
 fresh_OOD2 = fresh_OOD2[select_columns].iloc[1]
-fresh_OOD2['domain'] = 'OOD2'
+fresh_OOD2['Domain'] = 'OOD2'
 
 
 fresh_result = pd.concat([fresh_full_data, fresh_InDomain, fresh_OOD1, fresh_OOD2], axis=1, ignore_index=False).T.reset_index()[select_columns]

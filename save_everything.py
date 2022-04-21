@@ -142,7 +142,7 @@ if args.save_data_stat:
 
     full = df2stat_df(full_df, 'Full')
     indomain_train = df2stat_df(indomain_train_df, 'In Domain Train')
-    indomain_test = df2stat_df(indomain_test_df, 'In Domain Test')
+    indomain_test = df2stat_df(indomain_test_df, 'InDomain')
     ood1 = df2stat_df(ood1_df, 'OOD1')
     ood2 = df2stat_df(ood2_df, 'OOD2')
 

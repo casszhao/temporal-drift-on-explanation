@@ -100,7 +100,7 @@ for i, task in enumerate(task_list):
     for df in data_list:
         print('-----------')
         print(df)
-    exit()
+
     bigtable = reduce(lambda left, right: pd.merge(left, right, on=['Domain'],
                                                    how='outer'), data_list)
     print(bigtable)
@@ -142,7 +142,8 @@ for i, task in enumerate(task_list):
     df['Task'] = task
     bigtable_with.append(df)
 bigtableof4 = pd.concat([bigtable_with[0], bigtable_with[1], bigtable_with[2], bigtable_with[3]], ignore_index=False)
-bigtableof4.to_csv('bigtable_of_alltasks.csv')
+bigtableof4.to_csv('./bigtable_of_alltasks.csv')
+print('done')
 
 #
 #

@@ -54,7 +54,48 @@ for i, task in enumerate(task_list):
         else:
             pass
 
-    data_list = [predictive, full_similarity_JS_TOPIC, rationales_SAtopk_similarity_JS_TOPIC, data_stat]
+
+    ##### posthoc
+    def json2df(df, domain):
+        df = df[['scaled attention']].rename(columns={'scaled attention': 'Posthoc'})
+
+        list_of_list = []
+        for col in range(0, len(df.columns)):  # the range length equals to the number of attributes, if remove ig
+            rationales_sufficiency = df.iloc[0, col].get('mean')
+            rationales_comprehensiveness = df.iloc[1, col].get('mean')
+            rationales_AOPCsufficiency = df.iloc[2, col].get('mean')
+            rationales_AOPCcomprehensiveness = df.iloc[3, col].get('mean')
+            four_eval_metrics = [rationales_sufficiency, rationales_comprehensiveness,
+                                 rationales_AOPCsufficiency, rationales_AOPCcomprehensiveness]
+            list_of_list.append(four_eval_metrics)
+        df_tf = pd.DataFrame.from_records(list_of_list).transpose()
+        df_tf.columns = df.columns  # ['random','scaled_attention','attention','ig','lime','gradients','deeplift']
+
+        df_tf['Rationales_metrics'] = ['Sufficiency', 'Comprehensiveness', 'AOPC_sufficiency', 'AOPC_comprehensiveness']
+        df_tf['Domain'] = str(domain)
+        df_tf = df_tf.set_index('Rationales_metrics')
+        return df_tf
+
+
+    for fname in os.listdir('../posthoc_results/' + str(task_name) + '/'):
+        if 'topk' in fname and 'description.json' in fname:
+            if 'ood1' in fname:
+                ood1_path = os.path.join('../posthoc_results', str(task_name), fname)
+            elif 'ood2' in fname:
+                ood2_path = os.path.join('../posthoc_results', str(task_name), fname)
+            else:
+                indomain_path = os.path.join('../posthoc_results', str(task_name), fname)
+    json = pd.read_json(indomain_path)
+    df = json2df(json, 'InDomain')
+    OOD1 = pd.read_json(ood1_path)
+    df1 = json2df(OOD1, 'OOD1')
+    OOD2 = pd.read_json(ood2_path)
+    df2 = json2df(OOD2, 'OOD2')
+    Posthoc = pd.concat([df, df1, df2], ignore_index=False)
+
+
+
+    data_list = [predictive, Posthoc, full_similarity_JS_TOPIC, rationales_SAtopk_similarity_JS_TOPIC, data_stat]
     bigtable = reduce(lambda left, right: pd.merge(left, right, on=['Domain'],
                                                    how='outer'), data_list)
     print(bigtable)

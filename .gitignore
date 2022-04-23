@@ -3,5 +3,4 @@
 /experiment_logs/
 /extracted_rationales/
 *.pt
-/saved_everything/
 /src/data_functions/.temp_data/

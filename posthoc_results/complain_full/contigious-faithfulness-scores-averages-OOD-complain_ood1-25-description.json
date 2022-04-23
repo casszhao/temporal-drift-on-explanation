@@ -1,0 +1,110 @@
+{
+    "attention": {
+        "sufficiency": {
+            "mean": 0.45487309558672967,
+            "std": 0.45536889108160633
+        },
+        "comprehensiveness": {
+            "mean": 0.26957661158597135,
+            "std": 0.39051373950609475
+        },
+        "AOPC - sufficiency": {
+            "mean": 0.40087910284027084,
+            "std": 0.3159601515582506
+        },
+        "AOPC - comprehensiveness": {
+            "mean": 0.18041947815827022,
+            "std": 0.20325263606694036
+        }
+    },
+    "random": {
+        "sufficiency": {
+            "mean": 0.581111788584387,
+            "std": 0.4381995986710806
+        },
+        "comprehensiveness": {
+            "mean": 0.22767716903741353,
+            "std": 0.3534979849198076
+        },
+        "AOPC - sufficiency": {
+            "mean": 0.4720208733759306,
+            "std": 0.31889228598259184
+        },
+        "AOPC - comprehensiveness": {
+            "mean": 0.18823652257544649,
+            "std": 0.19544826721438674
+        }
+    },
+    "gradients": {
+        "sufficiency": {
+            "mean": 0.6189977561344883,
+            "std": 0.44522234346898065
+        },
+        "comprehensiveness": {
+            "mean": 0.26499476374816455,
+            "std": 0.36743522630832426
+        },
+        "AOPC - sufficiency": {
+            "mean": 0.5009880177409806,
+            "std": 0.32891165511838466
+        },
+        "AOPC - comprehensiveness": {
+            "mean": 0.2265870380907923,
+            "std": 0.2145923938915591
+        }
+    },
+    "scaled attention": {
+        "sufficiency": {
+            "mean": 0.5896594351075134,
+            "std": 0.4385623499685236
+        },
+        "comprehensiveness": {
+            "mean": 0.2764706859920312,
+            "std": 0.3986098004544964
+        },
+        "AOPC - sufficiency": {
+            "mean": 0.47812183501879907,
+            "std": 0.31956661850234797
+        },
+        "AOPC - comprehensiveness": {
+            "mean": 0.226424391530403,
+            "std": 0.23504758941831266
+        }
+    },
+    "deeplift": {
+        "sufficiency": {
+            "mean": 0.55882247525254,
+            "std": 0.44441157769676504
+        },
+        "comprehensiveness": {
+            "mean": 0.25952469546928225,
+            "std": 0.3773466349903276
+        },
+        "AOPC - sufficiency": {
+            "mean": 0.46587970550756275,
+            "std": 0.32458616877274316
+        },
+        "AOPC - comprehensiveness": {
+            "mean": 0.20256224682831173,
+            "std": 0.2161173845745188
+        }
+    },
+    "lime": {
+        "sufficiency": {
+            "mean": 0.5677942142622707,
+            "std": 0.43590259170397794
+        },
+        "comprehensiveness": {
+            "mean": 0.23602383224090512,
+            "std": 0.3666313198925217
+        },
+        "AOPC - sufficiency": {
+            "mean": 0.47087376085127836,
+            "std": 0.31106373309704793
+        },
+        "AOPC - comprehensiveness": {
+            "mean": 0.18906902352728186,
+            "std": 0.20857956222271024
+        }
+    }
+}

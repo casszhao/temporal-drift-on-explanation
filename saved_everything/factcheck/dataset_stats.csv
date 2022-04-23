@@ -1,4 +1,4 @@
-,Domain,Label distribution,Interquartile - Oldest,Median,Interquartile - Newest,InterTimeSpan(D),Oldest Date,Newest Date,TimeSpan(D,Data Num
+,Domain,Label distribution,Interquartile - Oldest,Median,Interquartile - Newest,InterTimeSpan(D),Oldest Date,Newest Date,TimeSpan(D),Data Num
 0,Full,"misinfo    10257
 info        2383",2014-10-24,2016-12-29,2018-12-20,1518,1995-09-25,2021-07-19,9429,12640
 0,In Domain Train,"1    6205

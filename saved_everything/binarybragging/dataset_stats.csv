@@ -1,4 +1,4 @@
-,Domain,Label distribution,Interquartile - Oldest,Median,Interquartile - Newest,InterTimeSpan(D),Oldest Date,Newest Date,TimeSpan(D,Data Num
+,Domain,Label distribution,Interquartile - Oldest,Median,Interquartile - Newest,InterTimeSpan(D),Oldest Date,Newest Date,TimeSpan(D),Data Num
 0,Full,"0    5279
 1     700",2019-06-23,2019-12-17,2020-06-23,366,2019-01-13,2020-12-17,704,5979
 0,In Domain Train,"0    3165

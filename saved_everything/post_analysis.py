@@ -18,13 +18,17 @@ for i, task in enumerate(task_list):
     print('-----------' , task_name)
     task_index = i+1
     pwd = os.getcwd()
-    print(pwd)
     path = os.path.join(pwd, str(task_name), 'key_results.csv')
-    print(path)
     predictive = pd.read_csv(path)
     predictive = predictive[['Domain', 'Bert F1', 'FRESH F1', 'KUMA F1', 'LSTM F1']]
+    try:
+        print('loop in try  4444  predictive  444')
+        predictive.loc[predictive["Domain"] == "In Domain(Baseline)", "Domain"] = "InDomain"
+        print(' In Domain(Baseline) changed to InDomain')
+    except:
+        print('no try')
 
-    data_stat = pd.read_csv('./' + task_name + '/dataset_stats.csv').iloc[: , 1:]
+    data_stat = pd.read_csv('./' + task_name + '/dataset_stats.csv')#.iloc[: , 1:]
     # if task_name == 'binarybragging':
     #     data_stat['InterTimeSpan(D)'] = data_stat['Interquartile Time Span in Days']
     #     data_stat['TimeSpan(D)'] = data_stat['Time Span in Days']
@@ -44,6 +48,12 @@ for i, task in enumerate(task_list):
             full_similarity_JS_TOPIC = full_similarity[full_similarity['Rep_Mea'] == 'Topic jensen-shannon']
             full_similarity_JS_TOPIC = full_similarity_JS_TOPIC[['Similarity', 'Domain']]
             full_similarity_JS_TOPIC = full_similarity_JS_TOPIC.rename(columns={"Similarity": "Text_Simi"})
+            try:
+                print('loop in try')
+                full_similarity_JS_TOPIC.loc[full_similarity_JS_TOPIC["Domain"] == "In Domain(Baseline)", "Domain"] = "InDomain"
+                print(' In Domain(Baseline) changed to InDomain')
+            except:
+                print(' no try')
         elif fnmatch.fnmatch(file, '*rationale_similarity*'):
             rationales_similarity = pd.read_csv(task_name + '/' + file)
             rationales_SAtopk_similarity_JS_TOPIC = rationales_similarity[
@@ -53,6 +63,11 @@ for i, task in enumerate(task_list):
             rationales_SAtopk_similarity_JS_TOPIC = rationales_SAtopk_similarity_JS_TOPIC[['Similarity', 'Domain']]
             rationales_SAtopk_similarity_JS_TOPIC = rationales_SAtopk_similarity_JS_TOPIC.rename(
                 columns={"Similarity": "Rationales_Simi"})
+            try:
+                rationales_SAtopk_similarity_JS_TOPIC.loc[rationales_SAtopk_similarity_JS_TOPIC["Domain"] == "In Domain(Baseline)", "Domain"] = "InDomain"
+                print(' In Domain(Baseline) changed to InDomain')
+            except:
+                print(' no try ')
         else:
             pass
 
@@ -143,9 +158,9 @@ for i, task in enumerate(task_list):
 
 
 bigtable_with = []
-for i, task in enumerate(task_list):
-    df = task_list[i]
-    df['Task'] = task
+for i, task in enumerate(bigtable_list):
+    df = bigtable_list[i]
+    df['Task'] = str(task_name[i])
     bigtable_with.append(df)
 bigtableof4 = pd.concat([bigtable_with[0], bigtable_with[1], bigtable_with[2], bigtable_with[3]], ignore_index=False)
 bigtableof4.to_csv('./bigtable_of_alltasks.csv')

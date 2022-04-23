@@ -108,7 +108,7 @@ if args.save_data_stat:
         stat_df = pd.DataFrame({'Domain': [str(domain)], 'Label distribution': [label_dist], 'Interquartile - Oldest': [Interquartile_start],
                                 'Median': [Interquartile_Mid], 'Interquartile - Newest': [Interquartile_end],
                                 'InterTimeSpan(D)': [inter_duration.days],
-                                'Oldest Date': [start_date], 'Newest Date': [end_date], 'TimeSpan(D': [duration.days],
+                                'Oldest Date': [start_date], 'Newest Date': [end_date], 'TimeSpan(D)': [duration.days],
                                 'Data Num': [len(df)],
                                 })
         print('done for :', str(domain))
@@ -171,10 +171,10 @@ if args.save_for_bert:
         OOD2 = OOD2[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
 
 
-    Full_data['domain'] = 'Full size'
-    InDomain['domain'] = 'InDomain'
-    OOD1['domain'] = 'OOD1'
-    OOD2['domain'] = 'OOD2'
+    Full_data['Domain'] = 'Full size'
+    InDomain['Domain'] = 'InDomain'
+    OOD1['Domain'] = 'OOD1'
+    OOD2['Domain'] = 'OOD2'
     result = pd.concat([Full_data, InDomain, OOD1, OOD2], ignore_index=False, axis=1).T
     result.to_csv('saved_everything/' + str(args.dataset) + '/bert_predictive_on_fulltext.csv')
 ####################################################################################
@@ -266,20 +266,20 @@ if args.save_for_fresh:
             print(path)
             fresh_InDomain = pd.read_json(path)
             fresh_InDomain = fresh_InDomain[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[1]
-            fresh_InDomain['domain'] = 'InDomain'
+            fresh_InDomain['Domain'] = 'InDomain'
             path1 = './FRESH_classifiers/' + str(args.dataset) + '/topk/attention_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json'
             fresh_OOD1 = pd.read_json(path1)
             fresh_OOD1 = fresh_OOD1[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[1]
-            fresh_OOD1['domain'] = 'OOD1'
+            fresh_OOD1['Domain'] = 'OOD1'
 
             path2 = './FRESH_classifiers/' + str(args.dataset) + '/topk/attention_bert_predictive_performances-OOD-' + str(
                 args.dataset) + '_ood2.json'
             fresh_OOD2 = pd.read_json(path2)
             fresh_OOD2 = fresh_OOD2[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[1]
-            fresh_OOD2['domain'] = 'OOD2'
+            fresh_OOD2['Domain'] = 'OOD2'
 
             attribute_df = pd.concat([fresh_InDomain, fresh_OOD1, fresh_OOD2], axis=1, ignore_index=False).T.reset_index()[
-                ['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece', 'domain']]
+                ['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece', 'Domain']]
             attribute_df['attribute_name'] = str(attribute_name)
             attribute_list.append(attribute_df)
 
@@ -327,15 +327,15 @@ if args.save_for_kuma_lstm:
         LSTM_OOD1 = LSTM_OOD1[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
         LSTM_OOD2 = LSTM_OOD2[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
 
-    kuma_FullData['domain'] = 'Full data'
-    kuma_InDomain['domain'] = 'InDomain'
-    kuma_OOD1['domain'] = 'OOD1'
-    kuma_OOD2['domain'] = 'OOD2'
+    kuma_FullData['Domain'] = 'Full data'
+    kuma_InDomain['Domain'] = 'InDomain'
+    kuma_OOD1['Domain'] = 'OOD1'
+    kuma_OOD2['Domain'] = 'OOD2'
 
-    LSTM_FullData['domain'] = 'Full data'
-    LSTM_InDomain['domain'] = 'InDomain'
-    LSTM_OOD1['domain'] = 'OOD1'
-    LSTM_OOD2['domain'] = 'OOD2'
+    LSTM_FullData['Domain'] = 'Full data'
+    LSTM_InDomain['Domain'] = 'InDomain'
+    LSTM_OOD1['Domain'] = 'OOD1'
+    LSTM_OOD2['Domain'] = 'OOD2'
 
     kuma_result = pd.concat([kuma_FullData, kuma_InDomain, kuma_OOD1, kuma_OOD2], ignore_index=False, axis=1).T
     kuma_result['Model'] = 'Kuma'

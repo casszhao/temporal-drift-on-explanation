@@ -17,23 +17,26 @@ for i, task in enumerate(task_list):
     task_name = str(task)
     print('-----------' , task_name)
     task_index = i+1
-
-    predictive = pd.read_csv('./' + task_name + '/key_results.csv')
+    pwd = os.getcwd()
+    print(pwd)
+    path = os.path.join(pwd, str(task_name), 'key_results.csv')
+    print(path)
+    predictive = pd.read_csv(path)
     predictive = predictive[['Domain', 'Bert F1', 'FRESH F1', 'KUMA F1', 'LSTM F1']]
 
     data_stat = pd.read_csv('./' + task_name + '/dataset_stats.csv').iloc[: , 1:]
-    if task_name == 'binarybragging':
-        data_stat['InterTimeSpan(D)'] = data_stat['Interquartile Time Span in Days']
-        data_stat['TimeSpan(D)'] = data_stat['Time Span in Days']
-        data_stat = data_stat.drop(['Interquartile Time Span in Days', 'Time Span in Days'], axis=1)
+    # if task_name == 'binarybragging':
+    #     data_stat['InterTimeSpan(D)'] = data_stat['Interquartile Time Span in Days']
+    #     data_stat['TimeSpan(D)'] = data_stat['Time Span in Days']
+    #     data_stat = data_stat.drop(['Interquartile Time Span in Days', 'Time Span in Days'], axis=1)
 
-    else:
-        data_stat['InterTimeSpan(D)'] = pd.to_numeric(data_stat['InterTimeSpan(D)'].astype(str).str.replace(r' days$', '', regex=True))
-        data_stat['TimeSpan(D)'] = pd.to_numeric(data_stat['Time Span in Days'].astype(str).str.replace(r' days$', '', regex=True))
+    # else:
+    data_stat['InterTimeSpan(D)'] = pd.to_numeric(data_stat['InterTimeSpan(D)'].astype(str).str.replace(r' days$', '', regex=True))
+    data_stat['TimeSpan(D)'] = pd.to_numeric(data_stat['TimeSpan(D)'].astype(str).str.replace(r' days$', '', regex=True))
 
     data_stat['TimeDensity'] = data_stat['Data Num']/data_stat['TimeSpan(D)']
     data_stat['InterTimeDensity'] = data_stat['Data Num']*0.5/data_stat['InterTimeSpan(D)']
-    # data_stat['Data Num'] = pd.to_numeric(data_stat['Data Num'])
+    data_stat['Data Num'] = pd.to_numeric(data_stat['Data Num'])
 
     for file in os.listdir('./' + task_name + '/'):
         if fnmatch.fnmatch(file, '*fulltext_similarity*'):
@@ -92,8 +95,10 @@ for i, task in enumerate(task_list):
     df2 = json2df(OOD2, 'OOD2')
     Posthoc = pd.concat([df, df1, df2], ignore_index=False)
 
-    AOPC_suff = Posthoc.loc['AOPC_sufficiency', :].rename(columns={"Posthoc": "AOPC_suff"}, inplace=True)
-    AOPC_compr = Posthoc.loc['AOPC_comprehensiveness', :].rename(columns={"Posthoc": "AOPC_compr"}, inplace=True)
+    AOPC_suff = Posthoc.copy().loc['AOPC_sufficiency', :]
+    AOPC_suff.rename(columns={"Posthoc": "AOPC_suff"}, inplace=True)
+    AOPC_compr = Posthoc.copy().loc['AOPC_comprehensiveness', :]
+    AOPC_compr.rename(columns={"Posthoc": "AOPC_compr"}, inplace=True)
 
 
     data_list = [predictive, AOPC_suff, AOPC_compr, full_similarity_JS_TOPIC, rationales_SAtopk_similarity_JS_TOPIC, data_stat]
@@ -132,8 +137,8 @@ for i, task in enumerate(task_list):
                 square=True, linewidths=.5, cbar_kws={"shrink": .7})
     plt.title(task_name, fontsize=17)
     plt.tight_layout()
-    plt.show()
-    plt.savefig(str(task_name), dpi=600, format='png')
+    #plt.show()
+    plt.savefig(str(task_name) + '.png', dpi=600, format='png')
 
 
 

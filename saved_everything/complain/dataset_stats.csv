@@ -1,4 +1,4 @@
-,Domain,Label distribution,Interquartile - Oldest,Median,Interquartile - Newest,InterTimeSpan(D),Oldest Date,Newest Date,TimeSpan(D,Data Num
+,Domain,Label distribution,Interquartile - Oldest,Median,Interquartile - Newest,InterTimeSpan(D),Oldest Date,Newest Date,TimeSpan(D),Data Num
 0,Full,"0    1733
 1     944",2017-11-05,2017-12-11,2018-01-14,70,2011-01-07,2018-02-07,2588,2677
 0,In Domain Train,"0    971

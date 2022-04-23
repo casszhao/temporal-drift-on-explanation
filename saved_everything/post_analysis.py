@@ -133,6 +133,7 @@ for i, task in enumerate(task_list):
     plt.title(task_name, fontsize=17)
     plt.tight_layout()
     plt.show()
+    plt.savefig(str(task_name), dpi=600, format='png')
 
 
 

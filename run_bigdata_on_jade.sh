@@ -57,6 +57,7 @@ echo "done evaluate faithfulness for topk for both full and indmain"
 python evaluate_posthoc.py --dataset $dataset$"_full" --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder contigious
 python evaluate_posthoc.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder contigious
 echo "done evaluate faithfulness for contigious for both full and indmain"
+exit
 
 
 ######## Train Fresh ################### on full dataset and In Domain
@@ -198,8 +199,8 @@ cd ../
 
 
 
-python save_predictive.py --dataset complain
-python save_similarity.py --dataset complain
+python save_predictive.py --dataset $dataset
+python save_similarity.py --dataset $dataset
 
 
 

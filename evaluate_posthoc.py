@@ -162,7 +162,7 @@ gc.collect()
 ## ood evaluation DATASET 1
 data = BERT_HOLDER(
     path = args["data_dir"], 
-    b_size = args["batch_size"],
+    b_size = 8,
     stage = "eval", #args["batch_size"],
     ood = True,
     ood_dataset_ = 1
@@ -188,7 +188,7 @@ gc.collect()
 ## ood evaluation DATASET 2
 data = BERT_HOLDER(
     path = args["data_dir"],
-    b_size = args["batch_size"],
+    b_size = 8,
     stage = "eval", #args["batch_size"],
     ood = True,
     ood_dataset_ = 2
@@ -215,7 +215,7 @@ gc.collect()
 
 data = BERT_HOLDER(
     path = args["data_dir"],
-    b_size = args["batch_size"],
+    b_size = 8, # to fix cuda out of memory
     stage = "eval", #args["batch_size"],
     ood = False,
 )

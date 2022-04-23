@@ -28,7 +28,7 @@ for i, task in enumerate(task_list):
         data_stat = data_stat.drop(['Interquartile Time Span in Days', 'Time Span in Days'], axis=1)
 
     else:
-        data_stat['InterTimeSpan(D)'] = pd.to_numeric(data_stat['Interquartile Time Span in Days'].astype(str).str.replace(r' days$', '', regex=True))
+        data_stat['InterTimeSpan(D)'] = pd.to_numeric(data_stat['InterTimeSpan(D)'].astype(str).str.replace(r' days$', '', regex=True))
         data_stat['TimeSpan(D)'] = pd.to_numeric(data_stat['Time Span in Days'].astype(str).str.replace(r' days$', '', regex=True))
 
     data_stat['TimeDensity'] = data_stat['Data Num']/data_stat['TimeSpan(D)']

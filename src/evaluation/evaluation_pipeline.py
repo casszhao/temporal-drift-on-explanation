@@ -35,7 +35,7 @@ class evaluate():
         """
         loads and holds a pretrained model
         """
-
+        print(model_path, args["model_abbreviation"])
         self.models = glob.glob(model_path + args["model_abbreviation"] + "*.pt")
         self.output_dims = output_dims
         self.ood = ood

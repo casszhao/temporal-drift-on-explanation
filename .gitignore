@@ -4,3 +4,10 @@
 /extracted_rationales/
 *.pt
 /src/data_functions/.temp_data/
+*.sh
+__pycache__
+/FRESH_classifiers/
+*model*
+/posthoc_results/*/*npy
+*.out
+.env

@@ -123,6 +123,7 @@ for i, task in enumerate(task_list):
 
     bigtable = reduce(lambda left, right: pd.merge(left, right, on=['Domain'],
                                                    how='outer'), data_list)
+    bigtable.drop(bigtable.columns[0], axis=1)
     print(bigtable)
     bigtable.to_csv(task_name + '/bigtable.csv')
     bigtable_list.append(bigtable)

@@ -41,6 +41,9 @@ for i, task in enumerate(task_list):
     data_stat['TimeDensity'] = data_stat['Data Num']/data_stat['TimeSpan(D)']
     data_stat['InterTimeDensity'] = data_stat['Data Num']*0.5/data_stat['InterTimeSpan(D)']
     data_stat['Data Num'] = pd.to_numeric(data_stat['Data Num'])
+    data_stat = data_stat[['Domain', 'Label distribution', 'Interquartile - Oldest',
+       'Median', 'Interquartile - Newest', 'InterTimeSpan(D)', 'Oldest Date',
+       'Newest Date', 'TimeSpan(D)', 'Data Num', 'TimeDensity','InterTimeDensity']]
 
     for file in os.listdir('./' + task_name + '/'):
         if fnmatch.fnmatch(file, '*fulltext_similarity*'):
@@ -123,7 +126,7 @@ for i, task in enumerate(task_list):
 
     bigtable = reduce(lambda left, right: pd.merge(left, right, on=['Domain'],
                                                    how='outer'), data_list)
-    bigtable.drop(bigtable.columns[0], axis=1)
+    
     print(bigtable)
     bigtable.to_csv(task_name + '/bigtable.csv')
     bigtable_list.append(bigtable)

@@ -7,6 +7,7 @@
 
 # 7. datasets metadata: train/test/ size, time span, label distribution
 
+from telnetlib import PRAGMA_HEARTBEAT
 import pandas as pd
 import json
 import csv
@@ -105,12 +106,20 @@ if args.save_data_stat:
             Interquartile_end = df['date'][0]
             duration = end_date - start_date
 
-        stat_df = pd.DataFrame({'Domain': [str(domain)], 'Label distribution': [label_dist], 'Interquartile - Oldest': [Interquartile_start],
-                                'Median': [Interquartile_Mid], 'Interquartile - Newest': [Interquartile_end],
+        stat_df = pd.DataFrame({'Domain': [str(domain)], 'Label distribution': [label_dist], 'Interquartile-Oldest': [Interquartile_start],
+                                'Median': [Interquartile_Mid], 'Interquartile-Newest': [Interquartile_end],
                                 'InterTimeSpan(D)': [inter_duration.days],
                                 'Oldest Date': [start_date], 'Newest Date': [end_date], 'TimeSpan(D)': [duration.days],
                                 'Data Num': [len(df)],
                                 })
+        
+        stat_df['InterTimeSpan(D)'] = pd.to_numeric(stat_df['InterTimeSpan(D)'].astype(str).str.replace(r' days$', '', regex=True))
+        stat_df['TimeSpan(D)'] = pd.to_numeric(stat_df['TimeSpan(D)'].astype(str).str.replace(r' days$', '', regex=True))
+
+        stat_df['TimeDensity'] = stat_df['Data Num']/stat_df['TimeSpan(D)']
+        stat_df['InterTimeDensity'] = stat_df['Data Num']*0.5/stat_df['InterTimeSpan(D)']
+        stat_df['Data Num'] = pd.to_numeric(stat_df['Data Num'])
+
         print('done for :', str(domain))
 
         return stat_df
@@ -147,6 +156,24 @@ if args.save_data_stat:
     ood2 = df2stat_df(ood2_df, 'OOD2')
 
     df = pd.concat([full, indomain_train, indomain_test, ood1, ood2])
+
+    start_date = df.iloc[0]['Oldest Date']
+    end_date = df.iloc[0]['Newest Date']
+    Inter_start_date = df.iloc[0]['Interquartile-Oldest']
+    Inter_end_date = df.iloc[0]['Interquartile-Newest']
+    Median = df.iloc[0]['Median']
+
+    TimeSpan = df.iloc[0]['TimeSpan(D)']
+    print('==============')
+    print(TimeSpan)
+    InterTimeSpan = df.iloc[0]['InterTimeSpan(D)']
+    
+    print(abs(df['Oldest Date']-start_date))
+
+    df['TimeDiff'] = abs(df['Oldest Date']-start_date) + abs(df['Newest Date']-end_date) + abs(df['Interquartile-Oldest']-Inter_start_date) + abs(df['Interquartile-Newest']-Inter_end_date) + abs(df['Median']-Median)
+    df['TimeDiff'] = pd.to_numeric(df['TimeDiff'].astype(str).str.replace(r' days$', '', regex=True))/(TimeSpan*0.5+InterTimeSpan*0.5)
+    print(df['TimeDiff'])
+
     df.to_csv('./saved_everything/'+ str(args.dataset) +'/dataset_stats.csv')
 
 

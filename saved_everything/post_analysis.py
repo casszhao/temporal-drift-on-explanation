@@ -19,6 +19,8 @@ for i, task in enumerate(task_list):
     task_index = i+1
     pwd = os.getcwd()
     path = os.path.join(pwd, str(task_name), 'key_results.csv')
+
+    ### predictive
     predictive = pd.read_csv(path)
     predictive = predictive[['Domain', 'Bert F1', 'FRESH F1', 'KUMA F1', 'LSTM F1']]
     try:
@@ -28,22 +30,17 @@ for i, task in enumerate(task_list):
     except:
         print('no try')
 
+    ### data_stat
     data_stat = pd.read_csv('./' + task_name + '/dataset_stats.csv')#.iloc[: , 1:]
-    # if task_name == 'binarybragging':
-    #     data_stat['InterTimeSpan(D)'] = data_stat['Interquartile Time Span in Days']
-    #     data_stat['TimeSpan(D)'] = data_stat['Time Span in Days']
-    #     data_stat = data_stat.drop(['Interquartile Time Span in Days', 'Time Span in Days'], axis=1)
-
-    # else:
     data_stat['InterTimeSpan(D)'] = pd.to_numeric(data_stat['InterTimeSpan(D)'].astype(str).str.replace(r' days$', '', regex=True))
     data_stat['TimeSpan(D)'] = pd.to_numeric(data_stat['TimeSpan(D)'].astype(str).str.replace(r' days$', '', regex=True))
 
     data_stat['TimeDensity'] = data_stat['Data Num']/data_stat['TimeSpan(D)']
     data_stat['InterTimeDensity'] = data_stat['Data Num']*0.5/data_stat['InterTimeSpan(D)']
     data_stat['Data Num'] = pd.to_numeric(data_stat['Data Num'])
-    data_stat = data_stat[['Domain', 'Label distribution', 'Interquartile - Oldest',
-       'Median', 'Interquartile - Newest', 'InterTimeSpan(D)', 'Oldest Date',
-       'Newest Date', 'TimeSpan(D)', 'Data Num', 'TimeDensity','InterTimeDensity']]
+    data_stat = data_stat[['Domain', 'Label distribution', 'Interquartile-Oldest',
+       'Median', 'Interquartile-Newest', 'InterTimeSpan(D)', 'Oldest Date',
+       'Newest Date', 'TimeSpan(D)', 'Data Num', 'TimeDensity','InterTimeDensity','TimeDiff']]
 
     for file in os.listdir('./' + task_name + '/'):
         if fnmatch.fnmatch(file, '*fulltext_similarity*'):

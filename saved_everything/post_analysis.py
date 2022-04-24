@@ -120,6 +120,7 @@ for i, task in enumerate(task_list):
 
 
     data_list = [predictive, AOPC_suff, AOPC_compr, full_similarity_JS_TOPIC, rationales_SAtopk_similarity_JS_TOPIC, data_stat]
+    
     for df in data_list:
         print('-----------')
         print(df)
@@ -164,7 +165,7 @@ for i, task in enumerate(task_list):
 bigtable_with = []
 for i, task in enumerate(bigtable_list):
     df = bigtable_list[i]
-    df['Task'] = str(task_name[i])
+    df['Task'] = str(task_list[i])
     bigtable_with.append(df)
 bigtableof4 = pd.concat([bigtable_with[0], bigtable_with[1], bigtable_with[2], bigtable_with[3]], ignore_index=False)
 bigtableof4.to_csv('./bigtable_of_alltasks.csv')

@@ -70,8 +70,9 @@ os.makedirs(datasets_dir, exist_ok = True)
 
 select_columns = ['mean-f1', 'std-f1']
 ######################## 1. bert predictive resultes -- on In domain / ood1 / ood2
-Full_data = pd.read_json('./models/' + str(args.dataset) + '_full/bert_predictive_performances.json')
 InDomain = pd.read_json('./models/' + str(args.dataset) + '/bert_predictive_performances.json')
+Full_data = pd.read_json('./models/' + str(args.dataset) + '_full/bert_predictive_performances.json')
+
 path = os.path.join('./models/', str(args.dataset),'bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
 OOD1 = pd.read_json(path)
 path = os.path.join('./models/', str(args.dataset),'bert_predictive_performances-OOD-' + str(args.dataset) + '_ood2.json')

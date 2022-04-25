@@ -7,6 +7,7 @@
 
 # 7. datasets metadata: train/test/ size, time span, label distribution
 
+from dataclasses import replace
 from telnetlib import PRAGMA_HEARTBEAT
 import pandas as pd
 import json
@@ -15,7 +16,8 @@ import config.cfg
 import os
 import argparse
 import fnmatch
-
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 
 parser = argparse.ArgumentParser()
@@ -62,11 +64,95 @@ parser.add_argument(
     action='store_true',
     default=False
 )
+parser.add_argument(
+    '--plot_time_distribution',
+    help='decide which parts are in need',
+    action='store_true',
+    default=False
+)
 args = parser.parse_args()
 
 datasets_dir = 'saved_everything/' + str(args.dataset)
 os.makedirs(datasets_dir, exist_ok = True)
 
+
+
+######################## plot time distribution
+
+from datetime import datetime
+
+if args.plot_time_distribution:
+    def df2stat_df(df, domain):
+        if "xfact" in str(args.dataset):
+            df = df[pd.to_datetime(df['claimDate'], errors='coerce').notna()] # claimDate  for xfact
+            df = df.dropna().sort_values(by='claimDate', na_position='first') # claimDate  for xfact
+            df['date'] = pd.to_datetime(df['claimDate']).dt.date              # claimDate  for xfact
+        else:
+            df = df[pd.to_datetime(df['date'], errors='coerce').notna()] 
+            df = df.dropna().sort_values(by='date', na_position='first') 
+            df['date'] = pd.to_datetime(df['date']).dt.date  
+
+        if args.dataset == 'binarybragging':
+            df['Year'] = pd.to_datetime(df['date'].astype(str).str[:7])
+            #df['Year'] = df['date'].astype(str).str[:7]
+        else:       
+            df['Year'] = pd.DatetimeIndex(df['date']).year
+        df['Domain'] = str(domain)
+
+        stat_df = df[['Year', 'Domain']]
+        
+        return stat_df
+
+
+############################# read data in ##################
+    if "xfact" in str(args.dataset):
+        # for xfact only, only read in adding, to make a dataset for full data
+        full_df_1 = pd.read_json('datasets/'+ str(args.dataset) +'/data/train.json')
+        full_df_2 = pd.read_json('datasets/'+ str(args.dataset) +'/data/test.json')
+        full_df_3 = pd.read_json('datasets/'+ str(args.dataset) +'/data/dev.json')
+        full_df_4 = pd.read_json('datasets/'+ str(args.dataset) +'_ood1/data/test.json')
+        full_df_5 = pd.read_json('datasets/'+ str(args.dataset) +'_ood2/data/test.json')
+        full_df = pd.concat([full_df_1, full_df_2, full_df_3, full_df_4, full_df_5], ignore_index=False)
+
+    elif "factcheck" in str(args.dataset):
+        full_df = pd.read_csv('./datasets/'+str(args.dataset)+'_full/data/'+str(args.dataset)+'_full.csv')
+    else:
+        full_df_1 = pd.read_json('datasets/'+ str(args.dataset) +'_full/data/train.json') #'datasets/'+ str(args.dataset) +'_full/data/train.json')
+        full_df_2 = pd.read_json('datasets/'+ str(args.dataset) +'_full/data/test.json')
+        full_df_3 = pd.read_json('datasets/'+ str(args.dataset) +'_full/data/dev.json')
+        full_df = pd.concat([full_df_1, full_df_2, full_df_3], ignore_index=False)
+
+
+    indomain_train_df = pd.read_json('datasets/'+ str(args.dataset) +'/data/train.json')
+    indomain_test_df = pd.read_json('datasets/'+ str(args.dataset) +'/data/test.json')
+    ood1_df = pd.read_json('datasets/'+ str(args.dataset) +'_ood1/data/test.json')
+    ood2_df = pd.read_json('datasets/'+ str(args.dataset) +'_ood2/data/test.json')
+
+    full = df2stat_df(full_df, 'Full')
+    indomain_train = df2stat_df(indomain_train_df, 'InDomain Train')
+    indomain_test = df2stat_df(indomain_test_df, 'InDomain Test')
+    ood1 = df2stat_df(ood1_df, 'OOD1')
+    ood2 = df2stat_df(ood2_df, 'OOD2')
+
+    df = pd.concat([full, indomain_train, indomain_test, ood1, ood2]).reset_index(drop=True)
+    # pd.to_numeric(df['Year'], downcast='integer')
+    print(df)
+    # penguins = sns.load_dataset("penguins")
+    # print(penguins)
+    # sns.displot(penguins, x="flipper_length_mm", hue="species", kind="kde")
+    # plt.show()
+    if args.dataset == 'binarybragging':
+        sns.displot(x=df['Year'],hue=df['Domain'], kind="kde") 
+    else:
+        sns.displot(x=df['Year'],hue=df['Domain'], kind="kde") 
+    plt.title(str(args.dataset), fontsize=20)
+    plt.ylabel("Percentage")
+    plt.legend(bbox_to_anchor=(1, 1, 0.28, 0.28), loc='best', borderaxespad=1)
+    plt.tight_layout()
+    plt.savefig('./TimeDist/'+str(args.dataset)+'.png', bbox_inches = 'tight', dpi=200, format='png')
+    plt.show()
+
+# https://stackoverflow.com/questions/59346731/no-handles-with-labels-found-to-put-in-legend
 
 
 ######################## data statistic

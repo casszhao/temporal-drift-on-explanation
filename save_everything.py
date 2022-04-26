@@ -331,9 +331,6 @@ def json2df(df, domain):
 
 
 if args.save_posthoc:
-#
-    # seed_list = []
-    # for seed in [10]: #[5,10,15,20,25]:
     df_list = []
     for thresh in ['topk', 'contigious']:
 
@@ -345,7 +342,11 @@ if args.save_posthoc:
                     ood2_path = os.path.join('posthoc_results', str(args.dataset), fname)
                 else:
                     indomain_path = os.path.join('posthoc_results', str(args.dataset), fname)
-
+        for fname in os.listdir('posthoc_results/' + str(args.dataset) + '_full/'):
+            if 'OOD' not in fname and 'description.json' in fname:
+                full_path = os.path.join('posthoc_results', str(args.dataset)+'_full', fname)
+        full = pd.read_json(full_path)
+        full = pd.read_json(full, 'Full')
         json = pd.read_json(indomain_path)
         df = json2df(json, 'InDomain')
         OOD1 = pd.read_json(ood1_path)
@@ -353,7 +354,7 @@ if args.save_posthoc:
         OOD2 = pd.read_json(ood2_path)
         df2 = json2df(OOD2, 'OOD2')
 
-        final = pd.concat([df, df1, df2], ignore_index=False)
+        final = pd.concat([full, df, df1, df2], ignore_index=False)
         final['thresholder'] = str(thresh)
         df_list.append(final)
 

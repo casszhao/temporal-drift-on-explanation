@@ -5,7 +5,7 @@
 #SBATCH --time=6-00:00
 
 # set name of job
-#SBATCH --job-name=factcheck
+#SBATCH --job-name=2AmazDigiMu
 
 # set number of GPUs
 #SBATCH --gres=gpu:1
@@ -29,7 +29,7 @@ module load python/anaconda3
 module load cuda/10.2
 source activate ood_faith
 
-dataset="factcheck"
+dataset="AmazDigiMu"
 model_dir="models/"
 data_dir="datasets/"
 evaluation_dir="posthoc_results/"
@@ -51,24 +51,25 @@ thresholder="topk"
 
 
 ##### evaluate POSTHOC BERT for full data and in domain
-python evaluate_posthoc.py --dataset $dataset$"_full" --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder topk
-python evaluate_posthoc.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder topk
-echo "done evaluate faithfulness for topk for both full and indmain"
-python evaluate_posthoc.py --dataset $dataset$"_full" --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder contigious
-python evaluate_posthoc.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder contigious
-echo "done evaluate faithfulness for contigious for both full and indmain"
-exit
+# python evaluate_posthoc.py --dataset $dataset$"_full" --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder topk
+# python evaluate_posthoc.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder topk
+# echo "done evaluate faithfulness for topk for both full and indmain"
+# python evaluate_posthoc.py --dataset $dataset$"_full" --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder contigious
+# python evaluate_posthoc.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder contigious
+# echo "done evaluate faithfulness for contigious for both full and indmain"
+
 
 
 ######## Train Fresh ################### on full dataset and In Domain
 ######################################################################
 
 ##### extract rationales
-python FRESH_extract_rationales_cass.py --dataset $dataset$"_full" --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder $thresholder
-python FRESH_extract_rationales_cass.py --dataset $dataset$"_full" --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder contigious
-python FRESH_extract_rationales_cass.py --dataset $dataset --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder $thresholder
-python FRESH_extract_rationales_cass.py --dataset $dataset --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder contigious
-echo 'done extract rationales (top and contigious) for FRESH'
+# python FRESH_extract_rationales_cass.py --dataset $dataset$"_full" --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder $thresholder
+# python FRESH_extract_rationales_cass.py --dataset $dataset$"_full" --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder contigious
+# echo 'done extract rationales (top and contigious) for FRESH for full dataset, next do indomain '
+# python FRESH_extract_rationales_cass.py --dataset $dataset --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder $thresholder
+# python FRESH_extract_rationales_cass.py --dataset $dataset --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder contigious
+# echo 'done extract rationales (top and contigious) for FRESH'
 
 
 
@@ -201,6 +202,7 @@ cd ../
 
 python save_predictive.py --dataset $dataset
 python save_similarity.py --dataset $dataset
+python save_everything.py --dataset $dataset
 
 
 

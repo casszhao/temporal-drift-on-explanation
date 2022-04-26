@@ -2,7 +2,7 @@
 #SBATCH --nodes=1
 
 # set max wallclock time
-#SBATCH --time=6-00:00
+#SBATCH --time=7-00:00
 
 # set name of job
 #SBATCH --job-name=complain

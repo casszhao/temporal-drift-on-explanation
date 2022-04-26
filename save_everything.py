@@ -346,7 +346,7 @@ if args.save_posthoc:
             if 'OOD' not in fname and 'description.json' in fname:
                 full_path = os.path.join('posthoc_results', str(args.dataset)+'_full', fname)
         full = pd.read_json(full_path)
-        full = pd.read_json(full, 'Full')
+        full_df = json2df(full, 'Full')
         json = pd.read_json(indomain_path)
         df = json2df(json, 'InDomain')
         OOD1 = pd.read_json(ood1_path)
@@ -354,7 +354,7 @@ if args.save_posthoc:
         OOD2 = pd.read_json(ood2_path)
         df2 = json2df(OOD2, 'OOD2')
 
-        final = pd.concat([full, df, df1, df2], ignore_index=False)
+        final = pd.concat([full_df, df, df1, df2], ignore_index=False)
         final['thresholder'] = str(thresh)
         df_list.append(final)
 

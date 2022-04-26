@@ -320,8 +320,8 @@ def json2df(df, domain):
         list_of_list.append(four_eval_metrics)
 
     df_tf = pd.DataFrame.from_records(list_of_list).transpose()
-    # print(df_tf)
-    df_tf.columns = df.columns  # ['random','scaled_attention','attention','ig','lime','gradients','deeplift']
+    #df_tf.columns = df.columns  # ['random','scaled_attention','attention','ig','lime','gradients','deeplift']
+    df_tf.columns = ['random','scaled_attention','attention','deeplift','gradients','lime']
 
     df_tf['Rationales_metrics'] = ['Sufficiency', 'Comprehensiveness', 'AOPC_sufficiency', 'AOPC_comprehensiveness']
     df_tf['Domain'] = str(domain)

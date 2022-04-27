@@ -307,8 +307,8 @@ if args.save_for_bert:
 def json2df(df, domain):
     df.rename(columns={"": "Task"})
     list_of_list = []
-
-    for col in range(0, len(df.columns)): # the range length equals to the number of attributes, if remove ig
+    # df.columns = ['lime', 'gradients', 'scaled attention', 'random', 'deeplift', 'attention']
+    for col, col_attribute_name in enumerate(df.columns): # the range length equals to the number of attributes, if remove ig
         rationales_sufficiency = df.iloc[0, col].get('mean')
         rationales_comprehensiveness = df.iloc[1, col].get('mean')
         rationales_AOPCsufficiency = df.iloc[2, col].get('mean')
@@ -318,10 +318,11 @@ def json2df(df, domain):
                              rationales_AOPCsufficiency, rationales_AOPCcomprehensiveness]
 
         list_of_list.append(four_eval_metrics)
+        # print(four_eval_metrics)
 
     df_tf = pd.DataFrame.from_records(list_of_list).transpose()
-    #df_tf.columns = df.columns  # ['random','scaled_attention','attention','ig','lime','gradients','deeplift']
-    df_tf.columns = ['random','scaled_attention','attention','deeplift','gradients','lime']
+    df_tf.columns = df.columns  # ['random','scaled_attention','attention','ig','lime','gradients','deeplift']
+    df_tf = df_tf[['random','scaled attention','attention','deeplift','gradients','lime']]
 
     df_tf['Rationales_metrics'] = ['Sufficiency', 'Comprehensiveness', 'AOPC_sufficiency', 'AOPC_comprehensiveness']
     df_tf['Domain'] = str(domain)
@@ -345,6 +346,7 @@ if args.save_posthoc:
         for fname in os.listdir('posthoc_results/' + str(args.dataset) + '_full/'):
             if 'OOD' not in fname and 'description.json' in fname:
                 full_path = os.path.join('posthoc_results', str(args.dataset)+'_full', fname)
+
         full = pd.read_json(full_path)
         full_df = json2df(full, 'Full')
         json = pd.read_json(indomain_path)

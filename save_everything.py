@@ -343,9 +343,11 @@ if args.save_posthoc:
                     ood2_path = os.path.join('posthoc_results', str(args.dataset), fname)
                 else:
                     indomain_path = os.path.join('posthoc_results', str(args.dataset), fname)
+        
         for fname in os.listdir('posthoc_results/' + str(args.dataset) + '_full/'):
-            if 'OOD' not in fname and 'description.json' in fname:
+            if 'OOD' not in fname and str(thresh) in fname and 'description.json' in fname:
                 full_path = os.path.join('posthoc_results', str(args.dataset)+'_full', fname)
+                # print('full: ', full_path)
 
         full = pd.read_json(full_path)
         full_df = json2df(full, 'Full')

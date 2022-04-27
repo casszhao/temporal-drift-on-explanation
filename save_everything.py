@@ -161,11 +161,16 @@ from datetime import datetime
 
 if args.save_data_stat:
     def df2stat_df(df, domain):
-        df = df[pd.to_datetime(df['date'], errors='coerce').notna()] # claimDate  for xfact
-        df = df.dropna().sort_values(by='date', na_position='first') # claimDate  for xfact
-        df['date'] = pd.to_datetime(df['date']).dt.date              # claimDate  for xfact
+        if "xfact" in str(args.dataset):
+            df = df[pd.to_datetime(df['claimDate'], errors='coerce').notna()] # claimDate  for xfact
+            df = df.dropna().sort_values(by='claimDate', na_position='first') # claimDate  for xfact
+            df['date'] = pd.to_datetime(df['claimDate']).dt.date              # claimDate  for xfact
+        else:            
+            df = df[pd.to_datetime(df['date'], errors='coerce').notna()] # claimDate  for xfact
+            df = df.dropna().sort_values(by='date', na_position='first') # claimDate  for xfact
+            df['date'] = pd.to_datetime(df['date']).dt.date              # claimDate  for xfact
+        
         label_dist = df['label'].value_counts().to_string()
-
 
         start_date = df['date'].iloc[0]
         end_date = df['date'].iloc[-1]
@@ -173,10 +178,16 @@ if args.save_data_stat:
         print(df['date'])
         print('---', start_date)
         print('---', end_date)
-        inter_quartile = df.date.quantile([0.25, 0.5, 0.75])
-        Interquartile_start = inter_quartile.values[0]
-        Interquartile_Mid = inter_quartile.values[1]
-        Interquartile_end = inter_quartile.values[2]
+        quartile = int(len(df) * 0.25)
+        # inter_quartile = df.date.quantile([0.25, 0.5, 0.75])
+        # Interquartile_start = inter_quartile.values[0]
+        # Interquartile_Mid = inter_quartile.values[1]
+        # Interquartile_end = inter_quartile.values[2]
+        Interquartile_start = df['date'][quartile]
+        Interquartile_Mid = df['date'][int(quartile*2)]
+        Interquartile_end = df['date'][int(quartile*3)]
+
+        print(Interquartile_start)
 
         duration = end_date - start_date
         inter_duration = Interquartile_end - Interquartile_start
@@ -188,9 +199,9 @@ if args.save_data_stat:
             duration = end_date - start_date
 
         if int(inter_duration.days) <= 0:
-            Interquartile_start = df['date'][len(df) - 1]
-            Interquartile_end = df['date'][0]
-            duration = end_date - start_date
+            Interquartile_start = df['date'][int(quartile*3)]
+            Interquartile_end = df['date'][quartile]
+            inter_duration = Interquartile_end - Interquartile_start
 
         stat_df = pd.DataFrame({'Domain': [str(domain)], 'Label distribution': [label_dist], 'Interquartile-Oldest': [Interquartile_start],
                                 'Median': [Interquartile_Mid], 'Interquartile-Newest': [Interquartile_end],
@@ -221,8 +232,8 @@ if args.save_data_stat:
         full_df_5 = pd.read_json('datasets/'+ str(args.dataset) +'_ood2/data/test.json')
         full_df = pd.concat([full_df_1, full_df_2, full_df_3, full_df_4, full_df_5], ignore_index=False)
 
-    elif "factcheck" in str(args.dataset):
-        full_df = pd.read_csv('./datasets/'+str(args.dataset)+'_full/data/'+str(args.dataset)+'_full.csv')
+    # elif "factcheck" in str(args.dataset):
+    #     full_df = pd.read_csv('./datasets/'+str(args.dataset)+'_full/data/'+str(args.dataset)+'_full.json')
     else:
         full_df_1 = pd.read_json('datasets/'+ str(args.dataset) +'_full/data/train.json')
         full_df_2 = pd.read_json('datasets/'+ str(args.dataset) +'_full/data/test.json')

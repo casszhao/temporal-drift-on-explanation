@@ -10,6 +10,11 @@ import matplotlib.ticker as mticker
 import fnmatch
 import os
 
+## 直接使用了 dataset_stats.csv
+#           key_results.csv
+#           fulltext_similarity rationale_similarity
+#           posthoc_results/****.json
+
 bigtable_list = []
 task_list = ['complain', 'binarybragging', 'xfact', 'factcheck']
 for i, task in enumerate(task_list):

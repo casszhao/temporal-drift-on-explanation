@@ -88,9 +88,11 @@ if args.plot_time_distribution:
             df = df.dropna().sort_values(by='claimDate', na_position='first') # claimDate  for xfact
             df['date'] = pd.to_datetime(df['claimDate']).dt.date              # claimDate  for xfact
         else:
-            df = df[pd.to_datetime(df['date'], errors='coerce').notna()] 
+            # df = df[pd.to_datetime(df['date'], errors='coerce').notna()] 
+            # df = df.dropna().sort_values(by='date', na_position='first') 
+            # df['date'] = pd.to_datetime(df['date']).dt.date  
+            df['date'] = pd.to_datetime(df['date'], errors = 'coerce', utc=True).dt.date
             df = df.dropna().sort_values(by='date', na_position='first') 
-            df['date'] = pd.to_datetime(df['date']).dt.date  
 
         if args.dataset == 'binarybragging':
             df['Year'] = pd.to_datetime(df['date'].astype(str).str[:7])
@@ -105,7 +107,7 @@ if args.plot_time_distribution:
 
 
 ############################# read data in ##################
-    if "xfact" in str(args.dataset):
+    if "xfact" in str(args.dataset) or "factcheck" in str(args.dataset):
         # for xfact only, only read in adding, to make a dataset for full data
         full_df_1 = pd.read_json('datasets/'+ str(args.dataset) +'/data/train.json')
         full_df_2 = pd.read_json('datasets/'+ str(args.dataset) +'/data/test.json')
@@ -114,8 +116,8 @@ if args.plot_time_distribution:
         full_df_5 = pd.read_json('datasets/'+ str(args.dataset) +'_ood2/data/test.json')
         full_df = pd.concat([full_df_1, full_df_2, full_df_3, full_df_4, full_df_5], ignore_index=False)
 
-    elif "factcheck" in str(args.dataset):
-        full_df = pd.read_csv('./datasets/'+str(args.dataset)+'_full/data/'+str(args.dataset)+'_full.csv')
+    # elif "factcheck" in str(args.dataset):
+    #     full_df = pd.read_csv('./datasets/'+str(args.dataset)+'_full/data/'+str(args.dataset)+'_full.csv')
     else:
         full_df_1 = pd.read_json('datasets/'+ str(args.dataset) +'_full/data/train.json') #'datasets/'+ str(args.dataset) +'_full/data/train.json')
         full_df_2 = pd.read_json('datasets/'+ str(args.dataset) +'_full/data/test.json')
@@ -184,8 +186,6 @@ if args.save_data_stat:
         Interquartile_Mid = DATE[int(quartile*2)]
         Interquartile_end = DATE[-quartile]
 
-        
-
         duration = end_date - start_date
         inter_duration = Interquartile_end - Interquartile_start
         print('---duration ---')
@@ -194,10 +194,9 @@ if args.save_data_stat:
             start_date = df['date'][len(df) - 1]
             end_date = df['date'][0]
             duration = end_date - start_date
-
         if int(inter_duration.days) <= 0:
-            Interquartile_start = df['date'][int(quartile*3)]
-            Interquartile_end = df['date'][quartile]
+            Interquartile_start = DATE[-quartile]
+            Interquartile_end = DATE[quartile]
             inter_duration = Interquartile_end - Interquartile_start
 
         stat_df = pd.DataFrame({'Domain': [str(domain)], 'Label distribution': [label_dist], 'Interquartile-Oldest': [Interquartile_start],

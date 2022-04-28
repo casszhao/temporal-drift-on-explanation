@@ -166,9 +166,8 @@ if args.save_data_stat:
             df = df.dropna().sort_values(by='claimDate', na_position='first') # claimDate  for xfact
             df['date'] = pd.to_datetime(df['claimDate']).dt.date              # claimDate  for xfact
         else:            
-            df = df[pd.to_datetime(df['date'], errors='coerce').notna()] # claimDate  for xfact
-            df = df.dropna().sort_values(by='date', na_position='first') # claimDate  for xfact
-            df['date'] = pd.to_datetime(df['date']).dt.date              # claimDate  for xfact
+            df['date'] = pd.to_datetime(df['date'], errors = 'coerce', utc=True).dt.date
+            df = df.dropna().sort_values(by='date', na_position='first') 
         
         label_dist = df['label'].value_counts().to_string()
 
@@ -179,15 +178,13 @@ if args.save_data_stat:
         print('---', start_date)
         print('---', end_date)
         quartile = int(len(df) * 0.25)
-        # inter_quartile = df.date.quantile([0.25, 0.5, 0.75])
-        # Interquartile_start = inter_quartile.values[0]
-        # Interquartile_Mid = inter_quartile.values[1]
-        # Interquartile_end = inter_quartile.values[2]
-        Interquartile_start = df['date'][quartile]
-        Interquartile_Mid = df['date'][int(quartile*2)]
-        Interquartile_end = df['date'][int(quartile*3)]
 
-        print(Interquartile_start)
+        DATE = df['date'].tolist()
+        Interquartile_start = DATE[quartile]
+        Interquartile_Mid = DATE[int(quartile*2)]
+        Interquartile_end = DATE[-quartile]
+
+        
 
         duration = end_date - start_date
         inter_duration = Interquartile_end - Interquartile_start
@@ -223,7 +220,7 @@ if args.save_data_stat:
 
 
 ############################# read data in ##################
-    if "xfact" in str(args.dataset):
+    if "xfact" in str(args.dataset) or "factcheck" in str(args.dataset):
         # for xfact only, only read in adding, to make a dataset for full data
         full_df_1 = pd.read_json('datasets/'+ str(args.dataset) +'/data/train.json')
         full_df_2 = pd.read_json('datasets/'+ str(args.dataset) +'/data/test.json')
@@ -245,6 +242,7 @@ if args.save_data_stat:
     indomain_test_df = pd.read_json('datasets/'+ str(args.dataset) +'/data/test.json')
     ood1_df = pd.read_json('datasets/'+ str(args.dataset) +'_ood1/data/test.json')
     ood2_df = pd.read_json('datasets/'+ str(args.dataset) +'_ood2/data/test.json')
+
 
     full = df2stat_df(full_df, 'Full')
     indomain_train = df2stat_df(indomain_train_df, 'In Domain Train')

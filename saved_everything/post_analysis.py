@@ -16,7 +16,7 @@ import os
 #           posthoc_results/****.json
 
 bigtable_list = []
-task_list = ['complain', 'binarybragging', 'xfact', 'factcheck']
+task_list = ['complain', 'binarybragging', 'xfact', 'factcheck'] #, 'AmazDigiMu', 'AmazInstr', 'AmazPantry'
 for i, task in enumerate(task_list):
 
     task_name = str(task)

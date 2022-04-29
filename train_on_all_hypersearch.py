@@ -69,7 +69,7 @@ parser.add_argument(
 user_args = vars(parser.parse_args())
 user_args["importance_metric"] = None
 
-log_dir = "experiment_logs/train_" + user_args["dataset"] + "_seed-" + str(user_args["seed"]) + "_" + date_time + "/"
+log_dir = "ft_bert/" + user_args["dataset"] + "_seed-" + str(user_args["seed"]) + "_" + date_time + "/"
 config_dir = "experiment_config/train_" + user_args["dataset"] + "_seed-" + str(
     user_args["seed"]) + "_" + date_time + "/"
 
@@ -147,31 +147,48 @@ if args["evaluate_models"]:
     keep_best_model_(keep_models=False)
 
 else:
-
+    lr_test = 1e-5
+    logging.info('batch size 16')
+    logging.info(str(lr_test))
     train_searchPara_and_save(
         train_data_loader=data.train_loader,
         dev_data_loader=data.dev_loader,
         output_dims=data.nu_of_labels,
-        lr = 1e-5, #3e-5, 2e-5
+        lr = lr_test, #3e-5, 2e-5
     )
 
+    lr_test = 2e-5
+    logging.info(str(lr_test))
     train_searchPara_and_save(
         train_data_loader=data.train_loader,
         dev_data_loader=data.dev_loader,
         output_dims=data.nu_of_labels,
-        lr = 3e-5, #,
+        lr = lr_test, #,
     )
 
+    lr_test = 5e-5
+    logging.info(str(lr_test))
     train_searchPara_and_save(
         train_data_loader=data.train_loader,
         dev_data_loader=data.dev_loader,
         output_dims=data.nu_of_labels,
-        lr = 2e-5, #3e-5, 2e-5
+        lr = lr_test, #3e-5, 2e-5
     )
 
+    lr_test = 1e-6
+    logging.info(str(lr_test))
     train_searchPara_and_save(
         train_data_loader=data.train_loader,
         dev_data_loader=data.dev_loader,
         output_dims=data.nu_of_labels,
-        lr = 3e-6, #3e-5, 2e-5
+        lr = lr_test, #3e-5, 2e-5
+    )
+
+    lr_test = 5e-4
+    logging.info(str(lr_test))
+    train_searchPara_and_save(
+        train_data_loader=data.train_loader,
+        dev_data_loader=data.dev_loader,
+        output_dims=data.nu_of_labels,
+        lr = lr_test, #3e-5, 2e-5
     )

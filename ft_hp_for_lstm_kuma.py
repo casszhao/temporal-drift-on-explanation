@@ -21,7 +21,7 @@ parser.add_argument(
     "--dataset", 
     type = str, 
     help = "select dataset / task", 
-    default = "complain",
+    default = "complain_full",
     # choices = ["WS", "SST", "IMDB", "Yelp", "AmazDigiMu", "AmazPantry", "AmazInstr", "factcheck","factcheck_ood2","factcheck_ood1"]
 )
 
@@ -36,13 +36,14 @@ parser.add_argument(
     "--model_dir",   
     type = str, 
     help = "directory to save models", 
-    default = "full_text_models/"
+    default = "ft_model/"
 )
 
 parser.add_argument(
     "--seed",   
     type = int, 
-    help = "random seed for experiment"
+    help = "random seed for experiment",
+    default = 5
 )
 
 parser.add_argument(
@@ -55,7 +56,7 @@ parser.add_argument(
     "--inherently_faithful", 
     type = str, 
     help = "select dataset / task", 
-    default = None, 
+    default = "full_lstm", 
     choices = [None, "kuma", "rl", "full_lstm"]
 )
 
@@ -68,7 +69,7 @@ parser.add_argument(
 user_args = vars(parser.parse_args())
 user_args["importance_metric"] = None
 
-log_dir = "experiment_logs/ft_" + user_args["dataset"] + "_lstm_kuma-" + str(user_args["seed"]) + "_" +  date_time + "/"
+log_dir = "ft_model/" + user_args["dataset"] + "_lstm_kuma-" + str(user_args["seed"]) + "_" +  date_time + "/"
 config_dir = "experiment_config/train_" + user_args["dataset"] + "_seed-" + str(user_args["seed"]) + "_" + date_time + "/"
 
 
@@ -131,6 +132,63 @@ data = dataholder(
 logging.info("model is  : \n ----------------------")
 logging.info(str(user_args["inherently_faithful"]))
 
+
+lr_test = 5e-2
+logging.info(str(lr_test))
+train_and_save(
+    train_data_loader=data.train_loader,
+    dev_data_loader=data.dev_loader,
+    for_rationale=False,
+    output_dims=data.nu_of_labels,
+    vocab_size=data.vocab_size,
+)
+lr_test = 1e-2
+logging.info(str(lr_test))
+train_and_save(
+    train_data_loader=data.train_loader,
+    dev_data_loader=data.dev_loader,
+    for_rationale=False,
+    output_dims=data.nu_of_labels,
+    vocab_size=data.vocab_size,
+)
+lr_test = 5e-3
+logging.info(str(lr_test))
+train_and_save(
+    train_data_loader=data.train_loader,
+    dev_data_loader=data.dev_loader,
+    for_rationale=False,
+    output_dims=data.nu_of_labels,
+    vocab_size=data.vocab_size,
+)
+lr_test = 1e-3
+logging.info(str(lr_test))
+train_and_save(
+    train_data_loader=data.train_loader,
+    dev_data_loader=data.dev_loader,
+    for_rationale=False,
+    output_dims=data.nu_of_labels,
+    vocab_size=data.vocab_size,
+)
+lr_test = 1e-4
+logging.info(str(lr_test))
+train_and_save(
+    train_data_loader=data.train_loader,
+    dev_data_loader=data.dev_loader,
+    for_rationale=False,
+    output_dims=data.nu_of_labels,
+    vocab_size=data.vocab_size,
+)
+lr_test = 5e-4
+logging.info(str(lr_test))
+train_and_save(
+    train_data_loader=data.train_loader,
+    dev_data_loader=data.dev_loader,
+    for_rationale=False,
+    output_dims=data.nu_of_labels,
+    vocab_size=data.vocab_size,
+)
+lr_test = 1e-5
+logging.info(str(lr_test))
 train_and_save(
     train_data_loader=data.train_loader,
     dev_data_loader=data.dev_loader,
@@ -140,15 +198,15 @@ train_and_save(
 )
 
 ## in domain evaluation
-test_stats = test_predictive_performance(
-    test_data_loader=data.test_loader,
-    for_rationale=False,
-    output_dims=data.nu_of_labels,
-    save_output_probs=True,
-    vocab_size=data.vocab_size
-)
+# test_stats = test_predictive_performance(
+#     test_data_loader=data.test_loader,
+#     for_rationale=False,
+#     output_dims=data.nu_of_labels,
+#     save_output_probs=True,
+#     vocab_size=data.vocab_size
+# )
 
-print(test_stats)
+# print(test_stats)
 
 del data
 gc.collect()

@@ -22,7 +22,7 @@ parser.add_argument(
     "--dataset",
     type=str,
     help="select dataset / task",
-    default="sst",
+    default="complain_full",
     # choices = ["WS", "SST", "IMDB", "Yelp", "AmazDigiMu", "AmazPantry", "AmazInstr", "factcheck","factcheck_ood2","factcheck_ood1"]
 )
 
@@ -37,7 +37,7 @@ parser.add_argument(
     "--model_dir",
     type=str,
     help="directory to save models",
-    default="models/"
+    default="ft_model/"
 )
 
 parser.add_argument(
@@ -69,7 +69,7 @@ parser.add_argument(
 user_args = vars(parser.parse_args())
 user_args["importance_metric"] = None
 
-log_dir = "ft_bert/" + user_args["dataset"] + "_seed-" + str(user_args["seed"]) + "_" + date_time + "/"
+log_dir = "ft_model/" + user_args["dataset"] + "_seed-" + str(user_args["seed"]) + "_" + date_time + "/"
 config_dir = "experiment_config/train_" + user_args["dataset"] + "_seed-" + str(
     user_args["seed"]) + "_" + date_time + "/"
 
@@ -157,7 +157,7 @@ else:
         lr = lr_test, #3e-5, 2e-5
     )
 
-    lr_test = 2e-5
+    lr_test = 5e-5
     logging.info(str(lr_test))
     train_searchPara_and_save(
         train_data_loader=data.train_loader,
@@ -166,16 +166,7 @@ else:
         lr = lr_test, #,
     )
 
-    lr_test = 5e-5
-    logging.info(str(lr_test))
-    train_searchPara_and_save(
-        train_data_loader=data.train_loader,
-        dev_data_loader=data.dev_loader,
-        output_dims=data.nu_of_labels,
-        lr = lr_test, #3e-5, 2e-5
-    )
-
-    lr_test = 1e-6
+    lr_test = 1e-4
     logging.info(str(lr_test))
     train_searchPara_and_save(
         train_data_loader=data.train_loader,
@@ -185,6 +176,42 @@ else:
     )
 
     lr_test = 5e-4
+    logging.info(str(lr_test))
+    train_searchPara_and_save(
+        train_data_loader=data.train_loader,
+        dev_data_loader=data.dev_loader,
+        output_dims=data.nu_of_labels,
+        lr = lr_test, #3e-5, 2e-5
+    )
+
+    lr_test = 1e-3
+    logging.info(str(lr_test))
+    train_searchPara_and_save(
+        train_data_loader=data.train_loader,
+        dev_data_loader=data.dev_loader,
+        output_dims=data.nu_of_labels,
+        lr = lr_test, #3e-5, 2e-5
+    )
+
+    lr_test = 5e-3
+    logging.info(str(lr_test))
+    train_searchPara_and_save(
+        train_data_loader=data.train_loader,
+        dev_data_loader=data.dev_loader,
+        output_dims=data.nu_of_labels,
+        lr = lr_test, #3e-5, 2e-5
+    )
+
+    lr_test = 1e-2
+    logging.info(str(lr_test))
+    train_searchPara_and_save(
+        train_data_loader=data.train_loader,
+        dev_data_loader=data.dev_loader,
+        output_dims=data.nu_of_labels,
+        lr = lr_test, #3e-5, 2e-5
+    )
+
+    lr_test = 5e-2
     logging.info(str(lr_test))
     train_searchPara_and_save(
         train_data_loader=data.train_loader,

@@ -43,6 +43,7 @@ parser.add_argument(
 parser.add_argument(
     "--seed",
     type=int,
+    default=5,
     help="random seed for experiment"
 )
 

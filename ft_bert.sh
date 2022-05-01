@@ -37,7 +37,7 @@ extracted_rationale_dir="extracted_rationales/"
 thresholder="topk"
 
 
-python train_on_all_hypersearch.py --dataset factcheck --seed 5 --model_dir ft_bert_
+python train_on_all_hypersearch.py --dataset complain_full --seed 5 --model_dir ft_bert_
 
 
 

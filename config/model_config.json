@@ -150,7 +150,7 @@
     },
     "complain_full" : {
         "rationale_length" : 0.2,
-        "batch_size": 16,
+        "batch_size": 8,
         "lr_bert" : 1e-05,
         "lr_classifier" : 5e-6,
         "model" : "bert-base-uncased",
@@ -159,7 +159,7 @@
     },
     "complain" : {
         "rationale_length" : 0.2,
-        "batch_size": 16,
+        "batch_size": 8,
         "lr_bert" : 1e-05,
         "lr_classifier" : 5e-6,
         "model" : "bert-base-uncased",
@@ -168,7 +168,7 @@
     },
     "complain_ood1" : {
         "rationale_length" : 0.2,
-        "batch_size": 16,
+        "batch_size": 8,
         "lr_bert" : 1e-05,
         "lr_classifier" : 5e-6,
         "model" : "bert-base-uncased",
@@ -177,7 +177,7 @@
     },
     "complain_ood2" : {
         "rationale_length" : 0.2,
-        "batch_size": 16,
+        "batch_size": 8,
         "lr_bert" : 1e-05,
         "lr_classifier" : 5e-6,
         "model" : "bert-base-uncased",

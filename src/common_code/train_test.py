@@ -251,7 +251,7 @@ def train_hypersearch_model(model, training, development, loss_function, optimis
 
 
 def train_model(model, training, development, loss_function, optimiser, seed,
-            run,epochs = 10, cutoff = True, save_folder  = None, 
+            run, epochs = 10, cutoff = True, save_folder  = None, 
             cutoff_len = 2):
     
     """ 
@@ -311,6 +311,8 @@ def train_model(model, training, development, loss_function, optimiser, seed,
     logging.info("*saving checkpoint every {} iterations".format(every))
 
     if every == 0: every = 1
+
+    logging.info("+++++++++++++ epochs:  {}".format(epochs))    
 
     for epoch in range(epochs):
         

@@ -88,6 +88,15 @@ task_list = ['complain', 'binarybragging', 'xfact', 'factcheck', 'AmazDigiMu', '
 
 from datetime import datetime
 
+
+# https://towardsdatascience.com/5-types-of-plots-that-will-help-you-with-time-series-analysis-b63747818705
+# https://www.geeksforgeeks.org/how-to-plot-timeseries-based-charts-using-pandas/
+# *** https://seaborn.pydata.org/tutorial/distributions.html
+# https://pythonguides.com/matplotlib-time-series-plot/
+# https://realpython.com/pandas-plot-python/
+# https://www.kaggle.com/code/kashnitsky/topic-9-part-1-time-series-analysis-in-python/notebook
+# https://www.oreilly.com/library/view/python-data-science/9781491912126/ch04.html
+# *** https://chartio.com/learn/charts/box-plot-complete-guide/
 if args.plot_time_distribution:
     def df2stat_df(df, domain):
         if "xfact" in str(args.dataset):

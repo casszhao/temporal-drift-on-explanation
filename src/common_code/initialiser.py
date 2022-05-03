@@ -81,8 +81,8 @@ def prepare_config(user_args, stage = "train") -> dict:
     embed_model = default_args["embed_model"]
 
     if user_args["inherently_faithful"] == "full_lstm":
-
-      epochs = 5
+      epochs = 5 if "Amaz" in str(user_args["dataset"]) else 10
+      
 
   else:
 

@@ -20,7 +20,7 @@ parser.add_argument(
     "--dataset", 
     type = str, 
     help = "select dataset / task", 
-    default = "sst", 
+    default = "complain", 
     # choices = ["WS", "SST","IMDB", "Yelp", "AmazDigiMu", "AmazPantry", "AmazInstr", "fc1", "fc2", "fc3"]
 )
 
@@ -35,7 +35,7 @@ parser.add_argument(
     "--model_dir",   
     type = str, 
     help = "directory to save models", 
-    default = "full_text_models/"
+    default = "FRESH_classifiers/"
 )
 
 parser.add_argument(

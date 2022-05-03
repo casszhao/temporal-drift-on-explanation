@@ -70,13 +70,20 @@ parser.add_argument(
     action='store_true',
     default=False
 )
+
+parser.add_argument(
+    '--combine_all_data_stat',
+    help='decide which parts are in need',
+    action='store_true',
+    default=False
+)
 args = parser.parse_args()
 
 datasets_dir = 'saved_everything/' + str(args.dataset)
 os.makedirs(datasets_dir, exist_ok = True)
 
 
-
+task_list = ['complain', 'binarybragging', 'xfact', 'factcheck', 'AmazDigiMu', 'AmazInstr', 'AmazPantry']
 ######################## plot time distribution
 
 from datetime import datetime
@@ -161,6 +168,17 @@ if args.plot_time_distribution:
 
 from datetime import datetime
 
+if args.combine_all_data_stat:
+    df_list = []
+    for i, task in enumerate(task_list):
+        if i == 0:
+            df = pd.read_csv('./saved_everything/'+ str(task) +'/dataset_stats.csv')
+        else:
+            temp_df = pd.read_csv('./saved_everything/'+ str(task) +'/dataset_stats.csv')
+            df = pd.concat([df, temp_df])
+    df.to_csv('./saved_everything/all_dataset_stats.csv')      
+
+
 if args.save_data_stat:
     def df2stat_df(df, domain):
         if "xfact" in str(args.dataset):
@@ -172,6 +190,7 @@ if args.save_data_stat:
             df = df.dropna().sort_values(by='date', na_position='first') 
         
         label_dist = df['label'].value_counts().to_string()
+        label_num = df['label'].nunique()
 
         start_date = df['date'].iloc[0]
         end_date = df['date'].iloc[-1]
@@ -199,18 +218,18 @@ if args.save_data_stat:
             Interquartile_end = DATE[quartile]
             inter_duration = Interquartile_end - Interquartile_start
 
-        stat_df = pd.DataFrame({'Domain': [str(domain)], 'Label distribution': [label_dist], 'Interquartile-Oldest': [Interquartile_start],
-                                'Median': [Interquartile_Mid], 'Interquartile-Newest': [Interquartile_end],
-                                'InterTimeSpan(D)': [inter_duration.days],
-                                'Oldest Date': [start_date], 'Newest Date': [end_date], 'TimeSpan(D)': [duration.days],
+        stat_df = pd.DataFrame({'Domain': [str(domain)], 'Label Num': [label_num], 'Label distribution': [label_dist], 'Interquartile-Oldest': [Interquartile_start],
+                                'Median Date': [Interquartile_Mid], 'Interquartile-Newest': [Interquartile_end],
+                                'Interquartile Time Span(Days)': [inter_duration.days],
+                                'Start Date': [start_date], 'End Date': [end_date], 'Time Span(Days)': [duration.days],
                                 'Data Num': [len(df)],
                                 })
         
-        stat_df['InterTimeSpan(D)'] = pd.to_numeric(stat_df['InterTimeSpan(D)'].astype(str).str.replace(r' days$', '', regex=True))
-        stat_df['TimeSpan(D)'] = pd.to_numeric(stat_df['TimeSpan(D)'].astype(str).str.replace(r' days$', '', regex=True))
+        stat_df['Interquartile Time Span(Days)'] = pd.to_numeric(stat_df['Interquartile Time Span(Days)'].astype(str).str.replace(r' days$', '', regex=True))
+        stat_df['Time Span(Days)'] = pd.to_numeric(stat_df['Time Span(Days)'].astype(str).str.replace(r' days$', '', regex=True))
 
-        stat_df['TimeDensity'] = stat_df['Data Num']/stat_df['TimeSpan(D)']
-        stat_df['InterTimeDensity'] = stat_df['Data Num']*0.5/stat_df['InterTimeSpan(D)']
+        stat_df['TimeDensity'] = stat_df['Data Num']/stat_df['Interquartile Time Span(Days)']
+        stat_df['InterTimeDensity'] = stat_df['Data Num']*0.5/stat_df['Interquartile Time Span(Days)']
         stat_df['Data Num'] = pd.to_numeric(stat_df['Data Num'])
 
         print('done for :', str(domain))
@@ -221,12 +240,15 @@ if args.save_data_stat:
 ############################# read data in ##################
     if "xfact" in str(args.dataset) or "factcheck" in str(args.dataset):
         # for xfact only, only read in adding, to make a dataset for full data
-        full_df_1 = pd.read_json('datasets/'+ str(args.dataset) +'/data/train.json')
-        full_df_2 = pd.read_json('datasets/'+ str(args.dataset) +'/data/test.json')
+        full_df_11 = pd.read_json('datasets/'+ str(args.dataset) +'/data/train.json')
+        full_df_21 = pd.read_json('datasets/'+ str(args.dataset) +'/data/test.json')
         full_df_3 = pd.read_json('datasets/'+ str(args.dataset) +'/data/dev.json')
         full_df_4 = pd.read_json('datasets/'+ str(args.dataset) +'_ood1/data/test.json')
         full_df_5 = pd.read_json('datasets/'+ str(args.dataset) +'_ood2/data/test.json')
-        full_df = pd.concat([full_df_1, full_df_2, full_df_3, full_df_4, full_df_5], ignore_index=False)
+        full_df = pd.concat([full_df_11, full_df_21, full_df_3, full_df_4, full_df_5], ignore_index=False)
+
+        full_df_1 = pd.read_json('datasets/xfact_full/data/train.json')
+        full_df_2 = pd.read_json('datasets/xfact_full/data/test.json')
 
     # elif "factcheck" in str(args.dataset):
     #     full_df = pd.read_csv('./datasets/'+str(args.dataset)+'_full/data/'+str(args.dataset)+'_full.json')
@@ -234,8 +256,8 @@ if args.save_data_stat:
         full_df_1 = pd.read_json('datasets/'+ str(args.dataset) +'_full/data/train.json')
         full_df_2 = pd.read_json('datasets/'+ str(args.dataset) +'_full/data/test.json')
         full_df_3 = pd.read_json('datasets/'+ str(args.dataset) +'_full/data/dev.json')
-        full_df = pd.concat([full_df_1, full_df_2, full_df_3], ignore_index=False)
-
+    
+    full_df = pd.concat([full_df_1, full_df_2, full_df_3], ignore_index=False)
 
     indomain_train_df = pd.read_json('datasets/'+ str(args.dataset) +'/data/train.json')
     indomain_test_df = pd.read_json('datasets/'+ str(args.dataset) +'/data/test.json')
@@ -243,34 +265,39 @@ if args.save_data_stat:
     ood2_df = pd.read_json('datasets/'+ str(args.dataset) +'_ood2/data/test.json')
 
 
-    full = df2stat_df(full_df, 'Full')
+    full = df2stat_df(full_df, 'Original (full size)')
+    full_train = df2stat_df(full_df_1, 'Original Train')
+    full_test = df2stat_df(full_df_2, 'Original Test')
     indomain_train = df2stat_df(indomain_train_df, 'In Domain Train')
     indomain_test = df2stat_df(indomain_test_df, 'InDomain')
     ood1 = df2stat_df(ood1_df, 'OOD1')
     ood2 = df2stat_df(ood2_df, 'OOD2')
 
-    df = pd.concat([full, indomain_train, indomain_test, ood1, ood2])
+    df = pd.concat([full, full_train, full_test, indomain_train, indomain_test, ood1, ood2])
 
-    start_date = df.iloc[0]['Oldest Date']
-    end_date = df.iloc[0]['Newest Date']
+    start_date = df.iloc[0]['Start Date']
+    end_date = df.iloc[0]['End Date']
     Inter_start_date = df.iloc[0]['Interquartile-Oldest']
     Inter_end_date = df.iloc[0]['Interquartile-Newest']
-    Median = df.iloc[0]['Median']
+    Median = df.iloc[0]['Median Date']
 
-    TimeSpan = df.iloc[0]['TimeSpan(D)']
+    TimeSpan = df.iloc[0]['Interquartile Time Span(Days)']
     print('==============')
     print(TimeSpan)
-    InterTimeSpan = df.iloc[0]['InterTimeSpan(D)']
+    InterTimeSpan = df.iloc[0]['Interquartile Time Span(Days)']
     
-    print(abs(df['Oldest Date']-start_date))
+    print(abs(df['Start Date']-start_date))
 
-    df['TimeDiff'] = abs(df['Oldest Date']-start_date) + abs(df['Newest Date']-end_date) + abs(df['Interquartile-Oldest']-Inter_start_date) + abs(df['Interquartile-Newest']-Inter_end_date) + abs(df['Median']-Median)
+    df['TimeDiff'] = abs(df['Start Date']-start_date) + abs(df['End Date']-end_date) + abs(df['Interquartile-Oldest']-Inter_start_date) + abs(df['Interquartile-Newest']-Inter_end_date) + abs(df['Median Date']-Median)
     df['TimeDiff'] = pd.to_numeric(df['TimeDiff'].astype(str).str.replace(r' days$', '', regex=True))/(TimeSpan*0.5+InterTimeSpan*0.5)
     print(df['TimeDiff'])
 
+    df['Task'] = str(args.dataset)
+
+    df = df[['Task', 'Label Num', 'Domain', 'Start Date', 'End Date', 'Time Span(Days)', 'Median Date',
+            'Interquartile Time Span(Days)', 'Data Num']]
+
     df.to_csv('./saved_everything/'+ str(args.dataset) +'/dataset_stats.csv')
-
-
 
 
 

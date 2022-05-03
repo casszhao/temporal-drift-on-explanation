@@ -187,14 +187,14 @@ echo "done eval kuma"
 
 
 ##### change name for
-cd ./FRESH_classifiers/
-echo 'go change name for scaled attention'
-shopt -s globstar
-for file in **/*\ *
-do
-    mv "$file" "${file// /_}"
-done
-cd ../../
+# cd ./FRESH_classifiers/
+# echo 'go change name for scaled attention'
+# shopt -s globstar
+# for file in **/*\ *
+# do
+#     mv "$file" "${file// /_}"
+# done
+# cd ../../
 
 
 ##### scaled\ attention

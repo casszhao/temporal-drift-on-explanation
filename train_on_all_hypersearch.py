@@ -148,7 +148,7 @@ if args["evaluate_models"]:
     keep_best_model_(keep_models=False)
 
 else:
-    lr_test = 1e-5
+    lr_test = 2e-5
     logging.info('batch size 16')
     logging.info(str(lr_test))
     train_searchPara_and_save(
@@ -158,7 +158,15 @@ else:
         lr = lr_test, #3e-5, 2e-5
     )
 
-    lr_test = 5e-5
+    test_stats = test_predictive_performance(
+        test_data_loader=data.test_loader,
+        for_rationale=False,
+        output_dims=data.nu_of_labels,
+        save_output_probs=True,
+        vocab_size=data.vocab_size
+    )
+
+    lr_test = 3e-5
     logging.info(str(lr_test))
     train_searchPara_and_save(
         train_data_loader=data.train_loader,
@@ -166,8 +174,16 @@ else:
         output_dims=data.nu_of_labels,
         lr = lr_test, #,
     )
+    test_stats = test_predictive_performance(
+        test_data_loader=data.test_loader,
+        for_rationale=False,
+        output_dims=data.nu_of_labels,
+        save_output_probs=True,
+        vocab_size=data.vocab_size
+    )
 
-    lr_test = 1e-4
+
+    lr_test = 4e-5
     logging.info(str(lr_test))
     train_searchPara_and_save(
         train_data_loader=data.train_loader,
@@ -176,7 +192,7 @@ else:
         lr = lr_test, #3e-5, 2e-5
     )
 
-    lr_test = 5e-4
+    lr_test = 6e-5
     logging.info(str(lr_test))
     train_searchPara_and_save(
         train_data_loader=data.train_loader,
@@ -185,7 +201,7 @@ else:
         lr = lr_test, #3e-5, 2e-5
     )
 
-    lr_test = 1e-3
+    lr_test = 1e-7
     logging.info(str(lr_test))
     train_searchPara_and_save(
         train_data_loader=data.train_loader,
@@ -194,25 +210,41 @@ else:
         lr = lr_test, #3e-5, 2e-5
     )
 
-    lr_test = 5e-3
+    lr_test = 5e-6
     logging.info(str(lr_test))
     train_searchPara_and_save(
         train_data_loader=data.train_loader,
         dev_data_loader=data.dev_loader,
         output_dims=data.nu_of_labels,
         lr = lr_test, #3e-5, 2e-5
+    )
+    test_stats = test_predictive_performance(
+        test_data_loader=data.test_loader,
+        for_rationale=False,
+        output_dims=data.nu_of_labels,
+        save_output_probs=True,
+        vocab_size=data.vocab_size
     )
 
-    lr_test = 1e-2
+
+    lr_test = 1e-6
     logging.info(str(lr_test))
     train_searchPara_and_save(
         train_data_loader=data.train_loader,
         dev_data_loader=data.dev_loader,
         output_dims=data.nu_of_labels,
         lr = lr_test, #3e-5, 2e-5
+    )
+    test_stats = test_predictive_performance(
+        test_data_loader=data.test_loader,
+        for_rationale=False,
+        output_dims=data.nu_of_labels,
+        save_output_probs=True,
+        vocab_size=data.vocab_size
     )
 
-    lr_test = 5e-2
+
+    lr_test = 2e-6
     logging.info(str(lr_test))
     train_searchPara_and_save(
         train_data_loader=data.train_loader,
@@ -220,3 +252,28 @@ else:
         output_dims=data.nu_of_labels,
         lr = lr_test, #3e-5, 2e-5
     )
+    test_stats = test_predictive_performance(
+        test_data_loader=data.test_loader,
+        for_rationale=False,
+        output_dims=data.nu_of_labels,
+        save_output_probs=True,
+        vocab_size=data.vocab_size
+    )
+
+    lr_test = 4e-6
+    logging.info(str(lr_test))
+    train_searchPara_and_save(
+        train_data_loader=data.train_loader,
+        dev_data_loader=data.dev_loader,
+        output_dims=data.nu_of_labels,
+        lr = lr_test, #3e-5, 2e-5
+    )
+    test_stats = test_predictive_performance(
+        test_data_loader=data.test_loader,
+        for_rationale=False,
+        output_dims=data.nu_of_labels,
+        save_output_probs=True,
+        vocab_size=data.vocab_size
+    )
+    del data
+    gc.collect()

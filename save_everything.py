@@ -101,11 +101,14 @@ def df2stat_df(df, domain):
         df['date'] = pd.to_datetime(df['date'], errors='coerce', utc=True).dt.date
         df = df.dropna().sort_values(by='date', na_position='first')
 
-    if args.dataset == 'binarybragging':
-        df['Year'] = pd.to_datetime(df['date'].astype(str).str[:4])
-        # df['Year'] = df['date'].astype(str).str[:7]
-    else:
-        df['Year'] = pd.DatetimeIndex(df['date']).year
+    # if args.dataset == 'binarybragging':
+    #     print(df['date'])
+    #     df['Year'] = pd.to_datetime(df['date'].astype(str).str[:4]).dt.date
+    #     print(df['Year'])
+    #     # df['Year'] = df['date'].astype(str).str[:7]
+    # else:
+    #    df['Year'] = pd.DatetimeIndex(df['date']).year
+    df['Year'] = pd.DatetimeIndex(df['date']).year
     df['Temporal Domain'] = str(domain)
 
     stat_df = df[['Year', 'Temporal Domain']]
@@ -157,13 +160,13 @@ if args.plot_time_distribution:
     sns.violinplot(y=df['Year'], x=df['Temporal Domain'], showmedians=True, showextrema=True, palette="rocket",
     scale='width')
     #sns.boxplot(y=df['Year'], x=df['Temporal Domain'], palette="rocket")
-    plt.title('Complaints', fontsize=18)
+    plt.title('Bragging', fontsize=18)
     # plt.ylabel("Percentage")
     #plt.xlabel("Full size", "InDomain Train", "InDomain Test", "OOD1 Test", "OOD2 Test")
     #plt.legend(bbox_to_anchor=(1, 1, 0.28, 0.28), loc='best', borderaxespad=1)
     plt.tight_layout()
     # plt.xticks(fontsize= )
-    plt.savefig('./TimeDist/'+str(args.dataset)+'_vio2.png', bbox_inches = 'tight', dpi=250, format='png')
+    plt.savefig('./TimeDist/'+str(args.dataset)+'_vio.png', bbox_inches = 'tight', dpi=250, format='png')
     plt.show()
 
 # https://stackoverflow.com/questions/59346731/no-handles-with-labels-found-to-put-in-legend

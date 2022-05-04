@@ -162,7 +162,7 @@ if args.plot_time_distribution:
     if args.dataset == 'binarybragging':
         sns.displot(x=df['Year'],hue=df['Domain'], kind="kde") 
     else:
-        sns.displot(x=df['Year'],hue=df['Domain'], kind="kde") 
+        sns.violinplot(x=df['Year'],hue=df['Domain'], kind="kde") 
     plt.title(str(args.dataset), fontsize=20)
     plt.ylabel("Percentage")
     plt.legend(bbox_to_anchor=(1, 1, 0.28, 0.28), loc='best', borderaxespad=1)

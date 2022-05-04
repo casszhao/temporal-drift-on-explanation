@@ -14,6 +14,7 @@ import json
 import csv
 import config.cfg
 import os
+import numpy as np
 import argparse
 import fnmatch
 import seaborn as sns
@@ -153,22 +154,33 @@ if args.plot_time_distribution:
     ood2 = df2stat_df(ood2_df, 'OOD2 Test')
 
     df = pd.concat([full, indomain_train, indomain_test, ood1, ood2]).reset_index(drop=True)
-    # pd.to_numeric(df['Year'], downcast='integer')
-    print(df)
 
-    #df['Year'] = pd.to_numeric(df['Year'])
-    sns.violinplot(y=df['Year'], x=df['Temporal Domain'], showmedians=True, showextrema=True, palette="rocket",
-    scale='width')
-    #sns.boxplot(y=df['Year'], x=df['Temporal Domain'], palette="rocket")
-    plt.title('Bragging', fontsize=18)
+    kwargs = dict(histtype='step', alpha=0.9)
+
+    plt.hist(full['Year'], **kwargs, label='Full')
+    plt.hist(indomain_test['Year'], **kwargs, label='InDomain Test')
+    plt.hist(ood1['Year'], **kwargs, label='OOD1 Test')
+    plt.hist(ood2['Year'], **kwargs, label='OOD2 Test')
+    plt.legend(bbox_to_anchor=(1, 0.7, 0.35, 0.35), loc='best', borderaxespad=1)
+    plt.title('Factcheck', fontsize=18)
+    plt.savefig('./TimeDist/'+str(args.dataset)+'_box.png', bbox_inches = 'tight', dpi=250, format='png')
+    plt.show()
+
+'''
+   
+    #sns.violinplot(y=df['Year'], x=df['Temporal Domain'], showmedians=True, showextrema=True, palette="rocket",scale='width')
+    #sns.boxplot(y=df['Year'], x=df['Temporal Domain'], palette="rocket", whis=np.inf)
+    sns.displot(df, x="Year", hue="Temporal Domain", stat="density", common_norm=False)
+    plt.title('Xfact', fontsize=18)
     # plt.ylabel("Percentage")
     #plt.xlabel("Full size", "InDomain Train", "InDomain Test", "OOD1 Test", "OOD2 Test")
     #plt.legend(bbox_to_anchor=(1, 1, 0.28, 0.28), loc='best', borderaxespad=1)
     plt.tight_layout()
     # plt.xticks(fontsize= )
-    plt.savefig('./TimeDist/'+str(args.dataset)+'_vio.png', bbox_inches = 'tight', dpi=250, format='png')
-    plt.show()
 
+    plt.savefig('./TimeDist/'+str(args.dataset)+'_box.png', bbox_inches = 'tight', dpi=250, format='png')
+    plt.show()
+'''
 # https://stackoverflow.com/questions/59346731/no-handles-with-labels-found-to-put-in-legend
 
 

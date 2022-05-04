@@ -88,6 +88,15 @@ task_list = ['complain', 'binarybragging', 'xfact', 'factcheck', 'AmazDigiMu', '
 
 from datetime import datetime
 
+
+# https://towardsdatascience.com/5-types-of-plots-that-will-help-you-with-time-series-analysis-b63747818705
+# https://www.geeksforgeeks.org/how-to-plot-timeseries-based-charts-using-pandas/
+# *** https://seaborn.pydata.org/tutorial/distributions.html
+# https://pythonguides.com/matplotlib-time-series-plot/
+# https://realpython.com/pandas-plot-python/
+# https://www.kaggle.com/code/kashnitsky/topic-9-part-1-time-series-analysis-in-python/notebook
+# https://www.oreilly.com/library/view/python-data-science/9781491912126/ch04.html
+# *** https://chartio.com/learn/charts/box-plot-complete-guide/
 if args.plot_time_distribution:
     def df2stat_df(df, domain):
         if "xfact" in str(args.dataset):
@@ -181,6 +190,7 @@ if args.combine_all_data_stat:
 
 if args.save_data_stat:
     def df2stat_df(df, domain):
+        print(df)
         if "xfact" in str(args.dataset):
             df = df[pd.to_datetime(df['claimDate'], errors='coerce').notna()] # claimDate  for xfact
             df = df.dropna().sort_values(by='claimDate', na_position='first') # claimDate  for xfact
@@ -188,9 +198,11 @@ if args.save_data_stat:
         else:            
             df['date'] = pd.to_datetime(df['date'], errors = 'coerce', utc=True).dt.date
             df = df.dropna().sort_values(by='date', na_position='first') 
+            print(df)
         
         label_dist = df['label'].value_counts().to_string()
         label_num = df['label'].nunique()
+        print(df)
 
         start_date = df['date'].iloc[0]
         end_date = df['date'].iloc[-1]
@@ -238,7 +250,7 @@ if args.save_data_stat:
 
 
 ############################# read data in ##################
-    if "xfact" in str(args.dataset) or "factcheck" in str(args.dataset):
+    if "xfact" in str(args.dataset):
         # for xfact only, only read in adding, to make a dataset for full data
         full_df_11 = pd.read_json('datasets/'+ str(args.dataset) +'/data/train.json')
         full_df_21 = pd.read_json('datasets/'+ str(args.dataset) +'/data/test.json')

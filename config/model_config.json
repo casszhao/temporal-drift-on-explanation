@@ -1,0 +1,322 @@
+{   "epochs" : 5,
+    "model_abbreviation" :      {"bert-base-uncased": "bert",
+                                 "bert-base-cased": "bert-cased",
+                                 "allenai/scibert_scivocab_uncased": "scibert",
+                                 "roberta-base": "roberta"},
+    "embed_model" : "glove.840B.300d",
+    "factcheck_full" : {
+        "rationale_length" : 0.2,
+        "batch_size": 64,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "factcheck_ood1",
+        "ood_dataset_2": "factcheck_ood2"
+    },
+    "factcheck" : {
+        "rationale_length" : 0.2,
+        "batch_size": 64,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "factcheck_ood1",
+        "ood_dataset_2": "factcheck_ood2"
+    },
+    "factcheck_ood1" : {
+        "rationale_length" : 0.2,
+        "batch_size": 64,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "factcheck",
+        "ood_dataset_2": "factcheck_ood2"
+    },
+    "factcheck_ood2" : {
+        "rationale_length" : 0.2,
+        "batch_size": 64,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "factcheck_ood1",
+        "ood_dataset_2": "factcheck"
+    },
+    "xfact_full" : {
+        "rationale_length" : 0.2,
+        "batch_size": 64,
+        "lr_bert" : 2e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "xfact_ood1",
+        "ood_dataset_2": "xfact_ood2"
+    },
+    "xfact" : {
+        "rationale_length" : 0.2,
+        "batch_size": 64,
+        "lr_bert" : 2e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "xfact_ood1",
+        "ood_dataset_2": "xfact_ood2"
+    },
+    "xfact_ood1" : {
+        "rationale_length" : 0.2,
+        "batch_size": 64,
+        "lr_bert" : 2e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "xfact",
+        "ood_dataset_2": "xfact_ood2"
+    },
+    "xfact_ood2" : {
+        "rationale_length" : 0.2,
+        "batch_size": 64,
+        "lr_bert" : 2e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "xfact_ood1",
+        "ood_dataset_2": "xfact"
+    },
+    "binarybragging_full" : {
+        "rationale_length" : 0.2,
+        "batch_size": 32,
+        "lr_bert" : 5e-6,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "binarybragging_ood1",
+        "ood_dataset_2": "binarybragging_ood2"
+    },
+    "binarybragging" : {
+        "rationale_length" : 0.2,
+        "batch_size": 32,
+        "lr_bert" : 5e-6,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "binarybragging_ood1",
+        "ood_dataset_2": "binarybragging_ood2"
+    },
+    "binarybragging_ood1" : {
+        "rationale_length" : 0.2,
+        "batch_size": 32,
+        "lr_bert" : 5e-6,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "binarybragging",
+        "ood_dataset_2": "binarybragging_ood2"
+    },
+    "binarybragging_ood2" : {
+        "rationale_length" : 0.2,
+        "batch_size": 32,
+        "lr_bert" : 5e-6,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "binarybragging_ood1",
+        "ood_dataset_2": "binarybragging"
+    },
+    "bragging_full" : {
+        "rationale_length" : 0.2,
+        "batch_size": 16,
+        "lr_bert" : 3e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "bragging_ood1",
+        "ood_dataset_2": "bragging_ood2"
+    },
+    "bragging" : {
+        "rationale_length" : 0.2,
+        "batch_size": 16,
+        "lr_bert" : 3e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "bragging_ood1",
+        "ood_dataset_2": "bragging_ood2"
+    },
+    "bragging_ood1" : {
+        "rationale_length" : 0.2,
+        "batch_size": 16,
+        "lr_bert" : 3e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "bragging",
+        "ood_dataset_2": "bragging_ood2"
+    },
+    "bragging_ood2" : {
+        "rationale_length" : 0.2,
+        "batch_size": 16,
+        "lr_bert" : 3e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "bragging_ood1",
+        "ood_dataset_2": "bragging"
+    },
+    "complain_full" : {
+        "rationale_length" : 0.2,
+        "batch_size": 64,
+        "lr_bert" : 1e-05,
+        "lr_classifier" : 1e-05,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "complain_ood1",
+        "ood_dataset_2": "complain_ood2"
+    },
+    "complain" : {
+        "rationale_length" : 0.2,
+        "batch_size": 64,
+        "lr_bert" : 1e-05,
+        "lr_classifier" : 1e-05,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "complain_ood1",
+        "ood_dataset_2": "complain_ood2"
+    },
+    "complain_ood1" : {
+        "rationale_length" : 0.2,
+        "batch_size": 64,
+        "lr_bert" : 1e-05,
+        "lr_classifier" : 1e-05,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "complain",
+        "ood_dataset_2": "complain_ood2"
+    },
+    "complain_ood2" : {
+        "rationale_length" : 0.2,
+        "batch_size": 64,
+        "lr_bert" : 1e-05,
+        "lr_classifier" : 1e-05,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "complain_ood1",
+        "ood_dataset_2": "complain"
+    },
+    "IMDB" : {
+        "rationale_length" : 0.02,
+        "batch_size" : 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "SST",
+        "ood_dataset_2": "Yelp"
+    },
+    "SST" : {
+        "rationale_length" : 0.2,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "IMDB",
+        "ood_dataset_2": "Yelp"
+    },
+    "Yelp" : {
+        "rationale_length" : 0.1,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4, 
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "SST",
+        "ood_dataset_2": "IMDB"
+    },
+    "AmazDigiMu": {
+        "rationale_length" : 0.2,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4, 
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "AmazDigiMu_ood1",
+        "ood_dataset_2": "AmazDigiMu_ood2"
+    },
+    "AmazDigiMu_full": {
+        "rationale_length" : 0.2,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "AmazDigiMu_ood1",
+        "ood_dataset_2": "AmazDigiMu_ood2"
+    },
+    "AmazDigiMu_ood1": {
+        "rationale_length" : 0.2,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "AmazDigiMu",
+        "ood_dataset_2": "AmazDigiMu_ood2"
+    },
+    "AmazDigiMu_ood2": {
+        "rationale_length" : 0.2,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "AmazDigiMu",
+        "ood_dataset_2": "AmazDigiMu_ood1"
+    },
+    "AmazInstr" : {
+        "rationale_length" : 0.2,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4, 
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "AmazInstr_ood1",
+        "ood_dataset_2": "AmazInstr_ood2"
+    },
+    "AmazInstr_full" : {
+        "rationale_length" : 0.2,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "AmazInstr_ood1",
+        "ood_dataset_2": "AmazInstr_ood2"
+    },
+        "AmazInstr_ood1" : {
+        "rationale_length" : 0.2,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "AmazInstr",
+        "ood_dataset_2": "AmazInstr_ood2"
+    },
+        "AmazInstr_ood2" : {
+        "rationale_length" : 0.2,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "AmazInstr",
+        "ood_dataset_2": "AmazInstr_ood1"
+    },
+    "AmazPantry" : {
+        "rationale_length" : 0.2,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4, 
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "AmazPantry_ood1",
+        "ood_dataset_2": "AmazPantry_ood2"
+    },
+    "AmazPantry_full" : {
+        "rationale_length" : 0.2,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "AmazPantry_ood1",
+        "ood_dataset_2": "AmazPantry_ood2"
+    },
+        "AmazPantry_ood1" : {
+        "rationale_length" : 0.2,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "AmazPantry",
+        "ood_dataset_2": "AmazPantry_ood2"
+    },
+        "AmazPantry_ood2" : {
+        "rationale_length" : 0.2,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "AmazPantry",
+        "ood_dataset_2": "AmazPantry_ood1"
+    }
+}

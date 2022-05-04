@@ -127,16 +127,16 @@ xfact_full = xfact = xfact_ood1 = xfact_ood2 = {
 
 complain_full = complain = complain_ood1 = complain_ood2 = {
     "OPTIM_ARGS_" : {     ## for Adam Loss
-        "lr" : 0.00001,
+        "lr" : 0.00001, # || MAYBE decrease# can try lower
         "weight_decay" : 0.00001,
         "betas" : [0.9, 0.999],
         "amsgrad" : False,
     },
     "MODEL_ARGS_" : {     ## model args
         "lasso":           0.0,
-        "lambda_init":     1e-6,
-        "lagrange_lr":     1e-5, # have tried 1e-2, 1e-3
-        "lagrange_alpha":  0.8, # have tried 0.9, 0.8, 0.7
+        "lambda_init":     1e-6, # || 1e-4
+        "lagrange_lr":     1e-5, # have tried 1e-2, 1e-3 || 
+        "lagrange_alpha":  0.8, # have tried 0.9, 0.8, 0.7 || 0.85 penalty to rationales length
     }
 }
 

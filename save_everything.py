@@ -89,6 +89,28 @@ task_list = ['complain', 'binarybragging', 'xfact', 'factcheck', 'AmazDigiMu', '
 from datetime import datetime
 
 
+def df2stat_df(df, domain):
+    if "xfact" in str(args.dataset):
+        df = df[pd.to_datetime(df['claimDate'], errors='coerce').notna()]  # claimDate  for xfact
+        df = df.dropna().sort_values(by='claimDate', na_position='first')  # claimDate  for xfact
+        df['date'] = pd.to_datetime(df['claimDate']).dt.date  # claimDate  for xfact
+    else:
+        # df = df[pd.to_datetime(df['date'], errors='coerce').notna()]
+        # df = df.dropna().sort_values(by='date', na_position='first')
+        # df['date'] = pd.to_datetime(df['date']).dt.date
+        df['date'] = pd.to_datetime(df['date'], errors='coerce', utc=True).dt.date
+        df = df.dropna().sort_values(by='date', na_position='first')
+
+    if args.dataset == 'binarybragging':
+        df['Year'] = pd.to_datetime(df['date'].astype(str).str[:4])
+        # df['Year'] = df['date'].astype(str).str[:7]
+    else:
+        df['Year'] = pd.DatetimeIndex(df['date']).year
+    df['Temporal Domain'] = str(domain)
+
+    stat_df = df[['Year', 'Temporal Domain']]
+
+    return stat_df
 # https://towardsdatascience.com/5-types-of-plots-that-will-help-you-with-time-series-analysis-b63747818705
 # https://www.geeksforgeeks.org/how-to-plot-timeseries-based-charts-using-pandas/
 # *** https://seaborn.pydata.org/tutorial/distributions.html
@@ -98,30 +120,6 @@ from datetime import datetime
 # https://www.oreilly.com/library/view/python-data-science/9781491912126/ch04.html
 # *** https://chartio.com/learn/charts/box-plot-complete-guide/
 if args.plot_time_distribution:
-    def df2stat_df(df, domain):
-        if "xfact" in str(args.dataset):
-            df = df[pd.to_datetime(df['claimDate'], errors='coerce').notna()] # claimDate  for xfact
-            df = df.dropna().sort_values(by='claimDate', na_position='first') # claimDate  for xfact
-            df['date'] = pd.to_datetime(df['claimDate']).dt.date              # claimDate  for xfact
-        else:
-            # df = df[pd.to_datetime(df['date'], errors='coerce').notna()] 
-            # df = df.dropna().sort_values(by='date', na_position='first') 
-            # df['date'] = pd.to_datetime(df['date']).dt.date  
-            df['date'] = pd.to_datetime(df['date'], errors = 'coerce', utc=True).dt.date
-            df = df.dropna().sort_values(by='date', na_position='first') 
-
-        if args.dataset == 'binarybragging':
-            df['Year'] = pd.to_datetime(df['date'].astype(str).str[:7])
-            #df['Year'] = df['date'].astype(str).str[:7]
-        else:       
-            df['Year'] = pd.DatetimeIndex(df['date']).year
-        df['Domain'] = str(domain)
-
-        stat_df = df[['Year', 'Domain']]
-        
-        return stat_df
-
-
 ############################# read data in ##################
     if "xfact" in str(args.dataset) or "factcheck" in str(args.dataset):
         # for xfact only, only read in adding, to make a dataset for full data
@@ -131,7 +129,6 @@ if args.plot_time_distribution:
         full_df_4 = pd.read_json('datasets/'+ str(args.dataset) +'_ood1/data/test.json')
         full_df_5 = pd.read_json('datasets/'+ str(args.dataset) +'_ood2/data/test.json')
         full_df = pd.concat([full_df_1, full_df_2, full_df_3, full_df_4, full_df_5], ignore_index=False)
-
     # elif "factcheck" in str(args.dataset):
     #     full_df = pd.read_csv('./datasets/'+str(args.dataset)+'_full/data/'+str(args.dataset)+'_full.csv')
     else:
@@ -146,28 +143,25 @@ if args.plot_time_distribution:
     ood1_df = pd.read_json('datasets/'+ str(args.dataset) +'_ood1/data/test.json')
     ood2_df = pd.read_json('datasets/'+ str(args.dataset) +'_ood2/data/test.json')
 
-    full = df2stat_df(full_df, 'Full')
-    indomain_train = df2stat_df(indomain_train_df, 'InDomain Train')
-    indomain_test = df2stat_df(indomain_test_df, 'InDomain Test')
-    ood1 = df2stat_df(ood1_df, 'OOD1')
-    ood2 = df2stat_df(ood2_df, 'OOD2')
+    full = df2stat_df(full_df, 'Full Data')
+    indomain_train = df2stat_df(indomain_train_df, 'InDomainTrain')
+    indomain_test = df2stat_df(indomain_test_df, 'InDomainTest')
+    ood1 = df2stat_df(ood1_df, 'OOD1 Test')
+    ood2 = df2stat_df(ood2_df, 'OOD2 Test')
 
     df = pd.concat([full, indomain_train, indomain_test, ood1, ood2]).reset_index(drop=True)
     # pd.to_numeric(df['Year'], downcast='integer')
     print(df)
-    # penguins = sns.load_dataset("penguins")
-    # print(penguins)
-    # sns.displot(penguins, x="flipper_length_mm", hue="species", kind="kde")
-    # plt.show()
-    if args.dataset == 'binarybragging':
-        sns.displot(x=df['Year'],hue=df['Domain'], kind="kde") 
-    else:
-        sns.violinplot(x=df['Year'],hue=df['Domain'], kind="kde") 
-    plt.title(str(args.dataset), fontsize=20)
-    plt.ylabel("Percentage")
-    plt.legend(bbox_to_anchor=(1, 1, 0.28, 0.28), loc='best', borderaxespad=1)
+
+    #df['Year'] = pd.to_numeric(df['Year'])
+    sns.violinplot(y=df['Year'], x=df['Temporal Domain'], showmedians=True, showextrema=True, palette="rocket")
+    plt.title('Bragging', fontsize=18)
+    # plt.ylabel("Percentage")
+    #plt.xlabel("Full size", "InDomain Train", "InDomain Test", "OOD1 Test", "OOD2 Test")
+    #plt.legend(bbox_to_anchor=(1, 1, 0.28, 0.28), loc='best', borderaxespad=1)
     plt.tight_layout()
-    plt.savefig('./TimeDist/'+str(args.dataset)+'.png', bbox_inches = 'tight', dpi=200, format='png')
+    # plt.xticks(fontsize= )
+    plt.savefig('./TimeDist/'+str(args.dataset)+'_vio.png', bbox_inches = 'tight', dpi=250, format='png')
     plt.show()
 
 # https://stackoverflow.com/questions/59346731/no-handles-with-labels-found-to-put-in-legend

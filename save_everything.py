@@ -154,14 +154,16 @@ if args.plot_time_distribution:
     print(df)
 
     #df['Year'] = pd.to_numeric(df['Year'])
-    sns.violinplot(y=df['Year'], x=df['Temporal Domain'], showmedians=True, showextrema=True, palette="rocket")
+    sns.violinplot(y=df['Year'], x=df['Temporal Domain'], showmedians=True, showextrema=True, palette="rocket",
+    scale='area')
+    #sns.boxplot(y=df['Year'], x=df['Temporal Domain'], palette="rocket")
     plt.title('Bragging', fontsize=18)
     # plt.ylabel("Percentage")
     #plt.xlabel("Full size", "InDomain Train", "InDomain Test", "OOD1 Test", "OOD2 Test")
     #plt.legend(bbox_to_anchor=(1, 1, 0.28, 0.28), loc='best', borderaxespad=1)
     plt.tight_layout()
     # plt.xticks(fontsize= )
-    plt.savefig('./TimeDist/'+str(args.dataset)+'_vio.png', bbox_inches = 'tight', dpi=250, format='png')
+    plt.savefig('./TimeDist/'+str(args.dataset)+'_box.png', bbox_inches = 'tight', dpi=250, format='png')
     plt.show()
 
 # https://stackoverflow.com/questions/59346731/no-handles-with-labels-found-to-put-in-legend

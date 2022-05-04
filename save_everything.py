@@ -403,12 +403,20 @@ if args.save_posthoc:
         final['thresholder'] = str(thresh)
         df_list.append(final)
 
+
     posthoc_faithfulness = pd.concat([df_list[0], df_list[1]], ignore_index=False)
         # seed_n['seed'] = seed
         # seed_list.append(seed_n)
-
+    print(posthoc_faithfulness)
     # posthoc_faithfulness = pd.concat([seed_list[0],seed_list[1],seed_list[2],seed_list[3],seed_list[4]], ignore_index=False)
     posthoc_faithfulness.to_csv('saved_everything/' + str(args.dataset) + '/posthoc_faithfulness.csv')
+
+    topk = df_list[0][['Domain', 'random','scaled attention','attention','deeplift','gradients','lime']]
+    topk['scaled attention'] = topk['scaled attention']/topk['random']
+    ['Domain', 'attention', 'deeplift', 'gradients', 'lime']
+    AOPC_sufficiency = topk.loc[['AOPC_sufficiency']]
+    AOPC_comprehensiveness = topk.loc[['AOPC_comprehensiveness']]
+    print(AOPC_sufficiency)
 
 #############################################################################################################################################
 

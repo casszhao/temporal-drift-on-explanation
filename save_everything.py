@@ -443,16 +443,21 @@ if args.save_posthoc:
         topk['deeplift'] = topk['deeplift']/topk['random']
         topk['gradients'] = topk['gradients']/topk['random']
         topk['lime'] = topk['lime']/topk['random']
+        topk = topk[['Domain','scaled attention','attention','deeplift','gradients','lime']]
 
         AOPC_sufficiency = topk.loc[['AOPC_sufficiency']].set_index('Domain')
-        
         OOD12 = (AOPC_sufficiency.loc['OOD1'] + AOPC_sufficiency.loc['OOD2'])/2
         OOD12.name = 'OOD1+2'
-        AOPC_sufficiency.append([OOD12])
-        print(OOD12)
+        AOPC_sufficiency = AOPC_sufficiency.append([OOD12])
 
-        AOPC_comprehensiveness = topk.loc[['AOPC_comprehensiveness']]
-        print(AOPC_sufficiency)
+        AOPC_comprehensiveness = topk.loc[['AOPC_comprehensiveness']].set_index('Domain')
+        OOD12 = (AOPC_comprehensiveness.loc['OOD1'] + AOPC_comprehensiveness.loc['OOD2'])/2
+        OOD12.name = 'OOD1+2'
+        AOPC_comprehensiveness = AOPC_comprehensiveness.append([OOD12])
+
+        final = pd.concat([AOPC_sufficiency, AOPC_comprehensiveness], axis=1)
+        pd.options.display.float_format = "{:,.2f}".format
+        print(final)
 
 #############################################################################################################################################
 

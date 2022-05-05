@@ -119,6 +119,7 @@ data = dataholder(
     args["data_dir"],
     # b_size = args["batch_size"],
     b_size = 16,
+    #stage = "eval",
     return_as_frames = True
 )
 

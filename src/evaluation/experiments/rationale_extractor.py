@@ -358,8 +358,10 @@ def rationale_creator_(data, data_split_name, ood, tokenizer, model_random_seed,
     ## filter only relevant parts in our dataset
 
     if "exp_split" not in data.columns:
-
-        data = data.rename(columns = {"split" : "exp_split"})
+        if "split" not in data.columns:
+            data['exp_split'] = data['annotation_id']
+        else:
+            data = data.rename(columns = {"split" : "exp_split"})
 
     # data = data[["input_ids", "annotation_id", "exp_split", "label", "label_id"]]
     data = data[["input_ids", "annotation_id", "exp_split", "label"]]

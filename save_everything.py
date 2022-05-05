@@ -78,6 +78,13 @@ parser.add_argument(
     action='store_true',
     default=False
 )
+
+parser.add_argument(
+    '--save_posthoc_for_analysis',
+    help='decide which parts are in need',
+    action='store_true',
+    default=False
+)
 args = parser.parse_args()
 
 datasets_dir = 'saved_everything/' + str(args.dataset)
@@ -428,12 +435,24 @@ if args.save_posthoc:
     # posthoc_faithfulness = pd.concat([seed_list[0],seed_list[1],seed_list[2],seed_list[3],seed_list[4]], ignore_index=False)
     posthoc_faithfulness.to_csv('saved_everything/' + str(args.dataset) + '/posthoc_faithfulness.csv')
 
-    topk = df_list[0][['Domain', 'random','scaled attention','attention','deeplift','gradients','lime']]
-    topk['scaled attention'] = topk['scaled attention']/topk['random']
-    ['Domain', 'attention', 'deeplift', 'gradients', 'lime']
-    AOPC_sufficiency = topk.loc[['AOPC_sufficiency']]
-    AOPC_comprehensiveness = topk.loc[['AOPC_comprehensiveness']]
-    print(AOPC_sufficiency)
+    if args.save_posthoc_for_analysis:
+
+        topk = df_list[0][['Domain', 'random', 'scaled attention','attention','deeplift','gradients','lime']]
+        topk['scaled attention'] = topk['scaled attention']/topk['random']
+        topk['attention'] = topk['attention']/topk['random']
+        topk['deeplift'] = topk['deeplift']/topk['random']
+        topk['gradients'] = topk['gradients']/topk['random']
+        topk['lime'] = topk['lime']/topk['random']
+
+        AOPC_sufficiency = topk.loc[['AOPC_sufficiency']].set_index('Domain')
+        
+        OOD12 = (AOPC_sufficiency.loc['OOD1'] + AOPC_sufficiency.loc['OOD2'])/2
+        OOD12.name = 'OOD1+2'
+        AOPC_sufficiency.append([OOD12])
+        print(OOD12)
+
+        AOPC_comprehensiveness = topk.loc[['AOPC_comprehensiveness']]
+        print(AOPC_sufficiency)
 
 #############################################################################################################################################
 

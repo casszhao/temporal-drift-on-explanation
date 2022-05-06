@@ -2,7 +2,7 @@ import numpy as np
 import logging
 import os
 
-dataset = 'AmazInstr'
+dataset = 'xfact'
 
 log_dir = "saved_everything/" + str(dataset)
 os.makedirs(log_dir, exist_ok = True)

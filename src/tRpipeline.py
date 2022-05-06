@@ -560,9 +560,12 @@ def keep_best_model_(keep_models = False, for_rationale = False):
                 "model_run_stats/*dev*.json"
             )
         )
+    print(len(dev_stats))
 
     if args.use_tasc: dev_stats = [x for x in dev_stats if "tasc" in x]
     else: dev_stats = [x for x in dev_stats if "tasc" not in x]
+
+    print(len(dev_stats))
 
     dev_stats_cleared = {}
 

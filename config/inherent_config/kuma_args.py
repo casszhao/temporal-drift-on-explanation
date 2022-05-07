@@ -127,7 +127,7 @@ xfact_full = xfact = xfact_ood1 = xfact_ood2 = {
 
 complain_full = complain = complain_ood1 = complain_ood2 = {
     "OPTIM_ARGS_" : {     ## for Adam Loss
-        "lr" : 0.00001, # || MAYBE decrease# can try lower
+        "lr" : 0.000005, # || MAYBE decrease# can try lower, tried 0.00001
         "weight_decay" : 0.00001,
         "betas" : [0.9, 0.999],
         "amsgrad" : False,

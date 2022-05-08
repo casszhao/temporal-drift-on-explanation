@@ -1,8 +1,17 @@
 import numpy as np
 import logging
 import os
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    "--dataset",
+    type = str,
+    help = "select dataset / task",
+    default = "factcheck",
+)
+args = parser.parse_args()
 
-dataset = 'xfact'
+dataset = str(args.dataset)
 
 log_dir = "saved_everything/" + str(dataset)
 os.makedirs(log_dir, exist_ok = True)
@@ -53,7 +62,7 @@ def one_domain_len(domain):
         all ->  {overall}
     ''')
 
-one_domain_len('full')
+#one_domain_len('full')
 one_domain_len('InDomain')
 one_domain_len('ood1')
 one_domain_len('ood2')

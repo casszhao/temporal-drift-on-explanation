@@ -5,7 +5,7 @@
 #SBATCH --time=6-00:00
 
 # set name of job
-#SBATCH --job-name=comp_lstm
+#SBATCH --job-name=xfact
 
 # set number of GPUs
 #SBATCH --gres=gpu:1
@@ -21,15 +21,13 @@
 
 
 
-
-
 # run the application
 cd /jmain02/home/J2AD003/txk58/zxz22-txk58/extract_rationales/extract_rationales/
 module load python/anaconda3
 module load cuda/10.2
 source activate ood_faith
 
-dataset="complain"
+dataset="xfact"
 model_dir="models/"
 data_dir="datasets/"
 evaluation_dir="posthoc_results/"
@@ -139,25 +137,25 @@ thresholder="topk"
 
 
 
-########################## Train LSTM
+# ########################## Train LSTM
 
-########## train and test on full dataset
-for seed in 5 10 15 20 25
-do
-   python train_fulltext_and_kuma.py --dataset $dataset$"_full" --model_dir LSTM_model --data_dir $data_dir --seed $seed --inherently_faithful "full_lstm"
-done
-echo "done TRAINING LSTM on full data"
-python train_fulltext_and_kuma.py --dataset $dataset$"_full" --model_dir LSTM_model --data_dir $data_dir --evaluate_models --inherently_faithful "full_lstm"
-echo "done EVALUATION LSTM on full data"
+# ########## train and test on full dataset
+# for seed in 5 10 15 20 25
+# do
+#    python train_fulltext_and_kuma.py --dataset $dataset$"_full" --model_dir LSTM_model --data_dir $data_dir --seed $seed --inherently_faithful "full_lstm"
+# done
+# echo "done TRAINING LSTM on full data"
+# python train_fulltext_and_kuma.py --dataset $dataset$"_full" --model_dir LSTM_model --data_dir $data_dir --evaluate_models --inherently_faithful "full_lstm"
+# echo "done EVALUATION LSTM on full data"
 
-## train and test on indomain dataset
-for seed in 5 10 15 20 25
-do
-   python train_fulltext_and_kuma.py --dataset $dataset --model_dir LSTM_model --data_dir $data_dir --seed $seed --inherently_faithful "full_lstm"
-done
-echo "done TRAINING LSTM on indomain data"
-python train_fulltext_and_kuma.py --dataset $dataset --model_dir LSTM_model --data_dir $data_dir --evaluate_models --inherently_faithful "full_lstm"
-echo "done EVALUATION LSTM on indomain data"
+# ## train and test on indomain dataset
+# for seed in 5 10 15 20 25
+# do
+#    python train_fulltext_and_kuma.py --dataset $dataset --model_dir LSTM_model --data_dir $data_dir --seed $seed --inherently_faithful "full_lstm"
+# done
+# echo "done TRAINING LSTM on indomain data"
+# python train_fulltext_and_kuma.py --dataset $dataset --model_dir LSTM_model --data_dir $data_dir --evaluate_models --inherently_faithful "full_lstm"
+# echo "done EVALUATION LSTM on indomain data"
 
 
 
@@ -171,15 +169,16 @@ done
 echo "done train kuma on full data"
 python train_fulltext_and_kuma.py --dataset $dataset$"_full" --model_dir "kuma_model/" --data_dir $data_dir --inherently_faithful "kuma" --evaluate_models
 echo "done eval kuma on full data"
-
-echo '-------- start training kuma on in domain------------'
-for seed in 5 10 15 20 25
-do
-python train_fulltext_and_kuma.py --dataset $dataset --model_dir "kuma_model/" --data_dir $data_dir --seed $seed --inherently_faithful "kuma"
-done
-echo "done train kuma"
-python train_fulltext_and_kuma.py --dataset $dataset --model_dir "kuma_model/" --data_dir $data_dir --seed $seed --inherently_faithful "kuma" --evaluate_models
-echo "done eval kuma"
+python extract_kuma_len.py --dataset $dataset$"_full"
+# echo '-------- start training kuma on in domain------------'
+# for seed in 5 10 15 20 25
+# do
+# python train_fulltext_and_kuma.py --dataset $dataset --model_dir "kuma_model/" --data_dir $data_dir --seed $seed --inherently_faithful "kuma"
+# done
+# echo "done train kuma"
+# python train_fulltext_and_kuma.py --dataset $dataset --model_dir "kuma_model/" --data_dir $data_dir --seed $seed --inherently_faithful "kuma" --evaluate_models
+# echo "done eval kuma"
+# python extract_kuma_len.py --dataset $dataset$
 
 
 
@@ -197,8 +196,8 @@ echo "done eval kuma"
 # cd ../../
 
 
-##### scaled\ attention
-python save_predictive.py --dataset complain
+# ##### scaled\ attention
+# python save_predictive.py --dataset complain
 
 
 

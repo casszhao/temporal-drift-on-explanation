@@ -110,35 +110,36 @@ factcheck_full = factcheck = factcheck_ood1 = factcheck_ood2 = {
 
 xfact_full = xfact = xfact_ood1 = xfact_ood2 = {
     "OPTIM_ARGS_" : {     ## for Adam Loss
-        "lr" : 0.00001,
+        "lr" : 1e-5, # || MAYBE decrease# can try lower, tried 0.00001
         "weight_decay" : 0.00001,
         "betas" : [0.9, 0.999],
         "amsgrad" : False,
     },
     "MODEL_ARGS_" : {     ## model args
         "lasso":           0.0,
-        "lambda_init":     5e-5, # how short or long rationales are # compare to lstm standard,
-                                 # penalise when a rationale is long. So if they low they will select more text and therefore closer accuracy to only lstm
-
-        "lagrange_lr":     1e-4, # have tried 1e-2, 1e-3
+        "lambda_init":     0.5, # how short or long rationales are # compare to lstm standard,
+                                 # penalise when a rationale is long. So if they high they will select less text and therefore closer accuracy to only lstm
+        "lagrange_lr":     5e-4, # have tried 1e-2, 1e-3
         "lagrange_alpha":  0.8, # have tried 0.9, 0.8
     }
 }
 
 complain_full = complain = complain_ood1 = complain_ood2 = {
     "OPTIM_ARGS_" : {     ## for Adam Loss
-        "lr" : 0.000005, # || MAYBE decrease# can try lower, tried 0.00001
+        "lr" : 1e-5, # || MAYBE decrease# can try lower, tried 0.00001
         "weight_decay" : 0.00001,
         "betas" : [0.9, 0.999],
         "amsgrad" : False,
     },
     "MODEL_ARGS_" : {     ## model args
         "lasso":           0.0,
-        "lambda_init":     1e-6, # || 1e-4
+        "lambda_init":     0.5, # || 1e-4
         "lagrange_lr":     1e-5, # have tried 1e-2, 1e-3 || 
         "lagrange_alpha":  0.8, # have tried 0.9, 0.8, 0.7 || 0.85 penalty to rationales length
     }
 }
+
+
 
 bragging_full = bragging = bragging_ood1 = bragging_ood2 = {
     "OPTIM_ARGS_" : {     ## for Adam Loss

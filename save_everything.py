@@ -168,17 +168,17 @@ if args.plot_time_distribution:
     plt.hist(indomain_test['Year'], **kwargs, label='InDomain Test')
     plt.hist(ood1['Year'], **kwargs, label='OOD1 Test')
     plt.hist(ood2['Year'], **kwargs, label='OOD2 Test')
-    plt.legend(bbox_to_anchor=(1, 0.7, 0.35, 0.35), loc='best', borderaxespad=1)
-    plt.title('Factcheck', fontsize=18)
+    plt.legend(bbox_to_anchor=(1, 0.7, 0.2, 0.35), loc='best', borderaxespad=1)
+    plt.title('Agnews', fontsize=18)
     plt.savefig('./TimeDist/'+str(args.dataset)+'_box.png', bbox_inches = 'tight', dpi=250, format='png')
     plt.show()
 
+
 '''
-   
-    #sns.violinplot(y=df['Year'], x=df['Temporal Domain'], showmedians=True, showextrema=True, palette="rocket",scale='width')
+    sns.violinplot(y=df['Year'], x=df['Temporal Domain'], showmedians=True, showextrema=True, palette="rocket",scale='width')
     #sns.boxplot(y=df['Year'], x=df['Temporal Domain'], palette="rocket", whis=np.inf)
-    sns.displot(df, x="Year", hue="Temporal Domain", stat="density", common_norm=False)
-    plt.title('Xfact', fontsize=18)
+    #sns.displot(df, x="Year", hue="Temporal Domain", stat="density", common_norm=False)
+    plt.title('Agnews', fontsize=18)
     # plt.ylabel("Percentage")
     #plt.xlabel("Full size", "InDomain Train", "InDomain Test", "OOD1 Test", "OOD2 Test")
     #plt.legend(bbox_to_anchor=(1, 1, 0.28, 0.28), loc='best', borderaxespad=1)

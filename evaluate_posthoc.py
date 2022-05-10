@@ -149,9 +149,8 @@ evaluator = evaluation_pipeline.evaluate(
     output_dims = data.nu_of_labels
 )
 # will generate
-
-
 logging.info("*********conducting in-domain flip experiments")
+
 evaluator.faithfulness_experiments_(data)
 
 del data
@@ -159,10 +158,12 @@ del evaluator
 gc.collect()
 
 
+
+
 ## ood evaluation DATASET 1
 data = BERT_HOLDER(
     path = args["data_dir"], 
-    b_size = 8,
+    b_size = args["batch_size"],
     stage = "eval", #args["batch_size"],
     ood = True,
     ood_dataset_ = 1
@@ -176,6 +177,7 @@ evaluator = evaluation_pipeline.evaluate(
 )
 
 logging.info("*********conducting oo-domain flip experiments DATASET 1")
+print('"*********conducting oo-domain flip experiments DATASET 1"')
 
 evaluator.faithfulness_experiments_(data)
 
@@ -185,48 +187,26 @@ del evaluator
 gc.collect()
 
 
+
+
 ## ood evaluation DATASET 2
 data = BERT_HOLDER(
-    path = args["data_dir"],
-    b_size = 8,
+    path = args["data_dir"], 
+    b_size = args["batch_size"],
     stage = "eval", #args["batch_size"],
     ood = True,
     ood_dataset_ = 2
 )
 
 evaluator = evaluation_pipeline.evaluate(
-    model_path = args["model_dir"],
+    model_path = args["model_dir"], 
     output_dims = data.nu_of_labels,
     ood = True,
     ood_dataset_ = 2
 )
 
 logging.info("*********conducting oo-domain flip experiments DATASET 2")
-
-evaluator.faithfulness_experiments_(data)
-
-# delete full data not needed anymore
-del data
-del evaluator
-gc.collect()
-
-
-
-
-data = BERT_HOLDER(
-    path = args["data_dir"],
-    b_size = 8, # to fix cuda out of memory
-    stage = "eval", #args["batch_size"],
-    ood = False,
-)
-
-evaluator = evaluation_pipeline.evaluate(
-    model_path = args["model_dir"],
-    output_dims = data.nu_of_labels,
-    ood = False,
-)
-
-logging.info("*********conducting non oo-domain flip experiments with evaluator")
+print('"*********conducting oo-domain flip experiments DATASET 2"')
 
 evaluator.faithfulness_experiments_(data)
 
@@ -235,5 +215,3 @@ del data
 del evaluator
 gc.collect()
 torch.cuda.empty_cache()
-
-  

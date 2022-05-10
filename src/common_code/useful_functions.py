@@ -114,7 +114,6 @@ def batch_from_dict_(batch_data, metadata, target_key = "original prediction", f
     new_tensor = []
 
     for _id_ in batch_data["annotation_id"]:
-
         new_tensor.append(
             metadata[_id_][target_key]
         )

@@ -91,7 +91,7 @@ datasets_dir = 'saved_everything/' + str(args.dataset)
 os.makedirs(datasets_dir, exist_ok = True)
 
 
-task_list = ['complain', 'binarybragging', 'xfact', 'factcheck', 'AmazDigiMu', 'AmazInstr', 'AmazPantry']
+task_list = ['xfact', 'factcheck', 'AmazDigiMu', 'AmazPantry']
 ######################## plot time distribution
 
 from datetime import datetime
@@ -162,20 +162,20 @@ if args.plot_time_distribution:
 
     df = pd.concat([full, indomain_train, indomain_test, ood1, ood2]).reset_index(drop=True)
 
-    kwargs = dict(histtype='step', alpha=0.9)
+    # kwargs = dict(histtype='step', alpha=0.9)
+    # plt.hist(full['Year'], **kwargs, label='Full')
+    # plt.hist(indomain_test['Year'], **kwargs, label='InDomain Test')
+    # plt.hist(ood1['Year'], **kwargs, label='OOD1 Test')
+    # plt.hist(ood2['Year'], **kwargs, label='OOD2 Test')
+    # plt.legend(bbox_to_anchor=(1, 0.7, 0.2, 0.35), loc='best', borderaxespad=1)
+    # plt.title('Agnews', fontsize=18)
+    # plt.savefig('./TimeDist/'+str(args.dataset)+'_box.png', bbox_inches = 'tight', dpi=250, format='png')
+    # plt.show()
 
-    plt.hist(full['Year'], **kwargs, label='Full')
-    plt.hist(indomain_test['Year'], **kwargs, label='InDomain Test')
-    plt.hist(ood1['Year'], **kwargs, label='OOD1 Test')
-    plt.hist(ood2['Year'], **kwargs, label='OOD2 Test')
-    plt.legend(bbox_to_anchor=(1, 0.7, 0.2, 0.35), loc='best', borderaxespad=1)
-    plt.title('Agnews', fontsize=18)
-    plt.savefig('./TimeDist/'+str(args.dataset)+'_box.png', bbox_inches = 'tight', dpi=250, format='png')
-    plt.show()
-
-
-'''
-    sns.violinplot(y=df['Year'], x=df['Temporal Domain'], showmedians=True, showextrema=True, palette="rocket",scale='width')
+    #  https://mode.com/blog/violin-plot-examples/
+    # density estimation to show the distribution shape of the data
+    sns.violinplot(y=df['Year'], x=df['Temporal Domain'], showmedians=True, showextrema=True, 
+    palette="rocket",scale='width') #,gridsize=10
     #sns.boxplot(y=df['Year'], x=df['Temporal Domain'], palette="rocket", whis=np.inf)
     #sns.displot(df, x="Year", hue="Temporal Domain", stat="density", common_norm=False)
     plt.title('Agnews', fontsize=18)
@@ -187,7 +187,7 @@ if args.plot_time_distribution:
 
     plt.savefig('./TimeDist/'+str(args.dataset)+'_box.png', bbox_inches = 'tight', dpi=250, format='png')
     plt.show()
-'''
+
 # https://stackoverflow.com/questions/59346731/no-handles-with-labels-found-to-put-in-legend
 
 

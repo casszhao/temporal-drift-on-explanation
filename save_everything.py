@@ -91,7 +91,7 @@ datasets_dir = 'saved_everything/' + str(args.dataset)
 os.makedirs(datasets_dir, exist_ok = True)
 
 
-task_list = ['complain', 'binarybragging', 'xfact', 'factcheck', 'AmazDigiMu', 'AmazInstr', 'AmazPantry']
+task_list = ['xfact', 'factcheck', 'AmazDigiMu', 'AmazPantry']
 ######################## plot time distribution
 
 from datetime import datetime

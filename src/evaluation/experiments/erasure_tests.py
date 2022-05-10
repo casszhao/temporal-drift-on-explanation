@@ -142,7 +142,7 @@ def conduct_experiments_(model, data, model_random_seed, ood = False, ood_datase
                 faithfulness_results[annot_id]["full text prediction"] = original_prediction[_j_] 
                 faithfulness_results[annot_id]["true label"] = batch["labels"][_j_].detach().cpu().item()
             
-            for feat_name in {"random", "attention", "gradients", "scaled attention", "lime", "deeplift"}: #"ig" ,
+            for feat_name in {"random", "attention", "gradients", "scaled attention", "ig", "deeplift"}: #"ig" ,"lime"
 
                 feat_score =  batch_from_dict_(
                     batch_data = batch, 

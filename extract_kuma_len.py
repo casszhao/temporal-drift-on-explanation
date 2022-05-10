@@ -62,7 +62,7 @@ def one_domain_len(domain):
         all ->  {overall}
     ''')
 
-#one_domain_len('full')
+one_domain_len('full')
 one_domain_len('InDomain')
 one_domain_len('ood1')
 one_domain_len('ood2')

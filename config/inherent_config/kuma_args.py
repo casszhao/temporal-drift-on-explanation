@@ -118,21 +118,9 @@ factcheck_full = factcheck = factcheck_ood1 = factcheck_ood2 = {
     },
     "MODEL_ARGS_" : {     ## model args
         "lasso":           0.0,
-<<<<<<< HEAD
-        "lambda_init":     0.1, # how short or long rationales are # compare to lstm standard,
-                                 # penalise when a rationale is long. So if they high they will select less text and therefore closer accuracy to only lstm
-        "lagrange_lr":     5e-4, # have tried 1e-2, 1e-3
-        "lagrange_alpha":  0.8, # have tried 0.9, 0.8
-||||||| merged common ancestors
-        "lambda_init":     0.5, # how short or long rationales are # compare to lstm standard,
-                                 # penalise when a rationale is long. So if they high they will select less text and therefore closer accuracy to only lstm
-        "lagrange_lr":     5e-4, # have tried 1e-2, 1e-3
-        "lagrange_alpha":  0.8, # have tried 0.9, 0.8
-=======
         "lambda_init":     1e-3,
         "lagrange_lr":     1e-2,
         "lagrange_alpha":  0.9,
->>>>>>> 531054f8ef9db4590b5bc3bacbdfb835d6f1541f
     }
 }
 
@@ -145,20 +133,10 @@ xfact_full = xfact = xfact_ood1 = xfact_ood2 = {
     },
     "MODEL_ARGS_" : {     ## model args
         "lasso":           0.0,
-<<<<<<< HEAD
-        "lambda_init":     0.1, # || 1e-4
-        "lagrange_lr":     1e-5, # have tried 1e-2, 1e-3 || 
-        "lagrange_alpha":  0.8, # have tried 0.9, 0.8, 0.7 || 0.85 penalty to rationales length
-||||||| merged common ancestors
-        "lambda_init":     0.5, # || 1e-4
-        "lagrange_lr":     1e-5, # have tried 1e-2, 1e-3 || 
-        "lagrange_alpha":  0.8, # have tried 0.9, 0.8, 0.7 || 0.85 penalty to rationales length
-=======
         "lambda_init":     0.5, # how short or long rationales are # compare to lstm standard,
                                  # penalise when a rationale is long. So if they high they will select less text and therefore closer accuracy to only lstm
         "lagrange_lr":     5e-4, # have tried 1e-2, 1e-3
         "lagrange_alpha":  0.8, # have tried 0.9, 0.8
->>>>>>> 531054f8ef9db4590b5bc3bacbdfb835d6f1541f
     }
 }
 

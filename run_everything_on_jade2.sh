@@ -5,7 +5,7 @@
 #SBATCH --time=6-00:00
 
 # set name of job
-#SBATCH --job-name=xfact
+#SBATCH --job-name=AmazPantry
 
 # set number of GPUs
 #SBATCH --gres=gpu:1
@@ -27,7 +27,7 @@ module load python/anaconda3
 module load cuda/10.2
 source activate ood_faith
 
-dataset="xfact"
+dataset="AmazPantry"
 model_dir="models/"
 data_dir="datasets/"
 evaluation_dir="posthoc_results/"

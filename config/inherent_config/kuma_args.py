@@ -48,20 +48,6 @@ Yelp = {
 }
 
 
-AmazInstr = AmazInstr_full = AmazInstr_ood1 = AmazInstr_ood2 = {
-    "OPTIM_ARGS_" : {     ## for Adam Loss
-        "lr" : 0.0001, ##0.00001
-        "weight_decay" : 0.00001,
-        "betas" : [0.9, 0.999],
-        "amsgrad" : False,
-    },
-    "MODEL_ARGS_" : {     ## model args
-        "lasso":           0.0,
-        "lambda_init":     5e-4,
-        "lagrange_lr":     5e-3,
-        "lagrange_alpha":  0.9,
-    }
-}
 
 AmazDigiMu = AmazDigiMu_full = AmazDigiMu_ood1 = AmazDigiMu_ood2 = {
     "OPTIM_ARGS_" : {     ## for Adam Loss
@@ -79,6 +65,36 @@ AmazDigiMu = AmazDigiMu_full = AmazDigiMu_ood1 = AmazDigiMu_ood2 = {
 }
 
 AmazPantry = AmazPantry_full = AmazPantry_ood1 = AmazPantry_ood2 = {
+    "OPTIM_ARGS_" : {     ## for Adam Loss
+        "lr" : 0.0001, ##0.00001
+        "weight_decay" : 0.00001,
+        "betas" : [0.9, 0.999],
+        "amsgrad" : False,
+    },
+    "MODEL_ARGS_" : {     ## model args
+        "lasso":           0.0,
+        "lambda_init":     5e-4,
+        "lagrange_lr":     5e-3,
+        "lagrange_alpha":  0.9,
+    }
+}
+
+agnews = agnews_full = agnews_ood1 = agnews_ood2 = {
+    "OPTIM_ARGS_" : {     ## for Adam Loss
+        "lr" : 0.0001, ##0.00001
+        "weight_decay" : 0.00001,
+        "betas" : [0.9, 0.999],
+        "amsgrad" : False,
+    },
+    "MODEL_ARGS_" : {     ## model args
+        "lasso":           0.0,
+        "lambda_init":     5e-4,
+        "lagrange_lr":     5e-3,
+        "lagrange_alpha":  0.9,
+    }
+}
+
+healthfact = healthfact_full = healthfact_ood1 = healthfact_ood2 = {
     "OPTIM_ARGS_" : {     ## for Adam Loss
         "lr" : 0.0001, ##0.00001
         "weight_decay" : 0.00001,
@@ -124,20 +140,20 @@ xfact_full = xfact = xfact_ood1 = xfact_ood2 = {
     }
 }
 
-complain_full = complain = complain_ood1 = complain_ood2 = {
-    "OPTIM_ARGS_" : {     ## for Adam Loss
-        "lr" : 1e-5, # || MAYBE decrease# can try lower, tried 0.00001
-        "weight_decay" : 0.00001,
-        "betas" : [0.9, 0.999],
-        "amsgrad" : False,
-    },
-    "MODEL_ARGS_" : {     ## model args
-        "lasso":           0.0,
-        "lambda_init":     0.5, # || 1e-4
-        "lagrange_lr":     1e-5, # have tried 1e-2, 1e-3 || 
-        "lagrange_alpha":  0.8, # have tried 0.9, 0.8, 0.7 || 0.85 penalty to rationales length
-    }
-}
+# complain_full = complain = complain_ood1 = complain_ood2 = {
+#     "OPTIM_ARGS_" : {     ## for Adam Loss
+#         "lr" : 1e-5, # || MAYBE decrease# can try lower, tried 0.00001
+#         "weight_decay" : 0.00001,
+#         "betas" : [0.9, 0.999],
+#         "amsgrad" : False,
+#     },
+#     "MODEL_ARGS_" : {     ## model args
+#         "lasso":           0.0,
+#         "lambda_init":     0.5, # || 1e-4
+#         "lagrange_lr":     1e-5, # have tried 1e-2, 1e-3 || 
+#         "lagrange_alpha":  0.8, # have tried 0.9, 0.8, 0.7 || 0.85 penalty to rationales length
+#     }
+# }
 
 
 
@@ -183,10 +199,10 @@ get_ = {
     'xfact_full': xfact_full,
     'xfact_ood1': xfact_ood1,
     'xfact_ood2': xfact_ood2,
-    'complain': complain,
-    'complain_full': complain_full,
-    'complain_ood2': complain_ood2,
-    'complain_ood1': complain_ood1,
+    # 'complain': complain,
+    # 'complain_full': complain_full,
+    # 'complain_ood2': complain_ood2,
+    # 'complain_ood1': complain_ood1,
     'bragging': bragging,
     'bragging_full': bragging_full,
     'bragging_ood1': bragging_ood1,
@@ -203,9 +219,13 @@ get_ = {
     "AmazPantry_full": AmazPantry_full,
     "AmazPantry_ood1": AmazPantry_ood1,
     "AmazPantry_ood2": AmazPantry_ood2,
-    "AmazInstr": AmazInstr,
-    "AmazInstr_full": AmazInstr_full,
-    "AmazInstr_ood1": AmazInstr_ood1,
-    "AmazInstr_ood2": AmazInstr_ood2,
+    "agnews": agnews,
+    "agnews_full": agnews_full,
+    "agnews_ood1": agnews_ood1,
+    "agnews_ood2": agnews_ood2,
+    "healthfact": healthfact,
+    "healthfact_full": healthfact_full,
+    "healthfact_ood1": healthfact_ood1,
+    "healthfact_ood2": healthfact_ood2,
 }
 

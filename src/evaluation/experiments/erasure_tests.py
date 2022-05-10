@@ -234,7 +234,8 @@ def conduct_experiments_(model, data, model_random_seed, ood = False, ood_datase
             
     descriptor = {}
     # filling getting averages
-    for feat_attr in {"attention", "gradients", "random", "scaled attention", "lime", "deeplift"}: #"ig",
+    for feat_attr in {"attention", "gradients", "random", "scaled attention", "lime", "deeplift",
+    "deepliftshap","gradientshap","ig"}: #"ig",
         
         sufficiencies = np.asarray([faithfulness_results[k][feat_attr][f"sufficiency @ {desired_rationale_length}"] for k in faithfulness_results.keys()])
         comprehensivenesses = np.asarray([faithfulness_results[k][feat_attr][f"comprehensiveness @ {desired_rationale_length}"] for k in faithfulness_results.keys()])

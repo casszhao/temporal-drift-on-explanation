@@ -137,9 +137,6 @@ def extract_importance_(model, data, data_split_name, model_random_seed, ood, oo
 
     ## save them
     np.save(scorenames, feature_attribution)
-    print(scorenames)
-    print(feature_attribution)
-    exit()
 
     print(f"model dependent importance scores stored in -> {scorenames}")
 
@@ -246,7 +243,7 @@ def extract_lime_scores_(model, data, data_split_name,
     return
 
 from src.evaluation.experiments.shap_predictor import ShapleyModelWrapper
-from captum.attr import DeepLift
+from captum.attr import DeepLift, DeepLiftShap, GradientShap
 
 def extract_shap_values_(model, data, data_split_name, 
                         model_random_seed, ood, ood_dataset_):
@@ -272,8 +269,22 @@ def extract_shap_values_(model, data, data_split_name,
         print(f"deeplift scores already computed")
 
         return
+    
+    if "deepliftsharp" in importance_scores[key]:
+
+        print(f"deepliftsharp scores already computed")
+
+        return
+
+    if "gradientshap" in importance_scores[key]:
+
+        print(f"gradientshap scores already computed")
+
+        return
 
     explainer = DeepLift(ShapleyModelWrapper(model))
+    explainer_deepliftshap = DeepLiftShap(ShapleyModelWrapper(model))
+    explainer_gradientshap = GradientShap(ShapleyModelWrapper(model))
 
     if ood : pbar = trange(len(data) * data.batch_size, desc=f"extracting --OOD-{ood_dataset_}-- deeplift scores for -> {data_split_name}", leave=True)
     else: pbar = trange(len(data) * data.batch_size, desc=f"extracting deeplift scores for -> {data_split_name}", leave=True)
@@ -301,33 +312,64 @@ def extract_shap_values_(model, data, data_split_name,
         original_prediction, _ =  model(**batch)
 
         embeddings = model.wrapper.model.embeddings.word_embeddings.weight[batch["input_ids"].long()]
-
+        # deeplift
         attribution = explainer.attribute(
             embeddings.requires_grad_(True), 
             target = original_prediction.argmax(-1)
         )
-
         attribution = attribution.sum(-1)
-
         attribution = torch.masked_fill(
             attribution, 
             (batch["query_mask"] == 0).bool(), 
             float("-inf")
+        )  
+
+        
+        # deepliftshap
+        attribution_deepliftshap = explainer_deepliftshap.attribute(
+            embeddings.requires_grad_(True), 
+            target = original_prediction.argmax(-1),
+            baselines = torch.zeros(embeddings.size()).to(device)
         )
-      
+        attribution_deepliftshap = attribution_deepliftshap.sum(-1)
+        attribution_deepliftshap = torch.masked_fill(
+            attribution_deepliftshap, 
+            (batch["query_mask"] == 0).bool(), 
+            float("-inf")
+        )  
+
+
+        # gradientshap
+        attribution_gradientshap = explainer_gradientshap.attribute(
+            embeddings.requires_grad_(True), 
+            target = original_prediction.argmax(-1),
+            baselines = torch.zeros(embeddings.size()).to(device)
+        )
+        attribution_gradientshap = attribution_gradientshap.sum(-1)
+        attribution_gradientshap = torch.masked_fill(
+            attribution_gradientshap, 
+            (batch["query_mask"] == 0).bool(), 
+            float("-inf")
+        )  
+
+
+        
         for _i_ in range(original_prediction.size(0)):
-
             annotation_id = batch["annotation_id"][_i_]
-
             importance_scores[annotation_id]["deeplift"] = attribution[_i_].detach().cpu().numpy()
+            importance_scores[annotation_id]["deepliftshap"] = attribution_deepliftshap[_i_].detach().cpu().numpy()
+            importance_scores[annotation_id]["gradientshap"] = attribution_gradientshap[_i_].detach().cpu().numpy()
+
 
 
         pbar.update(data.batch_size)
 
+
+
      ## save them
     np.save(fname, importance_scores)
 
-    print(f"appended deeplift scores in -> {fname}")
+    print(f"appended deeplift/deepliftshap/gradientshap scores in -> {fname}")
 
     return
 
@@ -382,7 +424,8 @@ def rationale_creator_(data, data_split_name, ood, tokenizer, model_random_seed,
         desired_rationale_length = args.rationale_length
 
     ## time to register rationales
-    for feature_attribution in {"attention", "gradients", "scaled attention", "deeplift", "lime"}: #"ig",
+    for feature_attribution in {"attention", "gradients", "scaled attention", "ig", "deeplift", "lime", "deepliftshap",
+    "gradientshap"}: #"ig",
         
         temp_registry = {}
 

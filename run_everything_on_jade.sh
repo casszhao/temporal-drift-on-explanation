@@ -5,7 +5,7 @@
 #SBATCH --time=6-00:00
 
 # set name of job
-#SBATCH --job-name=agnews
+#SBATCH --job-name=healthfact
 
 # set number of GPUs
 #SBATCH --gres=gpu:1
@@ -27,8 +27,7 @@ module load python/anaconda3
 module load cuda/10.2
 source activate ood_faith
 
-dataset="agnews"
-dataset="agnews"
+dataset="healthfact"
 model_dir="models/"
 data_dir="datasets/"
 evaluation_dir="posthoc_results/"
@@ -179,7 +178,7 @@ done
 echo "done train kuma"
 python train_fulltext_and_kuma.py --dataset $dataset --model_dir "kuma_model/" --data_dir $data_dir --seed $seed --inherently_faithful "kuma" --evaluate_models
 echo "done eval kuma"
-python extract_kuma_len.py --dataset $dataset$
+python extract_kuma_len.py --dataset $dataset
 
 
 

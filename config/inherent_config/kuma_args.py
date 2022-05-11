@@ -133,7 +133,7 @@ xfact_full = xfact = xfact_ood1 = xfact_ood2 = {
     },
     "MODEL_ARGS_" : {     ## model args
         "lasso":           0.0,
-        "lambda_init":     0.5, # how short or long rationales are # compare to lstm standard,
+        "lambda_init":     0.1, # how short or long rationales are # compare to lstm standard,
                                  # penalise when a rationale is long. So if they high they will select less text and therefore closer accuracy to only lstm
         "lagrange_lr":     5e-4, # have tried 1e-2, 1e-3
         "lagrange_alpha":  0.8, # have tried 0.9, 0.8

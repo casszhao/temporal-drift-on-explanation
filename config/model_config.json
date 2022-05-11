@@ -78,7 +78,7 @@
     },
     "binarybragging_full" : {
         "rationale_length" : 0.2,
-        "batch_size": 32,
+        "batch_size": 4,
         "lr_bert" : 5e-6,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",
@@ -87,7 +87,7 @@
     },
     "binarybragging" : {
         "rationale_length" : 0.2,
-        "batch_size": 32,
+        "batch_size": 4,
         "lr_bert" : 5e-6,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",
@@ -96,7 +96,7 @@
     },
     "binarybragging_ood1" : {
         "rationale_length" : 0.2,
-        "batch_size": 32,
+        "batch_size": 4,
         "lr_bert" : 5e-6,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",
@@ -105,7 +105,7 @@
     },
     "binarybragging_ood2" : {
         "rationale_length" : 0.2,
-        "batch_size": 32,
+        "batch_size": 4,
         "lr_bert" : 5e-6,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",

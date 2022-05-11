@@ -16,7 +16,7 @@ with open(config.cfg.config_directory + 'instance_config.json', 'r') as f:
     args = AttrDict(json.load(f))
 
 from src.models.deterministic.bert import BertClassifier
-from src.evaluation.experiments.rationale_extractor import extract_importance_, rationale_creator_, extract_lime_scores_, extract_shap_values_
+from src.evaluation.experiments.rationale_extractor import extract_importance_, rationale_creator_, extract_lime_scores_, extract_deeplift_values_, extract_gradientshap_values_, extract_deepliftshap_values_
 from src.evaluation.experiments.erasure_tests import conduct_experiments_
 
 
@@ -141,6 +141,7 @@ class evaluate():
                     ood = self.ood,
                     ood_dataset_ = self.ood_dataset_
                 )
+                torch.cuda.empty_cache()
 
                 extract_lime_scores_(
                     model = model,
@@ -153,8 +154,9 @@ class evaluate():
                     ood = self.ood,
                     ood_dataset_ = self.ood_dataset_
                 )
+                torch.cuda.empty_cache()
 
-                extract_shap_values_(
+                extract_deeplift_values_(
                     model = model,
                     data = data_split,
                     data_split_name = data_split_name,
@@ -162,9 +164,29 @@ class evaluate():
                     ood = self.ood,
                     ood_dataset_ = self.ood_dataset_
                 )
+                torch.cuda.empty_cache()
 
+                extract_deepliftshap_values_(
+                    model = model,
+                    data = data_split,
+                    data_split_name = data_split_name,
+                    model_random_seed = self.model_random_seed,
+                    ood = self.ood,
+                    ood_dataset_ = self.ood_dataset_
+                )
+                torch.cuda.empty_cache()
 
-        return
+                extract_gradientshap_values_(
+                    model = model,
+                    data = data_split,
+                    data_split_name = data_split_name,
+                    model_random_seed = self.model_random_seed,
+                    ood = self.ood,
+                    ood_dataset_ = self.ood_dataset_
+                )
+                torch.cuda.empty_cache()
+
+        return 
 
     def create_rationales_(self, data):
         
@@ -175,7 +197,6 @@ class evaluate():
             "importance_scores",
             ""
         )
-
 
         for data_split_name, data_split in data.as_dataframes_().items():
 

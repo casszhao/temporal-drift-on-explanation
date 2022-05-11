@@ -210,6 +210,7 @@ def extract_lime_scores_(model, data, data_split_name,
 
         ## skip to save time if we already run lime (VERY EXPENSIVE)
         if "lime" in importance_scores[annot_id]:
+            print('already computed LIME')
 
             continue
 
@@ -245,7 +246,7 @@ def extract_lime_scores_(model, data, data_split_name,
 from src.evaluation.experiments.shap_predictor import ShapleyModelWrapper
 from captum.attr import DeepLift, DeepLiftShap, GradientShap
 
-def extract_shap_values_(model, data, data_split_name, 
+def extract_deeplift_values_(model, data, data_split_name, 
                         model_random_seed, ood, ood_dataset_):
     
     
@@ -265,26 +266,10 @@ def extract_shap_values_(model, data, data_split_name,
     key = next(iter(importance_scores))
 
     if "deeplift" in importance_scores[key]:
-
-        print(f"deeplift scores already computed")
-
+        print(f"already computed DeepLift")
         return
     
-    if "deepliftsharp" in importance_scores[key]:
-
-        print(f"deepliftsharp scores already computed")
-
-        return
-
-    if "gradientshap" in importance_scores[key]:
-
-        print(f"gradientshap scores already computed")
-
-        return
-
-    explainer = DeepLift(ShapleyModelWrapper(model))
-    explainer_deepliftshap = DeepLiftShap(ShapleyModelWrapper(model))
-    explainer_gradientshap = GradientShap(ShapleyModelWrapper(model))
+    explainer = DeepLift(ShapleyModelWrapper(model)) 
 
     if ood : pbar = trange(len(data) * data.batch_size, desc=f"extracting --OOD-{ood_dataset_}-- deeplift scores for -> {data_split_name}", leave=True)
     else: pbar = trange(len(data) * data.batch_size, desc=f"extracting deeplift scores for -> {data_split_name}", leave=True)
@@ -312,7 +297,8 @@ def extract_shap_values_(model, data, data_split_name,
         original_prediction, _ =  model(**batch)
 
         embeddings = model.wrapper.model.embeddings.word_embeddings.weight[batch["input_ids"].long()]
-        # deeplift
+
+
         attribution = explainer.attribute(
             embeddings.requires_grad_(True), 
             target = original_prediction.argmax(-1)
@@ -324,19 +310,142 @@ def extract_shap_values_(model, data, data_split_name,
             float("-inf")
         )  
 
+  
+        for _i_ in range(original_prediction.size(0)):
+            annotation_id = batch["annotation_id"][_i_]
+            importance_scores[annotation_id]["deeplift"] = attribution[_i_].detach().cpu().numpy()
+
+        pbar.update(data.batch_size)
+
+    np.save(fname, importance_scores)
+
+    return
+
+def extract_deepliftshap_values_(model, data, data_split_name, 
+                        model_random_seed, ood, ood_dataset_):
+    
+    
+    fname = os.path.join(
+        os.getcwd(),
+        args["extracted_rationale_dir"],
+        "importance_scores",
+        ""
+    )
+
+    if ood: fname = f"{fname}{data_split_name}_importance_scores-OOD-{ood_dataset_}-{model_random_seed}.npy"
+    else: fname = f"{fname}{data_split_name}_importance_scores-{model_random_seed}.npy"
+
+    ## retrieve importance scores
+    importance_scores = np.load(fname, allow_pickle = True).item()
+
+    key = next(iter(importance_scores))
+
+    if "deepliftshap" in importance_scores[key]:
+        print(f"already computed DeepLiftShap")
+        return
+    
+    explainer_deepliftshap = DeepLiftShap(ShapleyModelWrapper(model))
+
+    if ood : pbar = trange(len(data) * data.batch_size, desc=f"extracting --OOD-{ood_dataset_}-- deepliftshap scores for -> {data_split_name}", leave=True)
+    else: pbar = trange(len(data) * data.batch_size, desc=f"extracting deepliftshap scores for -> {data_split_name}", leave=True)
+
+    ## we are interested in token level features
+    for batch in data:
+
+        model.eval()
+        model.zero_grad()
+
+        batch = {
+            "annotation_id" : batch["annotation_id"],
+            "input_ids" : batch["input_ids"].squeeze(1).to(device),
+            "lengths" : batch["lengths"].to(device),
+            "labels" : batch["label"].to(device),
+            "token_type_ids" : batch["token_type_ids"].squeeze(1).to(device),
+            "attention_mask" : batch["attention_mask"].squeeze(1).to(device),
+            "query_mask" : batch["query_mask"].squeeze(1).to(device),
+            "special_tokens" : batch["special tokens"],
+            "retain_gradient" : False ## we do not need it
+        }
+            
+        assert batch["input_ids"].size(0) == len(batch["labels"]), "Error: batch size for item 1 not in correct position"
         
-        # deepliftshap
-        attribution_deepliftshap = explainer_deepliftshap.attribute(
-            embeddings.requires_grad_(True), 
-            target = original_prediction.argmax(-1),
-            baselines = torch.zeros(embeddings.size()).to(device)
-        )
+        original_prediction, _ =  model(**batch)
+
+        embeddings = model.wrapper.model.embeddings.word_embeddings.weight[batch["input_ids"].long()]
+
+        
+        attribution_deepliftshap = explainer_deepliftshap.attribute(embeddings.requires_grad_(True), 
+                                                                    target = original_prediction.argmax(-1),
+                                                                    baselines = torch.zeros(embeddings.size()).to(device)
+                                                                )
         attribution_deepliftshap = attribution_deepliftshap.sum(-1)
-        attribution_deepliftshap = torch.masked_fill(
-            attribution_deepliftshap, 
-            (batch["query_mask"] == 0).bool(), 
-            float("-inf")
-        )  
+        attribution_deepliftshap = torch.masked_fill(attribution_deepliftshap, 
+                                                    (batch["query_mask"] == 0).bool(), 
+                                                    float("-inf")
+                                                )  
+  
+        for _i_ in range(original_prediction.size(0)):
+            annotation_id = batch["annotation_id"][_i_]
+            importance_scores[annotation_id]["deepliftshap"] = attribution_deepliftshap[_i_].detach().cpu().numpy()
+
+        pbar.update(data.batch_size)
+
+     ## save them
+    np.save(fname, importance_scores)
+
+    return
+
+
+def extract_gradientshap_values_(model, data, data_split_name, 
+                        model_random_seed, ood, ood_dataset_):
+    
+    
+    fname = os.path.join(
+        os.getcwd(),
+        args["extracted_rationale_dir"],
+        "importance_scores",
+        ""
+    )
+
+    if ood: fname = f"{fname}{data_split_name}_importance_scores-OOD-{ood_dataset_}-{model_random_seed}.npy"
+    else: fname = f"{fname}{data_split_name}_importance_scores-{model_random_seed}.npy"
+
+    ## retrieve importance scores
+    importance_scores = np.load(fname, allow_pickle = True).item()
+
+    key = next(iter(importance_scores))
+
+    if "gradientshap" in importance_scores[key]:
+        print(f"already got gradientshap")
+        return    
+    explainer_gradientshap = GradientShap(ShapleyModelWrapper(model))
+
+    if ood : pbar = trange(len(data) * data.batch_size, desc=f"extracting --OOD-{ood_dataset_}-- gradientshap scores for -> {data_split_name}", leave=True)
+    else: pbar = trange(len(data) * data.batch_size, desc=f"extracting gradientshap scores for -> {data_split_name}", leave=True)
+
+    ## we are interested in token level features
+    for batch in data:
+
+        model.eval()
+        model.zero_grad()
+
+        batch = {
+            "annotation_id" : batch["annotation_id"],
+            "input_ids" : batch["input_ids"].squeeze(1).to(device),
+            "lengths" : batch["lengths"].to(device),
+            "labels" : batch["label"].to(device),
+            "token_type_ids" : batch["token_type_ids"].squeeze(1).to(device),
+            "attention_mask" : batch["attention_mask"].squeeze(1).to(device),
+            "query_mask" : batch["query_mask"].squeeze(1).to(device),
+            "special_tokens" : batch["special tokens"],
+            "retain_gradient" : False ## we do not need it
+        }
+            
+        assert batch["input_ids"].size(0) == len(batch["labels"]), "Error: batch size for item 1 not in correct position"
+        
+        original_prediction, _ =  model(**batch)
+
+        embeddings = model.wrapper.model.embeddings.word_embeddings.weight[batch["input_ids"].long()]
 
 
         # gradientshap
@@ -350,29 +459,16 @@ def extract_shap_values_(model, data, data_split_name,
             attribution_gradientshap, 
             (batch["query_mask"] == 0).bool(), 
             float("-inf")
-        )  
-
-
-        
+        )        
         for _i_ in range(original_prediction.size(0)):
             annotation_id = batch["annotation_id"][_i_]
-            importance_scores[annotation_id]["deeplift"] = attribution[_i_].detach().cpu().numpy()
-            importance_scores[annotation_id]["deepliftshap"] = attribution_deepliftshap[_i_].detach().cpu().numpy()
             importance_scores[annotation_id]["gradientshap"] = attribution_gradientshap[_i_].detach().cpu().numpy()
-
-
-
         pbar.update(data.batch_size)
-
-
 
      ## save them
     np.save(fname, importance_scores)
 
-    print(f"appended deeplift/deepliftshap/gradientshap scores in -> {fname}")
-
     return
-
 
 def rationale_creator_(data, data_split_name, ood, tokenizer, model_random_seed, ood_dataset_):
 

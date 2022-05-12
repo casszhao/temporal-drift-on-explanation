@@ -210,7 +210,7 @@ def extract_lime_scores_(model, data, data_split_name,
 
         ## skip to save time if we already run lime (VERY EXPENSIVE)
         if "lime" in importance_scores[annot_id]:
-            print('already computed LIME')
+            # print('already computed LIME')
 
             continue
 

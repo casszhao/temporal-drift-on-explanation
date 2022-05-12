@@ -266,7 +266,7 @@ def extract_deeplift_values_(model, data, data_split_name,
     key = next(iter(importance_scores))
 
     if "deeplift" in importance_scores[key]:
-        print(f"already computed DeepLift")
+        print(f"-----------already computed DeepLift-------")
         return
     
     explainer = DeepLift(ShapleyModelWrapper(model)) 
@@ -341,7 +341,7 @@ def extract_deepliftshap_values_(model, data, data_split_name,
     key = next(iter(importance_scores))
 
     if "deepliftshap" in importance_scores[key]:
-        print(f"already computed DeepLiftShap")
+        print(f"-------------already computed DeepLiftShap--------")
         return
     
     explainer_deepliftshap = DeepLiftShap(ShapleyModelWrapper(model))
@@ -376,7 +376,7 @@ def extract_deepliftshap_values_(model, data, data_split_name,
         
         attribution_deepliftshap = explainer_deepliftshap.attribute(embeddings.requires_grad_(True), 
                                                                     target = original_prediction.argmax(-1),
-                                                                    baselines = torch.zeros(embeddings.size()[-1]).to(device)
+                                                                    baselines = torch.zeros(embeddings.size()).to(device)
                                                                 )
         attribution_deepliftshap = attribution_deepliftshap.sum(-1)
         attribution_deepliftshap = torch.masked_fill(attribution_deepliftshap, 
@@ -392,6 +392,7 @@ def extract_deepliftshap_values_(model, data, data_split_name,
 
      ## save them
     np.save(fname, importance_scores)
+    print(f"appended deepliftshap scores in -> {fname}")
 
     return
 
@@ -467,6 +468,7 @@ def extract_gradientshap_values_(model, data, data_split_name,
 
      ## save them
     np.save(fname, importance_scores)
+    print(f"appended gradientshap scores in -> {fname}")
 
     return
 

@@ -12,3 +12,4 @@ __pycache__
 *.out
 .env
 ./scibert_scivocab_uncased
+scibert_scivocab_uncased/

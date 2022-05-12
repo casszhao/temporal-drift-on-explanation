@@ -129,7 +129,7 @@ class evaluate():
             # ## if its for rationale extraction we want all splits
             # else:
 
-            for data_split_name, data_split in {"train": data.train_loader, "dev":  data.dev_loader ,
+            for data_split_name, data_split in {"dev":  data.dev_loader, "train": data.train_loader, 
                                                 "test":  data.test_loader}.items():
             # for data_split_name, data_split in {"test": data.test_loader}.items(): ## REMOVE AFTER
 
@@ -142,6 +142,7 @@ class evaluate():
                     ood_dataset_ = self.ood_dataset_
                 )
                 torch.cuda.empty_cache()
+                print(' ++++ done {} s attributes of ig/scale attention...'.format(data_split_name))
 
                 extract_lime_scores_(
                     model = model,
@@ -155,6 +156,7 @@ class evaluate():
                     ood_dataset_ = self.ood_dataset_
                 )
                 torch.cuda.empty_cache()
+                print(' ++++ done {} s lime '.format(data_split_name))
 
                 extract_deeplift_values_(
                     model = model,
@@ -165,6 +167,8 @@ class evaluate():
                     ood_dataset_ = self.ood_dataset_
                 )
                 torch.cuda.empty_cache()
+                print(' ++++ done {} s deeplift '.format(data_split_name))
+
 
                 extract_deepliftshap_values_(
                     model = model,
@@ -175,6 +179,8 @@ class evaluate():
                     ood_dataset_ = self.ood_dataset_
                 )
                 torch.cuda.empty_cache()
+                print(' ++++ done {} s deepliftshap '.format(data_split_name))
+
 
                 extract_gradientshap_values_(
                     model = model,
@@ -185,6 +191,8 @@ class evaluate():
                     ood_dataset_ = self.ood_dataset_
                 )
                 torch.cuda.empty_cache()
+                print(' ++++ done {} s gradientshap '.format(data_split_name))
+
 
         return 
 

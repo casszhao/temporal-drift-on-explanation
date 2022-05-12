@@ -30,7 +30,7 @@ parser.add_argument(
     "--dataset", 
     type = str, 
     help = "select dataset / task", 
-    default = "xfact",
+    default = "binarybragging",
     # choices = ["WS", "SST","IMDB", "Yelp", "AmazDigiMu", "AmazPantry", "AmazInstr", "fc1", "fc2", "fc3"]
 )
 
@@ -114,6 +114,7 @@ logging.info("Running on cuda ? {}".format(torch.cuda.is_available()))
 
 torch.backends.cudnn.deterministic = True
 torch.backends.cudnn.benchmark = False
+torch.cuda.empty_cache()
 
 
 from src.common_code.initialiser import initial_preparations
@@ -140,7 +141,7 @@ from src.evaluation import evaluation_pipeline
 data = BERT_HOLDER(
     args["data_dir"], 
     stage = "eval",
-    b_size = 8,
+    b_size = 4,
     #b_size = args["batch_size"], # TO FIX CUDA OUT OF MEMORY, MAY NOT WORK
 )
 
@@ -163,7 +164,8 @@ gc.collect()
 ## ood evaluation DATASET 1
 data = BERT_HOLDER(
     path = args["data_dir"], 
-    b_size = args["batch_size"],
+    b_size = 4,
+    #b_size = args["batch_size"], # TO FIX CUDA OUT OF MEMORY, MAY NOT WORK
     stage = "eval", #args["batch_size"],
     ood = True,
     ood_dataset_ = 1
@@ -192,7 +194,8 @@ gc.collect()
 ## ood evaluation DATASET 2
 data = BERT_HOLDER(
     path = args["data_dir"], 
-    b_size = args["batch_size"],
+    b_size = 4,
+    #b_size = args["batch_size"], # TO FIX CUDA OUT OF MEMORY, MAY NOT WORK
     stage = "eval", #args["batch_size"],
     ood = True,
     ood_dataset_ = 2

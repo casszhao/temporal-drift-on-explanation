@@ -376,7 +376,7 @@ def extract_deepliftshap_values_(model, data, data_split_name,
         
         attribution_deepliftshap = explainer_deepliftshap.attribute(embeddings.requires_grad_(True), 
                                                                     target = original_prediction.argmax(-1),
-                                                                    baselines = torch.zeros(embeddings.size()).to(device)
+                                                                    baselines = torch.zeros(embeddings.size()[-1]).to(device)
                                                                 )
         attribution_deepliftshap = attribution_deepliftshap.sum(-1)
         attribution_deepliftshap = torch.masked_fill(attribution_deepliftshap, 
@@ -452,7 +452,7 @@ def extract_gradientshap_values_(model, data, data_split_name,
         attribution_gradientshap = explainer_gradientshap.attribute(
             embeddings.requires_grad_(True), 
             target = original_prediction.argmax(-1),
-            baselines = torch.zeros(embeddings.size()).to(device)
+            baselines = torch.zeros(embeddings.size()[-1]).to(device)
         )
         attribution_gradientshap = attribution_gradientshap.sum(-1)
         attribution_gradientshap = torch.masked_fill(

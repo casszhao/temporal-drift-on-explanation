@@ -249,7 +249,6 @@ from captum.attr import DeepLift, DeepLiftShap, GradientShap
 def extract_deeplift_values_(model, data, data_split_name, 
                         model_random_seed, ood, ood_dataset_):
     
-    
     fname = os.path.join(
         os.getcwd(),
         args["extracted_rationale_dir"],
@@ -270,9 +269,6 @@ def extract_deeplift_values_(model, data, data_split_name,
         return
     
     explainer = DeepLift(ShapleyModelWrapper(model)) 
-
-    if ood : pbar = trange(len(data) * data.batch_size, desc=f"extracting --OOD-{ood_dataset_}-- deeplift scores for -> {data_split_name}", leave=True)
-    else: pbar = trange(len(data) * data.batch_size, desc=f"extracting deeplift scores for -> {data_split_name}", leave=True)
 
     ## we are interested in token level features
     for batch in data:
@@ -315,7 +311,7 @@ def extract_deeplift_values_(model, data, data_split_name,
             annotation_id = batch["annotation_id"][_i_]
             importance_scores[annotation_id]["deeplift"] = attribution[_i_].detach().cpu().numpy()
 
-        pbar.update(data.batch_size)
+        # pbar.update(data.batch_size)
 
     np.save(fname, importance_scores)
 
@@ -323,7 +319,6 @@ def extract_deeplift_values_(model, data, data_split_name,
 
 def extract_deepliftshap_values_(model, data, data_split_name, 
                         model_random_seed, ood, ood_dataset_):
-    
     
     fname = os.path.join(
         os.getcwd(),
@@ -335,6 +330,7 @@ def extract_deepliftshap_values_(model, data, data_split_name,
     if ood: fname = f"{fname}{data_split_name}_importance_scores-OOD-{ood_dataset_}-{model_random_seed}.npy"
     else: fname = f"{fname}{data_split_name}_importance_scores-{model_random_seed}.npy"
 
+
     ## retrieve importance scores
     importance_scores = np.load(fname, allow_pickle = True).item()
 
@@ -345,9 +341,6 @@ def extract_deepliftshap_values_(model, data, data_split_name,
         return
     
     explainer_deepliftshap = DeepLiftShap(ShapleyModelWrapper(model))
-
-    if ood : pbar = trange(len(data) * data.batch_size, desc=f"extracting --OOD-{ood_dataset_}-- deepliftshap scores for -> {data_split_name}", leave=True)
-    else: pbar = trange(len(data) * data.batch_size, desc=f"extracting deepliftshap scores for -> {data_split_name}", leave=True)
 
     ## we are interested in token level features
     for batch in data:
@@ -376,7 +369,7 @@ def extract_deepliftshap_values_(model, data, data_split_name,
         
         attribution_deepliftshap = explainer_deepliftshap.attribute(embeddings.requires_grad_(True), 
                                                                     target = original_prediction.argmax(-1),
-                                                                    baselines = torch.zeros(embeddings.size()).to(device)
+                                                                    baselines = torch.rand(embeddings.size()).to(device)
                                                                 )
         attribution_deepliftshap = attribution_deepliftshap.sum(-1)
         attribution_deepliftshap = torch.masked_fill(attribution_deepliftshap, 
@@ -388,7 +381,7 @@ def extract_deepliftshap_values_(model, data, data_split_name,
             annotation_id = batch["annotation_id"][_i_]
             importance_scores[annotation_id]["deepliftshap"] = attribution_deepliftshap[_i_].detach().cpu().numpy()
 
-        pbar.update(data.batch_size)
+        # pbar.update(data.batch_size)
 
      ## save them
     np.save(fname, importance_scores)
@@ -453,7 +446,7 @@ def extract_gradientshap_values_(model, data, data_split_name,
         attribution_gradientshap = explainer_gradientshap.attribute(
             embeddings.requires_grad_(True), 
             target = original_prediction.argmax(-1),
-            baselines = torch.zeros(embeddings.size()[-1]).to(device)
+            baselines = torch.rand(embeddings.size()).to(device)
         )
         attribution_gradientshap = attribution_gradientshap.sum(-1)
         attribution_gradientshap = torch.masked_fill(

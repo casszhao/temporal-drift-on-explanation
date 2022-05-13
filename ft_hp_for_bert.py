@@ -22,7 +22,7 @@ parser.add_argument(
     "--dataset",
     type=str,
     help="select dataset / task",
-    default="sst",
+    default="healthfact",
     # choices = ["WS", "SST", "IMDB", "Yelp", "AmazDigiMu", "AmazPantry", "AmazInstr", "factcheck","factcheck_ood2","factcheck_ood1"]
 )
 
@@ -43,7 +43,8 @@ parser.add_argument(
 parser.add_argument(
     "--seed",
     type=int,
-    help="random seed for experiment"
+    help="random seed for experiment",
+    default= 5
 )
 
 parser.add_argument(
@@ -155,7 +156,7 @@ else:
         train_data_loader=data.train_loader,
         dev_data_loader=data.dev_loader,
         output_dims=data.nu_of_labels,
-        lr = 5e-4, #3e-5, 2e-5
+        lr = 1e-4, #3e-5, 2e-5
     )
 
     logging.info(" -------------------- learning rate: {}".format('1e-5'))
@@ -163,7 +164,22 @@ else:
         train_data_loader=data.train_loader,
         dev_data_loader=data.dev_loader,
         output_dims=data.nu_of_labels,
+        lr = 5e-4, #3e-5, 2e-5
+    )
+    
+    train_searchPara_and_save(
+        train_data_loader=data.train_loader,
+        dev_data_loader=data.dev_loader,
+        output_dims=data.nu_of_labels,
         lr = 1e-5, #3e-5, 2e-5
+    )
+
+    logging.info(" -------------------- learning rate: {}".format('1e-5'))
+    train_searchPara_and_save(
+        train_data_loader=data.train_loader,
+        dev_data_loader=data.dev_loader,
+        output_dims=data.nu_of_labels,
+        lr = 5e-5, #3e-5, 2e-5
     )
 
     logging.info(" -------------------- learning rate: {}".format('5e-5'))
@@ -171,7 +187,7 @@ else:
         train_data_loader=data.train_loader,
         dev_data_loader=data.dev_loader,
         output_dims=data.nu_of_labels,
-        lr = 5e-5, #,
+        lr = 1e-6, #,
     )
 
     logging.info(" -------------------- learning rate: {}".format('1e-6'))
@@ -179,13 +195,65 @@ else:
         train_data_loader=data.train_loader,
         dev_data_loader=data.dev_loader,
         output_dims=data.nu_of_labels,
-        lr = 1e-6, #3e-5, 2e-5
+        lr = 5e-6, #3e-5, 2e-5
     )
 
-    logging.info(" -------------------- learning rate: {}".format('5e-6'))
+
+
+
+
+    data = dataholder(
+    path=args["data_dir"],
+    b_size=16
+)
+
+    logging.info("Finetune BERT for: {}".format(str(user_args["dataset"])))
+    logging.info("batch size: {}".format(16))
+
+    logging.info(" -------------------- learning rate: {}".format('5e-4'))
+    train_searchPara_and_save(
+        train_data_loader=data.train_loader,
+        dev_data_loader=data.dev_loader,
+        output_dims=data.nu_of_labels,
+        lr = 1e-4, #3e-5, 2e-5
+    )
+
+    logging.info(" -------------------- learning rate: {}".format('1e-5'))
+    train_searchPara_and_save(
+        train_data_loader=data.train_loader,
+        dev_data_loader=data.dev_loader,
+        output_dims=data.nu_of_labels,
+        lr = 5e-4, #3e-5, 2e-5
+    )
+    
+    train_searchPara_and_save(
+        train_data_loader=data.train_loader,
+        dev_data_loader=data.dev_loader,
+        output_dims=data.nu_of_labels,
+        lr = 1e-5, #3e-5, 2e-5
+    )
+
+    logging.info(" -------------------- learning rate: {}".format('1e-5'))
+    train_searchPara_and_save(
+        train_data_loader=data.train_loader,
+        dev_data_loader=data.dev_loader,
+        output_dims=data.nu_of_labels,
+        lr = 5e-5, #3e-5, 2e-5
+    )
+
+    logging.info(" -------------------- learning rate: {}".format('5e-5'))
+    train_searchPara_and_save(
+        train_data_loader=data.train_loader,
+        dev_data_loader=data.dev_loader,
+        output_dims=data.nu_of_labels,
+        lr = 1e-6, #,
+    )
+
+    logging.info(" -------------------- learning rate: {}".format('1e-6'))
     train_searchPara_and_save(
         train_data_loader=data.train_loader,
         dev_data_loader=data.dev_loader,
         output_dims=data.nu_of_labels,
         lr = 5e-6, #3e-5, 2e-5
     )
+

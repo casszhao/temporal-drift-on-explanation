@@ -129,10 +129,10 @@ class evaluate():
             # ## if its for rationale extraction we want all splits
             # else:
 
-            for data_split_name, data_split in {"dev":  data.dev_loader, "train": data.train_loader, 
-                                                "test":  data.test_loader}.items():
-            # for data_split_name, data_split in {"test": data.test_loader}.items(): ## REMOVE AFTER
-
+            # for data_split_name, data_split in {"dev":  data.dev_loader, "train": data.train_loader, 
+            #                                     "test":  data.test_loader}.items():
+            for data_split_name, data_split in {"test": data.test_loader}.items(): ## REMOVE AFTER
+            # need to run extract importance first
                 extract_importance_(
                     model = model,
                     data_split_name = data_split_name,
@@ -142,7 +142,7 @@ class evaluate():
                     ood_dataset_ = self.ood_dataset_
                 )
                 torch.cuda.empty_cache()
-                print(' ++++ done {} s attributes of ig/scale attention...'.format(data_split_name))
+                print(' \\ +++++++++ DONE {} s attributes of ig/scale attention...'.format(data_split_name))
 
                 extract_lime_scores_(
                     model = model,
@@ -156,7 +156,7 @@ class evaluate():
                     ood_dataset_ = self.ood_dataset_
                 )
                 torch.cuda.empty_cache()
-                print(' ++++ done {} s lime '.format(data_split_name))
+                print(' \\ +++++++++ DONE {} s lime '.format(data_split_name))
 
                 extract_deeplift_values_(
                     model = model,
@@ -167,7 +167,7 @@ class evaluate():
                     ood_dataset_ = self.ood_dataset_
                 )
                 torch.cuda.empty_cache()
-                print(' ++++ done {} s deeplift '.format(data_split_name))
+                print(' \\ +++++++++ DONE {} s deeplift '.format(data_split_name))
 
 
                 extract_deepliftshap_values_(
@@ -179,7 +179,7 @@ class evaluate():
                     ood_dataset_ = self.ood_dataset_
                 )
                 torch.cuda.empty_cache()
-                print(' ++++ done {} s deepliftshap '.format(data_split_name))
+                print(' \\ +++++++++ DONE {} s deepliftshap '.format(data_split_name))
 
 
                 extract_gradientshap_values_(
@@ -191,7 +191,7 @@ class evaluate():
                     ood_dataset_ = self.ood_dataset_
                 )
                 torch.cuda.empty_cache()
-                print(' ++++ done {} s gradientshap '.format(data_split_name))
+                print(' \\ +++++++++ DONE {} s gradientshap '.format(data_split_name))
 
 
         return 

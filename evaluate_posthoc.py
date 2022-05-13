@@ -30,7 +30,7 @@ parser.add_argument(
     "--dataset", 
     type = str, 
     help = "select dataset / task", 
-    default = "binarybragging",
+    default = "factcheck",
     # choices = ["WS", "SST","IMDB", "Yelp", "AmazDigiMu", "AmazPantry", "AmazInstr", "fc1", "fc2", "fc3"]
 )
 
@@ -109,6 +109,7 @@ logging.basicConfig(
                   )
 
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+CUDA_LAUNCH_BLOCKING=1
 
 logging.info("Running on cuda ? {}".format(torch.cuda.is_available()))
 

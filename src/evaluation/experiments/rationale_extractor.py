@@ -410,7 +410,7 @@ def extract_gradientshap_values_(model, data, data_split_name,
     key = next(iter(importance_scores))
 
     if "gradientshap" in importance_scores[key]:
-        print(f"already got gradientshap")
+        print(f"already got gradientshap, return and go to the next attribute")
         return    
     explainer_gradientshap = GradientShap(ShapleyModelWrapper(model))
 

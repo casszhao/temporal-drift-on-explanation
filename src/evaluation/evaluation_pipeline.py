@@ -129,9 +129,9 @@ class evaluate():
             # ## if its for rationale extraction we want all splits
             # else:
 
-            # for data_split_name, data_split in {"dev":  data.dev_loader, "train": data.train_loader, 
-            #                                     "test":  data.test_loader}.items():
-            for data_split_name, data_split in {"test": data.test_loader}.items(): ## REMOVE AFTER
+            for data_split_name, data_split in {"dev":  data.dev_loader, "train": data.train_loader, 
+                                                "test":  data.test_loader}.items():
+            # for data_split_name, data_split in {"test": data.test_loader}.items(): ## REMOVE AFTER
             # need to run extract importance first
                 extract_importance_(
                     model = model,

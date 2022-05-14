@@ -387,7 +387,7 @@ def json2df(df, domain):
 
     df_tf = pd.DataFrame.from_records(list_of_list).transpose()
     df_tf.columns = df.columns  # ['random','scaled_attention','attention','ig','lime','gradients','deeplift']
-    df_tf = df_tf[['random','scaled attention','attention','deeplift','gradients','lime']]
+    # df_tf = df_tf[['random','scaled attention','attention','deeplift','gradients','lime']]
 
     df_tf['Rationales_metrics'] = ['Sufficiency', 'Comprehensiveness', 'AOPC_sufficiency', 'AOPC_comprehensiveness']
     df_tf['Domain'] = str(domain)
@@ -412,18 +412,20 @@ if args.save_posthoc:
         for fname in os.listdir('posthoc_results/' + str(args.dataset) + '_full/'):
             if 'OOD' not in fname and str(thresh) in fname and 'description.json' in fname:
                 full_path = os.path.join('posthoc_results', str(args.dataset)+'_full', fname)
-                # print('full: ', full_path)
+                
+                
 
         full = pd.read_json(full_path)
         full_df = json2df(full, 'Full')
-        json = pd.read_json(indomain_path)
-        df = json2df(json, 'InDomain')
+        indomain = pd.read_json(indomain_path)
+        df = json2df(indomain, 'InDomain')
         OOD1 = pd.read_json(ood1_path)
         df1 = json2df(OOD1, 'OOD1')
         OOD2 = pd.read_json(ood2_path)
         df2 = json2df(OOD2, 'OOD2')
 
         final = pd.concat([full_df, df, df1, df2], ignore_index=False)
+        #final = pd.concat([df, df1, df2], ignore_index=False)
         final['thresholder'] = str(thresh)
         df_list.append(final)
 
@@ -436,6 +438,8 @@ if args.save_posthoc:
     posthoc_faithfulness.to_csv('saved_everything/' + str(args.dataset) + '/posthoc_faithfulness.csv')
 
     if args.save_posthoc_for_analysis:
+        print(df_list[0])
+        exit()
 
         topk = df_list[0][['Domain', 'random', 
                             'scaled attention','attention','deeplift','gradients','lime','ig','deepliftshap',

@@ -89,45 +89,6 @@ class evaluate():
 
             self.model_random_seed = re.sub("bert", "", model_name.split(".pt")[0].split("/")[-1])
 
-            # ## used ONLY with test set when evaluating faithfulness
-            # if data_split:
-            #     print('----------------------')
-            #     print(data_split)
-            #
-            #     assert data_split == "test"
-            #
-            #     extract_importance_(
-            #         model = model,
-            #         data_split_name = "test",
-            #         data = data.test_loader,
-            #         model_random_seed = self.model_random_seed,
-            #         ood = self.ood,
-            #         ood_dataset_ = self.ood_dataset_
-            #     )
-            #
-            #     extract_lime_scores_(
-            #         model = model,
-            #         data = data.test_loader,
-            #         data_split_name = "test",
-            #         model_random_seed = self.model_random_seed,
-            #         no_of_labels = data.nu_of_labels,
-            #         max_seq_len = data.max_len,
-            #         tokenizer = data.tokenizer,
-            #         ood = self.ood,
-            #         ood_dataset_ = self.ood_dataset_
-            #     )
-            #
-            #     extract_shap_values_(
-            #         model = model,
-            #         data = data.test_loader,
-            #         data_split_name = "test",
-            #         model_random_seed = self.model_random_seed,
-            #         ood = self.ood,
-            #         ood_dataset_ = self.ood_dataset_
-            #     )
-            #
-            # ## if its for rationale extraction we want all splits
-            # else:
 
             for data_split_name, data_split in {"dev":  data.dev_loader, "train": data.train_loader, 
                                                 "test":  data.test_loader}.items():
@@ -142,7 +103,7 @@ class evaluate():
                     ood_dataset_ = self.ood_dataset_
                 )
                 torch.cuda.empty_cache()
-                print(' \\ +++++++++ DONE {} s attributes of ig/scale attention...'.format(data_split_name))
+                print(' \\ +++++++++ DONE {} s attributes of ig/scale attention/attention...'.format(data_split_name))
 
                 extract_lime_scores_(
                     model = model,
@@ -155,6 +116,7 @@ class evaluate():
                     ood = self.ood,
                     ood_dataset_ = self.ood_dataset_
                 )
+                
                 torch.cuda.empty_cache()
                 print(' \\ +++++++++ DONE {} s lime '.format(data_split_name))
 

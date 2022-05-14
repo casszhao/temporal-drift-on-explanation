@@ -437,13 +437,18 @@ if args.save_posthoc:
 
     if args.save_posthoc_for_analysis:
 
-        topk = df_list[0][['Domain', 'random', 'scaled attention','attention','deeplift','gradients','lime']]
+        topk = df_list[0][['Domain', 'random', 
+                            'scaled attention','attention','deeplift','gradients','lime','ig','deepliftshap',
+                            'gradientshap']]
         topk['scaled attention'] = topk['scaled attention']/topk['random']
         topk['attention'] = topk['attention']/topk['random']
         topk['deeplift'] = topk['deeplift']/topk['random']
         topk['gradients'] = topk['gradients']/topk['random']
         topk['lime'] = topk['lime']/topk['random']
-        topk = topk[['Domain','scaled attention','attention','deeplift','gradients','lime']]
+        topk['ig'] = topk['ig']/topk['random']
+        topk['deepliftshap'] = topk['deepliftshap']/topk['random']
+        topk['gradientshap'] = topk['gradientshap']/topk['random']
+        topk = topk[['Domain','scaled attention','attention','deeplift','gradients','lime''ig','deepliftshap','gradientshap']]
 
         AOPC_sufficiency = topk.loc[['AOPC_sufficiency']].set_index('Domain')
         OOD12 = (AOPC_sufficiency.loc['OOD1'] + AOPC_sufficiency.loc['OOD2'])/2
@@ -456,6 +461,7 @@ if args.save_posthoc:
         AOPC_comprehensiveness = AOPC_comprehensiveness.append([OOD12])
 
         final = pd.concat([AOPC_sufficiency, AOPC_comprehensiveness], axis=1)
+        final.to_csv('saved_everything/' + str(args.dataset) + '/posthoc_faithfulness_overleaf.csv')
         pd.options.display.float_format = "{:,.2f}".format
         print(final)
 

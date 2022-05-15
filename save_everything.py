@@ -409,14 +409,14 @@ if args.save_posthoc:
                 else:
                     indomain_path = os.path.join('posthoc_results', str(args.dataset), fname)
         
-        for fname in os.listdir('posthoc_results/' + str(args.dataset) + '_full/'):
-            if 'OOD' not in fname and str(thresh) in fname and 'description.json' in fname:
-                full_path = os.path.join('posthoc_results', str(args.dataset)+'_full', fname)
+        # for fname in os.listdir('posthoc_results/' + str(args.dataset) + '_full/'):
+        #     if 'OOD' not in fname and str(thresh) in fname and 'description.json' in fname:
+        #         full_path = os.path.join('posthoc_results', str(args.dataset)+'_full', fname)
                 
                 
 
-        full = pd.read_json(full_path)
-        full_df = json2df(full, 'Full')
+        # full = pd.read_json(full_path)
+        # full_df = json2df(full, 'Full')
         indomain = pd.read_json(indomain_path)
         df = json2df(indomain, 'InDomain')
         OOD1 = pd.read_json(ood1_path)
@@ -424,8 +424,8 @@ if args.save_posthoc:
         OOD2 = pd.read_json(ood2_path)
         df2 = json2df(OOD2, 'OOD2')
 
-        final = pd.concat([full_df, df, df1, df2], ignore_index=False)
-        #final = pd.concat([df, df1, df2], ignore_index=False)
+        #final = pd.concat([full_df, df, df1, df2], ignore_index=False)
+        final = pd.concat([df, df1, df2], ignore_index=False)
         final['thresholder'] = str(thresh)
         df_list.append(final)
 
@@ -439,7 +439,7 @@ if args.save_posthoc:
 
     if args.save_posthoc_for_analysis:
         print(df_list[0])
-        exit()
+        #exit()
 
         topk = df_list[0][['Domain', 'random', 
                             'scaled attention','attention','deeplift','gradients','lime','ig','deepliftshap',
@@ -452,7 +452,7 @@ if args.save_posthoc:
         topk['ig'] = topk['ig']/topk['random']
         topk['deepliftshap'] = topk['deepliftshap']/topk['random']
         topk['gradientshap'] = topk['gradientshap']/topk['random']
-        topk = topk[['Domain','scaled attention','attention','deeplift','gradients','lime''ig','deepliftshap','gradientshap']]
+        topk = topk[['Domain','scaled attention','attention','deeplift','gradients','lime','ig','deepliftshap','gradientshap']]
 
         AOPC_sufficiency = topk.loc[['AOPC_sufficiency']].set_index('Domain')
         OOD12 = (AOPC_sufficiency.loc['OOD1'] + AOPC_sufficiency.loc['OOD2'])/2

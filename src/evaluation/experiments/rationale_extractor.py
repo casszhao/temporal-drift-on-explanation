@@ -206,13 +206,26 @@ def extract_lime_scores_(model, data, data_split_name,
 
     warnings.warn("NUMBER OF SAMPLES IN LIME IS TOO SMALL ---> RESET AFTER DEV")
 
-    for annot_id in train_ls.keys():
+    # key = next(iter(importance_scores))
+
+    # if "deeplift" in importance_scores[key]:
+    #     print(f"-----------already computed DeepLift-------")
+    #     return
+    key = next(iter(importance_scores))
+    for annot_id in train_ls.keys(): # annot_id is not in the train_ls.keys
+
+        #print('importance_scores[annot_id]: ', importance_scores[annot_id])
+        #break
 
         ## skip to save time if we already run lime (VERY EXPENSIVE)
-        if "lime" in importance_scores[annot_id]:
-            # print('already computed LIME')
+        if "lime" in importance_scores[key]:
+            #print('already computed LIME for instance: ', annot_id)
 
             continue
+
+
+
+        print('need to do LIME for: ', annot_id)
 
         exp = explainer.explain_instance(
             train_ls[annot_id]["split example"], 

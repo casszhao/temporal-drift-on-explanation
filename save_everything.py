@@ -463,6 +463,7 @@ if args.save_posthoc:
 
         final = pd.concat([AOPC_sufficiency, AOPC_comprehensiveness], axis=1)
         final.to_csv('saved_everything/' + str(args.dataset) + '/posthoc_faithfulness_overleaf.csv')
+        pd.set_option('display.max_columns', None)
         pd.options.display.float_format = "{:,.2f}".format
         print(final)
 

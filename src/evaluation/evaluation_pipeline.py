@@ -94,6 +94,7 @@ class evaluate():
                                                 "test":  data.test_loader}.items():
             #for data_split_name, data_split in {"test": data.test_loader}.items(): ## REMOVE AFTER
             # need to run extract importance first
+                print(' START extracting for ', data_split_name)
                 extract_importance_(
                     model = model,
                     data_split_name = data_split_name,
@@ -242,7 +243,7 @@ class evaluate():
             ## register importance scores if they are not there
             self.register_importance_(
                 data, 
-                data_split = "test"
+                #data_split = "test"
             ) 
 
             conduct_experiments_(

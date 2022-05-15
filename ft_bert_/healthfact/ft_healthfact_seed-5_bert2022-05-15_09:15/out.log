@@ -1,0 +1,106 @@
+2022-05-15 09:15:28 INFO     Running on cuda : True
+2022-05-15 09:15:28 INFO     config  : 
+ ----------------------
+2022-05-15 09:15:28 INFO     dataset : healthfact
+2022-05-15 09:15:28 INFO     data_dir : /jmain02/home/J2AD003/txk58/zxz22-txk58/extract_rationales/extract_rationales/datasets/healthfact/data/
+2022-05-15 09:15:28 INFO     model_dir : /jmain02/home/J2AD003/txk58/zxz22-txk58/extract_rationales/extract_rationales/models/healthfact/
+2022-05-15 09:15:28 INFO     seed : 5
+2022-05-15 09:15:28 INFO     evaluate_models : False
+2022-05-15 09:15:28 INFO     inherently_faithful : None
+2022-05-15 09:15:28 INFO     use_tasc : False
+2022-05-15 09:15:28 INFO     importance_metric : None
+2022-05-15 09:15:28 INFO     rationale_length : 0.2
+2022-05-15 09:15:28 INFO     batch_size : 8
+2022-05-15 09:15:28 INFO     lr_bert : 1e-05
+2022-05-15 09:15:28 INFO     lr_classifier : 1e-05
+2022-05-15 09:15:28 INFO     model : scibert_scivocab_uncased
+2022-05-15 09:15:28 INFO     ood_dataset_1 : healthfact_ood1
+2022-05-15 09:15:28 INFO     ood_dataset_2 : healthfact_ood2
+2022-05-15 09:15:28 INFO     epochs : 10
+2022-05-15 09:15:28 INFO     model_abbreviation : scibert
+2022-05-15 09:15:28 INFO     evaluation_dir : None
+2022-05-15 09:15:28 INFO     extracted_rationale_dir : None
+2022-05-15 09:15:28 INFO     query : False
+2022-05-15 09:15:28 INFO     stage_of_proj : train
+2022-05-15 09:15:28 INFO     ood_rat_1 : 0.2
+2022-05-15 09:15:28 INFO     ood_rat_2 : 0.2
+2022-05-15 09:15:28 INFO     embed_model : None
+2022-05-15 09:15:28 INFO     
+ ----------------------
+2022-05-15 09:16:45 INFO     2022-05-15_09:15
+2022-05-15 09:16:45 INFO     Finetune BERT for: healthfact
+2022-05-15 09:16:45 INFO     Finetune BERT for: healthfact
+2022-05-15 09:17:25 INFO      \ ------------------  batch size: 8
+2022-05-15 09:17:25 INFO      \ -------------------- learning rate: 0.0001
+2022-05-15 09:17:49 INFO     ***************************************
+2022-05-15 09:17:49 INFO     Training on seed 5
+2022-05-15 09:17:49 INFO     *saving checkpoint every 246 iterations
+2022-05-15 09:17:49 INFO     +++++++++++++ epochs:  10
+2022-05-15 09:20:38 INFO     *** epoch - 1 | train loss - 9.79 | dev f1 - 0.139 | dev loss - 9.54
+2022-05-15 09:23:22 INFO     *** epoch - 2 | train loss - 9.57 | dev f1 - 0.138 | dev loss - 9.49
+2022-05-15 09:26:05 INFO     *** epoch - 3 | train loss - 9.51 | dev f1 - 0.138 | dev loss - 9.48
+2022-05-15 09:28:47 INFO     *** epoch - 4 | train loss - 9.51 | dev f1 - 0.139 | dev loss - 9.56
+2022-05-15 09:31:30 INFO     *** epoch - 5 | train loss - 9.48 | dev f1 - 0.138 | dev loss - 9.63
+2022-05-15 09:34:13 INFO     *** epoch - 6 | train loss - 9.46 | dev f1 - 0.138 | dev loss - 9.45
+2022-05-15 09:36:58 INFO     *** epoch - 7 | train loss - 9.46 | dev f1 - 0.139 | dev loss - 9.43
+2022-05-15 09:39:40 INFO     *** epoch - 8 | train loss - 9.46 | dev f1 - 0.139 | dev loss - 9.43
+2022-05-15 09:42:22 INFO     *** epoch - 9 | train loss - 9.44 | dev f1 - 0.138 | dev loss - 9.43
+2022-05-15 09:45:04 INFO     *** epoch - 10 | train loss - 9.44 | dev f1 - 0.139 | dev loss - 9.43
+2022-05-15 09:45:05 INFO      \ -------------------- learning rate: 0.0005
+2022-05-15 09:45:07 INFO     ***************************************
+2022-05-15 09:45:07 INFO     Training on seed 5
+2022-05-15 09:45:07 INFO     *saving checkpoint every 246 iterations
+2022-05-15 09:45:07 INFO     +++++++++++++ epochs:  10
+2022-05-15 09:47:55 INFO     *** epoch - 1 | train loss - 10.36 | dev f1 - 0.139 | dev loss - 9.63
+2022-05-15 09:50:38 INFO     *** epoch - 2 | train loss - 9.89 | dev f1 - 0.139 | dev loss - 9.52
+2022-05-15 09:53:23 INFO     *** epoch - 3 | train loss - 9.82 | dev f1 - 0.138 | dev loss - 9.54
+2022-05-15 09:56:05 INFO     *** epoch - 4 | train loss - 9.76 | dev f1 - 0.139 | dev loss - 9.72
+2022-05-15 09:58:49 INFO     *** epoch - 5 | train loss - 9.66 | dev f1 - 0.138 | dev loss - 9.74
+2022-05-15 10:01:32 INFO     *** epoch - 6 | train loss - 9.61 | dev f1 - 0.138 | dev loss - 9.57
+2022-05-15 10:04:16 INFO     *** epoch - 7 | train loss - 9.59 | dev f1 - 0.139 | dev loss - 9.63
+2022-05-15 10:06:59 INFO     *** epoch - 8 | train loss - 9.55 | dev f1 - 0.138 | dev loss - 9.79
+2022-05-15 10:09:41 INFO     *** epoch - 9 | train loss - 9.49 | dev f1 - 0.138 | dev loss - 9.45
+2022-05-15 10:12:24 INFO     *** epoch - 10 | train loss - 9.45 | dev f1 - 0.139 | dev loss - 9.43
+2022-05-15 10:12:24 INFO      \ -------------------- learning rate: 1e-05
+2022-05-15 10:12:26 INFO     ***************************************
+2022-05-15 10:12:26 INFO     Training on seed 5
+2022-05-15 10:12:26 INFO     *saving checkpoint every 246 iterations
+2022-05-15 10:12:26 INFO     +++++++++++++ epochs:  10
+2022-05-15 10:15:15 INFO     *** epoch - 1 | train loss - 8.03 | dev f1 - 0.421 | dev loss - 7.24
+2022-05-15 10:18:00 INFO     *** epoch - 2 | train loss - 6.05 | dev f1 - 0.435 | dev loss - 7.73
+2022-05-15 10:20:43 INFO     *** epoch - 3 | train loss - 4.24 | dev f1 - 0.485 | dev loss - 10.09
+2022-05-15 10:23:27 INFO     *** epoch - 4 | train loss - 2.74 | dev f1 - 0.515 | dev loss - 12.31
+2022-05-15 10:26:10 INFO     *** epoch - 5 | train loss - 1.73 | dev f1 - 0.512 | dev loss - 19.75
+2022-05-15 10:28:54 INFO     *** epoch - 6 | train loss - 1.13 | dev f1 - 0.505 | dev loss - 24.6
+2022-05-15 10:31:37 INFO     *** epoch - 7 | train loss - 0.79 | dev f1 - 0.52 | dev loss - 27.15
+2022-05-15 10:34:22 INFO     *** epoch - 8 | train loss - 0.55 | dev f1 - 0.522 | dev loss - 29.39
+2022-05-15 10:37:07 INFO     *** epoch - 9 | train loss - 0.33 | dev f1 - 0.513 | dev loss - 30.65
+2022-05-15 10:39:52 INFO     *** epoch - 10 | train loss - 0.23 | dev f1 - 0.515 | dev loss - 31.59
+2022-05-15 10:39:53 INFO      \ -------------------- learning rate: 2e-05
+2022-05-15 10:39:56 INFO     ***************************************
+2022-05-15 10:39:56 INFO     Training on seed 5
+2022-05-15 10:39:56 INFO     *saving checkpoint every 246 iterations
+2022-05-15 10:39:56 INFO     +++++++++++++ epochs:  10
+2022-05-15 10:42:45 INFO     *** epoch - 1 | train loss - 8.23 | dev f1 - 0.409 | dev loss - 7.4
+2022-05-15 10:45:29 INFO     *** epoch - 2 | train loss - 6.41 | dev f1 - 0.443 | dev loss - 7.91
+2022-05-15 10:48:13 INFO     *** epoch - 3 | train loss - 4.4 | dev f1 - 0.448 | dev loss - 9.95
+2022-05-15 10:50:56 INFO     *** epoch - 4 | train loss - 2.64 | dev f1 - 0.538 | dev loss - 12.54
+2022-05-15 10:53:39 INFO     *** epoch - 5 | train loss - 1.94 | dev f1 - 0.518 | dev loss - 21.19
+2022-05-15 10:56:23 INFO     *** epoch - 6 | train loss - 1.04 | dev f1 - 0.534 | dev loss - 26.45
+2022-05-15 10:59:06 INFO     *** epoch - 7 | train loss - 0.69 | dev f1 - 0.531 | dev loss - 28.31
+2022-05-15 11:01:49 INFO     *** epoch - 8 | train loss - 0.27 | dev f1 - 0.523 | dev loss - 30.99
+2022-05-15 11:04:33 INFO     *** epoch - 9 | train loss - 0.18 | dev f1 - 0.528 | dev loss - 32.03
+2022-05-15 11:07:16 INFO     *** epoch - 10 | train loss - 0.1 | dev f1 - 0.528 | dev loss - 32.11
+2022-05-15 11:07:16 INFO      \ -------------------- learning rate: 3e-05
+2022-05-15 11:07:18 INFO     ***************************************
+2022-05-15 11:07:18 INFO     Training on seed 5
+2022-05-15 11:07:18 INFO     *saving checkpoint every 246 iterations
+2022-05-15 11:07:18 INFO     +++++++++++++ epochs:  10
+2022-05-15 11:10:07 INFO     *** epoch - 1 | train loss - 8.58 | dev f1 - 0.391 | dev loss - 7.63
+2022-05-15 11:12:52 INFO     *** epoch - 2 | train loss - 6.99 | dev f1 - 0.382 | dev loss - 7.84
+2022-05-15 11:15:35 INFO     *** epoch - 3 | train loss - 5.18 | dev f1 - 0.469 | dev loss - 8.24
+2022-05-15 11:18:18 INFO     *** epoch - 4 | train loss - 3.31 | dev f1 - 0.473 | dev loss - 10.99
+2022-05-15 11:21:02 INFO     *** epoch - 5 | train loss - 2.28 | dev f1 - 0.478 | dev loss - 22.59
+2022-05-15 11:23:45 INFO     *** epoch - 6 | train loss - 1.39 | dev f1 - 0.517 | dev loss - 26.79
+2022-05-15 11:26:29 INFO     *** epoch - 7 | train loss - 0.65 | dev f1 - 0.486 | dev loss - 32.55
+2022-05-15 11:29:12 INFO     *** epoch - 8 | train loss - 0.36 | dev f1 - 0.533 | dev loss - 32.38

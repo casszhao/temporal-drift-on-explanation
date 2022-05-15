@@ -156,8 +156,8 @@ else:
     
     batch_size_list = [8,16,32,64]
     for b in batch_size_list:
-            data = dataholder(path=args["data_dir"], b_size=b)
-            logging.info(" \\ ------------------  batch size: {}".format(str(b)))
+        data = dataholder(path=args["data_dir"], b_size=b)
+        logging.info(" \\ ------------------  batch size: {}".format(str(b)))
 
         LR = [1e-4, 5e-4, 1e-5, 2e-5, 3e-5, 4e-5, 5e-5, 1e-6, 5e-6]
         for lr in LR:

@@ -409,14 +409,14 @@ if args.save_posthoc:
                 else:
                     indomain_path = os.path.join('posthoc_results', str(args.dataset), fname)
         
-        # for fname in os.listdir('posthoc_results/' + str(args.dataset) + '_full/'):
-        #     if 'OOD' not in fname and str(thresh) in fname and 'description.json' in fname:
-        #         full_path = os.path.join('posthoc_results', str(args.dataset)+'_full', fname)
+        for fname in os.listdir('posthoc_results/' + str(args.dataset) + '_full/'):
+            if 'OOD' not in fname and str(thresh) in fname and 'description.json' in fname:
+                full_path = os.path.join('posthoc_results', str(args.dataset)+'_full', fname)
                 
                 
 
-        # full = pd.read_json(full_path)
-        # full_df = json2df(full, 'Full')
+        full = pd.read_json(full_path)
+        full_df = json2df(full, 'Full')
         indomain = pd.read_json(indomain_path)
         df = json2df(indomain, 'InDomain')
         OOD1 = pd.read_json(ood1_path)
@@ -424,22 +424,19 @@ if args.save_posthoc:
         OOD2 = pd.read_json(ood2_path)
         df2 = json2df(OOD2, 'OOD2')
 
-        #final = pd.concat([full_df, df, df1, df2], ignore_index=False)
-        final = pd.concat([df, df1, df2], ignore_index=False)
+        final = pd.concat([full_df, df, df1, df2], ignore_index=False)
+        #final = pd.concat([df, df1, df2], ignore_index=False)
         final['thresholder'] = str(thresh)
         df_list.append(final)
 
 
     posthoc_faithfulness = pd.concat([df_list[0], df_list[1]], ignore_index=False)
-        # seed_n['seed'] = seed
-        # seed_list.append(seed_n)
     print(posthoc_faithfulness)
     # posthoc_faithfulness = pd.concat([seed_list[0],seed_list[1],seed_list[2],seed_list[3],seed_list[4]], ignore_index=False)
     posthoc_faithfulness.to_csv('saved_everything/' + str(args.dataset) + '/posthoc_faithfulness.csv')
 
     if args.save_posthoc_for_analysis:
         print(df_list[0])
-        #exit()
 
         topk = df_list[0][['Domain', 'random', 
                             'scaled attention','attention','deeplift','gradients','lime','ig','deepliftshap',

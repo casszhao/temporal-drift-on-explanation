@@ -1,4 +1,4 @@
-{   "epochs" : 5,
+{   "epochs" : 10,
     "model_abbreviation" :      {"bert-base-uncased": "bert",
                                  "bert-base-cased": "bert-cased",
                                  "scibert_scivocab_uncased": "scibert",

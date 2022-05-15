@@ -1,0 +1,32 @@
+2022-05-15 06:16:17 INFO     Running on cuda : True
+2022-05-15 06:16:17 INFO     config  : 
+ ----------------------
+2022-05-15 06:16:17 INFO     dataset : healthfact
+2022-05-15 06:16:17 INFO     data_dir : /jmain02/home/J2AD003/txk58/zxz22-txk58/extract_rationales/extract_rationales/datasets/healthfact/data/
+2022-05-15 06:16:17 INFO     model_dir : /jmain02/home/J2AD003/txk58/zxz22-txk58/extract_rationales/extract_rationales/models/healthfact/
+2022-05-15 06:16:17 INFO     seed : 5
+2022-05-15 06:16:17 INFO     evaluate_models : False
+2022-05-15 06:16:17 INFO     inherently_faithful : None
+2022-05-15 06:16:17 INFO     use_tasc : False
+2022-05-15 06:16:17 INFO     importance_metric : None
+2022-05-15 06:16:17 INFO     rationale_length : 0.2
+2022-05-15 06:16:17 INFO     batch_size : 8
+2022-05-15 06:16:17 INFO     lr_bert : 1e-05
+2022-05-15 06:16:17 INFO     lr_classifier : 1e-05
+2022-05-15 06:16:17 INFO     model : scibert_scivocab_uncased
+2022-05-15 06:16:17 INFO     ood_dataset_1 : healthfact_ood1
+2022-05-15 06:16:17 INFO     ood_dataset_2 : healthfact_ood2
+2022-05-15 06:16:17 INFO     epochs : 5
+2022-05-15 06:16:17 INFO     model_abbreviation : scibert
+2022-05-15 06:16:17 INFO     evaluation_dir : None
+2022-05-15 06:16:17 INFO     extracted_rationale_dir : None
+2022-05-15 06:16:17 INFO     query : False
+2022-05-15 06:16:17 INFO     stage_of_proj : train
+2022-05-15 06:16:17 INFO     ood_rat_1 : 0.2
+2022-05-15 06:16:17 INFO     ood_rat_2 : 0.2
+2022-05-15 06:16:17 INFO     embed_model : None
+2022-05-15 06:16:17 INFO     
+ ----------------------
+2022-05-15 06:17:39 INFO     Finetune BERT for: healthfact
+2022-05-15 06:17:39 INFO     batch size: 8
+2022-05-15 06:17:39 INFO      \ -------------------- learning rate: [0.0001, 0.0005, 1e-05, 2e-05, 3e-05, 4e-05, 5e-05, 1e-06, 5e-06]

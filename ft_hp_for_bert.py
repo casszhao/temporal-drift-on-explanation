@@ -148,56 +148,24 @@ if args["evaluate_models"]:
     keep_best_model_(keep_models=False)
 
 else:
+    logging.info(date_time)
     logging.info("Finetune BERT for: {}".format(str(user_args["dataset"])))
-    logging.info("batch size: {}".format(str(args["batch_size"])))
+    logging.info("Finetune BERT for: {}".format(str(user_args["dataset"])))
+    
 
     
-    LR = [1e-4, 5e-4, 1e-5, 2e-5, 3e-5, 4e-5, 5e-5, 1e-6, 5e-6]
-    for lr in LR:
-        logging.info(" \\ -------------------- learning rate: {}".format(LR))
-        train_searchPara_and_save(
-            train_data_loader=data.train_loader,
-            dev_data_loader=data.dev_loader,
-            output_dims=data.nu_of_labels,
-            lr = LR, #3e-5, 2e-5
-        )
+    batch_size_list = [8,16,32,64]
+    for b in batch_size_list:
+            data = dataholder(path=args["data_dir"], b_size=b)
+            logging.info(" \\ ------------------  batch size: {}".format(str(b)))
 
-
-
-
-
-    data = dataholder(
-    path=args["data_dir"],
-    b_size=16
-)
-
-    logging.info("Finetune BERT for: {}".format(str(user_args["dataset"])))
-    logging.info("batch size: {}".format(16))
-
-    for lr in LR:
-        logging.info(" \\ -------------------- learning rate: {}".format(LR))
-        train_searchPara_and_save(
-            train_data_loader=data.train_loader,
-            dev_data_loader=data.dev_loader,
-            output_dims=data.nu_of_labels,
-            lr = LR, #3e-5, 2e-5
-        )
-
-
-    data = dataholder(
-    path=args["data_dir"],
-    b_size=32
-)
-
-    logging.info("Finetune BERT for: {}".format(str(user_args["dataset"])))
-    logging.info("batch size: {}".format(16))
-
-    for lr in LR:
-        logging.info(" \\ -------------------- learning rate: {}".format(LR))
-        train_searchPara_and_save(
-            train_data_loader=data.train_loader,
-            dev_data_loader=data.dev_loader,
-            output_dims=data.nu_of_labels,
-            lr = LR, #3e-5, 2e-5
-        )
+        LR = [1e-4, 5e-4, 1e-5, 2e-5, 3e-5, 4e-5, 5e-5, 1e-6, 5e-6]
+        for lr in LR:
+            logging.info(" \\ -------------------- learning rate: {}".format(LR))
+            train_searchPara_and_save(
+                train_data_loader=data.train_loader,
+                dev_data_loader=data.dev_loader,
+                output_dims=data.nu_of_labels,
+                lr = LR, #3e-5, 2e-5
+            )
 

@@ -108,8 +108,8 @@ def train_searchPara_and_save(lr, train_data_loader, dev_data_loader, output_dim
         epochs=args["epochs"],
         cutoff=False,
         save_folder=saving_model,
-        run=int(args["seed"]), ## +++ changed from str() to int()
-        seed=int(args["seed"]) ## +++ changed from str() to int()
+        run=str(args["seed"]), ## +++ changed from str() to int()
+        seed=str(args["seed"]) ## +++ changed from str() to int()
     )
 
     text_file = open(

@@ -1,0 +1,29 @@
+2022-05-17 06:29:38 INFO     Running on cuda : True
+2022-05-17 06:29:38 INFO     config  : 
+ ----------------------
+2022-05-17 06:29:38 INFO     dataset : healthfact
+2022-05-17 06:29:38 INFO     data_dir : /home/cass/PycharmProjects/ood_time/extract_rationales/datasets/healthfact/data/
+2022-05-17 06:29:38 INFO     model_dir : /home/cass/PycharmProjects/ood_time/extract_rationales/models/healthfact/
+2022-05-17 06:29:38 INFO     seed : 5
+2022-05-17 06:29:38 INFO     evaluate_models : False
+2022-05-17 06:29:38 INFO     inherently_faithful : None
+2022-05-17 06:29:38 INFO     use_tasc : False
+2022-05-17 06:29:38 INFO     importance_metric : None
+2022-05-17 06:29:38 INFO     rationale_length : 0.2
+2022-05-17 06:29:38 INFO     batch_size : 8
+2022-05-17 06:29:38 INFO     lr_bert : 1e-05
+2022-05-17 06:29:38 INFO     lr_classifier : 1e-05
+2022-05-17 06:29:38 INFO     model : scibert_scivocab_uncased
+2022-05-17 06:29:38 INFO     ood_dataset_1 : healthfact_ood1
+2022-05-17 06:29:38 INFO     ood_dataset_2 : healthfact_ood2
+2022-05-17 06:29:38 INFO     epochs : 10
+2022-05-17 06:29:38 INFO     model_abbreviation : scibert
+2022-05-17 06:29:38 INFO     evaluation_dir : None
+2022-05-17 06:29:38 INFO     extracted_rationale_dir : None
+2022-05-17 06:29:38 INFO     query : False
+2022-05-17 06:29:38 INFO     stage_of_proj : train
+2022-05-17 06:29:38 INFO     ood_rat_1 : 0.2
+2022-05-17 06:29:38 INFO     ood_rat_2 : 0.2
+2022-05-17 06:29:38 INFO     embed_model : None
+2022-05-17 06:29:38 INFO     
+ ----------------------

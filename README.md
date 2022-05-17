@@ -8,7 +8,7 @@ Install necessary packages by using the files  [conda_reqs.txt]() and  [pip_reqs
 conda create --name ood_faith --file  conda_reqs.txt
 conda activate ood_faith
 pip install -r pip_reqs.txt
-python -m spacy download en
+python -m spacy download en_core_web_sm
 ```
 
 ## Downloading Task Data

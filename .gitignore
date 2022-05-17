@@ -13,3 +13,4 @@ __pycache__
 .env
 ./scibert_scivocab_uncased
 scibert_scivocab_uncased/
+*cpython-37.pyc

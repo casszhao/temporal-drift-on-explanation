@@ -5,7 +5,7 @@
 #SBATCH --time=6-00:00
 
 # set name of job
-#SBATCH --job-name=healthfact_lstm
+#SBATCH --job-name=agnews_lstm
 
 # set number of GPUs
 #SBATCH --gres=gpu:1
@@ -27,7 +27,7 @@ module load python/anaconda3
 module load cuda/10.2
 source activate ood_faith
 
-dataset="healthfact"
+dataset="agnews"
 model_dir="models/"
 data_dir="datasets/"
 evaluation_dir="posthoc_results/"
@@ -197,9 +197,9 @@ python extract_kuma_len.py --dataset $dataset
 
 
 # ##### scaled\ attention
-python save_predictive.py --dataset $dataset
-python save_kuma.py --dataset $dataset
-python save_similarity.py --dataset $dataset
+# python save_predictive.py --dataset $dataset
+# python save_kuma.py --dataset $dataset
+# python save_similarity.py --dataset $dataset
 
 
 

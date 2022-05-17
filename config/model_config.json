@@ -153,7 +153,7 @@
         "batch_size": 8,
         "lr_bert" : 1e-05,
         "lr_classifier" : 1e-05,
-        "model" : "scibert_scivocab_uncased",
+        "model" : "bert-base-uncased", 
         "ood_dataset_1": "healthfact_ood1",
         "ood_dataset_2": "healthfact_ood2"
     },
@@ -162,7 +162,7 @@
         "batch_size": 8,
         "lr_bert" : 1e-05,
         "lr_classifier" : 1e-05,
-        "model" : "scibert_scivocab_uncased",
+        "model" : "bert-base-uncased",
         "ood_dataset_1": "healthfact_ood1",
         "ood_dataset_2": "healthfact_ood2"
     },
@@ -171,7 +171,7 @@
         "batch_size": 8,
         "lr_bert" : 1e-05,
         "lr_classifier" : 1e-05,
-        "model" : "scibert_scivocab_uncased",
+        "model" : "bert-base-uncased",
         "ood_dataset_1": "healthfact",
         "ood_dataset_2": "healthfact_ood2"
     },
@@ -180,7 +180,7 @@
         "batch_size": 8,
         "lr_bert" : 1e-05,
         "lr_classifier" : 1e-05,
-        "model" : "scibert_scivocab_uncased",
+        "model" : "bert-base-uncased",
         "ood_dataset_1": "healthfact_ood1",
         "ood_dataset_2": "healthfact"
     },
@@ -265,7 +265,7 @@
         "ood_dataset_1": "agnews_ood1",
         "ood_dataset_2": "agnews_ood2"
     },
-        "agnews_ood1" : {
+    "agnews_ood1" : {
         "rationale_length" : 0.2,
         "batch_size": 8,
         "lr_bert" : 1e-5,
@@ -274,7 +274,7 @@
         "ood_dataset_1": "agnews",
         "ood_dataset_2": "agnews_ood2"
     },
-        "agnews_ood2" : {
+    "agnews_ood2" : {
         "rationale_length" : 0.2,
         "batch_size": 8,
         "lr_bert" : 1e-5,
@@ -301,7 +301,7 @@
         "ood_dataset_1": "AmazPantry_ood1",
         "ood_dataset_2": "AmazPantry_ood2"
     },
-        "AmazPantry_ood1" : {
+    "AmazPantry_ood1" : {
         "rationale_length" : 0.2,
         "batch_size": 8,
         "lr_bert" : 1e-5,
@@ -310,7 +310,7 @@
         "ood_dataset_1": "AmazPantry",
         "ood_dataset_2": "AmazPantry_ood2"
     },
-        "AmazPantry_ood2" : {
+    "AmazPantry_ood2" : {
         "rationale_length" : 0.2,
         "batch_size": 8,
         "lr_bert" : 1e-5,

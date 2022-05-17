@@ -1,0 +1,58 @@
+2022-05-17 06:28:14 INFO     Running on cuda : True
+2022-05-17 06:28:14 INFO     config  : 
+ ----------------------
+2022-05-17 06:28:14 INFO     dataset : healthfact
+2022-05-17 06:28:14 INFO     data_dir : /home/cass/PycharmProjects/ood_time/extract_rationales/datasets/healthfact/data/
+2022-05-17 06:28:14 INFO     model_dir : /home/cass/PycharmProjects/ood_time/extract_rationales/models/healthfact/
+2022-05-17 06:28:14 INFO     seed : 5
+2022-05-17 06:28:14 INFO     evaluate_models : False
+2022-05-17 06:28:14 INFO     inherently_faithful : None
+2022-05-17 06:28:14 INFO     use_tasc : False
+2022-05-17 06:28:14 INFO     importance_metric : None
+2022-05-17 06:28:14 INFO     rationale_length : 0.2
+2022-05-17 06:28:14 INFO     batch_size : 8
+2022-05-17 06:28:14 INFO     lr_bert : 1e-05
+2022-05-17 06:28:14 INFO     lr_classifier : 1e-05
+2022-05-17 06:28:14 INFO     model : scibert_scivocab_uncased
+2022-05-17 06:28:14 INFO     ood_dataset_1 : healthfact_ood1
+2022-05-17 06:28:14 INFO     ood_dataset_2 : healthfact_ood2
+2022-05-17 06:28:14 INFO     epochs : 10
+2022-05-17 06:28:14 INFO     model_abbreviation : scibert
+2022-05-17 06:28:14 INFO     evaluation_dir : None
+2022-05-17 06:28:14 INFO     extracted_rationale_dir : None
+2022-05-17 06:28:14 INFO     query : False
+2022-05-17 06:28:14 INFO     stage_of_proj : train
+2022-05-17 06:28:14 INFO     ood_rat_1 : 0.2
+2022-05-17 06:28:14 INFO     ood_rat_2 : 0.2
+2022-05-17 06:28:14 INFO     embed_model : None
+2022-05-17 06:28:14 INFO     
+ ----------------------
+2022-05-17 06:28:44 INFO     Running on cuda : True
+2022-05-17 06:28:44 INFO     config  : 
+ ----------------------
+2022-05-17 06:28:44 INFO     dataset : healthfact
+2022-05-17 06:28:44 INFO     data_dir : /home/cass/PycharmProjects/ood_time/extract_rationales/datasets/healthfact/data/
+2022-05-17 06:28:44 INFO     model_dir : /home/cass/PycharmProjects/ood_time/extract_rationales/models/healthfact/
+2022-05-17 06:28:44 INFO     seed : 5
+2022-05-17 06:28:44 INFO     evaluate_models : False
+2022-05-17 06:28:44 INFO     inherently_faithful : None
+2022-05-17 06:28:44 INFO     use_tasc : False
+2022-05-17 06:28:44 INFO     importance_metric : None
+2022-05-17 06:28:44 INFO     rationale_length : 0.2
+2022-05-17 06:28:44 INFO     batch_size : 8
+2022-05-17 06:28:44 INFO     lr_bert : 1e-05
+2022-05-17 06:28:44 INFO     lr_classifier : 1e-05
+2022-05-17 06:28:44 INFO     model : scibert_scivocab_uncased
+2022-05-17 06:28:44 INFO     ood_dataset_1 : healthfact_ood1
+2022-05-17 06:28:44 INFO     ood_dataset_2 : healthfact_ood2
+2022-05-17 06:28:44 INFO     epochs : 10
+2022-05-17 06:28:44 INFO     model_abbreviation : scibert
+2022-05-17 06:28:44 INFO     evaluation_dir : None
+2022-05-17 06:28:44 INFO     extracted_rationale_dir : None
+2022-05-17 06:28:44 INFO     query : False
+2022-05-17 06:28:44 INFO     stage_of_proj : train
+2022-05-17 06:28:44 INFO     ood_rat_1 : 0.2
+2022-05-17 06:28:44 INFO     ood_rat_2 : 0.2
+2022-05-17 06:28:44 INFO     embed_model : None
+2022-05-17 06:28:44 INFO     
+ ----------------------

@@ -1,0 +1,8 @@
+,Task,Label Num,Domain,Start Date,End Date,Time Span(Days),Median Date,Interquartile Time Span(Days),Data Num
+0,yelp,5,Original (full size),2005-02-16,2022-01-19,6181,2014-01-02,3274,15372
+0,yelp,5,Original Train,2005-02-16,2022-01-19,6181,2014-01-30,3277,11956
+0,yelp,5,Original Test,2005-02-16,2022-01-19,6181,2013-09-18,3297,1708
+0,yelp,5,In Domain Train,2005-02-16,2018-12-31,5066,2012-01-16,2556,8540
+0,yelp,5,InDomain,2005-02-16,2018-12-24,5059,2011-10-22,2457,1708
+0,yelp,5,OOD1,2019-01-01,2020-12-31,730,2020-01-01,375,1708
+0,yelp,5,OOD2,2021-01-01,2022-01-19,383,2022-01-01,195,1708

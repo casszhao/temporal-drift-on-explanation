@@ -178,7 +178,8 @@ if args.plot_time_distribution:
     palette="rocket",scale='width') #,gridsize=10
     #sns.boxplot(y=df['Year'], x=df['Temporal Domain'], palette="rocket", whis=np.inf)
     #sns.displot(df, x="Year", hue="Temporal Domain", stat="density", common_norm=False)
-    plt.title('Healthfact', fontsize=18)
+
+    plt.title(str(args.dataset).capitalize(), fontsize=18)
     # plt.ylabel("Percentage")
     #plt.xlabel("Full size", "InDomain Train", "InDomain Test", "OOD1 Test", "OOD2 Test")
     #plt.legend(bbox_to_anchor=(1, 1, 0.28, 0.28), loc='best', borderaxespad=1)

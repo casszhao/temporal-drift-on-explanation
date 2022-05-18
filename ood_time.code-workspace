@@ -5,6 +5,7 @@
 		}
 	],
 	"settings": {
-		"files.autoSave": "afterDelay"
+		"files.autoSave": "afterDelay",
+		"csv-preview.numberFormat": "g3"
 	}
 }

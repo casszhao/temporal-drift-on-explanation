@@ -144,19 +144,14 @@ echo "start TRAINING LSTM on full data"
 for seed in 5 10 15 20 25
 do
    python train_fulltext_and_kuma.py --dataset $dataset$"_full" --model_dir LSTM_model --data_dir $data_dir --seed $seed --inherently_faithful "full_lstm"
-done
-echo "done TRAINING LSTM on full data"
-python train_fulltext_and_kuma.py --dataset $dataset$"_full" --model_dir LSTM_model --data_dir $data_dir --evaluate_models --inherently_faithful "full_lstm"
-echo "done EVALUATION LSTM on full data"
-
-## train and test on indomain dataset
-for seed in 5 10 15 20 25
-do
    python train_fulltext_and_kuma.py --dataset $dataset --model_dir LSTM_model --data_dir $data_dir --seed $seed --inherently_faithful "full_lstm"
 done
-echo "done TRAINING LSTM on indomain data"
+echo "done TRAINING LSTM on full data and indomain data"
+
+python train_fulltext_and_kuma.py --dataset $dataset$"_full" --model_dir LSTM_model --data_dir $data_dir --evaluate_models --inherently_faithful "full_lstm"
 python train_fulltext_and_kuma.py --dataset $dataset --model_dir LSTM_model --data_dir $data_dir --evaluate_models --inherently_faithful "full_lstm"
-echo "done EVALUATION LSTM on indomain data"
+echo "done EVALUATION LSTM on full data and indomain data"
+
 
 
 
@@ -200,8 +195,8 @@ echo "done extract kuma len"
 
 # ##### scaled\ attention
 # python save_predictive.py --dataset $dataset
-# python save_kuma.py --dataset $dataset
-# python save_similarity.py --dataset $dataset
+python save_everything.py --dataset $dataset --save_for_kuma_lstm
+python save_similarity.py --dataset $dataset
 
 
 

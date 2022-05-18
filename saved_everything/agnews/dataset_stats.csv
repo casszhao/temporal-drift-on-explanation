@@ -1,0 +1,8 @@
+,Task,Label Num,Domain,Start Date,End Date,Time Span(Days),Median Date,Interquartile Time Span(Days),Data Num
+0,agnews,4,Original (full size),2004-08-18,2008-02-20,1281,2006-09-27,980,46790
+0,agnews,4,Original Train,2004-08-18,2008-02-20,1281,2006-09-29,981,28074
+0,agnews,4,Original Test,2004-08-18,2008-02-20,1281,2006-09-26,977,9358
+0,agnews,4,In Domain Train,2006-05-19,2008-02-20,642,2007-06-28,407,16844
+0,agnews,4,InDomain,2006-05-19,2008-02-20,642,2007-07-05,404,5615
+0,agnews,4,OOD1,2004-08-18,2004-12-31,135,2004-10-24,70,9358
+0,agnews,4,OOD2,2005-01-01,2005-02-17,47,2005-01-20,23,9358

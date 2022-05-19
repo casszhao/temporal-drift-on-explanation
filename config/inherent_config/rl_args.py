@@ -41,7 +41,7 @@ IMDB = {
     }
 }
 
-Yelp = {
+yelp = yelp_full = yelp_ood1 = yelp_ood2 = {
     "OPTIM_ARGS_" : {     ## for Adam Loss
         "lr" : 0.0001, ##0.00001
         "weight_decay" : 0.00001,
@@ -163,7 +163,10 @@ agnews = agnews_full = agnews_ood1 = agnews_ood2 = {
 get_ = {
     "SST": SST,
     "IMDB": IMDB,
-    "Yelp" : Yelp,
+    "yelp": yelp,
+    "yelp_full": yelp_full,
+    "yelp_ood1": yelp_ood1,
+    "yelp_ood2": yelp_ood2,
     'factcheck_full': factcheck_full,
     'factcheck': factcheck,
     'factcheck_ood1': factcheck_ood1,

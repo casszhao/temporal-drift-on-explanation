@@ -1,6 +1,6 @@
 __name__ = "full_lstm"
 
-SST = IMDB = Yelp = {
+SST = IMDB = yelp = yelp_ood1 = yelp_ood2 = yelp_full {
     "OPTIM_ARGS_" : {     ## for Adam Loss
         "lr" : 0.001,
         "weight_decay" : 0.00001,
@@ -124,7 +124,6 @@ healthfact_full = healthfact = healthfact_ood1 = healthfact_ood2 = {
 get_ = {
     "SST": SST,
     "IMDB": IMDB,
-    "Yelp" : Yelp,
     'factcheck_full': factcheck_full,
     'factcheck': factcheck,
     'factcheck_ood1': factcheck_ood1,
@@ -161,6 +160,9 @@ get_ = {
     "healthfact_full": healthfact_full,
     "healthfact_ood1": healthfact_ood1,
     "healthfact_ood2": healthfact_ood2,
-
+    "yelp": yelp,
+    "yelp_full": yelp_full,
+    "yelp_ood1": yelp_ood1,
+    "yelp_ood2": yelp_ood2,
 }
 

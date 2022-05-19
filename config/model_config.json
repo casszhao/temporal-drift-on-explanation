@@ -202,14 +202,41 @@
         "ood_dataset_1": "IMDB",
         "ood_dataset_2": "Yelp"
     },
-    "Yelp" : {
+    "yelp" : {
         "rationale_length" : 0.1,
         "batch_size": 8,
         "lr_bert" : 1e-5,
         "lr_classifier" : 1e-4, 
         "model" : "bert-base-uncased",
-        "ood_dataset_1": "SST",
-        "ood_dataset_2": "IMDB"
+        "ood_dataset_1": "yelp_ood1",
+        "ood_dataset_2": "yelp_ood2"
+    },
+    "yelp_full" : {
+        "rationale_length" : 0.1,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4, 
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "yelp_ood1",
+        "ood_dataset_2": "yelp_ood2"
+    },
+    "yelp_ood1" : {
+        "rationale_length" : 0.1,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4, 
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "yelp",
+        "ood_dataset_2": "yelp_ood2"
+    },
+    "yelp_ood2" : {
+        "rationale_length" : 0.1,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4, 
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "yelp",
+        "ood_dataset_2": "yelp_ood2"
     },
     "AmazDigiMu": {
         "rationale_length" : 0.2,

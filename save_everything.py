@@ -189,6 +189,9 @@ if args.plot_time_distribution:
     #sns.displot(df, x="Year", hue="Temporal Domain", stat="density", common_norm=False)
 
     plt.title(str(args.dataset).capitalize(), fontsize=18)
+    if args.dataset == 'yelp':
+        yint = range(2005, 2023)
+        plt.yticks(yint)
     # plt.ylabel("Percentage")
     #plt.xlabel("Full size", "InDomain Train", "InDomain Test", "OOD1 Test", "OOD2 Test")
     #plt.legend(bbox_to_anchor=(1, 1, 0.28, 0.28), loc='best', borderaxespad=1)

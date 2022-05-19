@@ -102,6 +102,8 @@ def df2stat_df(df, domain):
         df = df[pd.to_datetime(df['claimDate'], errors='coerce').notna()]  # claimDate  for xfact
         df = df.dropna().sort_values(by='claimDate', na_position='first')  # claimDate  for xfact
         df['date'] = pd.to_datetime(df['claimDate']).dt.date  # claimDate  for xfact
+    elif "yelp" in str(args.dataset):
+        df['Year']=df['year']
     else:
         # df = df[pd.to_datetime(df['date'], errors='coerce').notna()]
         # df = df.dropna().sort_values(by='date', na_position='first')
@@ -116,10 +118,16 @@ def df2stat_df(df, domain):
     #     # df['Year'] = df['date'].astype(str).str[:7]
     # else:
     #    df['Year'] = pd.DatetimeIndex(df['date']).year
-    df['Year'] = pd.DatetimeIndex(df['date']).year
-    df['Temporal Domain'] = str(domain)
 
-    stat_df = df[['Year', 'Temporal Domain']]
+
+    if "yelp" in str(args.dataset):
+        df['Temporal Domain'] = str(domain)
+        stat_df = df[['Year', 'Temporal Domain']]
+    else:
+        df['Year'] = pd.DatetimeIndex(df['date']).year
+        df['Temporal Domain'] = str(domain)
+        stat_df = df[['Year', 'Temporal Domain']]
+
 
     return stat_df
 # https://towardsdatascience.com/5-types-of-plots-that-will-help-you-with-time-series-analysis-b63747818705
@@ -174,8 +182,9 @@ if args.plot_time_distribution:
 
     #  https://mode.com/blog/violin-plot-examples/
     # density estimation to show the distribution shape of the data
+
     sns.violinplot(y=df['Year'], x=df['Temporal Domain'], showmedians=True, showextrema=True, 
-    palette="rocket",scale='width') #,gridsize=10
+        palette="rocket",scale='width') #,gridsize=10
     #sns.boxplot(y=df['Year'], x=df['Temporal Domain'], palette="rocket", whis=np.inf)
     #sns.displot(df, x="Year", hue="Temporal Domain", stat="density", common_norm=False)
 
@@ -186,7 +195,7 @@ if args.plot_time_distribution:
     plt.tight_layout()
     # plt.xticks(fontsize= )
 
-    plt.savefig('./TimeDist/'+str(args.dataset)+'_box.png', bbox_inches = 'tight', dpi=250, format='png')
+    plt.savefig('./TimeDist/'+str(args.dataset)+'_vio.png', bbox_inches = 'tight', dpi=250, format='png')
     plt.show()
 
 # https://stackoverflow.com/questions/59346731/no-handles-with-labels-found-to-put-in-legend

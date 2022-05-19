@@ -14,6 +14,7 @@ else:
     device = torch.device("cpu")
     print("running on the CPU")
 CUDA_VISIBLE_DEVICES = 0
+CUDA_LAUNCH_BLOCKING=1
 
 
 print(device)

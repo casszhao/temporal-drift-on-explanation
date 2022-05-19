@@ -1,6 +1,6 @@
 __name__ = "full_lstm"
 
-SST = IMDB = yelp = yelp_ood1 = yelp_ood2 = yelp_full {
+SST = IMDB = yelp = yelp_ood1 = yelp_ood2 = yelp_full = {
     "OPTIM_ARGS_" : {     ## for Adam Loss
         "lr" : 0.001,
         "weight_decay" : 0.00001,

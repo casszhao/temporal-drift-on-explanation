@@ -22,7 +22,7 @@ parser.add_argument(
     "--dataset",
     type=str,
     help="select dataset / task",
-    default="healthfact_full",
+    default="yelp_full",
     # choices = ["WS", "SST", "IMDB", "Yelp", "AmazDigiMu", "AmazPantry", "AmazInstr", "factcheck","factcheck_ood2","factcheck_ood1"]
 )
 
@@ -37,14 +37,14 @@ parser.add_argument(
     "--model_dir",
     type=str,
     help="directory to save models",
-    default="models/"
+    default="ft_models/"
 )
 
 parser.add_argument(
     "--seed",
     type=int,
     help="random seed for experiment",
-    default= 5
+    default= 412
 )
 
 parser.add_argument(
@@ -82,7 +82,7 @@ import config.cfg
 config.cfg.config_directory = config_dir
 
 logging.basicConfig(
-    filename=log_dir + "/out.log",
+    filename=log_dir + "/bertFT_out.log",
     format='%(asctime)s %(levelname)-8s %(message)s',
     level=logging.INFO,
     datefmt='%Y-%m-%d %H:%M:%S'
@@ -160,7 +160,7 @@ else:
         logging.info(" \\ ------------------  batch size: {}".format(str(b)))
 
         #LR = [1e-4, 5e-4, 1e-5, 2e-5, 3e-5, 4e-5, 5e-5, 1e-6, 5e-6]
-        LR = [1e-5, 2e-5, 3e-5, 4e-5, 5e-5, 1e-6, 5e-6]
+        LR = [1e-4, 5e-4, 1e-5, 2e-5, 4e-5, 5e-5, 1e-6, 5e-6]
         for lr in LR:
             logging.info(" \\ -------------------- learning rate: {}".format(lr))
             train_searchPara_and_save(

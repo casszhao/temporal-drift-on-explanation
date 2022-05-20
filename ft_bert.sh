@@ -5,7 +5,7 @@
 #SBATCH --time=6-00:00
 
 # set name of job
-#SBATCH --job-name=FTBert-healthfact
+#SBATCH --job-name=FTBert-yelp
 
 # set number of GPUs
 #SBATCH --gres=gpu:1
@@ -25,14 +25,14 @@
 cd /jmain02/home/J2AD003/txk58/zxz22-txk58/extract_rationales/extract_rationales/
 module load python/anaconda3
 module load cuda/10.2
-source activate time_ood
+source activate ood_faith
 
 
-dataset="healthfact"
+dataset="yelp"
 model_dir="models/"
 data_dir="datasets/"
 evaluation_dir="posthoc_results/"
 extracted_rationale_dir="extracted_rationales/"
 thresholder="topk"
 
-python python ft_hp_for_bert.py --dataset $dataset
+python ft_hp_for_bert.py --dataset yelp_full

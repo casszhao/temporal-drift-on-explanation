@@ -21,7 +21,7 @@ parser.add_argument(
     "--dataset", 
     type = str, 
     help = "select dataset / task", 
-    default = "complain_full",
+    default = "yelp_full",
     # choices = ["WS", "SST", "IMDB", "Yelp", "AmazDigiMu", "AmazPantry", "AmazInstr", "factcheck","factcheck_ood2","factcheck_ood1"]
 )
 
@@ -43,7 +43,7 @@ parser.add_argument(
     "--seed",   
     type = int, 
     help = "random seed for experiment",
-    default = 15
+    default = 412
 )
 
 parser.add_argument(
@@ -69,19 +69,19 @@ parser.add_argument(
 user_args = vars(parser.parse_args())
 user_args["importance_metric"] = None
 
-log_dir = "ft_model/" + user_args["dataset"] + "_lstm_kuma-" + str(user_args["seed"]) + "_" +  date_time + "/"
-config_dir = "experiment_config/train_" + user_args["dataset"] + "_seed-" + str(user_args["seed"]) + "_" + date_time + "/"
+log_dir = "ft_lstm_/" + user_args["dataset"] + "/ft_" + user_args["dataset"] + "_seed-" + str(user_args["seed"]) + "_lstm" + date_time + "/"
+config_dir = "experiment_config/train_" + user_args["dataset"] + "_seed-" + str(
+    user_args["seed"]) + "_" + date_time + "/"
 
-
-os.makedirs(log_dir, exist_ok = True)
-os.makedirs(config_dir, exist_ok = True)
+os.makedirs(log_dir, exist_ok=True)
+os.makedirs(config_dir, exist_ok=True)
 
 import config.cfg
 
 config.cfg.config_directory = config_dir
 
 logging.basicConfig(
-    filename= log_dir + "/out.log", 
+    filename=log_dir + "/lstm_out.log",
     format='%(asctime)s %(levelname)-8s %(message)s',
     level=logging.INFO,
     datefmt='%Y-%m-%d %H:%M:%S'
@@ -123,90 +123,30 @@ from src.tRpipeline import train_and_save, test_predictive_performance, keep_bes
 # training the models and evaluating their predictive performance
 # on the full text length
 
-data = dataholder(
-        path = args["data_dir"], 
-        b_size = args["batch_size"]
-    )
 
 
-logging.info("model is  : \n ----------------------")
-logging.info(str(user_args["inherently_faithful"]))
+
+logging.info(date_time)
+logging.info("Finetune BERT for: {}".format(str(user_args["dataset"])))
+logging.info("Finetune BERT for: {}".format(str(user_args["dataset"])))
 
 
-lr_test = 5e-2
-logging.info(str(lr_test))
-train_and_save(
-    train_data_loader=data.train_loader,
-    dev_data_loader=data.dev_loader,
-    for_rationale=False,
-    output_dims=data.nu_of_labels,
-    vocab_size=data.vocab_size,
-)
-lr_test = 1e-2
-logging.info(str(lr_test))
-train_and_save(
-    train_data_loader=data.train_loader,
-    dev_data_loader=data.dev_loader,
-    for_rationale=False,
-    output_dims=data.nu_of_labels,
-    vocab_size=data.vocab_size,
-)
-lr_test = 5e-3
-logging.info(str(lr_test))
-train_and_save(
-    train_data_loader=data.train_loader,
-    dev_data_loader=data.dev_loader,
-    for_rationale=False,
-    output_dims=data.nu_of_labels,
-    vocab_size=data.vocab_size,
-)
-lr_test = 1e-3
-logging.info(str(lr_test))
-train_and_save(
-    train_data_loader=data.train_loader,
-    dev_data_loader=data.dev_loader,
-    for_rationale=False,
-    output_dims=data.nu_of_labels,
-    vocab_size=data.vocab_size,
-)
-lr_test = 1e-4
-logging.info(str(lr_test))
-train_and_save(
-    train_data_loader=data.train_loader,
-    dev_data_loader=data.dev_loader,
-    for_rationale=False,
-    output_dims=data.nu_of_labels,
-    vocab_size=data.vocab_size,
-)
-lr_test = 5e-4
-logging.info(str(lr_test))
-train_and_save(
-    train_data_loader=data.train_loader,
-    dev_data_loader=data.dev_loader,
-    for_rationale=False,
-    output_dims=data.nu_of_labels,
-    vocab_size=data.vocab_size,
-)
-lr_test = 1e-5
-logging.info(str(lr_test))
-train_and_save(
-    train_data_loader=data.train_loader,
-    dev_data_loader=data.dev_loader,
-    for_rationale=False,
-    output_dims=data.nu_of_labels,
-    vocab_size=data.vocab_size,
-)
 
-## in domain evaluation
-# test_stats = test_predictive_performance(
-#     test_data_loader=data.test_loader,
-#     for_rationale=False,
-#     output_dims=data.nu_of_labels,
-#     save_output_probs=True,
-#     vocab_size=data.vocab_size
-# )
+batch_size_list = [8,16,32,64] #
+for b in batch_size_list:
+    data = dataholder(path=args["data_dir"], b_size=b)
+    logging.info(" \\ ------------------  batch size: {}".format(str(b)))
 
-# print(test_stats)
+    #LR = [1e-4, 5e-4, 1e-5, 2e-5, 3e-5, 4e-5, 5e-5, 1e-6, 5e-6]
+    LR = [1e-2, 3e-2, 5e-2, 1e-3, 3e-3, 5e-3, 1e-4, 3e-4, 5e-4, 1e-5, 3e-5, 5e-5]
+    for lr in LR:
+        logging.info(" \\ -------------------- learning rate: {}".format(lr))
+        train_searchPara_and_save(
+            train_data_loader=data.train_loader,
+            dev_data_loader=data.dev_loader,
+            output_dims=data.nu_of_labels,
+            lr = lr, #3e-5, 2e-5
+        )
 
 del data
 gc.collect()

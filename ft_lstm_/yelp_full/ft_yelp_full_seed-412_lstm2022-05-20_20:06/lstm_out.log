@@ -1,0 +1,34 @@
+2022-05-20 20:06:56 INFO     Running on cuda : True
+2022-05-20 20:06:56 INFO     config  : 
+ ----------------------
+2022-05-20 20:06:56 INFO     dataset : yelp_full
+2022-05-20 20:06:56 INFO     data_dir : /jmain02/home/J2AD003/txk58/zxz22-txk58/extract_rationales/extract_rationales/datasets/yelp_full/data/
+2022-05-20 20:06:56 INFO     model_dir : /jmain02/home/J2AD003/txk58/zxz22-txk58/extract_rationales/extract_rationales/ft_model/yelp_full/
+2022-05-20 20:06:56 INFO     seed : 412
+2022-05-20 20:06:56 INFO     evaluate_models : False
+2022-05-20 20:06:56 INFO     inherently_faithful : full_lstm
+2022-05-20 20:06:56 INFO     use_tasc : False
+2022-05-20 20:06:56 INFO     importance_metric : None
+2022-05-20 20:06:56 INFO     rationale_length : 0.1
+2022-05-20 20:06:56 INFO     batch_size : 8
+2022-05-20 20:06:56 INFO     lr_bert : 1e-05
+2022-05-20 20:06:56 INFO     lr_classifier : 0.0001
+2022-05-20 20:06:56 INFO     model : bert-base-uncased
+2022-05-20 20:06:56 INFO     ood_dataset_1 : yelp_ood1
+2022-05-20 20:06:56 INFO     ood_dataset_2 : yelp_ood2
+2022-05-20 20:06:56 INFO     epochs : 10
+2022-05-20 20:06:56 INFO     model_abbreviation : full_lstm-bert
+2022-05-20 20:06:56 INFO     evaluation_dir : None
+2022-05-20 20:06:56 INFO     extracted_rationale_dir : None
+2022-05-20 20:06:56 INFO     query : False
+2022-05-20 20:06:56 INFO     stage_of_proj : train
+2022-05-20 20:06:56 INFO     ood_rat_1 : 0.1
+2022-05-20 20:06:56 INFO     ood_rat_2 : 0.1
+2022-05-20 20:06:56 INFO     embed_model : glove.840B.300d
+2022-05-20 20:06:56 INFO     
+ ----------------------
+2022-05-20 20:07:24 INFO     2022-05-20_20:06
+2022-05-20 20:07:24 INFO     Finetune BERT for: yelp_full
+2022-05-20 20:07:24 INFO     Finetune BERT for: yelp_full
+2022-05-20 20:07:27 INFO      \ ------------------  batch size: 8
+2022-05-20 20:07:27 INFO      \ -------------------- learning rate: 0.01

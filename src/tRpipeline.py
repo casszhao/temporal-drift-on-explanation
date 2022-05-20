@@ -279,7 +279,7 @@ def train_and_save(train_data_loader, dev_data_loader, for_rationale = False, ou
     return
 
 
-def train_LSTMpara_and_save(train_data_loader, dev_data_loader, for_rationale = False, output_dims = 2, ood = False, vocab_size = None):
+def train_LSTMpara_and_save(lr, train_data_loader, dev_data_loader, for_rationale = False, output_dims = 2, ood = False, vocab_size = None):
 
   
     """

@@ -118,7 +118,7 @@ else:
     
     from src.data_functions.dataholders import BERT_HOLDER as dataholder
     
-from src.tRpipeline import train_and_save, test_predictive_performance, keep_best_model_
+from src.tRpipeline import train_and_save, test_predictive_performance, keep_best_model_, train_searchPara_and_save, train_LSTMpara_and_save
 
 # training the models and evaluating their predictive performance
 # on the full text length
@@ -141,7 +141,7 @@ for b in batch_size_list:
     LR = [1e-2, 3e-2, 5e-2, 1e-3, 3e-3, 5e-3, 1e-4, 3e-4, 5e-4, 1e-5, 3e-5, 5e-5]
     for lr in LR:
         logging.info(" \\ -------------------- learning rate: {}".format(lr))
-        train_searchPara_and_save(
+        train_LSTMpara_and_save(
             train_data_loader=data.train_loader,
             dev_data_loader=data.dev_loader,
             output_dims=data.nu_of_labels,

@@ -30,7 +30,7 @@ parser.add_argument(
     "--dataset", 
     type = str, 
     help = "select dataset / task", 
-    default = "factcheck",
+    default = "yelp",
     # choices = ["WS", "SST","IMDB", "Yelp", "AmazDigiMu", "AmazPantry", "AmazInstr", "fc1", "fc2", "fc3"]
 )
 
@@ -152,8 +152,9 @@ evaluator = evaluation_pipeline.evaluate(
 )
 # will generate
 logging.info("*********conducting in-domain flip experiments")
-
+print('"*********conducting flip experiments on in-domain"')
 evaluator.faithfulness_experiments_(data)
+print('"********* DONE flip experiments on in-domain"')
 
 del data
 del evaluator
@@ -181,8 +182,8 @@ evaluator = evaluation_pipeline.evaluate(
 
 logging.info("*********conducting oo-domain flip experiments DATASET 1")
 print('"*********conducting oo-domain flip experiments DATASET 1"')
-
 evaluator.faithfulness_experiments_(data)
+print('"********* DONE oo-domain flip experiments DATASET 1"')
 
 # delete full data not needed anymore
 del data
@@ -213,7 +214,7 @@ logging.info("*********conducting oo-domain flip experiments DATASET 2")
 print('"*********conducting oo-domain flip experiments DATASET 2"')
 
 evaluator.faithfulness_experiments_(data)
-
+print('"********* DONE oo-domain flip experiments DATASET 2"')
 # delete full data not needed anymore
 del data
 del evaluator

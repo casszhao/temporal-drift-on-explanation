@@ -212,25 +212,27 @@ def extract_lime_scores_(model, data, data_split_name,
     #     print(f"-----------already computed DeepLift-------")
     #     return
     key = next(iter(importance_scores))
+    
+    print(' START LOOPING FOR LIME')
     for annot_id in train_ls.keys(): # annot_id is not in the train_ls.keys
 
         #print('importance_scores[annot_id]: ', importance_scores[annot_id])
         #break
 
         ## skip to save time if we already run lime (VERY EXPENSIVE)
-        if "lime" in importance_scores[key]:
-            #print('already computed LIME for instance: ', annot_id)
+        # if "lime" in importance_scores[key]:
+        #     #print('already computed LIME for instance: ', annot_id)
 
-            continue
+        #     continue
 
 
 
-        print('need to do LIME for: ', annot_id)
+        # print('need to do LIME for: ', annot_id)
 
         exp = explainer.explain_instance(
             train_ls[annot_id]["split example"], 
             lime_predictor.predictor, 
-            num_samples = 5, 
+            num_samples = 10, 
             num_features = len(set(train_ls[annot_id]["split example"])) 
         )
 
@@ -255,6 +257,8 @@ def extract_lime_scores_(model, data, data_split_name,
     print(f"appended lime scores in -> {fname}")
 
     return
+
+
 
 from src.evaluation.experiments.shap_predictor import ShapleyModelWrapper
 from captum.attr import DeepLift, DeepLiftShap, GradientShap

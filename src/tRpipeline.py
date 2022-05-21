@@ -297,19 +297,9 @@ def train_LSTMpara_and_save(lr, train_data_loader, dev_data_loader, for_rational
     np.random.seed(args["seed"])
 
 
-    if args.use_tasc and args.stage_of_proj == "train":
-            
-        tasc_variant = tasc
-        
-        tasc_mech = tasc_variant(vocab_size)
-        
-        print("*** TASC MODEL ****")
-
-    else:
-        
-        tasc_mech = None
+    tasc_mech = None
     
-        print("*** VANILLA MODEL ****")
+    print("*** VANILLA MODEL ****")
     
     if args.inherently_faithful is None:
 

@@ -340,3 +340,4 @@
 2022-05-21 13:09:58 INFO     *saving checkpoint every 62 iterations
 2022-05-21 13:09:58 INFO     +++++++++++++ epochs:  5
 2022-05-21 13:21:28 INFO     *** epoch - 1 | train loss - 82.56 | dev f1 - 0.354 | dev loss - 69.07
+2022-05-21 13:33:21 INFO     *** epoch - 2 | train loss - 62.06 | dev f1 - 0.521 | dev loss - 57.74

@@ -404,7 +404,7 @@ def train_LSTMpara_and_save(lr, train_data_loader, dev_data_loader, for_rational
                 args["model_dir"], 
                 f"model_run_stats/{args.model_abbreviation}_seed_{args.seed}.txt"
             ), 
-        "w")
+        "wb")
 
     text_file.write('learning rate is: '.encode())
     text_file.write(str(lr).encode())

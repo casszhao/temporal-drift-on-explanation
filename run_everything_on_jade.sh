@@ -195,8 +195,8 @@ echo "done extract kuma len"
 
 # ##### scaled\ attention
 # python save_predictive.py --dataset $dataset
-python save_everything.py --dataset $dataset --save_for_kuma_lstm
-python save_similarity.py --dataset $dataset
+# python save_everything.py --dataset $dataset --save_for_kuma_lstm
+# python save_similarity.py --dataset $dataset
 
 
 

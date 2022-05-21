@@ -1,0 +1,48 @@
+2022-05-20 21:18:34 INFO     Running on cuda : True
+2022-05-20 21:18:34 INFO     config  : 
+ ----------------------
+2022-05-20 21:18:34 INFO     dataset : yelp_full
+2022-05-20 21:18:34 INFO     data_dir : /jmain02/home/J2AD003/txk58/zxz22-txk58/extract_rationales/extract_rationales/datasets/yelp_full/data/
+2022-05-20 21:18:34 INFO     model_dir : /jmain02/home/J2AD003/txk58/zxz22-txk58/extract_rationales/extract_rationales/ft_model/yelp_full/
+2022-05-20 21:18:34 INFO     seed : 412
+2022-05-20 21:18:34 INFO     evaluate_models : False
+2022-05-20 21:18:34 INFO     inherently_faithful : full_lstm
+2022-05-20 21:18:34 INFO     use_tasc : False
+2022-05-20 21:18:34 INFO     importance_metric : None
+2022-05-20 21:18:34 INFO     rationale_length : 0.1
+2022-05-20 21:18:34 INFO     batch_size : 8
+2022-05-20 21:18:34 INFO     lr_bert : 1e-05
+2022-05-20 21:18:34 INFO     lr_classifier : 0.0001
+2022-05-20 21:18:34 INFO     model : bert-base-uncased
+2022-05-20 21:18:34 INFO     ood_dataset_1 : yelp_ood1
+2022-05-20 21:18:34 INFO     ood_dataset_2 : yelp_ood2
+2022-05-20 21:18:34 INFO     epochs : 10
+2022-05-20 21:18:34 INFO     model_abbreviation : full_lstm-bert
+2022-05-20 21:18:34 INFO     evaluation_dir : None
+2022-05-20 21:18:34 INFO     extracted_rationale_dir : None
+2022-05-20 21:18:34 INFO     query : False
+2022-05-20 21:18:34 INFO     stage_of_proj : train
+2022-05-20 21:18:34 INFO     ood_rat_1 : 0.1
+2022-05-20 21:18:34 INFO     ood_rat_2 : 0.1
+2022-05-20 21:18:34 INFO     embed_model : glove.840B.300d
+2022-05-20 21:18:34 INFO     
+ ----------------------
+2022-05-20 21:19:00 INFO     2022-05-20_21:18
+2022-05-20 21:19:00 INFO     Finetune BERT for: yelp_full
+2022-05-20 21:19:00 INFO     Finetune BERT for: yelp_full
+2022-05-20 21:19:03 INFO      \ ------------------  batch size: 8
+2022-05-20 21:19:03 INFO      \ -------------------- learning rate: 0.01
+2022-05-20 21:19:35 INFO     ***************************************
+2022-05-20 21:19:35 INFO     Training on seed 412
+2022-05-20 21:19:35 INFO     *saving checkpoint every 498 iterations
+2022-05-20 21:19:35 INFO     +++++++++++++ epochs:  10
+2022-05-20 21:20:32 INFO     *** epoch - 1 | train loss - 9.89 | dev f1 - 0.384 | dev loss - 8.7
+2022-05-20 21:21:26 INFO     *** epoch - 2 | train loss - 8.07 | dev f1 - 0.425 | dev loss - 8.35
+2022-05-20 21:22:17 INFO     *** epoch - 3 | train loss - 6.88 | dev f1 - 0.473 | dev loss - 8.21
+2022-05-20 21:23:05 INFO     *** epoch - 4 | train loss - 5.5 | dev f1 - 0.452 | dev loss - 9.37
+2022-05-20 21:24:01 INFO     *** epoch - 5 | train loss - 4.16 | dev f1 - 0.482 | dev loss - 10.32
+2022-05-20 21:24:49 INFO     *** epoch - 6 | train loss - 2.93 | dev f1 - 0.475 | dev loss - 11.85
+2022-05-20 21:25:43 INFO     *** epoch - 7 | train loss - 1.99 | dev f1 - 0.469 | dev loss - 13.69
+2022-05-20 21:26:36 INFO     *** epoch - 8 | train loss - 1.38 | dev f1 - 0.466 | dev loss - 16.42
+2022-05-20 21:27:35 INFO     *** epoch - 9 | train loss - 1.0 | dev f1 - 0.465 | dev loss - 19.43
+2022-05-20 21:28:24 INFO     *** epoch - 10 | train loss - 0.82 | dev f1 - 0.467 | dev loss - 20.38

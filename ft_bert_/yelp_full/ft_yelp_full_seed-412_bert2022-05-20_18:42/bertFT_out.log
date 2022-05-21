@@ -77,3 +77,217 @@
 2022-05-20 20:53:52 INFO     *saving checkpoint every 498 iterations
 2022-05-20 20:53:52 INFO     +++++++++++++ epochs:  5
 2022-05-20 21:00:17 INFO     *** epoch - 1 | train loss - 7.69 | dev f1 - 0.55 | dev loss - 6.69
+2022-05-20 21:06:44 INFO     *** epoch - 2 | train loss - 5.34 | dev f1 - 0.544 | dev loss - 7.61
+2022-05-20 21:13:08 INFO     *** epoch - 3 | train loss - 3.41 | dev f1 - 0.531 | dev loss - 10.14
+2022-05-20 21:19:30 INFO     *** epoch - 4 | train loss - 2.01 | dev f1 - 0.594 | dev loss - 16.03
+2022-05-20 21:26:01 INFO     *** epoch - 5 | train loss - 0.92 | dev f1 - 0.576 | dev loss - 20.35
+2022-05-20 21:26:04 INFO      \ -------------------- learning rate: 5e-05
+2022-05-20 21:26:08 INFO     ***************************************
+2022-05-20 21:26:08 INFO     Training on seed 412
+2022-05-20 21:26:08 INFO     *saving checkpoint every 498 iterations
+2022-05-20 21:26:08 INFO     +++++++++++++ epochs:  5
+2022-05-20 21:32:33 INFO     *** epoch - 1 | train loss - 7.84 | dev f1 - 0.533 | dev loss - 7.01
+2022-05-20 21:39:02 INFO     *** epoch - 2 | train loss - 5.51 | dev f1 - 0.534 | dev loss - 7.69
+2022-05-20 21:45:26 INFO     *** epoch - 3 | train loss - 3.58 | dev f1 - 0.535 | dev loss - 9.66
+2022-05-20 21:51:56 INFO     *** epoch - 4 | train loss - 2.12 | dev f1 - 0.576 | dev loss - 15.82
+2022-05-20 21:58:17 INFO     *** epoch - 5 | train loss - 1.01 | dev f1 - 0.571 | dev loss - 20.07
+2022-05-20 21:58:19 INFO      \ -------------------- learning rate: 1e-06
+2022-05-20 21:58:23 INFO     ***************************************
+2022-05-20 21:58:23 INFO     Training on seed 412
+2022-05-20 21:58:23 INFO     *saving checkpoint every 498 iterations
+2022-05-20 21:58:23 INFO     +++++++++++++ epochs:  5
+2022-05-20 22:04:48 INFO     *** epoch - 1 | train loss - 9.16 | dev f1 - 0.515 | dev loss - 7.24
+2022-05-20 22:11:23 INFO     *** epoch - 2 | train loss - 6.84 | dev f1 - 0.553 | dev loss - 6.89
+2022-05-20 22:17:47 INFO     *** epoch - 3 | train loss - 6.46 | dev f1 - 0.56 | dev loss - 6.76
+2022-05-20 22:24:13 INFO     *** epoch - 4 | train loss - 6.26 | dev f1 - 0.57 | dev loss - 6.71
+2022-05-20 22:30:36 INFO     *** epoch - 5 | train loss - 6.17 | dev f1 - 0.569 | dev loss - 6.72
+2022-05-20 22:30:38 INFO      \ -------------------- learning rate: 5e-06
+2022-05-20 22:30:42 INFO     ***************************************
+2022-05-20 22:30:42 INFO     Training on seed 412
+2022-05-20 22:30:42 INFO     *saving checkpoint every 498 iterations
+2022-05-20 22:30:42 INFO     +++++++++++++ epochs:  5
+2022-05-20 22:37:07 INFO     *** epoch - 1 | train loss - 7.3 | dev f1 - 0.571 | dev loss - 6.46
+2022-05-20 22:43:32 INFO     *** epoch - 2 | train loss - 5.61 | dev f1 - 0.609 | dev loss - 6.79
+2022-05-20 22:49:59 INFO     *** epoch - 3 | train loss - 4.87 | dev f1 - 0.584 | dev loss - 6.94
+2022-05-20 22:56:25 INFO     *** epoch - 4 | train loss - 4.33 | dev f1 - 0.597 | dev loss - 7.25
+2022-05-20 23:02:47 INFO     *** epoch - 5 | train loss - 3.94 | dev f1 - 0.605 | dev loss - 7.42
+2022-05-20 23:03:29 INFO      \ ------------------  batch size: 16
+2022-05-20 23:03:29 INFO      \ -------------------- learning rate: 0.0001
+2022-05-20 23:03:33 INFO     ***************************************
+2022-05-20 23:03:33 INFO     Training on seed 412
+2022-05-20 23:03:33 INFO     *saving checkpoint every 249 iterations
+2022-05-20 23:03:33 INFO     +++++++++++++ epochs:  5
+2022-05-20 23:09:13 INFO     *** epoch - 1 | train loss - 23.13 | dev f1 - 0.118 | dev loss - 22.98
+2022-05-20 23:15:03 INFO     *** epoch - 2 | train loss - 22.88 | dev f1 - 0.118 | dev loss - 22.65
+2022-05-20 23:20:41 INFO     *** epoch - 3 | train loss - 22.48 | dev f1 - 0.118 | dev loss - 22.75
+2022-05-20 23:26:28 INFO     *** epoch - 4 | train loss - 22.57 | dev f1 - 0.118 | dev loss - 22.65
+2022-05-20 23:32:05 INFO     *** epoch - 5 | train loss - 22.5 | dev f1 - 0.118 | dev loss - 22.69
+2022-05-20 23:32:07 INFO      \ -------------------- learning rate: 0.0005
+2022-05-20 23:32:11 INFO     ***************************************
+2022-05-20 23:32:11 INFO     Training on seed 412
+2022-05-20 23:32:11 INFO     *saving checkpoint every 249 iterations
+2022-05-20 23:32:11 INFO     +++++++++++++ epochs:  5
+2022-05-20 23:37:50 INFO     *** epoch - 1 | train loss - 23.83 | dev f1 - 0.118 | dev loss - 23.13
+2022-05-20 23:43:36 INFO     *** epoch - 2 | train loss - 23.04 | dev f1 - 0.118 | dev loss - 22.89
+2022-05-20 23:49:12 INFO     *** epoch - 3 | train loss - 22.94 | dev f1 - 0.118 | dev loss - 22.96
+2022-05-20 23:54:51 INFO     *** epoch - 4 | train loss - 22.88 | dev f1 - 0.118 | dev loss - 22.85
+2022-05-21 00:00:29 INFO     *** epoch - 5 | train loss - 22.84 | dev f1 - 0.118 | dev loss - 22.83
+2022-05-21 00:00:30 INFO      \ -------------------- learning rate: 1e-05
+2022-05-21 00:00:36 INFO     ***************************************
+2022-05-21 00:00:36 INFO     Training on seed 412
+2022-05-21 00:00:36 INFO     *saving checkpoint every 249 iterations
+2022-05-21 00:00:36 INFO     +++++++++++++ epochs:  5
+2022-05-21 00:06:19 INFO     *** epoch - 1 | train loss - 14.37 | dev f1 - 0.562 | dev loss - 12.75
+2022-05-21 00:12:00 INFO     *** epoch - 2 | train loss - 10.4 | dev f1 - 0.593 | dev loss - 13.48
+2022-05-21 00:17:46 INFO     *** epoch - 3 | train loss - 8.16 | dev f1 - 0.598 | dev loss - 14.59
+2022-05-21 00:23:27 INFO     *** epoch - 4 | train loss - 6.38 | dev f1 - 0.607 | dev loss - 16.23
+2022-05-21 00:29:13 INFO     *** epoch - 5 | train loss - 5.24 | dev f1 - 0.608 | dev loss - 17.27
+2022-05-21 00:29:15 INFO      \ -------------------- learning rate: 2e-05
+2022-05-21 00:29:19 INFO     ***************************************
+2022-05-21 00:29:19 INFO     Training on seed 412
+2022-05-21 00:29:19 INFO     *saving checkpoint every 249 iterations
+2022-05-21 00:29:19 INFO     +++++++++++++ epochs:  5
+2022-05-21 00:35:05 INFO     *** epoch - 1 | train loss - 14.58 | dev f1 - 0.551 | dev loss - 12.99
+2022-05-21 00:40:45 INFO     *** epoch - 2 | train loss - 10.03 | dev f1 - 0.596 | dev loss - 13.52
+2022-05-21 00:46:26 INFO     *** epoch - 3 | train loss - 6.6 | dev f1 - 0.593 | dev loss - 16.41
+2022-05-21 00:52:10 INFO     *** epoch - 4 | train loss - 3.95 | dev f1 - 0.593 | dev loss - 21.5
+2022-05-21 00:57:50 INFO     *** epoch - 5 | train loss - 2.36 | dev f1 - 0.591 | dev loss - 25.37
+2022-05-21 00:57:52 INFO      \ -------------------- learning rate: 4e-05
+2022-05-21 00:57:56 INFO     ***************************************
+2022-05-21 00:57:56 INFO     Training on seed 412
+2022-05-21 00:57:56 INFO     *saving checkpoint every 249 iterations
+2022-05-21 00:57:56 INFO     +++++++++++++ epochs:  5
+2022-05-21 01:03:38 INFO     *** epoch - 1 | train loss - 15.21 | dev f1 - 0.549 | dev loss - 13.44
+2022-05-21 01:09:25 INFO     *** epoch - 2 | train loss - 10.35 | dev f1 - 0.557 | dev loss - 13.98
+2022-05-21 01:15:06 INFO     *** epoch - 3 | train loss - 6.07 | dev f1 - 0.544 | dev loss - 17.64
+2022-05-21 01:20:54 INFO     *** epoch - 4 | train loss - 2.9 | dev f1 - 0.577 | dev loss - 27.16
+2022-05-21 01:26:33 INFO     *** epoch - 5 | train loss - 1.4 | dev f1 - 0.583 | dev loss - 34.57
+2022-05-21 01:26:35 INFO      \ -------------------- learning rate: 5e-05
+2022-05-21 01:26:39 INFO     ***************************************
+2022-05-21 01:26:39 INFO     Training on seed 412
+2022-05-21 01:26:39 INFO     *saving checkpoint every 249 iterations
+2022-05-21 01:26:39 INFO     +++++++++++++ epochs:  5
+2022-05-21 01:32:21 INFO     *** epoch - 1 | train loss - 15.81 | dev f1 - 0.542 | dev loss - 13.82
+2022-05-21 01:38:07 INFO     *** epoch - 2 | train loss - 11.07 | dev f1 - 0.552 | dev loss - 14.38
+2022-05-21 01:43:49 INFO     *** epoch - 3 | train loss - 6.86 | dev f1 - 0.54 | dev loss - 18.58
+2022-05-21 01:49:36 INFO     *** epoch - 4 | train loss - 3.6 | dev f1 - 0.556 | dev loss - 26.89
+2022-05-21 01:55:15 INFO     *** epoch - 5 | train loss - 1.68 | dev f1 - 0.562 | dev loss - 35.43
+2022-05-21 01:55:17 INFO      \ -------------------- learning rate: 1e-06
+2022-05-21 01:55:22 INFO     ***************************************
+2022-05-21 01:55:22 INFO     Training on seed 412
+2022-05-21 01:55:22 INFO     *saving checkpoint every 249 iterations
+2022-05-21 01:55:22 INFO     +++++++++++++ epochs:  5
+2022-05-21 02:01:04 INFO     *** epoch - 1 | train loss - 18.97 | dev f1 - 0.476 | dev loss - 14.96
+2022-05-21 02:06:54 INFO     *** epoch - 2 | train loss - 14.1 | dev f1 - 0.553 | dev loss - 13.92
+2022-05-21 02:12:36 INFO     *** epoch - 3 | train loss - 13.24 | dev f1 - 0.551 | dev loss - 13.57
+2022-05-21 02:18:27 INFO     *** epoch - 4 | train loss - 12.88 | dev f1 - 0.564 | dev loss - 13.5
+2022-05-21 02:24:08 INFO     *** epoch - 5 | train loss - 12.71 | dev f1 - 0.563 | dev loss - 13.5
+2022-05-21 02:24:09 INFO      \ -------------------- learning rate: 5e-06
+2022-05-21 02:24:14 INFO     ***************************************
+2022-05-21 02:24:14 INFO     Training on seed 412
+2022-05-21 02:24:14 INFO     *saving checkpoint every 249 iterations
+2022-05-21 02:24:14 INFO     +++++++++++++ epochs:  5
+2022-05-21 02:29:55 INFO     *** epoch - 1 | train loss - 14.75 | dev f1 - 0.571 | dev loss - 12.88
+2022-05-21 02:35:44 INFO     *** epoch - 2 | train loss - 11.32 | dev f1 - 0.586 | dev loss - 13.44
+2022-05-21 02:41:24 INFO     *** epoch - 3 | train loss - 10.03 | dev f1 - 0.593 | dev loss - 13.21
+2022-05-21 02:47:10 INFO     *** epoch - 4 | train loss - 9.12 | dev f1 - 0.591 | dev loss - 13.61
+2022-05-21 02:52:51 INFO     *** epoch - 5 | train loss - 8.55 | dev f1 - 0.599 | dev loss - 13.83
+2022-05-21 02:53:33 INFO      \ ------------------  batch size: 32
+2022-05-21 02:53:33 INFO      \ -------------------- learning rate: 0.0001
+2022-05-21 02:53:37 INFO     ***************************************
+2022-05-21 02:53:37 INFO     Training on seed 412
+2022-05-21 02:53:37 INFO     *saving checkpoint every 125 iterations
+2022-05-21 02:53:37 INFO     +++++++++++++ epochs:  5
+2022-05-21 02:58:33 INFO     *** epoch - 1 | train loss - 42.73 | dev f1 - 0.217 | dev loss - 43.39
+2022-05-21 03:03:38 INFO     *** epoch - 2 | train loss - 45.73 | dev f1 - 0.124 | dev loss - 46.06
+2022-05-21 03:08:35 INFO     *** epoch - 3 | train loss - 45.79 | dev f1 - 0.124 | dev loss - 45.54
+2022-05-21 03:13:34 INFO     *** epoch - 4 | train loss - 45.72 | dev f1 - 0.124 | dev loss - 45.46
+2022-05-21 03:18:30 INFO     *** epoch - 5 | train loss - 45.65 | dev f1 - 0.124 | dev loss - 45.57
+2022-05-21 03:18:32 INFO      \ -------------------- learning rate: 0.0005
+2022-05-21 03:18:36 INFO     ***************************************
+2022-05-21 03:18:36 INFO     Training on seed 412
+2022-05-21 03:18:36 INFO     *saving checkpoint every 125 iterations
+2022-05-21 03:18:36 INFO     +++++++++++++ epochs:  5
+2022-05-21 03:23:32 INFO     *** epoch - 1 | train loss - 47.96 | dev f1 - 0.118 | dev loss - 46.04
+2022-05-21 03:28:35 INFO     *** epoch - 2 | train loss - 46.16 | dev f1 - 0.118 | dev loss - 46.09
+2022-05-21 03:33:31 INFO     *** epoch - 3 | train loss - 45.91 | dev f1 - 0.118 | dev loss - 45.61
+2022-05-21 03:38:28 INFO     *** epoch - 4 | train loss - 45.77 | dev f1 - 0.118 | dev loss - 45.55
+2022-05-21 03:43:21 INFO     *** epoch - 5 | train loss - 45.71 | dev f1 - 0.118 | dev loss - 45.68
+2022-05-21 03:43:23 INFO      \ -------------------- learning rate: 1e-05
+2022-05-21 03:43:27 INFO     ***************************************
+2022-05-21 03:43:27 INFO     Training on seed 412
+2022-05-21 03:43:27 INFO     *saving checkpoint every 125 iterations
+2022-05-21 03:43:27 INFO     +++++++++++++ epochs:  5
+2022-05-21 03:48:26 INFO     *** epoch - 1 | train loss - 29.15 | dev f1 - 0.571 | dev loss - 25.4
+2022-05-21 03:53:25 INFO     *** epoch - 2 | train loss - 21.01 | dev f1 - 0.598 | dev loss - 26.48
+2022-05-21 03:58:22 INFO     *** epoch - 3 | train loss - 16.84 | dev f1 - 0.611 | dev loss - 27.99
+2022-05-21 04:03:25 INFO     *** epoch - 4 | train loss - 13.86 | dev f1 - 0.61 | dev loss - 29.61
+2022-05-21 04:08:22 INFO     *** epoch - 5 | train loss - 11.96 | dev f1 - 0.608 | dev loss - 31.26
+2022-05-21 04:08:24 INFO      \ -------------------- learning rate: 2e-05
+2022-05-21 04:08:28 INFO     ***************************************
+2022-05-21 04:08:28 INFO     Training on seed 412
+2022-05-21 04:08:28 INFO     *saving checkpoint every 125 iterations
+2022-05-21 04:08:28 INFO     +++++++++++++ epochs:  5
+2022-05-21 04:13:26 INFO     *** epoch - 1 | train loss - 29.24 | dev f1 - 0.577 | dev loss - 24.85
+2022-05-21 04:18:33 INFO     *** epoch - 2 | train loss - 20.0 | dev f1 - 0.589 | dev loss - 26.81
+2022-05-21 04:23:30 INFO     *** epoch - 3 | train loss - 13.44 | dev f1 - 0.602 | dev loss - 32.68
+2022-05-21 04:29:11 INFO     *** epoch - 4 | train loss - 8.2 | dev f1 - 0.599 | dev loss - 39.12
+2022-05-21 04:36:43 INFO     *** epoch - 5 | train loss - 5.54 | dev f1 - 0.591 | dev loss - 43.32
+2022-05-21 04:36:45 INFO      \ -------------------- learning rate: 4e-05
+2022-05-21 04:36:50 INFO     ***************************************
+2022-05-21 04:36:50 INFO     Training on seed 412
+2022-05-21 04:36:50 INFO     *saving checkpoint every 125 iterations
+2022-05-21 04:36:50 INFO     +++++++++++++ epochs:  5
+2022-05-21 04:44:36 INFO     *** epoch - 1 | train loss - 30.19 | dev f1 - 0.528 | dev loss - 26.43
+2022-05-21 04:51:59 INFO     *** epoch - 2 | train loss - 20.07 | dev f1 - 0.569 | dev loss - 27.92
+2022-05-21 05:00:12 INFO     *** epoch - 3 | train loss - 11.51 | dev f1 - 0.563 | dev loss - 37.12
+2022-05-21 05:08:01 INFO     *** epoch - 4 | train loss - 5.29 | dev f1 - 0.588 | dev loss - 52.04
+2022-05-21 05:16:21 INFO     *** epoch - 5 | train loss - 2.41 | dev f1 - 0.572 | dev loss - 63.11
+2022-05-21 05:16:23 INFO      \ -------------------- learning rate: 5e-05
+2022-05-21 05:16:30 INFO     ***************************************
+2022-05-21 05:16:30 INFO     Training on seed 412
+2022-05-21 05:16:30 INFO     *saving checkpoint every 125 iterations
+2022-05-21 05:16:30 INFO     +++++++++++++ epochs:  5
+2022-05-21 05:27:59 INFO     *** epoch - 1 | train loss - 30.88 | dev f1 - 0.528 | dev loss - 26.41
+2022-05-21 05:38:11 INFO     *** epoch - 2 | train loss - 20.79 | dev f1 - 0.577 | dev loss - 27.78
+2022-05-21 05:48:12 INFO     *** epoch - 3 | train loss - 12.45 | dev f1 - 0.592 | dev loss - 33.6
+2022-05-21 05:58:43 INFO     *** epoch - 4 | train loss - 5.59 | dev f1 - 0.581 | dev loss - 48.72
+2022-05-21 06:08:03 INFO     *** epoch - 5 | train loss - 2.29 | dev f1 - 0.588 | dev loss - 63.41
+2022-05-21 06:08:07 INFO      \ -------------------- learning rate: 1e-06
+2022-05-21 06:08:16 INFO     ***************************************
+2022-05-21 06:08:16 INFO     Training on seed 412
+2022-05-21 06:08:16 INFO     *saving checkpoint every 125 iterations
+2022-05-21 06:08:16 INFO     +++++++++++++ epochs:  5
+2022-05-21 06:18:06 INFO     *** epoch - 1 | train loss - 39.39 | dev f1 - 0.392 | dev loss - 31.46
+2022-05-21 06:28:37 INFO     *** epoch - 2 | train loss - 29.06 | dev f1 - 0.533 | dev loss - 28.26
+2022-05-21 06:39:39 INFO     *** epoch - 3 | train loss - 27.09 | dev f1 - 0.539 | dev loss - 27.63
+2022-05-21 06:49:34 INFO     *** epoch - 4 | train loss - 26.3 | dev f1 - 0.557 | dev loss - 27.15
+2022-05-21 06:59:38 INFO     *** epoch - 5 | train loss - 26.03 | dev f1 - 0.548 | dev loss - 27.4
+2022-05-21 06:59:41 INFO      \ -------------------- learning rate: 5e-06
+2022-05-21 06:59:47 INFO     ***************************************
+2022-05-21 06:59:47 INFO     Training on seed 412
+2022-05-21 06:59:47 INFO     *saving checkpoint every 125 iterations
+2022-05-21 06:59:47 INFO     +++++++++++++ epochs:  5
+2022-05-21 07:10:46 INFO     *** epoch - 1 | train loss - 30.1 | dev f1 - 0.588 | dev loss - 25.6
+2022-05-21 07:21:01 INFO     *** epoch - 2 | train loss - 22.82 | dev f1 - 0.584 | dev loss - 27.02
+2022-05-21 07:30:50 INFO     *** epoch - 3 | train loss - 20.41 | dev f1 - 0.614 | dev loss - 26.14
+2022-05-21 07:42:02 INFO     *** epoch - 4 | train loss - 18.84 | dev f1 - 0.611 | dev loss - 26.57
+2022-05-21 07:51:32 INFO     *** epoch - 5 | train loss - 17.96 | dev f1 - 0.601 | dev loss - 27.18
+2022-05-21 07:52:29 INFO      \ ------------------  batch size: 64
+2022-05-21 07:52:29 INFO      \ -------------------- learning rate: 0.0001
+2022-05-21 07:52:35 INFO     ***************************************
+2022-05-21 07:52:35 INFO     Training on seed 412
+2022-05-21 07:52:35 INFO     *saving checkpoint every 62 iterations
+2022-05-21 07:52:35 INFO     +++++++++++++ epochs:  5
+2022-05-21 08:01:17 INFO     *** epoch - 1 | train loss - 75.45 | dev f1 - 0.408 | dev loss - 69.35
+2022-05-21 08:11:52 INFO     *** epoch - 2 | train loss - 61.49 | dev f1 - 0.489 | dev loss - 64.28
+2022-05-21 08:22:10 INFO     *** epoch - 3 | train loss - 54.42 | dev f1 - 0.515 | dev loss - 64.63
+2022-05-21 08:32:34 INFO     *** epoch - 4 | train loss - 46.63 | dev f1 - 0.546 | dev loss - 65.24
+2022-05-21 08:42:25 INFO     *** epoch - 5 | train loss - 41.24 | dev f1 - 0.538 | dev loss - 67.88
+2022-05-21 08:42:28 INFO      \ -------------------- learning rate: 0.0005
+2022-05-21 08:42:34 INFO     ***************************************
+2022-05-21 08:42:34 INFO     Training on seed 412
+2022-05-21 08:42:34 INFO     *saving checkpoint every 62 iterations
+2022-05-21 08:42:34 INFO     +++++++++++++ epochs:  5
+2022-05-21 08:53:06 INFO     *** epoch - 1 | train loss - 100.45 | dev f1 - 0.118 | dev loss - 91.81
+2022-05-21 09:03:28 INFO     *** epoch - 2 | train loss - 93.3 | dev f1 - 0.118 | dev loss - 93.3

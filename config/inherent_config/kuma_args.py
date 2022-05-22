@@ -41,7 +41,9 @@ yelp = yelp_full = yelp_ood1 = yelp_ood2 = {
     },
     "MODEL_ARGS_" : {     ## model args
         "lasso":           0.0,
-        "lambda_init":     5e-4, ## 5e-4,
+        "lambda_init":     1e-5, ## 5e-4, # how short or long rationales are # compare to lstm standard,
+                                 # penalise when a rationale is long. So if they high they will select less text and therefore closer accuracy to only lstm
+                                #so if want to increase rationale len, put lower num to let it select more text         
         "lagrange_lr":     5e-3, ## 5e-3,
         "lagrange_alpha":  0.9,
     }

@@ -1,4 +1,4 @@
 {
     "git.ignoreLimitWarning": true,
-    "csv-preview.numberFormat": "g3"
+    "csv-preview.numberFormat": "g2"
 }

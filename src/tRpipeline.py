@@ -298,6 +298,7 @@ def train_LSTMpara_and_save(lr, train_data_loader, dev_data_loader, for_rational
 
 
     tasc_mech = None
+    
     print("*** VANILLA MODEL ****")
     
     if args.inherently_faithful is None:

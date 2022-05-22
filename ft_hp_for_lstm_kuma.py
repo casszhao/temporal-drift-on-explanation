@@ -127,8 +127,8 @@ from src.tRpipeline import train_and_save, test_predictive_performance, keep_bes
 
 
 logging.info(date_time)
-logging.info("Finetune BERT for: {}".format(str(user_args["dataset"])))
-logging.info("Finetune BERT for: {}".format(str(user_args["dataset"])))
+logging.info("Finetune LSTM for: {}".format(str(user_args["dataset"])))
+logging.info("Finetune LSTM for: {}".format(str(user_args["dataset"])))
 
 
 

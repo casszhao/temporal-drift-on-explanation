@@ -5,7 +5,7 @@
 #SBATCH --time=6-00:00
 
 # set name of job
-#SBATCH --job-name=yelp_lstm
+#SBATCH --job-name=yelp_BuLSTM
 
 # set number of GPUs
 #SBATCH --gres=gpu:1
@@ -157,26 +157,26 @@ echo "done EVALUATION LSTM on full data and indomain data"
 
 ############ train KUMA on FULL DATASET ######
 
-echo '-------- start training kuma on full data------------'
-for seed in 5 10 15 20 25
-do
-python train_fulltext_and_kuma.py --dataset $dataset$"_full" --model_dir "kuma_model/" --data_dir $data_dir --seed $seed --inherently_faithful "kuma"
-done
-echo "done train kuma on full data"
-python train_fulltext_and_kuma.py --dataset $dataset$"_full" --model_dir "kuma_model/" --data_dir $data_dir --inherently_faithful "kuma" --evaluate_models
-echo "done eval kuma on full data"
+# echo '-------- start training kuma on full data------------'
+# for seed in 5 10 15 20 25
+# do
+# python train_fulltext_and_kuma.py --dataset $dataset$"_full" --model_dir "kuma_model/" --data_dir $data_dir --seed $seed --inherently_faithful "kuma"
+# done
+# echo "done train kuma on full data"
+# python train_fulltext_and_kuma.py --dataset $dataset$"_full" --model_dir "kuma_model/" --data_dir $data_dir --inherently_faithful "kuma" --evaluate_models
+# echo "done eval kuma on full data"
 
-echo '-------- start training kuma on in domain------------'
-for seed in 5 10 15 20 25
-do
-   python train_fulltext_and_kuma.py --dataset $dataset --model_dir "kuma_model/" --data_dir $data_dir --seed $seed --inherently_faithful "kuma"
-done
-echo "done train kuma"
-python train_fulltext_and_kuma.py --dataset $dataset --model_dir "kuma_model/" --data_dir $data_dir --seed $seed --inherently_faithful "kuma" --evaluate_models
-echo "done eval kuma"
+# echo '-------- start training kuma on in domain------------'
+# for seed in 5 10 15 20 25
+# do
+#    python train_fulltext_and_kuma.py --dataset $dataset --model_dir "kuma_model/" --data_dir $data_dir --seed $seed --inherently_faithful "kuma"
+# done
+# echo "done train kuma"
+# python train_fulltext_and_kuma.py --dataset $dataset --model_dir "kuma_model/" --data_dir $data_dir --seed $seed --inherently_faithful "kuma" --evaluate_models
+# echo "done eval kuma"
 
-python extract_kuma_len.py --dataset $dataset
-echo "done extract kuma len"
+# python extract_kuma_len.py --dataset $dataset
+# echo "done extract kuma len"
 
 
 

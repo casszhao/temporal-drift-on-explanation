@@ -4,12 +4,8 @@ import torch
 import argparse
 import logging
 import gc
-
 torch.cuda.empty_cache()
 # torch.cuda.memory_summary(device=None, abbreviated=False)
-
-
-
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 import datetime
@@ -99,6 +95,7 @@ torch.backends.cudnn.deterministic = True
 torch.backends.cudnn.benchmark = False
 
 from src.common_code.initialiser import initial_preparations
+from src.evaluation import evaluation_pipeline
 import datetime
 
 # creating unique config from stage_config.json file and model_config.json file
@@ -108,18 +105,15 @@ logging.info("config  : \n ----------------------")
 [logging.info(k + " : " + str(v)) for k,v in args.items()]
 logging.info("\n ----------------------")
 
+
+
 from src.data_functions.dataholders import BERT_HOLDER as dataholder
-from src.evaluation import evaluation_pipeline
-
-
 
 
 
 data = dataholder(
     args["data_dir"],
-    # b_size = args["batch_size"],
-    b_size = 16,
-    #stage = "eval",
+    b_size = 16, # b_size = args["batch_size"], #stage = "eval",
     return_as_frames = True
 )
 
@@ -145,13 +139,10 @@ del data
 del evaluator
 gc.collect()
 torch.cuda.empty_cache()
-
-
 ## ood evaluation DATASET 1
 data = dataholder(
     path = args["data_dir"],
-    # b_size = args["batch_size"],
-    b_size=16,
+    b_size=16, # b_size = args["batch_size"],
     ood = True,
     ood_dataset_ = 1,
     return_as_frames = True
@@ -164,6 +155,8 @@ data = dataholder(
 #     stage = "eval",
 #     return_as_frames = True
 # )
+
+
 evaluator = evaluation_pipeline.evaluate(
     model_path = args["model_dir"],
     output_dims = data.nu_of_labels,
@@ -181,26 +174,23 @@ del data
 del evaluator
 gc.collect()
 torch.cuda.empty_cache()
-
 ## ood evaluation DATASET 2
 data = dataholder(
     path = args["data_dir"],
-    # b_size = args["batch_size"],
-    b_size=16,
+    b_size=16, # b_size = args["batch_size"],
     ood = True,
     ood_dataset_ = 2,
     return_as_frames = True
 )
-data = dataholder(
-    path = args["data_dir"],
-    # b_size = args["batch_size"],
-    b_size=16,
-    ood = True,
-    ood_dataset_ = 2,
-    stage = "eval",
-    return_as_frames = True
-)
-
+# data = dataholder(
+#     path = args["data_dir"],
+#     # b_size = args["batch_size"],
+#     b_size=16,
+#     ood = True,
+#     ood_dataset_ = 2,
+#     stage = "eval",
+#     return_as_frames = True
+# )
 evaluator = evaluation_pipeline.evaluate(
     model_path = args["model_dir"],
     output_dims = data.nu_of_labels,

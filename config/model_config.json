@@ -203,7 +203,7 @@
         "ood_dataset_2": "Yelp"
     },
     "yelp" : {
-        "rationale_length" : 0.1,
+        "rationale_length" : 0.2,
         "batch_size": 64,
         "lr_bert" : 1e-5,
         "lr_classifier" : 1e-4, 
@@ -212,7 +212,7 @@
         "ood_dataset_2": "yelp_ood2"
     },
     "yelp_full" : {
-        "rationale_length" : 0.1,
+        "rationale_length" : 0.2,
         "batch_size": 64,
         "lr_bert" : 1e-5,
         "lr_classifier" : 1e-4, 
@@ -221,7 +221,7 @@
         "ood_dataset_2": "yelp_ood2"
     },
     "yelp_ood1" : {
-        "rationale_length" : 0.1,
+        "rationale_length" : 0.2,
         "batch_size": 64,
         "lr_bert" : 1e-5,
         "lr_classifier" : 1e-4, 
@@ -230,7 +230,7 @@
         "ood_dataset_2": "yelp_ood2"
     },
     "yelp_ood2" : {
-        "rationale_length" : 0.1,
+        "rationale_length" : 0.2,
         "batch_size": 64,
         "lr_bert" : 1e-5,
         "lr_classifier" : 1e-4, 

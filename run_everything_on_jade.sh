@@ -5,7 +5,7 @@
 #SBATCH --time=6-00:00
 
 # set name of job
-#SBATCH --job-name=YelpFTKuma
+#SBATCH --job-name=YelpFRESH
 
 # set number of GPUs
 #SBATCH --gres=gpu:1
@@ -60,12 +60,12 @@ thresholder="topk"
 ######## Train Fresh ################### on full dataset and In Domain
 ######################################################################
 
-##### extract rationales
+#### extract rationales
 # python FRESH_extract_rationales_cass.py --dataset $dataset$"_full" --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder $thresholder
-# python FRESH_extract_rationales_cass.py --dataset $dataset$"_full" --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder contigious
-# python FRESH_extract_rationales_cass.py --dataset $dataset --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder $thresholder
-# python FRESH_extract_rationales_cass.py --dataset $dataset --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder contigious
-# echo 'done extract rationales (top and contigious) for FRESH'
+#python FRESH_extract_rationales_cass.py --dataset $dataset$"_full" --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder contigious
+python FRESH_extract_rationales_cass.py --dataset $dataset --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder $thresholder
+#python FRESH_extract_rationales_cass.py --dataset $dataset --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder contigious
+echo 'done extract rationales (top and contigious) for FRESH'
 
 
 
@@ -90,15 +90,15 @@ thresholder="topk"
 #       echo $thresholder
 # done
 # ### scaled attention
-# echo "starting training FRESH with: scaled attention"
-# for seed in 5 10 15 20 25
-# do
-#     python FRESH_train_on_rationales.py --dataset $dataset$"_full" --extracted_rationale_dir $extracted_rationale_dir --rationale_model_dir "FRESH_classifiers/" --thresholder $thresholder --importance_metric "scaled attention" --seed $seed
-#     python FRESH_train_on_rationales.py --dataset $dataset --extracted_rationale_dir $extracted_rationale_dir --rationale_model_dir "FRESH_classifiers/" --thresholder $thresholder --importance_metric "scaled attention" --seed $seed
-# done
-# echo "starting evaluating FRESH with: scaled attention"
+echo "starting training FRESH with: scaled attention"
+for seed in 5 10 15 20 25
+do
+    # python FRESH_train_on_rationales.py --dataset $dataset$"_full" --extracted_rationale_dir $extracted_rationale_dir --rationale_model_dir "FRESH_classifiers/" --thresholder $thresholder --importance_metric "scaled attention" --seed $seed
+    python FRESH_train_on_rationales.py --dataset $dataset --extracted_rationale_dir $extracted_rationale_dir --rationale_model_dir "FRESH_classifiers/" --thresholder $thresholder --importance_metric "scaled attention" --seed $seed
+done
+echo "starting evaluating FRESH with: scaled attention"
 # python FRESH_train_on_rationales.py --dataset $dataset$"_full" --extracted_rationale_dir $extracted_rationale_dir --rationale_model_dir "FRESH_classifiers/" --thresholder $thresholder --importance_metric "scaled attention" --evaluate_models
-# python FRESH_train_on_rationales.py --dataset $dataset --extracted_rationale_dir $extracted_rationale_dir --rationale_model_dir "FRESH_classifiers/" --thresholder $thresholder --importance_metric "scaled attention" --evaluate_models
+python FRESH_train_on_rationales.py --dataset $dataset --extracted_rationale_dir $extracted_rationale_dir --rationale_model_dir "FRESH_classifiers/" --thresholder $thresholder --importance_metric "scaled attention" --evaluate_models
 
 # thresholder="contigious"
 # for importance_metric in  "attention" "gradients" "lime" "deeplift"
@@ -157,14 +157,14 @@ thresholder="topk"
 
 ############ train KUMA on FULL DATASET ######
 
-echo '-------- start training kuma on full data------------'
-for seed in 5 10 15 20 25
-do
-python train_fulltext_and_kuma.py --dataset $dataset$"_full" --model_dir "kuma_model/" --data_dir $data_dir --seed $seed --inherently_faithful "kuma"
-done
-echo "done train kuma on full data"
-python train_fulltext_and_kuma.py --dataset $dataset$"_full" --model_dir "kuma_model/" --data_dir $data_dir --inherently_faithful "kuma" --evaluate_models
-echo "done eval kuma on full data"
+# echo '-------- start training kuma on full data------------'
+# for seed in 5 10 15 20 25
+# do
+# python train_fulltext_and_kuma.py --dataset $dataset$"_full" --model_dir "kuma_model/" --data_dir $data_dir --seed $seed --inherently_faithful "kuma"
+# done
+# echo "done train kuma on full data"
+# python train_fulltext_and_kuma.py --dataset $dataset$"_full" --model_dir "kuma_model/" --data_dir $data_dir --inherently_faithful "kuma" --evaluate_models
+# echo "done eval kuma on full data"
 
 # echo '-------- start training kuma on in domain------------'
 # for seed in 5 10 15 20 25

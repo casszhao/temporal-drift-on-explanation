@@ -14,10 +14,9 @@ import gc
 import datetime
 import sys
 
-torch.cuda.empty_cache()
-# torch.cuda.memory_summary(device=None, abbreviated=False)
+# torch.cuda.empty_cache()
+# # torch.cuda.memory_summary(device=None, abbreviated=False)
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-print(device)
 
 
 

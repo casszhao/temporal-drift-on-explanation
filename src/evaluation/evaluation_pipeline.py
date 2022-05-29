@@ -14,6 +14,13 @@ import config.cfg
 from config.cfg import AttrDict, config_directory
 
 
+# cwd = os.getcwd()  # Get the current working directory (cwd)
+# # files = os.listdir(cwd)  # Get all the files in that directory
+# # print("Files in %r: %s" % (cwd, files))
+
+
+# os.makedirs(config.cfg.config_directory + 'instance_config.json', exist_ok = True)
+
 with open(config.cfg.config_directory + 'instance_config.json', 'r') as f:
     args = AttrDict(json.load(f))
 

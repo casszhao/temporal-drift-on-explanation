@@ -5,12 +5,14 @@ import json
 import glob 
 import os
 import logging
+from src.common_code.initialiser import initial_preparations
 from src.models.deterministic.tasc import lin as tasc
 
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 import config.cfg
-from config.cfg import AttrDict
+from config.cfg import AttrDict, config_directory
+
 
 with open(config.cfg.config_directory + 'instance_config.json', 'r') as f:
     args = AttrDict(json.load(f))

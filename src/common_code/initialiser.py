@@ -120,6 +120,7 @@ def prepare_config(user_args, stage = "train") -> dict:
   #### saving config file for this run
   with open(config.cfg.config_directory + 'instance_config.json', 'w') as file:
       file.write(json.dumps(comb_args,  indent=4, sort_keys=True))
+      print(' #### saving config file for this run')
 
   return comb_args
 

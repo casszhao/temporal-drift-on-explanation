@@ -95,11 +95,14 @@ torch.backends.cudnn.deterministic = True
 torch.backends.cudnn.benchmark = False
 
 from src.common_code.initialiser import initial_preparations
-from src.evaluation import evaluation_pipeline
-import datetime
-
 # creating unique config from stage_config.json file and model_config.json file
 args = initial_preparations(user_args, stage = "extract")
+print(args)
+print('DONE initial preparations for args')
+
+
+from src.evaluation import evaluation_pipeline
+import datetime
 
 logging.info("config  : \n ----------------------")
 [logging.info(k + " : " + str(v)) for k,v in args.items()]

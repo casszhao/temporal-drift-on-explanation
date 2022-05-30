@@ -7,7 +7,7 @@ parser.add_argument(
     "--dataset",
     type = str,
     help = "select dataset / task",
-    default = "factcheck",
+    default = "yelp",
 )
 args = parser.parse_args()
 

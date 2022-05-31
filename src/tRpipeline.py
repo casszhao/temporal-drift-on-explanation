@@ -249,6 +249,8 @@ def train_and_save(train_data_loader, dev_data_loader, for_rationale = False, ou
         seed = str(args["seed"])
     )
 
+    print(results_to_save)
+
     if for_rationale:
 
 

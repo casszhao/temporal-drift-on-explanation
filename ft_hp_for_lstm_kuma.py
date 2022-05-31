@@ -5,6 +5,7 @@ import torch
 import os 
 import argparse
 import logging
+import numpy as np
 
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 CUDA_VISIBLE_DEVICES = 0
@@ -21,7 +22,7 @@ parser.add_argument(
     "--dataset", 
     type = str, 
     help = "select dataset / task", 
-    default = "yelp_full",
+    default = "factcheck",
     # choices = ["WS", "SST", "IMDB", "Yelp", "AmazDigiMu", "AmazPantry", "AmazInstr", "factcheck","factcheck_ood2","factcheck_ood1"]
 )
 
@@ -36,7 +37,7 @@ parser.add_argument(
     "--model_dir",   
     type = str, 
     help = "directory to save models", 
-    default = "ft_model/"
+    default = "ftKUMA_model/"
 )
 
 parser.add_argument(
@@ -56,7 +57,7 @@ parser.add_argument(
     "--inherently_faithful", 
     type = str, 
     help = "select dataset / task", 
-    default = "full_lstm", 
+    default = "kuma", 
     choices = [None, "kuma", "rl", "full_lstm"]
 )
 
@@ -69,8 +70,8 @@ parser.add_argument(
 user_args = vars(parser.parse_args())
 user_args["importance_metric"] = None
 
-log_dir = "ft_lstm_/" + user_args["dataset"] + "/ft_" + user_args["dataset"] + "_seed-" + str(user_args["seed"]) + "_lstm" + date_time + "/"
-config_dir = "experiment_config/train_" + user_args["dataset"] + "_seed-" + str(
+log_dir = "ft_kuma_/" + user_args["dataset"] + "/ft_" + user_args["dataset"] + "_seed-" + str(user_args["seed"]) + "_" + date_time + "/"
+config_dir = "FT_config/FT_" + user_args["dataset"] + "_seed-" + str(
     user_args["seed"]) + "_" + date_time + "/"
 
 os.makedirs(log_dir, exist_ok=True)
@@ -81,7 +82,7 @@ import config.cfg
 config.cfg.config_directory = config_dir
 
 logging.basicConfig(
-    filename=log_dir + "/lstm_out.log",
+    filename=log_dir + "/FTkuma_out.log",
     format='%(asctime)s %(levelname)-8s %(message)s',
     level=logging.INFO,
     datefmt='%Y-%m-%d %H:%M:%S'
@@ -127,26 +128,63 @@ from src.tRpipeline import train_and_save, test_predictive_performance, keep_bes
 
 
 logging.info(date_time)
-logging.info("Finetune LSTM for: {}".format(str(user_args["dataset"])))
-logging.info("Finetune LSTM for: {}".format(str(user_args["dataset"])))
+logging.info("Finetune kuma for: {}".format(str(user_args["dataset"])))
+logging.info("Finetune kuma for: {}".format(str(user_args["dataset"])))
 
 
 
-batch_size_list = [8,16,32,64] #
-for b in batch_size_list:
-    data = dataholder(path=args["data_dir"], b_size=b)
-    logging.info(" \\ ------------------  batch size: {}".format(str(b)))
+# batch_size_list = [8,16,32,64] #
+# for b in batch_size_list:
+#     data = dataholder(path=args["data_dir"], b_size=b)
+#     logging.info(" \\ ------------------  batch size: {}".format(str(b)))
 
-    #LR = [1e-4, 5e-4, 1e-5, 2e-5, 3e-5, 4e-5, 5e-5, 1e-6, 5e-6]
-    LR = [1e-2, 3e-2, 5e-2, 1e-3, 3e-3, 5e-3, 1e-4, 3e-4, 5e-4, 1e-5, 3e-5, 5e-5]
-    for lr in LR:
-        logging.info(" \\ -------------------- learning rate: {}".format(lr))
-        train_LSTMpara_and_save(
-            train_data_loader=data.train_loader,
-            dev_data_loader=data.dev_loader,
-            output_dims=data.nu_of_labels,
-            lr = lr, #3e-5, 2e-5
-        )
+#     #LR = [1e-4, 5e-4, 1e-5, 2e-5, 3e-5, 4e-5, 5e-5, 1e-6, 5e-6]
+#     LR = [1e-2, 3e-2, 5e-2, 1e-3, 3e-3, 5e-3, 1e-4, 3e-4, 5e-4, 1e-5, 3e-5, 5e-5]
+#     for lr in LR:
+#         logging.info(" \\ -------------------- learning rate: {}".format(lr))
+#         train_LSTMpara_and_save(
+#             train_data_loader=data.train_loader,
+#             dev_data_loader=data.dev_loader,
+#             output_dims=data.nu_of_labels,
+#             lr = lr, #3e-5, 2e-5
+#         )
 
-del data
-gc.collect()
+# del data
+# gc.collect()
+data = dataholder(
+        path = args["data_dir"], 
+        b_size = args["batch_size"]
+    )
+
+train_and_save(
+        train_data_loader = data.train_loader, 
+        dev_data_loader = data.dev_loader, 
+        for_rationale = False, 
+        output_dims = data.nu_of_labels,
+        vocab_size = data.vocab_size
+    )
+
+
+path_to_file : str = f'{user_args["model_dir"]}/{user_args["dataset"]}/kuma-bert-output_seed-{user_args["seed"]}.npy'
+        
+file_data = np.load(path_to_file, allow_pickle=True).item()
+aggregated_ratio = np.zeros(len(file_data))
+
+for _i_, (docid, metadata) in enumerate(file_data.items()):
+
+    rationale_ratio = min( 
+                1.,
+                metadata['rationale'].sum()/metadata['full text length']
+            )
+
+    aggregated_ratio[_i_] = rationale_ratio
+
+overall[_j_] = aggregated_ratio.mean()
+    
+
+
+print(f'''{domain}
+        mean -> {overall.mean()}
+        std ->  {overall.std()}
+        all ->  {overall}
+    ''')

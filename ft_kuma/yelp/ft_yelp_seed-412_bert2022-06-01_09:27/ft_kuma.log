@@ -1,0 +1,64 @@
+2022-06-01 09:27:06 INFO     Running on cuda : True
+2022-06-01 09:27:06 INFO     config  : 
+ ----------------------
+2022-06-01 09:27:06 INFO     dataset : yelp
+2022-06-01 09:27:06 INFO     data_dir : /home/cass/PycharmProjects/ood_time/extract_rationales/datasets/yelp/data/
+2022-06-01 09:27:06 INFO     model_dir : /home/cass/PycharmProjects/ood_time/extract_rationales/ft_kuma/yelp/
+2022-06-01 09:27:06 INFO     seed : 412
+2022-06-01 09:27:06 INFO     evaluate_models : False
+2022-06-01 09:27:06 INFO     inherently_faithful : kuma
+2022-06-01 09:27:06 INFO     use_tasc : False
+2022-06-01 09:27:06 INFO     importance_metric : None
+2022-06-01 09:27:06 INFO     rationale_length : 0.2
+2022-06-01 09:27:06 INFO     batch_size : 8
+2022-06-01 09:27:06 INFO     lr_bert : 1e-05
+2022-06-01 09:27:06 INFO     lr_classifier : 0.0001
+2022-06-01 09:27:06 INFO     model : bert-base-uncased
+2022-06-01 09:27:06 INFO     ood_dataset_1 : yelp_ood1
+2022-06-01 09:27:06 INFO     ood_dataset_2 : yelp_ood2
+2022-06-01 09:27:06 INFO     epochs : 20
+2022-06-01 09:27:06 INFO     model_abbreviation : kuma-bert
+2022-06-01 09:27:06 INFO     evaluation_dir : None
+2022-06-01 09:27:06 INFO     extracted_rationale_dir : None
+2022-06-01 09:27:06 INFO     query : False
+2022-06-01 09:27:06 INFO     stage_of_proj : train
+2022-06-01 09:27:06 INFO     ood_rat_1 : 0.2
+2022-06-01 09:27:06 INFO     ood_rat_2 : 0.2
+2022-06-01 09:27:06 INFO     embed_model : glove.840B.300d
+2022-06-01 09:27:06 INFO     
+ ----------------------
+2022-06-01 09:27:08 INFO     2022-06-01_09:27
+2022-06-01 09:27:08 INFO     Finetune BERT for: yelp
+2022-06-01 09:27:08 INFO     Finetune BERT for: yelp
+2022-06-01 09:27:11 INFO     ***************************************
+2022-06-01 09:27:11 INFO     Training on seed 412
+2022-06-01 09:27:11 INFO     *saving checkpoint every 356 iterations
+2022-06-01 09:27:11 INFO     +++++++++++++ epochs:  20
+2022-06-01 09:27:55 INFO     *** epoch - 1 | train loss - 400.62 | dev f1 - 0.111 | dev loss - 11.63
+2022-06-01 09:28:39 INFO     *** epoch - 2 | train loss - 11.51 | dev f1 - 0.111 | dev loss - 11.49
+2022-06-01 09:29:23 INFO     *** epoch - 3 | train loss - 11.48 | dev f1 - 0.111 | dev loss - 11.48
+2022-06-01 09:30:06 INFO     *** epoch - 4 | train loss - 11.47 | dev f1 - 0.111 | dev loss - 11.48
+2022-06-01 09:30:50 INFO     *** epoch - 5 | train loss - 11.47 | dev f1 - 0.111 | dev loss - 11.47
+2022-06-01 09:31:35 INFO     *** epoch - 6 | train loss - 11.47 | dev f1 - 0.111 | dev loss - 11.47
+2022-06-01 09:32:19 INFO     *** epoch - 7 | train loss - 11.47 | dev f1 - 0.111 | dev loss - 11.48
+2022-06-01 09:33:02 INFO     *** epoch - 8 | train loss - 11.47 | dev f1 - 0.111 | dev loss - 11.47
+2022-06-01 09:33:44 INFO     *** epoch - 9 | train loss - 11.46 | dev f1 - 0.111 | dev loss - 11.47
+2022-06-01 09:34:26 INFO     *** epoch - 10 | train loss - 11.46 | dev f1 - 0.111 | dev loss - 11.47
+2022-06-01 09:35:07 INFO     *** epoch - 11 | train loss - 11.46 | dev f1 - 0.111 | dev loss - 11.46
+2022-06-01 09:35:51 INFO     *** epoch - 12 | train loss - 11.46 | dev f1 - 0.111 | dev loss - 11.46
+2022-06-01 09:36:33 INFO     *** epoch - 13 | train loss - 11.46 | dev f1 - 0.111 | dev loss - 11.46
+2022-06-01 09:37:16 INFO     *** epoch - 14 | train loss - 11.45 | dev f1 - 0.111 | dev loss - 11.46
+2022-06-01 09:37:57 INFO     *** epoch - 15 | train loss - 11.37 | dev f1 - 0.111 | dev loss - 11.4
+2022-06-01 09:38:39 INFO     *** epoch - 16 | train loss - 11.13 | dev f1 - 0.111 | dev loss - 11.13
+2022-06-01 09:39:21 INFO     *** epoch - 17 | train loss - 10.89 | dev f1 - 0.111 | dev loss - 10.93
+2022-06-01 09:40:02 INFO     *** epoch - 18 | train loss - 10.68 | dev f1 - 0.112 | dev loss - 10.87
+2022-06-01 09:40:44 INFO     *** epoch - 19 | train loss - 10.97 | dev f1 - 0.111 | dev loss - 11.2
+2022-06-01 09:41:25 INFO     *** epoch - 20 | train loss - 10.67 | dev f1 - 0.111 | dev loss - 11.22
+2022-06-01 09:41:25 INFO     
+        yelp ----
+2022-06-01 09:41:25 INFO     
+        InDomain
+        mean -> 0.08990730003126103
+        std ->  0.0
+        all ->  0.08990730003126103
+    

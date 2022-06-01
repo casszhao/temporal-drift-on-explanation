@@ -1,0 +1,64 @@
+2022-05-31 21:02:14 INFO     Running on cuda : True
+2022-05-31 21:02:14 INFO     config  : 
+ ----------------------
+2022-05-31 21:02:14 INFO     dataset : yelp
+2022-05-31 21:02:14 INFO     data_dir : /home/cass/PycharmProjects/ood_time/extract_rationales/datasets/yelp/data/
+2022-05-31 21:02:14 INFO     model_dir : /home/cass/PycharmProjects/ood_time/extract_rationales/ft_kuma/yelp/
+2022-05-31 21:02:14 INFO     seed : 412
+2022-05-31 21:02:14 INFO     evaluate_models : False
+2022-05-31 21:02:14 INFO     inherently_faithful : kuma
+2022-05-31 21:02:14 INFO     use_tasc : False
+2022-05-31 21:02:14 INFO     importance_metric : None
+2022-05-31 21:02:14 INFO     rationale_length : 0.2
+2022-05-31 21:02:14 INFO     batch_size : 32
+2022-05-31 21:02:14 INFO     lr_bert : 1e-05
+2022-05-31 21:02:14 INFO     lr_classifier : 0.0001
+2022-05-31 21:02:14 INFO     model : bert-base-uncased
+2022-05-31 21:02:14 INFO     ood_dataset_1 : yelp_ood1
+2022-05-31 21:02:14 INFO     ood_dataset_2 : yelp_ood2
+2022-05-31 21:02:14 INFO     epochs : 20
+2022-05-31 21:02:14 INFO     model_abbreviation : kuma-bert
+2022-05-31 21:02:14 INFO     evaluation_dir : None
+2022-05-31 21:02:14 INFO     extracted_rationale_dir : None
+2022-05-31 21:02:14 INFO     query : False
+2022-05-31 21:02:14 INFO     stage_of_proj : train
+2022-05-31 21:02:14 INFO     ood_rat_1 : 0.2
+2022-05-31 21:02:14 INFO     ood_rat_2 : 0.2
+2022-05-31 21:02:14 INFO     embed_model : glove.840B.300d
+2022-05-31 21:02:14 INFO     
+ ----------------------
+2022-05-31 21:02:16 INFO     2022-05-31_21:02
+2022-05-31 21:02:16 INFO     Finetune BERT for: yelp
+2022-05-31 21:02:16 INFO     Finetune BERT for: yelp
+2022-05-31 21:02:19 INFO     ***************************************
+2022-05-31 21:02:19 INFO     Training on seed 412
+2022-05-31 21:02:19 INFO     *saving checkpoint every 89 iterations
+2022-05-31 21:02:19 INFO     +++++++++++++ epochs:  20
+2022-05-31 21:02:40 INFO     *** epoch - 1 | train loss - 50.8 | dev f1 - 0.114 | dev loss - 49.59
+2022-05-31 21:03:00 INFO     *** epoch - 2 | train loss - 48.75 | dev f1 - 0.111 | dev loss - 47.11
+2022-05-31 21:03:20 INFO     *** epoch - 3 | train loss - 48.35 | dev f1 - 0.111 | dev loss - 50.76
+2022-05-31 21:03:40 INFO     *** epoch - 4 | train loss - 61.54 | dev f1 - 0.111 | dev loss - 78.45
+2022-05-31 21:04:00 INFO     *** epoch - 5 | train loss - 70.18 | dev f1 - 0.111 | dev loss - 31.28
+2022-05-31 21:04:21 INFO     *** epoch - 6 | train loss - 32.14 | dev f1 - 0.111 | dev loss - 33.48
+2022-05-31 21:04:40 INFO     *** epoch - 7 | train loss - 36.21 | dev f1 - 0.111 | dev loss - 38.03
+2022-05-31 21:05:00 INFO     *** epoch - 8 | train loss - 39.82 | dev f1 - 0.111 | dev loss - 40.98
+2022-05-31 21:05:19 INFO     *** epoch - 9 | train loss - 42.1 | dev f1 - 0.111 | dev loss - 42.84
+2022-05-31 21:05:39 INFO     *** epoch - 10 | train loss - 43.55 | dev f1 - 0.111 | dev loss - 43.99
+2022-05-31 21:06:00 INFO     *** epoch - 11 | train loss - 44.42 | dev f1 - 0.111 | dev loss - 44.7
+2022-05-31 21:06:20 INFO     *** epoch - 12 | train loss - 44.98 | dev f1 - 0.111 | dev loss - 45.15
+2022-05-31 21:06:40 INFO     *** epoch - 13 | train loss - 45.32 | dev f1 - 0.111 | dev loss - 45.42
+2022-05-31 21:07:00 INFO     *** epoch - 14 | train loss - 45.53 | dev f1 - 0.111 | dev loss - 45.59
+2022-05-31 21:07:20 INFO     *** epoch - 15 | train loss - 45.67 | dev f1 - 0.111 | dev loss - 45.69
+2022-05-31 21:07:40 INFO     *** epoch - 16 | train loss - 45.75 | dev f1 - 0.111 | dev loss - 45.75
+2022-05-31 21:08:01 INFO     *** epoch - 17 | train loss - 45.78 | dev f1 - 0.111 | dev loss - 45.8
+2022-05-31 21:08:21 INFO     *** epoch - 18 | train loss - 45.81 | dev f1 - 0.111 | dev loss - 45.82
+2022-05-31 21:08:42 INFO     *** epoch - 19 | train loss - 45.84 | dev f1 - 0.111 | dev loss - 45.83
+2022-05-31 21:09:02 INFO     *** epoch - 20 | train loss - 45.84 | dev f1 - 0.111 | dev loss - 45.83
+2022-05-31 21:09:02 INFO     
+        yelp ----
+2022-05-31 21:09:02 INFO     
+        InDomain
+        mean -> 0.0
+        std ->  0.0
+        all ->  0.0
+    

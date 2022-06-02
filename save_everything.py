@@ -85,10 +85,35 @@ parser.add_argument(
     action='store_true',
     default=False
 )
+
+parser.add_argument(
+    '--plot_radar',
+    help='decide which parts are in need',
+    action='store_true',
+    default=False
+)
+
+parser.add_argument(
+    '--plot_quiver',
+    help='decide which parts are in need',
+    action='store_true',
+    default=False
+) 
+
+
+
 args = parser.parse_args()
 
 datasets_dir = 'saved_everything/' + str(args.dataset)
 os.makedirs(datasets_dir, exist_ok = True)
+
+
+
+
+
+
+
+
 
 
 task_list = ['xfact', 'factcheck', 'AmazDigiMu', 'AmazPantry']
@@ -162,11 +187,11 @@ if args.plot_time_distribution:
     ood1_df = pd.read_json('datasets/'+ str(args.dataset) +'_ood1/data/test.json')
     ood2_df = pd.read_json('datasets/'+ str(args.dataset) +'_ood2/data/test.json')
 
-    full = df2stat_df(full_df, 'Full Data')
-    indomain_train = df2stat_df(indomain_train_df, 'InDomainTrain')
-    indomain_test = df2stat_df(indomain_test_df, 'InDomainTest')
-    ood1 = df2stat_df(ood1_df, 'OOD1 Test')
-    ood2 = df2stat_df(ood2_df, 'OOD2 Test')
+    full = df2stat_df(full_df, 'Full-size')
+    indomain_train = df2stat_df(indomain_train_df, 'SynD Train')
+    indomain_test = df2stat_df(indomain_test_df, 'SynD Test')
+    ood1 = df2stat_df(ood1_df, 'AsyD1 Test')
+    ood2 = df2stat_df(ood2_df, 'AsyD2 Test')
 
     df = pd.concat([full, indomain_train, indomain_test, ood1, ood2]).reset_index(drop=True)
 
@@ -481,6 +506,142 @@ if args.save_posthoc:
         print(final)
 
 #############################################################################################################################################
+
+
+if args.plot_quiver:
+    from matplotlib.pyplot import quiver
+    args.save_posthoc == True
+    df = pd.read_csv('saved_everything/' + str(args.dataset) + '/posthoc_faithfulness.csv')
+    df = df[((df['Rationales_metrics'] == 'AOPC_sufficiency') & (df['thresholder'] == 'topk'))]
+
+    df = df[['Domain', 'random', 
+                        'scaled attention','attention','deeplift','gradients','lime','ig','deepliftshap','gradientshap']]
+    print(df)
+    quiver([(1,2), (2,2)], (1.5, 2.5,2.5, 3.5))
+    plt.show()
+
+    # xarray.Dataset.plot.quiver(
+
+    # )
+    
+
+import plotly.graph_objects as go
+import plotly.offline as pyo
+from selenium import webdriver
+from plotly.subplots import make_subplots
+
+if args.plot_radar:
+    # args.save_posthoc == True
+    # args.save_posthoc_for_analysis == True
+    df = pd.read_csv('saved_everything/' + str(args.dataset) + '/posthoc_faithfulness_overleaf.csv', index_col=0)
+    APOC_sufficiency = df.iloc[:, 0:8]
+    AOPC_comprehensiveness = df.iloc[:, -8:]
+    print(APOC_sufficiency)
+    print(AOPC_comprehensiveness)
+    categories = APOC_sufficiency.columns
+    print(categories)
+    categories = [*categories, categories[0]]
+
+    Full_sufficiency = APOC_sufficiency.iloc[0, :].to_list()
+    SynD_sufficiency = APOC_sufficiency.iloc[1, :].to_list()
+    AsyD1_sufficiency = APOC_sufficiency.iloc[2, :].to_list()
+    AsyD2_sufficiency = APOC_sufficiency.iloc[3, :].to_list()
+    #AsyD1_2_sufficiency = APOC_sufficiency.iloc[4, :].to_list()
+    Full_sufficiency = [*Full_sufficiency, Full_sufficiency[0]]
+    SynD_sufficiency = [*SynD_sufficiency, SynD_sufficiency[0]]
+    AsyD1_sufficiency = [*AsyD1_sufficiency, AsyD1_sufficiency[0]]
+    AsyD2_sufficiency = [*AsyD2_sufficiency, AsyD2_sufficiency[0]]
+    #AsyD1_2 = [*AsyD1_2, AsyD1_2[0]]
+
+
+    Full_comprehensiveness = AOPC_comprehensiveness.iloc[0, :].to_list()
+    SynD_comprehensiveness = AOPC_comprehensiveness.iloc[1, :].to_list()
+    AsyD1_comprehensiveness = AOPC_comprehensiveness.iloc[2, :].to_list()
+    AsyD2_comprehensiveness = AOPC_comprehensiveness.iloc[3, :].to_list()
+    #AsyD1_2_sufficiency = APOC_sufficiency.iloc[4, :].to_list()
+    Full_comprehensiveness = [*Full_comprehensiveness, Full_comprehensiveness[0]]
+    SynD_comprehensiveness = [*SynD_comprehensiveness, SynD_comprehensiveness[0]]
+    AsyD1_comprehensiveness = [*AsyD1_comprehensiveness, AsyD1_comprehensiveness[0]]
+    AsyD2_comprehensiveness = [*AsyD2_comprehensiveness, AsyD2_comprehensiveness[0]]
+
+
+    fig = go.Figure(data=[go.Scatterpolar(r=Full_sufficiency, theta=categories, name='Full'),
+                        go.Scatterpolar(r=SynD_sufficiency, theta=categories, name='SynD'),
+                        go.Scatterpolar(r=AsyD1_sufficiency, theta=categories, name='AsyD1'),
+                        go.Scatterpolar(r=AsyD2_sufficiency, theta=categories, name='AsyD2'),
+                        ],
+    layout=go.Layout(
+        title=go.layout.Title(text='APOC Sufficiency of Different Time Span'),
+        polar={'radialaxis': {'visible': True}},
+        showlegend=True))
+    fig.update_layout(
+        font_family="Courier New",
+        font_color="Black",
+        title_font_family="Times New Roman",
+        title_font_color="black",
+        legend_title_font_color="Black",
+        legend_title="Time",
+        font=dict(family="Courier New, monospace",
+                size=32,
+                color="black", #RebeccaPurple
+                ),
+        legend=dict(yanchor="top",
+                y=0.99,
+                xanchor="right",
+                x=0.15,
+            ),
+        title={
+        # 'text': "Plot Title",
+        'y':0.9999,
+        'x':0.5,
+        'xanchor': 'center',
+        'yanchor': 'top'})
+    fig.update_xaxes(title_font_family="Arial")
+    fig.show()
+    #pyo.plot(fig)
+
+
+
+    fig = go.Figure(data=[go.Scatterpolar(r=Full_comprehensiveness, theta=categories, name='Full'),
+                        go.Scatterpolar(r=SynD_comprehensiveness, theta=categories, name='SynD'),
+                        go.Scatterpolar(r=AsyD1_comprehensiveness, theta=categories, name='AsyD1'),
+                        go.Scatterpolar(r=AsyD2_comprehensiveness, theta=categories, name='AsyD2'),
+                        ],
+    layout=go.Layout(
+        title=go.layout.Title(text='APOC Comprehensiveness of Different Time Span'),
+        polar={'radialaxis': {'visible': True}},
+        showlegend=True))
+    fig.update_layout(
+        font_family="Courier New",
+        font_color="Black",
+        title_font_family="Times New Roman",
+        title_font_color="black",
+        legend_title_font_color="Black",
+        legend_title="Time",
+        font=dict(family="Courier New, monospace",
+                size=32,
+                color="black", #RebeccaPurple
+                ),
+        legend=dict(yanchor="top",
+                y=0.99,
+                xanchor="right",
+                x=0.15,
+            ),
+        title={
+            # 'text': "Plot Title",
+            'y':0.9999,
+            'x':0.5,
+            'xanchor': 'center',
+            'yanchor': 'top'
+            }
+        )
+    fig.update_xaxes(title_font_family="Arial")
+    fig.show()
+
+
+
+    
+
 
 
 ########################### 3. FRESH results

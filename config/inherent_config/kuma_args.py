@@ -44,7 +44,7 @@ yelp = yelp_full = yelp_ood1 = yelp_ood2 = {
         "lambda_init":     1e-2, ## 5e-4, 1e-5, # how short or long rationales are # compare to lstm standard,
                                  # penalise when a rationale is long. So if they high they will select less text and therefore closer accuracy to only lstm
                                 #so if want to increase rationale len, put lower num         
-        "lagrange_lr":     5e-3, ## 5e-3,  #so if want to increase rationale len, put lower num 
+        "lagrange_lr":     1e-2, ## 5e-3,  #so if want to increase rationale len, put lower num 
         "lagrange_alpha":  0.9,            #so if want to decrease rationale len, put higher num
     }
 }

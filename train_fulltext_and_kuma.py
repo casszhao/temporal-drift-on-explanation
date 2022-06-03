@@ -6,8 +6,17 @@ import os
 import argparse
 import logging
 
-device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+# device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+if torch.cuda.is_available():
+    device = torch.device("cuda:0")
+    print("running on the GPU")
+else:
+    device = torch.device("cpu")
+    print("running on the CPU")
 CUDA_VISIBLE_DEVICES = 0
+CUDA_LAUNCH_BLOCKING=1
+
+
 print(device)
 
 import datetime
@@ -126,6 +135,7 @@ data = dataholder(
         path = args["data_dir"], 
         b_size = args["batch_size"]
     )
+print('batch size: ', args["batch_size"])
 
 ## evaluating finetuned models
 if args["evaluate_models"]:

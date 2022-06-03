@@ -55,12 +55,15 @@ parser.add_argument(
     action='store_true',
     default=False
 )
+
 parser.add_argument(
     '--save_data_stat',
     help='decide which parts are in need',
     action='store_true',
     default=False
 )
+rep_posthoc_for_analysis
+
 args = parser.parse_args()
 
 datasets_dir = 'saved_everything/' + str(args.dataset)
@@ -69,6 +72,10 @@ os.makedirs(datasets_dir, exist_ok = True)
 
 
 select_columns = ['mean-f1', 'std-f1']
+
+
+
+
 ######################## 1. bert predictive resultes -- on In domain / ood1 / ood2
 InDomain = pd.read_json('./models/' + str(args.dataset) + '/bert_predictive_performances.json')
 Full_data = pd.read_json('./models/' + str(args.dataset) + '_full/bert_predictive_performances.json')

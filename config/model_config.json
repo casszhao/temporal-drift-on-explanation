@@ -1,7 +1,7 @@
 {   "epochs" : 5,
     "model_abbreviation" :      {"bert-base-uncased": "bert",
                                  "bert-base-cased": "bert-cased",
-                                 "allenai/scibert_scivocab_uncased": "scibert",
+                                 "scibert_scivocab_uncased": "scibert",
                                  "roberta-base": "roberta"},
     "embed_model" : "glove.840B.300d",
     "factcheck_full" : {
@@ -78,7 +78,7 @@
     },
     "binarybragging_full" : {
         "rationale_length" : 0.2,
-        "batch_size": 32,
+        "batch_size": 4,
         "lr_bert" : 5e-6,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",
@@ -87,7 +87,7 @@
     },
     "binarybragging" : {
         "rationale_length" : 0.2,
-        "batch_size": 32,
+        "batch_size": 4,
         "lr_bert" : 5e-6,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",
@@ -96,7 +96,7 @@
     },
     "binarybragging_ood1" : {
         "rationale_length" : 0.2,
-        "batch_size": 32,
+        "batch_size": 4,
         "lr_bert" : 5e-6,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",
@@ -105,7 +105,7 @@
     },
     "binarybragging_ood2" : {
         "rationale_length" : 0.2,
-        "batch_size": 32,
+        "batch_size": 4,
         "lr_bert" : 5e-6,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",
@@ -148,41 +148,41 @@
         "ood_dataset_1": "bragging_ood1",
         "ood_dataset_2": "bragging"
     },
-    "complain_full" : {
+    "healthfact_full" : {
         "rationale_length" : 0.2,
-        "batch_size": 64,
+        "batch_size": 8,
         "lr_bert" : 1e-05,
         "lr_classifier" : 1e-05,
-        "model" : "bert-base-uncased",
-        "ood_dataset_1": "complain_ood1",
-        "ood_dataset_2": "complain_ood2"
+        "model" : "bert-base-uncased", 
+        "ood_dataset_1": "healthfact_ood1",
+        "ood_dataset_2": "healthfact_ood2"
     },
-    "complain" : {
+    "healthfact" : {
         "rationale_length" : 0.2,
-        "batch_size": 64,
+        "batch_size": 8,
         "lr_bert" : 1e-05,
         "lr_classifier" : 1e-05,
         "model" : "bert-base-uncased",
-        "ood_dataset_1": "complain_ood1",
-        "ood_dataset_2": "complain_ood2"
+        "ood_dataset_1": "healthfact_ood1",
+        "ood_dataset_2": "healthfact_ood2"
     },
-    "complain_ood1" : {
+    "healthfact_ood1" : {
         "rationale_length" : 0.2,
-        "batch_size": 64,
+        "batch_size": 8,
         "lr_bert" : 1e-05,
         "lr_classifier" : 1e-05,
         "model" : "bert-base-uncased",
-        "ood_dataset_1": "complain",
-        "ood_dataset_2": "complain_ood2"
+        "ood_dataset_1": "healthfact",
+        "ood_dataset_2": "healthfact_ood2"
     },
-    "complain_ood2" : {
+    "healthfact_ood2" : {
         "rationale_length" : 0.2,
-        "batch_size": 64,
+        "batch_size": 8,
         "lr_bert" : 1e-05,
         "lr_classifier" : 1e-05,
         "model" : "bert-base-uncased",
-        "ood_dataset_1": "complain_ood1",
-        "ood_dataset_2": "complain"
+        "ood_dataset_1": "healthfact_ood1",
+        "ood_dataset_2": "healthfact"
     },
     "IMDB" : {
         "rationale_length" : 0.02,
@@ -202,14 +202,41 @@
         "ood_dataset_1": "IMDB",
         "ood_dataset_2": "Yelp"
     },
-    "Yelp" : {
-        "rationale_length" : 0.1,
+    "yelp" : {
+        "rationale_length" : 0.2,
         "batch_size": 8,
         "lr_bert" : 1e-5,
         "lr_classifier" : 1e-4, 
         "model" : "bert-base-uncased",
-        "ood_dataset_1": "SST",
-        "ood_dataset_2": "IMDB"
+        "ood_dataset_1": "yelp_ood1",
+        "ood_dataset_2": "yelp_ood2"
+    },
+    "yelp_full" : {
+        "rationale_length" : 0.2,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4, 
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "yelp_ood1",
+        "ood_dataset_2": "yelp_ood2"
+    },
+    "yelp_ood1" : {
+        "rationale_length" : 0.2,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4, 
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "yelp",
+        "ood_dataset_2": "yelp_ood2"
+    },
+    "yelp_ood2" : {
+        "rationale_length" : 0.2,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4, 
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "yelp",
+        "ood_dataset_2": "yelp_ood2"
     },
     "AmazDigiMu": {
         "rationale_length" : 0.2,
@@ -247,41 +274,41 @@
         "ood_dataset_1": "AmazDigiMu",
         "ood_dataset_2": "AmazDigiMu_ood1"
     },
-    "AmazInstr" : {
+    "agnews" : {
         "rationale_length" : 0.2,
         "batch_size": 8,
         "lr_bert" : 1e-5,
         "lr_classifier" : 1e-4, 
         "model" : "bert-base-uncased",
-        "ood_dataset_1": "AmazInstr_ood1",
-        "ood_dataset_2": "AmazInstr_ood2"
+        "ood_dataset_1": "agnews_ood1",
+        "ood_dataset_2": "agnews_ood2"
     },
-    "AmazInstr_full" : {
+    "agnews_full" : {
         "rationale_length" : 0.2,
         "batch_size": 8,
         "lr_bert" : 1e-5,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",
-        "ood_dataset_1": "AmazInstr_ood1",
-        "ood_dataset_2": "AmazInstr_ood2"
+        "ood_dataset_1": "agnews_ood1",
+        "ood_dataset_2": "agnews_ood2"
     },
-        "AmazInstr_ood1" : {
+    "agnews_ood1" : {
         "rationale_length" : 0.2,
         "batch_size": 8,
         "lr_bert" : 1e-5,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",
-        "ood_dataset_1": "AmazInstr",
-        "ood_dataset_2": "AmazInstr_ood2"
+        "ood_dataset_1": "agnews",
+        "ood_dataset_2": "agnews_ood2"
     },
-        "AmazInstr_ood2" : {
+    "agnews_ood2" : {
         "rationale_length" : 0.2,
         "batch_size": 8,
         "lr_bert" : 1e-5,
         "lr_classifier" : 1e-4,
         "model" : "bert-base-uncased",
-        "ood_dataset_1": "AmazInstr",
-        "ood_dataset_2": "AmazInstr_ood1"
+        "ood_dataset_1": "agnews",
+        "ood_dataset_2": "agnews_ood1"
     },
     "AmazPantry" : {
         "rationale_length" : 0.2,
@@ -301,7 +328,7 @@
         "ood_dataset_1": "AmazPantry_ood1",
         "ood_dataset_2": "AmazPantry_ood2"
     },
-        "AmazPantry_ood1" : {
+    "AmazPantry_ood1" : {
         "rationale_length" : 0.2,
         "batch_size": 8,
         "lr_bert" : 1e-5,
@@ -310,7 +337,7 @@
         "ood_dataset_1": "AmazPantry",
         "ood_dataset_2": "AmazPantry_ood2"
     },
-        "AmazPantry_ood2" : {
+    "AmazPantry_ood2" : {
         "rationale_length" : 0.2,
         "batch_size": 8,
         "lr_bert" : 1e-5,

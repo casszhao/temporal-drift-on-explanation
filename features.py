@@ -123,8 +123,8 @@ def get_feature_representations(feature_names, examples, trg_examples, vocab,
             # check whether feature belongs to similarity-based features,
             # diversity-based features, etc.
             if i == 0:
-                print(j)
-                print(f_name)
+                # print(j)
+                # print(f_name)
 
             if f_name.startswith('topic'):
                 f = similarity.similarity_name2value(

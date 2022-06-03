@@ -5,18 +5,27 @@ import json
 import glob 
 import os
 import logging
+from src.common_code.initialiser import initial_preparations
 from src.models.deterministic.tasc import lin as tasc
 
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 import config.cfg
-from config.cfg import AttrDict
+from config.cfg import AttrDict, config_directory
+
+
+# cwd = os.getcwd()  # Get the current working directory (cwd)
+# # files = os.listdir(cwd)  # Get all the files in that directory
+# # print("Files in %r: %s" % (cwd, files))
+
+
+# os.makedirs(config.cfg.config_directory + 'instance_config.json', exist_ok = True)
 
 with open(config.cfg.config_directory + 'instance_config.json', 'r') as f:
     args = AttrDict(json.load(f))
 
 from src.models.deterministic.bert import BertClassifier
-from src.evaluation.experiments.rationale_extractor import extract_importance_, rationale_creator_, extract_lime_scores_, extract_shap_values_
+from src.evaluation.experiments.rationale_extractor import extract_importance_, rationale_creator_, extract_lime_scores_, extract_deeplift_values_, extract_gradientshap_values_, extract_deepliftshap_values_
 from src.evaluation.experiments.erasure_tests import conduct_experiments_
 
 
@@ -89,50 +98,14 @@ class evaluate():
 
             self.model_random_seed = re.sub("bert", "", model_name.split(".pt")[0].split("/")[-1])
 
-            # ## used ONLY with test set when evaluating faithfulness
-            # if data_split:
-            #     print('----------------------')
-            #     print(data_split)
-            #
-            #     assert data_split == "test"
-            #
-            #     extract_importance_(
-            #         model = model,
-            #         data_split_name = "test",
-            #         data = data.test_loader,
-            #         model_random_seed = self.model_random_seed,
-            #         ood = self.ood,
-            #         ood_dataset_ = self.ood_dataset_
-            #     )
-            #
-            #     extract_lime_scores_(
-            #         model = model,
-            #         data = data.test_loader,
-            #         data_split_name = "test",
-            #         model_random_seed = self.model_random_seed,
-            #         no_of_labels = data.nu_of_labels,
-            #         max_seq_len = data.max_len,
-            #         tokenizer = data.tokenizer,
-            #         ood = self.ood,
-            #         ood_dataset_ = self.ood_dataset_
-            #     )
-            #
-            #     extract_shap_values_(
-            #         model = model,
-            #         data = data.test_loader,
-            #         data_split_name = "test",
-            #         model_random_seed = self.model_random_seed,
-            #         ood = self.ood,
-            #         ood_dataset_ = self.ood_dataset_
-            #     )
-            #
-            # ## if its for rationale extraction we want all splits
-            # else:
 
-            for data_split_name, data_split in {"train": data.train_loader, "dev":  data.dev_loader ,
+            for data_split_name, data_split in {"dev":  data.dev_loader, "train": data.train_loader, 
                                                 "test":  data.test_loader}.items():
-            # for data_split_name, data_split in {"test": data.test_loader}.items(): ## REMOVE AFTER
+            #for data_split_name, data_split in {"test": data.test_loader}.items(): ## REMOVE AFTER
+            # need to run extract importance first
+                print(' ++++++++++++ START extracting for ', data_split_name, ' ++++++++++++++')
 
+                
                 extract_importance_(
                     model = model,
                     data_split_name = data_split_name,
@@ -141,6 +114,8 @@ class evaluate():
                     ood = self.ood,
                     ood_dataset_ = self.ood_dataset_
                 )
+                torch.cuda.empty_cache()
+                print(' \\ +++++++++ DONE {} s attributes of ig/scale attention/attention...'.format(data_split_name))
 
                 extract_lime_scores_(
                     model = model,
@@ -153,8 +128,11 @@ class evaluate():
                     ood = self.ood,
                     ood_dataset_ = self.ood_dataset_
                 )
+                
+                torch.cuda.empty_cache()
+                print(' \\ +++++++++ DONE {} s lime '.format(data_split_name))
 
-                extract_shap_values_(
+                extract_deeplift_values_(
                     model = model,
                     data = data_split,
                     data_split_name = data_split_name,
@@ -162,9 +140,35 @@ class evaluate():
                     ood = self.ood,
                     ood_dataset_ = self.ood_dataset_
                 )
+                torch.cuda.empty_cache()
+                print(' \\ +++++++++ DONE {} s deeplift '.format(data_split_name))
 
 
-        return
+                extract_deepliftshap_values_(
+                    model = model,
+                    data = data_split,
+                    data_split_name = data_split_name,
+                    model_random_seed = self.model_random_seed,
+                    ood = self.ood,
+                    ood_dataset_ = self.ood_dataset_
+                )
+                torch.cuda.empty_cache()
+                print(' \\ +++++++++ DONE {} s deepliftshap '.format(data_split_name))
+
+
+                extract_gradientshap_values_(
+                    model = model,
+                    data = data_split,
+                    data_split_name = data_split_name,
+                    model_random_seed = self.model_random_seed,
+                    ood = self.ood,
+                    ood_dataset_ = self.ood_dataset_
+                )
+                torch.cuda.empty_cache()
+                print(' \\ +++++++++ DONE {} s gradientshap '.format(data_split_name))
+
+
+        return 
 
     def create_rationales_(self, data):
         
@@ -175,7 +179,6 @@ class evaluate():
             "importance_scores",
             ""
         )
-
 
         for data_split_name, data_split in data.as_dataframes_().items():
 
@@ -251,7 +254,7 @@ class evaluate():
             ## register importance scores if they are not there
             self.register_importance_(
                 data, 
-                data_split = "test"
+                #data_split = "test"
             ) 
 
             conduct_experiments_(

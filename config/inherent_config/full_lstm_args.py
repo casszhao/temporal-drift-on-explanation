@@ -1,6 +1,6 @@
 __name__ = "full_lstm"
 
-SST = IMDB = Yelp = {
+SST = IMDB = yelp = yelp_ood1 = yelp_ood2 = yelp_full = {
     "OPTIM_ARGS_" : {     ## for Adam Loss
         "lr" : 0.001,
         "weight_decay" : 0.00001,
@@ -24,17 +24,6 @@ AmazDigiMu_full = AmazDigiMu_ood1 = AmazDigiMu_ood2 = AmazDigiMu = {
     }
 }
 
-AmazInstr_full = AmazInstr_ood1 = AmazInstr_ood2 = AmazInstr = {
-    "OPTIM_ARGS_" : {     ## for Adam Loss
-        "lr" : 0.001,
-        "weight_decay" : 0.00001,
-        "betas" : [0.9, 0.999],
-        "amsgrad" : False,
-    },
-    "MODEL_ARGS_" : {     ## model args
-        "dropout":         0.1,
-    }
-}
 
 AmazPantry_full = AmazPantry_ood1 = AmazPantry_ood2 = AmazPantry = {
     "OPTIM_ARGS_" : {     ## for Adam Loss
@@ -48,17 +37,17 @@ AmazPantry_full = AmazPantry_ood1 = AmazPantry_ood2 = AmazPantry = {
     }
 }
 
-complain_full = complain = complain_ood1 = complain_ood2 = {
-    "OPTIM_ARGS_" : {     ## for Adam Loss
-        "lr" : 0.001, # tried 0.001
-        "weight_decay" : 0.00001,
-        "betas" : [0.9, 0.999],
-        "amsgrad" : False,
-    },
-    "MODEL_ARGS_" : {     ## model args
-        "dropout":         0.2,
-    }
-}
+# complain_full = complain = complain_ood1 = complain_ood2 = {
+#     "OPTIM_ARGS_" : {     ## for Adam Loss
+#         "lr" : 0.001, # tried 0.001
+#         "weight_decay" : 0.00001,
+#         "betas" : [0.9, 0.999],
+#         "amsgrad" : False,
+#     },
+#     "MODEL_ARGS_" : {     ## model args
+#         "dropout":         0.2,
+#     }
+# }
 
 bragging_full = bragging = bragging_ood1 = bragging_ood2 = {
     "OPTIM_ARGS_" : {     ## for Adam Loss
@@ -108,10 +97,33 @@ xfact_full = xfact = xfact_ood1 = xfact_ood2 = {
     }
 }
 
+agnews_full = agnews = agnews_ood1 = agnews_ood2 = {
+    "OPTIM_ARGS_" : {     ## for Adam Loss
+        "lr" : 0.001,
+        "weight_decay" : 0.00001,
+        "betas" : [0.9, 0.999],
+        "amsgrad" : False,
+    },
+    "MODEL_ARGS_" : {     ## model args
+        "dropout":         0.1,
+    }
+}
+
+healthfact_full = healthfact = healthfact_ood1 = healthfact_ood2 = {
+    "OPTIM_ARGS_" : {     ## for Adam Loss
+        "lr" : 0.001,
+        "weight_decay" : 0.00001,
+        "betas" : [0.9, 0.999],
+        "amsgrad" : False,
+    },
+    "MODEL_ARGS_" : {     ## model args
+        "dropout":         0.1,
+    }
+}
+
 get_ = {
     "SST": SST,
     "IMDB": IMDB,
-    "Yelp" : Yelp,
     'factcheck_full': factcheck_full,
     'factcheck': factcheck,
     'factcheck_ood1': factcheck_ood1,
@@ -120,10 +132,10 @@ get_ = {
     'xfact_full': xfact_full,
     'xfact_ood1': xfact_ood1,
     'xfact_ood2': xfact_ood2,
-    'complain': complain,
-    'complain_full': complain_full,
-    'complain_ood2': complain_ood2,
-    'complain_ood1': complain_ood1,
+    # 'complain': complain,
+    # 'complain_full': complain_full,
+    # 'complain_ood2': complain_ood2,
+    # 'complain_ood1': complain_ood1,
     'bragging': bragging,
     'bragging_full': bragging_full,
     'bragging_ood1': bragging_ood1,
@@ -140,10 +152,17 @@ get_ = {
     "AmazPantry_full": AmazPantry_full,
     "AmazPantry_ood1": AmazPantry_ood1,
     "AmazPantry_ood2": AmazPantry_ood2,
-    "AmazInstr": AmazInstr,
-    "AmazInstr_full": AmazInstr_full,
-    "AmazInstr_ood1": AmazInstr_ood1,
-    "AmazInstr_ood2": AmazInstr_ood2,
-
+    "agnews": agnews,
+    "agnews_full": agnews_full,
+    "agnews_ood1": agnews_ood1,
+    "agnews_ood2": agnews_ood2,
+    "healthfact": healthfact,
+    "healthfact_full": healthfact_full,
+    "healthfact_ood1": healthfact_ood1,
+    "healthfact_ood2": healthfact_ood2,
+    "yelp": yelp,
+    "yelp_full": yelp_full,
+    "yelp_ood1": yelp_ood1,
+    "yelp_ood2": yelp_ood2,
 }
 

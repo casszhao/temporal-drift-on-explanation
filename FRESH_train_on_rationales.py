@@ -6,8 +6,14 @@ import os
 import argparse
 import logging
 
-device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-
+# device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+if torch.cuda.is_available():
+    device = torch.device("cuda:0")
+    print("running on the GPU")
+else:
+    device = torch.device("cpu")
+    print("running on the CPU")
+    
 import datetime
 import gc
 
@@ -54,7 +60,7 @@ parser.add_argument(
     type = str, 
     help = "importance metric for ra.ext.", 
     default = "attention", 
-    choices = ["attention", "gradients", "scaled attention", "ig", "deeplift", "lime"]
+    choices = ["attention", "gradients", "scaled attention", "ig", "deeplift", "lime", "gradientshap", "deepliftshap"]
 )
 
 parser.add_argument(

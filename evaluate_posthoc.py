@@ -14,10 +14,9 @@ import gc
 import datetime
 import sys
 
-torch.cuda.empty_cache()
-# torch.cuda.memory_summary(device=None, abbreviated=False)
+# torch.cuda.empty_cache()
+# # torch.cuda.memory_summary(device=None, abbreviated=False)
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-print(device)
 
 
 
@@ -30,7 +29,7 @@ parser.add_argument(
     "--dataset", 
     type = str, 
     help = "select dataset / task", 
-    default = "xfact",
+    default = "yelp",
     # choices = ["WS", "SST","IMDB", "Yelp", "AmazDigiMu", "AmazPantry", "AmazInstr", "fc1", "fc2", "fc3"]
 )
 
@@ -109,12 +108,14 @@ logging.basicConfig(
                   )
 
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+CUDA_LAUNCH_BLOCKING=1
 
 logging.info("Running on cuda ? {}".format(torch.cuda.is_available()))
 
 torch.backends.cudnn.deterministic = True
 torch.backends.cudnn.benchmark = False
-
+torch.cuda.empty_cache()
+CUDA_LAUNCH_BLOCKING=1
 
 from src.common_code.initialiser import initial_preparations
 
@@ -140,7 +141,7 @@ from src.evaluation import evaluation_pipeline
 data = BERT_HOLDER(
     args["data_dir"], 
     stage = "eval",
-    b_size = 8,
+    b_size = 4,
     #b_size = args["batch_size"], # TO FIX CUDA OUT OF MEMORY, MAY NOT WORK
 )
 
@@ -149,20 +150,23 @@ evaluator = evaluation_pipeline.evaluate(
     output_dims = data.nu_of_labels
 )
 # will generate
-
-
 logging.info("*********conducting in-domain flip experiments")
+print('"*********conducting flip experiments on in-domain"')
 evaluator.faithfulness_experiments_(data)
+print('"********* DONE flip experiments on in-domain"')
 
 del data
 del evaluator
 gc.collect()
 
 
+
+
 ## ood evaluation DATASET 1
 data = BERT_HOLDER(
     path = args["data_dir"], 
-    b_size = 8,
+    b_size = 4,
+    #b_size = args["batch_size"], # TO FIX CUDA OUT OF MEMORY, MAY NOT WORK
     stage = "eval", #args["batch_size"],
     ood = True,
     ood_dataset_ = 1
@@ -176,8 +180,9 @@ evaluator = evaluation_pipeline.evaluate(
 )
 
 logging.info("*********conducting oo-domain flip experiments DATASET 1")
-
+print('"*********conducting oo-domain flip experiments DATASET 1"')
 evaluator.faithfulness_experiments_(data)
+print('"********* DONE oo-domain flip experiments DATASET 1"')
 
 # delete full data not needed anymore
 del data
@@ -185,55 +190,32 @@ del evaluator
 gc.collect()
 
 
+
+
 ## ood evaluation DATASET 2
 data = BERT_HOLDER(
-    path = args["data_dir"],
-    b_size = 8,
+    path = args["data_dir"], 
+    b_size = 4,
+    #b_size = args["batch_size"], # TO FIX CUDA OUT OF MEMORY, MAY NOT WORK
     stage = "eval", #args["batch_size"],
     ood = True,
     ood_dataset_ = 2
 )
 
 evaluator = evaluation_pipeline.evaluate(
-    model_path = args["model_dir"],
+    model_path = args["model_dir"], 
     output_dims = data.nu_of_labels,
     ood = True,
     ood_dataset_ = 2
 )
 
 logging.info("*********conducting oo-domain flip experiments DATASET 2")
+print('"*********conducting oo-domain flip experiments DATASET 2"')
 
 evaluator.faithfulness_experiments_(data)
-
-# delete full data not needed anymore
-del data
-del evaluator
-gc.collect()
-
-
-
-
-data = BERT_HOLDER(
-    path = args["data_dir"],
-    b_size = 8, # to fix cuda out of memory
-    stage = "eval", #args["batch_size"],
-    ood = False,
-)
-
-evaluator = evaluation_pipeline.evaluate(
-    model_path = args["model_dir"],
-    output_dims = data.nu_of_labels,
-    ood = False,
-)
-
-logging.info("*********conducting non oo-domain flip experiments with evaluator")
-
-evaluator.faithfulness_experiments_(data)
-
+print('"********* DONE oo-domain flip experiments DATASET 2"')
 # delete full data not needed anymore
 del data
 del evaluator
 gc.collect()
 torch.cuda.empty_cache()
-
-  

@@ -89,18 +89,18 @@ def extract_importance_(model, data, data_split_name, model_random_seed, ood, oo
 
         gradients = torch.norm(g* em, dim = -1)
 
-        # integrated_grads = model.integrated_grads(
-        #         original_grad = g,
-        #         original_pred = yhat.max(-1),
-        #         **batch
-        # )
+        integrated_grads = model.integrated_grads(
+                original_grad = g,
+                original_pred = yhat.max(-1),
+                **batch
+        )
 
         normalised_random = torch.randn(attentions.shape).to(device)
 
         normalised_random = torch.masked_fill(normalised_random, ~batch["query_mask"].bool(), float("-inf"))
 
         # normalised integrated gradients of input
-        # normalised_ig = torch.masked_fill(integrated_grads, ~batch["query_mask"].bool(), float("-inf"))
+        normalised_ig = torch.masked_fill(integrated_grads, ~batch["query_mask"].bool(), float("-inf"))
 
         # normalised gradients of input
         normalised_grads = torch.masked_fill(gradients, ~batch["query_mask"].bool(), float("-inf"))
@@ -129,7 +129,7 @@ def extract_importance_(model, data, data_split_name, model_random_seed, ood, oo
                 "random" : normalised_random[_i_].cpu().detach().numpy(),
                 "attention" : normalised_attentions[_i_].cpu().detach().numpy(),
                 "gradients" : normalised_grads[_i_].cpu().detach().numpy(),
-                # "ig" : normalised_ig[_i_].cpu().detach().numpy(),
+                "ig" : normalised_ig[_i_].cpu().detach().numpy(),
                 "scaled attention" : normalised_attention_grads[_i_].cpu().detach().numpy()
             }
 
@@ -206,17 +206,33 @@ def extract_lime_scores_(model, data, data_split_name,
 
     warnings.warn("NUMBER OF SAMPLES IN LIME IS TOO SMALL ---> RESET AFTER DEV")
 
-    for annot_id in train_ls.keys():
+    # key = next(iter(importance_scores))
+
+    # if "deeplift" in importance_scores[key]:
+    #     print(f"-----------already computed DeepLift-------")
+    #     return
+    key = next(iter(importance_scores))
+    
+    print(' START LOOPING FOR LIME')
+    for annot_id in train_ls.keys(): # annot_id is not in the train_ls.keys
+
+        #print('importance_scores[annot_id]: ', importance_scores[annot_id])
+        #break
 
         ## skip to save time if we already run lime (VERY EXPENSIVE)
-        if "lime" in importance_scores[annot_id]:
+        # if "lime" in importance_scores[key]:
+        #     #print('already computed LIME for instance: ', annot_id)
 
-            continue
+        #     continue
+
+
+
+        # print('need to do LIME for: ', annot_id)
 
         exp = explainer.explain_instance(
             train_ls[annot_id]["split example"], 
             lime_predictor.predictor, 
-            num_samples = 5, 
+            num_samples = 10, 
             num_features = len(set(train_ls[annot_id]["split example"])) 
         )
 
@@ -242,12 +258,13 @@ def extract_lime_scores_(model, data, data_split_name,
 
     return
 
-from src.evaluation.experiments.shap_predictor import ShapleyModelWrapper
-from captum.attr import DeepLift
 
-def extract_shap_values_(model, data, data_split_name, 
+
+from src.evaluation.experiments.shap_predictor import ShapleyModelWrapper
+from captum.attr import DeepLift, DeepLiftShap, GradientShap
+
+def extract_deeplift_values_(model, data, data_split_name, 
                         model_random_seed, ood, ood_dataset_):
-    
     
     fname = os.path.join(
         os.getcwd(),
@@ -265,15 +282,10 @@ def extract_shap_values_(model, data, data_split_name,
     key = next(iter(importance_scores))
 
     if "deeplift" in importance_scores[key]:
-
-        print(f"deeplift scores already computed")
-
+        print(f"-----------already computed DeepLift-------")
         return
-
-    explainer = DeepLift(ShapleyModelWrapper(model))
-
-    if ood : pbar = trange(len(data) * data.batch_size, desc=f"extracting --OOD-{ood_dataset_}-- deeplift scores for -> {data_split_name}", leave=True)
-    else: pbar = trange(len(data) * data.batch_size, desc=f"extracting deeplift scores for -> {data_split_name}", leave=True)
+    
+    explainer = DeepLift(ShapleyModelWrapper(model)) 
 
     ## we are interested in token level features
     for batch in data:
@@ -299,35 +311,176 @@ def extract_shap_values_(model, data, data_split_name,
 
         embeddings = model.wrapper.model.embeddings.word_embeddings.weight[batch["input_ids"].long()]
 
+
         attribution = explainer.attribute(
             embeddings.requires_grad_(True), 
             target = original_prediction.argmax(-1)
         )
-
         attribution = attribution.sum(-1)
-
         attribution = torch.masked_fill(
             attribution, 
             (batch["query_mask"] == 0).bool(), 
             float("-inf")
-        )
-      
+        )  
+
+  
         for _i_ in range(original_prediction.size(0)):
-
             annotation_id = batch["annotation_id"][_i_]
-
             importance_scores[annotation_id]["deeplift"] = attribution[_i_].detach().cpu().numpy()
 
+        # pbar.update(data.batch_size)
 
+    np.save(fname, importance_scores)
+
+    return
+
+def extract_deepliftshap_values_(model, data, data_split_name, 
+                        model_random_seed, ood, ood_dataset_):
+    
+    fname = os.path.join(
+        os.getcwd(),
+        args["extracted_rationale_dir"],
+        "importance_scores",
+        ""
+    )
+
+    if ood: fname = f"{fname}{data_split_name}_importance_scores-OOD-{ood_dataset_}-{model_random_seed}.npy"
+    else: fname = f"{fname}{data_split_name}_importance_scores-{model_random_seed}.npy"
+
+
+    ## retrieve importance scores
+    importance_scores = np.load(fname, allow_pickle = True).item()
+
+    key = next(iter(importance_scores))
+
+    if "deepliftshap" in importance_scores[key]:
+        print(f"-------------already computed DeepLiftShap--------")
+        return
+    
+    explainer_deepliftshap = DeepLiftShap(ShapleyModelWrapper(model))
+
+    ## we are interested in token level features
+    for batch in data:
+
+        model.eval()
+        model.zero_grad()
+
+        batch = {
+            "annotation_id" : batch["annotation_id"],
+            "input_ids" : batch["input_ids"].squeeze(1).to(device),
+            "lengths" : batch["lengths"].to(device),
+            "labels" : batch["label"].to(device),
+            "token_type_ids" : batch["token_type_ids"].squeeze(1).to(device),
+            "attention_mask" : batch["attention_mask"].squeeze(1).to(device),
+            "query_mask" : batch["query_mask"].squeeze(1).to(device),
+            "special_tokens" : batch["special tokens"],
+            "retain_gradient" : False ## we do not need it
+        }
+            
+        assert batch["input_ids"].size(0) == len(batch["labels"]), "Error: batch size for item 1 not in correct position"
+        
+        original_prediction, _ =  model(**batch)
+
+        embeddings = model.wrapper.model.embeddings.word_embeddings.weight[batch["input_ids"].long()]
+
+        
+        attribution_deepliftshap = explainer_deepliftshap.attribute(embeddings.requires_grad_(True), 
+                                                                    target = original_prediction.argmax(-1),
+                                                                    baselines = torch.rand(embeddings.size()).to(device)
+                                                                )
+        attribution_deepliftshap = attribution_deepliftshap.sum(-1)
+        attribution_deepliftshap = torch.masked_fill(attribution_deepliftshap, 
+                                                    (batch["query_mask"] == 0).bool(), 
+                                                    float("-inf")
+                                                )  
+  
+        for _i_ in range(original_prediction.size(0)):
+            annotation_id = batch["annotation_id"][_i_]
+            importance_scores[annotation_id]["deepliftshap"] = attribution_deepliftshap[_i_].detach().cpu().numpy()
+
+        # pbar.update(data.batch_size)
+
+     ## save them
+    np.save(fname, importance_scores)
+    print(f"appended deepliftshap scores in -> {fname}")
+
+    return
+
+
+def extract_gradientshap_values_(model, data, data_split_name, 
+                        model_random_seed, ood, ood_dataset_):
+    
+    
+    fname = os.path.join(
+        os.getcwd(),
+        args["extracted_rationale_dir"],
+        "importance_scores",
+        ""
+    )
+
+    if ood: fname = f"{fname}{data_split_name}_importance_scores-OOD-{ood_dataset_}-{model_random_seed}.npy"
+    else: fname = f"{fname}{data_split_name}_importance_scores-{model_random_seed}.npy"
+
+    ## retrieve importance scores
+    importance_scores = np.load(fname, allow_pickle = True).item()
+
+    key = next(iter(importance_scores))
+
+    if "gradientshap" in importance_scores[key]:
+        print(f"already got gradientshap, return and go to the next attribute")
+        return    
+    explainer_gradientshap = GradientShap(ShapleyModelWrapper(model))
+
+    if ood : pbar = trange(len(data) * data.batch_size, desc=f"extracting --OOD-{ood_dataset_}-- gradientshap scores for -> {data_split_name}", leave=True)
+    else: pbar = trange(len(data) * data.batch_size, desc=f"extracting gradientshap scores for -> {data_split_name}", leave=True)
+
+    ## we are interested in token level features
+    for batch in data:
+
+        model.eval()
+        model.zero_grad()
+
+        batch = {
+            "annotation_id" : batch["annotation_id"],
+            "input_ids" : batch["input_ids"].squeeze(1).to(device),
+            "lengths" : batch["lengths"].to(device),
+            "labels" : batch["label"].to(device),
+            "token_type_ids" : batch["token_type_ids"].squeeze(1).to(device),
+            "attention_mask" : batch["attention_mask"].squeeze(1).to(device),
+            "query_mask" : batch["query_mask"].squeeze(1).to(device),
+            "special_tokens" : batch["special tokens"],
+            "retain_gradient" : False ## we do not need it
+        }
+            
+        assert batch["input_ids"].size(0) == len(batch["labels"]), "Error: batch size for item 1 not in correct position"
+        
+        original_prediction, _ =  model(**batch)
+
+        embeddings = model.wrapper.model.embeddings.word_embeddings.weight[batch["input_ids"].long()]
+
+
+        # gradientshap
+        attribution_gradientshap = explainer_gradientshap.attribute(
+            embeddings.requires_grad_(True), 
+            target = original_prediction.argmax(-1),
+            baselines = torch.rand(embeddings.size()).to(device)
+        )
+        attribution_gradientshap = attribution_gradientshap.sum(-1)
+        attribution_gradientshap = torch.masked_fill(
+            attribution_gradientshap, 
+            (batch["query_mask"] == 0).bool(), 
+            float("-inf")
+        )        
+        for _i_ in range(original_prediction.size(0)):
+            annotation_id = batch["annotation_id"][_i_]
+            importance_scores[annotation_id]["gradientshap"] = attribution_gradientshap[_i_].detach().cpu().numpy()
         pbar.update(data.batch_size)
 
      ## save them
     np.save(fname, importance_scores)
-
-    print(f"appended deeplift scores in -> {fname}")
+    print(f"appended gradientshap scores in -> {fname}")
 
     return
-
 
 def rationale_creator_(data, data_split_name, ood, tokenizer, model_random_seed, ood_dataset_):
 
@@ -358,8 +511,10 @@ def rationale_creator_(data, data_split_name, ood, tokenizer, model_random_seed,
     ## filter only relevant parts in our dataset
 
     if "exp_split" not in data.columns:
-
-        data = data.rename(columns = {"split" : "exp_split"})
+        if "split" not in data.columns:
+            data['exp_split'] = data['annotation_id']
+        else:
+            data = data.rename(columns = {"split" : "exp_split"})
 
     # data = data[["input_ids", "annotation_id", "exp_split", "label", "label_id"]]
     data = data[["input_ids", "annotation_id", "exp_split", "label"]]
@@ -377,7 +532,8 @@ def rationale_creator_(data, data_split_name, ood, tokenizer, model_random_seed,
         desired_rationale_length = args.rationale_length
 
     ## time to register rationales
-    for feature_attribution in {"attention", "gradients", "scaled attention", "deeplift", "lime"}: #"ig",
+    for feature_attribution in {"attention", "gradients", "scaled attention", "ig", "deeplift", "lime", "deepliftshap",
+    "gradientshap"}: #"ig",
         
         temp_registry = {}
 

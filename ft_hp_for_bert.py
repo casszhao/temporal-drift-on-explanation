@@ -22,7 +22,7 @@ parser.add_argument(
     "--dataset",
     type=str,
     help="select dataset / task",
-    default="sst",
+    default="yelp_full",
     # choices = ["WS", "SST", "IMDB", "Yelp", "AmazDigiMu", "AmazPantry", "AmazInstr", "factcheck","factcheck_ood2","factcheck_ood1"]
 )
 
@@ -37,13 +37,14 @@ parser.add_argument(
     "--model_dir",
     type=str,
     help="directory to save models",
-    default="models/"
+    default="ft_models/"
 )
 
 parser.add_argument(
     "--seed",
     type=int,
-    help="random seed for experiment"
+    help="random seed for experiment",
+    default= 412
 )
 
 parser.add_argument(
@@ -69,7 +70,7 @@ parser.add_argument(
 user_args = vars(parser.parse_args())
 user_args["importance_metric"] = None
 
-log_dir = "experiment_logs/ft_" + user_args["dataset"] + "_seed-" + str(user_args["seed"]) + "_bert" + date_time + "/"
+log_dir = "ft_bert_/" + user_args["dataset"] + "/ft_" + user_args["dataset"] + "_seed-" + str(user_args["seed"]) + "_bert" + date_time + "/"
 config_dir = "experiment_config/train_" + user_args["dataset"] + "_seed-" + str(
     user_args["seed"]) + "_" + date_time + "/"
 
@@ -81,7 +82,7 @@ import config.cfg
 config.cfg.config_directory = config_dir
 
 logging.basicConfig(
-    filename=log_dir + "/out.log",
+    filename=log_dir + "/bertFT_out.log",
     format='%(asctime)s %(levelname)-8s %(message)s',
     level=logging.INFO,
     datefmt='%Y-%m-%d %H:%M:%S'
@@ -147,45 +148,25 @@ if args["evaluate_models"]:
     keep_best_model_(keep_models=False)
 
 else:
+    logging.info(date_time)
     logging.info("Finetune BERT for: {}".format(str(user_args["dataset"])))
-    logging.info("batch size: {}".format(str(args["batch_size"])))
+    logging.info("Finetune BERT for: {}".format(str(user_args["dataset"])))
+    
 
-    logging.info(" -------------------- learning rate: {}".format('5e-4'))
-    train_searchPara_and_save(
-        train_data_loader=data.train_loader,
-        dev_data_loader=data.dev_loader,
-        output_dims=data.nu_of_labels,
-        lr = 5e-4, #3e-5, 2e-5
-    )
+    
+    batch_size_list = [8,16,32,64] #
+    for b in batch_size_list:
+        data = dataholder(path=args["data_dir"], b_size=b)
+        logging.info(" \\ ------------------  batch size: {}".format(str(b)))
 
-    logging.info(" -------------------- learning rate: {}".format('1e-5'))
-    train_searchPara_and_save(
-        train_data_loader=data.train_loader,
-        dev_data_loader=data.dev_loader,
-        output_dims=data.nu_of_labels,
-        lr = 1e-5, #3e-5, 2e-5
-    )
+        #LR = [1e-4, 5e-4, 1e-5, 2e-5, 3e-5, 4e-5, 5e-5, 1e-6, 5e-6]
+        LR = [1e-4, 5e-4, 1e-5, 2e-5, 4e-5, 5e-5, 1e-6, 5e-6]
+        for lr in LR:
+            logging.info(" \\ -------------------- learning rate: {}".format(lr))
+            train_searchPara_and_save(
+                train_data_loader=data.train_loader,
+                dev_data_loader=data.dev_loader,
+                output_dims=data.nu_of_labels,
+                lr = lr, #3e-5, 2e-5
+            )
 
-    logging.info(" -------------------- learning rate: {}".format('5e-5'))
-    train_searchPara_and_save(
-        train_data_loader=data.train_loader,
-        dev_data_loader=data.dev_loader,
-        output_dims=data.nu_of_labels,
-        lr = 5e-5, #,
-    )
-
-    logging.info(" -------------------- learning rate: {}".format('1e-6'))
-    train_searchPara_and_save(
-        train_data_loader=data.train_loader,
-        dev_data_loader=data.dev_loader,
-        output_dims=data.nu_of_labels,
-        lr = 1e-6, #3e-5, 2e-5
-    )
-
-    logging.info(" -------------------- learning rate: {}".format('5e-6'))
-    train_searchPara_and_save(
-        train_data_loader=data.train_loader,
-        dev_data_loader=data.dev_loader,
-        output_dims=data.nu_of_labels,
-        lr = 5e-6, #3e-5, 2e-5
-    )

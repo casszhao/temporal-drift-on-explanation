@@ -135,6 +135,7 @@ data = dataholder(
         path = args["data_dir"], 
         b_size = args["batch_size"]
     )
+print('batch size: ', args["batch_size"])
 
 ## evaluating finetuned models
 if args["evaluate_models"]:

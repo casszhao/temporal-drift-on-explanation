@@ -87,12 +87,17 @@ parser.add_argument(
 )
 
 parser.add_argument(
+<<<<<<< HEAD
     '--plot_radar',
+=======
+    '--predictive_and_posthoc',
+>>>>>>> 05b3ce7001e6bbb0c6d5b522fa31bd75c4cf2cf9
     help='decide which parts are in need',
     action='store_true',
     default=False
 )
 
+<<<<<<< HEAD
 parser.add_argument(
     '--plot_quiver',
     help='decide which parts are in need',
@@ -102,12 +107,15 @@ parser.add_argument(
 
 
 
+=======
+>>>>>>> 05b3ce7001e6bbb0c6d5b522fa31bd75c4cf2cf9
 args = parser.parse_args()
 
 datasets_dir = 'saved_everything/' + str(args.dataset)
 os.makedirs(datasets_dir, exist_ok = True)
 
 
+<<<<<<< HEAD
 
 
 
@@ -117,6 +125,9 @@ os.makedirs(datasets_dir, exist_ok = True)
 
 
 task_list = ['xfact', 'factcheck', 'AmazDigiMu', 'AmazPantry']
+=======
+    
+>>>>>>> 05b3ce7001e6bbb0c6d5b522fa31bd75c4cf2cf9
 ######################## plot time distribution
 
 from datetime import datetime
@@ -386,13 +397,16 @@ if args.save_for_bert:
         OOD1 = OOD1[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
         OOD2 = OOD2[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
 
-
+    OOD12 = (OOD1 + OOD2)/2
     Full_data['Domain'] = 'Full size'
-    InDomain['Domain'] = 'InDomain'
-    OOD1['Domain'] = 'OOD1'
-    OOD2['Domain'] = 'OOD2'
+    InDomain['Domain'] = 'SynD'
+    OOD1['Domain'] = 'AsyD1'
+    OOD2['Domain'] = 'AsyD2'
+    #OOD12['Domain'] = 'AsyD1+2'
+    
+
     result = pd.concat([Full_data, InDomain, OOD1, OOD2], ignore_index=False, axis=1).T
-    result.to_csv('saved_everything/' + str(args.dataset) + '/bert_predictive_on_fulltext.csv')
+    result.to_csv('saved_everything/' + str(args.dataset) + '/bert_predictive.csv')
 ####################################################################################
 
 
@@ -454,13 +468,13 @@ if args.save_posthoc:
                 
 
         full = pd.read_json(full_path)
-        full_df = json2df(full, 'Full')
+        full_df = json2df(full, 'Full size')
         indomain = pd.read_json(indomain_path)
-        df = json2df(indomain, 'InDomain')
+        df = json2df(indomain, 'SynD')
         OOD1 = pd.read_json(ood1_path)
-        df1 = json2df(OOD1, 'OOD1')
+        df1 = json2df(OOD1, 'AsyD1')
         OOD2 = pd.read_json(ood2_path)
-        df2 = json2df(OOD2, 'OOD2')
+        df2 = json2df(OOD2, 'AsyD2')
 
         final = pd.concat([full_df, df, df1, df2], ignore_index=False)
         #final = pd.concat([df, df1, df2], ignore_index=False)
@@ -490,13 +504,13 @@ if args.save_posthoc:
         topk = topk[['Domain','scaled attention','attention','deeplift','gradients','lime','ig','deepliftshap','gradientshap']]
 
         AOPC_sufficiency = topk.loc[['AOPC_sufficiency']].set_index('Domain')
-        OOD12 = (AOPC_sufficiency.loc['OOD1'] + AOPC_sufficiency.loc['OOD2'])/2
-        OOD12.name = 'OOD1+2'
+        OOD12 = (AOPC_sufficiency.loc['AsyD1'] + AOPC_sufficiency.loc['AsyD2'])/2
+        OOD12.name = 'AsyD1+2'
         AOPC_sufficiency = AOPC_sufficiency.append([OOD12])
 
         AOPC_comprehensiveness = topk.loc[['AOPC_comprehensiveness']].set_index('Domain')
-        OOD12 = (AOPC_comprehensiveness.loc['OOD1'] + AOPC_comprehensiveness.loc['OOD2'])/2
-        OOD12.name = 'OOD1+2'
+        OOD12 = (AOPC_comprehensiveness.loc['AsyD1'] + AOPC_comprehensiveness.loc['AsyD2'])/2
+        OOD12.name = 'AsyD1+2'
         AOPC_comprehensiveness = AOPC_comprehensiveness.append([OOD12])
 
         final = pd.concat([AOPC_sufficiency, AOPC_comprehensiveness], axis=1)
@@ -736,3 +750,16 @@ if args.save_for_kuma_lstm:
 
     final = pd.concat([kuma_result, LSTM_result], ignore_index=False)
     final.to_csv('saved_everything/' + str(args.dataset) + '/KUMA_LSTM_predictive_results.csv')
+
+if args.predictive_and_posthoc:
+    args.save_posthoc == True
+    args.save_for_bert == True
+
+    bert = pd.read_csv('saved_everything/' + str(args.dataset) + '/bert_predictive.csv')[['mean-f1', 'Domain']]
+    posthoc = pd.read_csv('saved_everything/' + str(args.dataset) + '/posthoc_faithfulness.csv')
+
+    merge = pd.merge(posthoc, bert, on = 'Domain')
+    #merge = merge.rename(columns={merge.columns[1]: 'Task'},inplace=True)
+    merge['Task'] = str(args.dataset).capitalize()
+    print(merge)
+    merge.to_csv('saved_everything/' + str(args.dataset) + '/posthoc_and_predictive.csv')

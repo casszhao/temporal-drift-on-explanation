@@ -15,8 +15,24 @@ import os
 #           fulltext_similarity rationale_similarity
 #           posthoc_results/****.json
 
+
 bigtable_list = []
-task_list = ['complain', 'binarybragging', 'xfact', 'factcheck'] #, 'AmazDigiMu', 'AmazInstr', 'AmazPantry'
+task_list = ['agnews', 'xfact', 'factcheck', 'AmazDigiMu', 'AmazPantry', 'yelp'] #, 'AmazDigiMu', 'AmazInstr', 'AmazPantry'
+
+for name in task_list:
+    path = str(name) + '/posthoc_and_predictive.csv'
+    df = pd.read_csv(path)
+    bigtable_list.append(df)
+
+all_tasks = pd.concat(bigtable_list, ignore_index=False)
+all_tasks.to_csv('all_tasks_all_posthoc.csv')
+
+exit()
+
+
+
+
+
 for i, task in enumerate(task_list):
 
     task_name = str(task)

@@ -87,47 +87,27 @@ parser.add_argument(
 )
 
 parser.add_argument(
-<<<<<<< HEAD
     '--plot_radar',
-=======
-    '--predictive_and_posthoc',
->>>>>>> 05b3ce7001e6bbb0c6d5b522fa31bd75c4cf2cf9
     help='decide which parts are in need',
     action='store_true',
     default=False
 )
 
-<<<<<<< HEAD
+
 parser.add_argument(
-    '--plot_quiver',
+    '--predictive_and_posthoc',
     help='decide which parts are in need',
     action='store_true',
     default=False
-) 
+)
 
-
-
-=======
->>>>>>> 05b3ce7001e6bbb0c6d5b522fa31bd75c4cf2cf9
 args = parser.parse_args()
 
 datasets_dir = 'saved_everything/' + str(args.dataset)
 os.makedirs(datasets_dir, exist_ok = True)
 
 
-<<<<<<< HEAD
-
-
-
-
-
-
-
-
-task_list = ['xfact', 'factcheck', 'AmazDigiMu', 'AmazPantry']
-=======
     
->>>>>>> 05b3ce7001e6bbb0c6d5b522fa31bd75c4cf2cf9
 ######################## plot time distribution
 
 from datetime import datetime
@@ -522,21 +502,6 @@ if args.save_posthoc:
 #############################################################################################################################################
 
 
-if args.plot_quiver:
-    from matplotlib.pyplot import quiver
-    args.save_posthoc == True
-    df = pd.read_csv('saved_everything/' + str(args.dataset) + '/posthoc_faithfulness.csv')
-    df = df[((df['Rationales_metrics'] == 'AOPC_sufficiency') & (df['thresholder'] == 'topk'))]
-
-    df = df[['Domain', 'random', 
-                        'scaled attention','attention','deeplift','gradients','lime','ig','deepliftshap','gradientshap']]
-    print(df)
-    quiver([(1,2), (2,2)], (1.5, 2.5,2.5, 3.5))
-    plt.show()
-
-    # xarray.Dataset.plot.quiver(
-
-    # )
     
 
 import plotly.graph_objects as go
@@ -633,7 +598,7 @@ if args.plot_radar:
         legend_title_font_color="Black",
         legend_title="Time",
         font=dict(family="Courier New, monospace",
-                size=32,
+                size=39,
                 color="black", #RebeccaPurple
                 ),
         legend=dict(yanchor="top",
@@ -647,7 +612,12 @@ if args.plot_radar:
             'x':0.5,
             'xanchor': 'center',
             'yanchor': 'top'
-            }
+        },
+            xaxis = dict(
+        tickmode = 'array',
+        tickvals = [0, 0.5, 1, 1.5, 2, 2.5],
+        #ticktext = ['One', 'Three', 'Five', 'Seven', 'Nine', 'Eleven']
+    )
         )
     fig.update_xaxes(title_font_family="Arial")
     fig.show()

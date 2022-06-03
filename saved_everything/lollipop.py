@@ -21,7 +21,7 @@ domainlabel_size = 20
 legend_font_size = 11
 
 
-data = 'factcheck'
+data = 'Xfact'
 df = df[df['Task'].str.contains(str(data))]
 suff = df[df['Rationales_metrics'].str.contains('AOPC_sufficiency')]
 comp = df[df['Rationales_metrics'].str.contains('AOPC_comprehensiveness')]
@@ -36,7 +36,7 @@ fig, ax = plt.subplots(1, 3, gridspec_kw={'width_ratios': [1.5, 4, 4]}, sharey='
 
 
 
-ax[0].hlines(y=my_range, xmin=0.84, xmax=0.95, color='grey', alpha=0.35)
+ax[0].hlines(y=my_range, xmin=0.35, xmax=0.45, color='grey', alpha=0.35)
 ax[0].scatter(df['mean-f1'], df['Domain'], color='dimgray', alpha=1, label='F1', marker='$F1$', s=166) # marker='|'
 ax[0].set_xlabel('BERT avg macro-F1',fontsize=xlabel_size)
 ax[0].set_ylabel(str(data), fontsize=xlabel_size)
@@ -63,7 +63,7 @@ plt.plot()
 # plt.subplot(133)
 
 # The horizontal plot is made using the hline function
-ax[2].hlines(y=my_range, xmin=0.05, xmax=0.4, color='grey', alpha=0.35)
+ax[2].hlines(y=my_range, xmin=0.1, xmax=0.35, color='grey', alpha=0.35)
 ax[2].scatter(comp['random'], my_range, color='dimgray', alpha=1, label='Random', marker='d', s=222)
 ax[2].scatter(comp['gradients'], my_range, color='red', alpha=ALPHA , label='Gradients', s=SIZE)
 ax[2].scatter(comp['deeplift'], my_range, color='green', alpha=ALPHA , label='Deeplift', s=SIZE)

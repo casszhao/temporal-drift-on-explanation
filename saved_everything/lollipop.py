@@ -138,4 +138,4 @@ plt.legend(bbox_to_anchor=(1.02, 1), loc='upper left', borderaxespad=0, fontsize
 # Show the graph
 
 plt.show()
-plt.savefig('./plot/'+str(data)+'.png', bbox_inches = 'tight', dpi=350, format='png')
+plt.savefig('./plot/'+str(data)+'.png', format='png') # bbox_inches = 'tight', dpi=350,

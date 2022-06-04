@@ -13,7 +13,7 @@ df = df[df['thresholder'].str.contains('topk')]
 
 
 
-data = 'Xfact'
+data = 'Yelp'
 df = df[df['Task'].str.contains(str(data))]
 suff = df[df['Rationales_metrics'].str.contains('AOPC_sufficiency')]
 comp = df[df['Rationales_metrics'].str.contains('AOPC_comprehensiveness')]
@@ -24,7 +24,7 @@ SIZE = 150
 xlabel_size = 13
 ylabel_size = 15
 domainlabel_size = 20
-legend_font_size = 12.5
+legend_font_size = 11
 
 if data == 'Xfact':
     bert_min = 0.37
@@ -77,13 +77,22 @@ else:
     comp_max = 0.35
 
 
-fig, ax = plt.subplots(1, 3, gridspec_kw={'width_ratios': [1.5, 4, 4]}, sharey='all', figsize=(13,3))
+fig, ax = plt.subplots(1, 3, gridspec_kw={'width_ratios': [1.5, 4, 4]}, sharey='all', figsize=(13,2.3))
 
 
 
 
 ax[0].hlines(y=my_range, xmin=bert_min, xmax=bert_max, color='grey', alpha=0.35)
-ax[0].scatter(df['mean-f1'], df['Domain'], color='dimgray', alpha=1, label='F1', marker='$F1$', s=166) # marker='|'
+ax[0].scatter(df['mean-f1'], df['Domain'], color='dimgray', alpha=1, label='F1', marker=">", s=166) # marker='|'
+for x,y in zip(df['mean-f1'],df['Domain']):
+    label = format(100*x, '.1f')
+    ax[0].annotate(label, # this is the text
+                 (x,y), # these are the coordinates to position the label
+                 textcoords="offset points", # how to position the text
+                 xytext=(0,10), # distance from text to points (x,y)
+                 ha='center',
+                 fontsize= 13,
+                 ) 
 ax[0].set_xlabel('BERT avg macro-F1',fontsize=xlabel_size)
 ax[0].set_ylabel(str(data), fontsize=xlabel_size)
 ax[0].set_yticklabels(my_range, fontsize=13)
@@ -123,19 +132,19 @@ ax[2].set_xlabel('AOPC Comprehensiveness',fontsize=xlabel_size)
 plt.plot()
 
 
-
 plt.subplots_adjust(
     left=0.09,
-    bottom=0.183, 
+    bottom=0.224, 
     right=0.83, 
-    top=0.98, 
+    top=0.874, 
     wspace=0.05, 
     hspace=0.2,
     )
 
-plt.legend(bbox_to_anchor=(1.02, 1), loc='upper left', borderaxespad=0, fontsize=legend_font_size)
+plt.legend(bbox_to_anchor=(1.02, 1.1), loc='upper left', borderaxespad=0, fontsize=legend_font_size)
 
-# Show the graph
-
+fig1 = plt.gcf()
 plt.show()
-plt.savefig('./plot/'+str(data)+'.png', format='png') # bbox_inches = 'tight', dpi=350,
+plt.draw()
+fig1.savefig('./plot/'+str(data)+'.png', dpi=250)
+#plt.savefig(, format='png') # bbox_inches = 'tight', dpi=350,

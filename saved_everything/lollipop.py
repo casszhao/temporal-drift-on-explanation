@@ -8,7 +8,7 @@ from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
 df = pd.read_csv("all_tasks_all_posthoc.csv")
 #df = df.pop(df.columns.values[0])
-df = df[df['thresholder'].str.contains('topk')]
+df = df[df['thresholder'].str.contains('contigiuous')] # topk
 
 
 
@@ -146,5 +146,5 @@ plt.legend(bbox_to_anchor=(1.02, 1.1), loc='upper left', borderaxespad=0, fontsi
 fig1 = plt.gcf()
 plt.show()
 plt.draw()
-fig1.savefig('./plot/'+str(data)+'.png', dpi=250)
+fig1.savefig('./plot/contig_'+str(data)+'.png', dpi=250)
 #plt.savefig(, format='png') # bbox_inches = 'tight', dpi=350,

@@ -220,7 +220,7 @@ feature_names = features.get_feature_names(feature_set_names)
 # for topic modelling:
 
 
-
+'''
 
 
 ###################################### 5. domain similarity between:  In domain / ood1 / ood2
@@ -262,7 +262,7 @@ results = pd.concat([baseline_similarity,OOD1_similarity,OOD2_similarity],ignore
 
 results.to_csv(datasets_dir + '/fulltext_similarity_vocab' + str(vocab.size) + ' .csv')
 
-
+'''
 
 
 ################################################ 6. rationale similarity between:  In domain / ood1 / ood2
@@ -278,10 +278,11 @@ os.makedirs(model_dir, exist_ok=True)
 thresh_list = []
 for threshold in ['topk', 'contigious']: #'topk',
     attributes_list = []
-    for attribute_name in ['scaled attention','attention', 'lime', 'deeplift', 'gradients']:
+    for attribute_name in ['scaled attention','attention', 'lime', 'deeplift', 'gradients','IG','gradientshap','deepliftshap']:
 
         # InD_path_train = './extracted_rationales/'+str(args.dataset)+'/data/'+str(threshold)+'/'+str(attribute_name)+'-train.json'
         InD_path_train = os.path.join('extracted_rationales',str(args.dataset),'data',str(threshold),str(attribute_name)+'-train.json')
+        print(InD_path_train)
         InD_path_test = './extracted_rationales/'+str(args.dataset)+'/data/'+str(threshold)+'/'+str(attribute_name)+'-test.json'
         OOD1_path = 'extracted_rationales/'+str(args.dataset)+'/data/'+str(threshold)+'/OOD-'+str(args.dataset)+'_ood1-'+str(attribute_name)+'-test.json'
         OOD2_path = 'extracted_rationales/'+str(args.dataset)+'/data/'+str(threshold)+'/OOD-'+str(args.dataset)+'_ood2-'+str(attribute_name)+'-test.json'

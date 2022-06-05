@@ -8,17 +8,19 @@ from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
 df = pd.read_csv("all_tasks_all_posthoc.csv")
 #df = df.pop(df.columns.values[0])
-df = df[df['thresholder'].str.contains('topk')] # topk
+df = df[df['thresholder'].str.contains('contigious')] # topk
 print(df)
 
 
 
 
-data = 'AmazPantry'
+data = 'Amazpantry'
 df = df[df['Task'].str.contains(str(data))]
+print(df)
 suff = df[df['Rationales_metrics'].str.contains('AOPC_sufficiency')]
 comp = df[df['Rationales_metrics'].str.contains('AOPC_comprehensiveness')]
 my_range=suff['Domain']
+print(comp)
 
 ALPHA = 0.5
 SIZE = 150
@@ -145,7 +147,8 @@ plt.subplots_adjust(
 plt.legend(bbox_to_anchor=(1.02, 1.1), loc='upper left', borderaxespad=0, fontsize=legend_font_size)
 
 fig1 = plt.gcf()
+
 plt.show()
 plt.draw()
 fig1.savefig('./plot/contig_'+str(data)+'.png', dpi=250)
-#plt.savefig(, format='png') # bbox_inches = 'tight', dpi=350,
+#plt.savefig('./plot/'+str(data), format='png') # bbox_inches = 'tight', dpi=350,

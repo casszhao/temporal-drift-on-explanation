@@ -29,7 +29,7 @@ fig, axs = plt.subplots(2, 3, figsize=(9, 4.5), sharey=False, sharex=False)
 
 for i, name in enumerate(task_list):
     
-    path = '/' + str(name) + '/selective_results.csv'
+    path = './' + str(name) + '/selective_results.csv'
     df = pd.read_csv(path)
     df['Task']=str(name)
     df['Bert F1'] = df['Bert F1']*100
@@ -76,14 +76,14 @@ plt.show()
 fig1 = plt.gcf()
 fig.savefig('./selective_predictive.png', dpi=250)
 
-# all_tasks = pd.concat(bigtable_list, ignore_index=False)
-# all_tasks.to_csv('all_tasks_all_selective.csv')
+all_tasks = pd.concat(bigtable_list, ignore_index=False)
+all_tasks.to_csv('all_tasks_all_selective.csv')
 
 
 
 
 for name in task_list:
-    path = str(name) + '/posthoc_and_predictive.csv'
+    path = './' + str(name) + '/posthoc_and_predictive.csv'
     df = pd.read_csv(path)
     bigtable_list.append(df)
 

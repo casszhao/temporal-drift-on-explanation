@@ -126,23 +126,23 @@ def get_feature_representations(feature_names, examples, trg_examples, vocab,
                 # print(j)
                 # print(f_name)
 
-            if f_name.startswith('topic'):
-                f = similarity.similarity_name2value(
-                    f_name.split('_')[1], topic_dists[i], trg_topic_dist)
-            elif f_name.startswith('word_embedding'):
-                f = similarity.similarity_name2value(
-                    f_name.split('_')[2], word_reprs[i], trg_word_repr)
-            elif f_name in SIMILARITY_FUNCTIONS:
-                f = similarity.similarity_name2value(
-                    f_name, term_dists[i], trg_term_dist)
-            elif f_name in DIVERSITY_FEATURES:
-                f = diversity_feature_name2value(
-                    f_name, examples[i], train_term_dist, vocab.word2id, word2vec)
-            else:
-                raise ValueError('%s is not a valid feature name.' % f_name)
-            assert not np.isnan(f), 'Error: Feature %s is nan.' % f_name
-            assert not np.isinf(f), 'Error: Feature %s is inf or -inf.' % f_name
-            features[i, j] = f
+                if f_name.startswith('topic'):
+                    f = similarity.similarity_name2value(
+                        f_name.split('_')[1], topic_dists[i], trg_topic_dist)
+                elif f_name.startswith('word_embedding'):
+                    f = similarity.similarity_name2value(
+                        f_name.split('_')[2], word_reprs[i], trg_word_repr)
+                elif f_name in SIMILARITY_FUNCTIONS:
+                    f = similarity.similarity_name2value(
+                        f_name, term_dists[i], trg_term_dist)
+                elif f_name in DIVERSITY_FEATURES:
+                    f = diversity_feature_name2value(
+                        f_name, examples[i], train_term_dist, vocab.word2id, word2vec)
+                else:
+                    raise ValueError('%s is not a valid feature name.' % f_name)
+                assert not np.isnan(f), 'Error: Feature %s is nan.' % f_name
+                assert not np.isinf(f), 'Error: Feature %s is inf or -inf.' % f_name
+                features[i, j] = f
         if i % 100 == 0 and i > 0:
             print('Created features for %d examples.' % i)
     return features

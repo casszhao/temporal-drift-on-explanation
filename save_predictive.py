@@ -110,7 +110,7 @@ bert_result = bert_result.rename(columns={"mean-f1":"Bert F1", "std-f1":"Bert st
 
 ########################### 3. FRESH results of top scaled attention
 fresh_full_data = pd.read_json(
-    './FRESH_classifiers/'+str(args.dataset)+'_full/topk/scaled_attention_bert_predictive_performances.json')
+    './FRESH_classifiers/'+str(args.dataset)+'_full/topk/scaled attention_bert_predictive_performances.json')
 fresh_full_data = fresh_full_data[select_columns].iloc[1]
 fresh_full_data['Domain'] = 'Fullsize data'
 
@@ -181,6 +181,7 @@ SPECTRA = pd.read_csv('saved_everything/' + str(args.dataset) + '/spectra_mean.c
 ##############################
 
 final = pd.concat([bert_result, fresh_result, LSTM_result, kuma_result, SPECTRA], axis=1)
+print(bert_result)
 final['Domain'] = ['Full', 'SynD', 'AsyD1', 'AsyD2']
 final = final.rename({'Domain': 'Testing Set'})
 

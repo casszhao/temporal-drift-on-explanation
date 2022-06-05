@@ -29,7 +29,7 @@ fig, axs = plt.subplots(2, 3, figsize=(9, 4.5), sharey=False, sharex=False)
 
 for i, name in enumerate(task_list):
     
-    path = str(name) + '/selective_results.csv'
+    path = '/' + str(name) + '/selective_results.csv'
     df = pd.read_csv(path)
     df['Task']=str(name)
     df['Bert F1'] = df['Bert F1']*100

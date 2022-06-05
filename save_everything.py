@@ -721,6 +721,9 @@ if args.save_for_kuma_lstm:
     final = pd.concat([kuma_result, LSTM_result], ignore_index=False)
     final.to_csv('saved_everything/' + str(args.dataset) + '/KUMA_LSTM_predictive_results.csv')
 
+
+
+
 if args.predictive_and_posthoc:
     args.save_posthoc == True
     args.save_for_bert == True

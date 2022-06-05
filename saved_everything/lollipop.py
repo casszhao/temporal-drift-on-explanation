@@ -8,12 +8,12 @@ from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
 df = pd.read_csv("all_tasks_all_posthoc.csv")
 #df = df.pop(df.columns.values[0])
-df = df[df['thresholder'].str.contains('contigiuous')] # topk
+df = df[df['thresholder'].str.contains('contigious')] # topk
 
 
 
 
-data = 'Yelp'
+data = 'Factcheck'
 df = df[df['Task'].str.contains(str(data))]
 suff = df[df['Rationales_metrics'].str.contains('AOPC_sufficiency')]
 comp = df[df['Rationales_metrics'].str.contains('AOPC_comprehensiveness')]

@@ -109,26 +109,54 @@ bert_result = bert_result.rename(columns={"mean-f1":"Bert F1", "std-f1":"Bert st
 
 
 ########################### 3. FRESH results of top scaled attention
-fresh_full_data = pd.read_json(
-    './FRESH_classifiers/'+str(args.dataset)+'_full/topk/scaled attention_bert_predictive_performances.json')
+import os.path
+
+
+if args.dataset == 'AmazDigiMu':
+    fresh_OOD1 = pd.read_json('FRESH_classifiers/AmazDigiMu/topk/scaled attention_bert_predictive_performances-OOD-AmazDigiMu_ood1.json')
+    fresh_OOD2 = pd.read_json('FRESH_classifiers/AmazDigiMu/topk/scaled attention_bert_predictive_performances-OOD-AmazDigiMu_ood2.json')
+    fresh_full_data = pd.read_json('./FRESH_classifiers/AmazDigiMu_full/topk/scaled_attention_bert_predictive_performances.json')
+    fresh_InDomain = pd.read_json('./FRESH_classifiers/AmazDigiMu/topk/scaled_attention_bert_predictive_performances.json')
+
+elif args.dataset == 'AmazPantry':
+    fresh_OOD1 = pd.read_json('FRESH_classifiers/AmazPantry/topk/scaled attention_bert_predictive_performances-OOD-AmazPantry_ood1.json')
+    fresh_OOD2 = pd.read_json('FRESH_classifiers/AmazPantry/topk/scaled attention_bert_predictive_performances-OOD-AmazPantry_ood2.json')
+    fresh_full_data = pd.read_json('./FRESH_classifiers/AmazPantry_full/topk/scaled_attention_bert_predictive_performances.json')
+    fresh_InDomain = pd.read_json('./FRESH_classifiers/AmazPantry/topk/scaled_attention_bert_predictive_performances.json')
+
+else:
+    fresh_OOD1_path = os.path.join('FRESH_classifiers', str(args.dataset), 'topk/', 'scaled attention_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
+    fresh_OOD2_path = os.path.join('FRESH_classifiers', str(args.dataset), 'topk/', 'scaled attention_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood2.json')
+    try:
+        file_exists = os.path.exists(fresh_OOD1_path)
+    except:
+        fresh_OOD1_path = os.path.join('FRESH_classifiers', str(args.dataset), 'topk/', 'scaled_attention_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
+        fresh_OOD2_path = os.path.join('FRESH_classifiers', str(args.dataset), 'topk/', 'scaled_attention_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood2.json')
+        file_exists = os.path.exists(fresh_OOD1_path)
+    fresh_OOD1 = pd.read_json(fresh_OOD1_path)
+    fresh_OOD2 = pd.read_json(fresh_OOD2_path)
+
+
+
+
+    fresh_full_data = pd.read_json(
+        './FRESH_classifiers/'+str(args.dataset)+'_full/topk/scaled attention_bert_predictive_performances.json')
+    fresh_InDomain = pd.read_json(
+        './FRESH_classifiers/' + str(args.dataset) + '/topk/scaled attention_bert_predictive_performances.json')
+
+
 fresh_full_data = fresh_full_data[select_columns].iloc[1]
 fresh_full_data['Domain'] = 'Fullsize data'
 
-fresh_InDomain = pd.read_json(
-    './FRESH_classifiers/' + str(args.dataset) + '/topk/scaled attention_bert_predictive_performances.json')
+
 fresh_InDomain = fresh_InDomain[select_columns].iloc[1]
 fresh_InDomain['Domain'] = 'InDomain'
 
-# fresh_OOD1 = pd.read_json(
-#     './FRESH_classifiers/' + str(args.dataset) + '/topk/scaled_attention_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
-# fresh_OOD1 = fresh_OOD1[select_columns].iloc[1]
-fresh_OOD1 = pd.read_json(
-    './FRESH_classifiers/'+str(args.dataset)+'/topk/scaled attention_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
+
 fresh_OOD1 = fresh_OOD1[select_columns].iloc[1]
 fresh_OOD1['Domain'] = 'OOD1'
 
-fresh_OOD2 = pd.read_json(
-    './FRESH_classifiers/' + str(args.dataset) + '/topk/scaled attention_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood2.json')
+
 fresh_OOD2 = fresh_OOD2[select_columns].iloc[1]
 fresh_OOD2['Domain'] = 'OOD2'
 
@@ -181,9 +209,9 @@ SPECTRA = pd.read_csv('saved_everything/' + str(args.dataset) + '/spectra_mean.c
 ##############################
 
 final = pd.concat([bert_result, fresh_result, LSTM_result, kuma_result, SPECTRA], axis=1)
-print(bert_result)
 final['Domain'] = ['Full', 'SynD', 'AsyD1', 'AsyD2']
 final = final.rename({'Domain': 'Testing Set'})
-
-final = final[final.select_dtypes(include=['number']).columns] * 100
+s = final[final.select_dtypes(include=['number']).columns] * 100
+final[s.columns] = s
+print(final)
 final.to_csv('saved_everything/' + str(args.dataset) + '/selective_results.csv')

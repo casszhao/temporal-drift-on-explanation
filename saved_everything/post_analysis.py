@@ -28,7 +28,7 @@ for name in task_list:
 all_tasks = pd.concat(bigtable_list, ignore_index=False)
 all_tasks.to_csv('all_tasks_all_selective.csv')
 
-exit()
+
 for name in task_list:
     path = str(name) + '/posthoc_and_predictive.csv'
     df = pd.read_csv(path)
@@ -38,7 +38,7 @@ all_tasks = pd.concat(bigtable_list, ignore_index=False)
 all_tasks.to_csv('all_tasks_all_posthoc.csv')
 
 
-
+exit()
 
 
 

@@ -77,8 +77,8 @@ select_columns = ['mean-f1', 'std-f1']
 
 
 ######################## 1. bert predictive resultes -- on In domain / ood1 / ood2
-InDomain = pd.read_json('./models/' + str(args.dataset) + '/bert_predictive_performances.json')
-Full_data = pd.read_json('./models/' + str(args.dataset) + '_full/bert_predictive_performances.json')
+InDomain = pd.read_json('./models/'+str(args.dataset)+'/bert_predictive_performances.json')
+Full_data = pd.read_json('./models/'+str(args.dataset)+'_full/bert_predictive_performances.json')
 
 path = os.path.join('./models/', str(args.dataset),'bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
 OOD1 = pd.read_json(path)
@@ -110,22 +110,25 @@ bert_result = bert_result.rename(columns={"mean-f1":"Bert F1", "std-f1":"Bert st
 
 ########################### 3. FRESH results of top scaled attention
 fresh_full_data = pd.read_json(
-    './FRESH_classifiers/' + str(args.dataset) + '_full/topk/scaled_attention_bert_predictive_performances.json')
+    './FRESH_classifiers/'+str(args.dataset)+'_full/topk/scaled_attention_bert_predictive_performances.json')
 fresh_full_data = fresh_full_data[select_columns].iloc[1]
 fresh_full_data['Domain'] = 'Fullsize data'
 
 fresh_InDomain = pd.read_json(
-    './FRESH_classifiers/' + str(args.dataset) + '/topk/scaled_attention_bert_predictive_performances.json')
+    './FRESH_classifiers/' + str(args.dataset) + '/topk/scaled attention_bert_predictive_performances.json')
 fresh_InDomain = fresh_InDomain[select_columns].iloc[1]
 fresh_InDomain['Domain'] = 'InDomain'
 
+# fresh_OOD1 = pd.read_json(
+#     './FRESH_classifiers/' + str(args.dataset) + '/topk/scaled_attention_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
+# fresh_OOD1 = fresh_OOD1[select_columns].iloc[1]
 fresh_OOD1 = pd.read_json(
-    './FRESH_classifiers/' + str(args.dataset) + '/topk/scaled_attention_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
+    './FRESH_classifiers/'+str(args.dataset)+'/topk/scaled attention_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
 fresh_OOD1 = fresh_OOD1[select_columns].iloc[1]
 fresh_OOD1['Domain'] = 'OOD1'
 
 fresh_OOD2 = pd.read_json(
-    './FRESH_classifiers/' + str(args.dataset) + '/topk/scaled_attention_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood2.json')
+    './FRESH_classifiers/' + str(args.dataset) + '/topk/scaled attention_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood2.json')
 fresh_OOD2 = fresh_OOD2[select_columns].iloc[1]
 fresh_OOD2['Domain'] = 'OOD2'
 
@@ -140,12 +143,10 @@ fresh_result = fresh_result.rename(columns={"mean-f1":"FRESH F1", "std-f1":"FRES
 ####################################  KUMA AND LSTM ############################################################
 
 ## get KUMA of FULL / IN D / OOD1 / OOD2
-kuma_FullData = pd.read_json('./kuma_model/' + str(args.dataset) + '_full/kuma-bert_predictive_performances.json')
-kuma_InDomain = pd.read_json('./kuma_model/' + str(args.dataset) + '/kuma-bert_predictive_performances.json')
-kuma_OOD1 = pd.read_json('./kuma_model/' + str(args.dataset) + '/kuma-bert_predictive_performances-OOD-' + str(
-    args.dataset) + '_ood1.json')
-kuma_OOD2 = pd.read_json('./kuma_model/' + str(args.dataset) + '/kuma-bert_predictive_performances-OOD-' + str(
-    args.dataset) + '_ood2.json')
+kuma_FullData = pd.read_json('./kuma_model/'+str(args.dataset)+'_full/kuma-bert_predictive_performances.json')
+kuma_InDomain = pd.read_json('./kuma_model/'+str(args.dataset)+'_full/kuma-bert_predictive_performances.json')
+kuma_OOD1 = pd.read_json('./kuma_model/'+str(args.dataset)+'_full/kuma-bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
+kuma_OOD2 = pd.read_json('./kuma_model/'+str(args.dataset)+'_full/kuma-bert_predictive_performances-OOD-' + str(args.dataset) + '_ood2.json')
 
 LSTM_FullData = pd.read_json(
     './LSTM_model/' + str(args.dataset) + '_full/full_lstm-bert_predictive_performances.json')
@@ -175,9 +176,13 @@ LSTM_result = pd.concat([LSTM_FullData, LSTM_InDomain, LSTM_OOD1, LSTM_OOD2], ig
 LSTM_result = LSTM_result.reset_index()[['mean-f1', 'std-f1']]
 LSTM_result = LSTM_result.rename(columns={"mean-f1":"LSTM F1", "std-f1":"LSTM std"})
 
-SPECTRA = pd.read_csv('saved_everything/' + str(args.dataset) + '/spectra_mean.csv')['Avg', 'Std'].rename(columns={"Avg":"SPECTRA F1", "Std":"SPECTRA std"})
+SPECTRA = pd.read_csv('saved_everything/' + str(args.dataset) + '/spectra_mean.csv')[['avg', 'std']].rename(columns={"avg":"SPECTRA F1", "std":"SPECTRA std"})
 
 ##############################
 
-final = pd.concat([bert_result, fresh_result, kuma_result, LSTM_result, SPECTRA], axis=1)
+final = pd.concat([bert_result, fresh_result, LSTM_result, kuma_result, SPECTRA], axis=1)
+final['Domain'] = ['Full', 'SynD', 'AsyD1', 'AsyD2']
+final = final.rename({'Domain': 'Testing Set'})
+
+final = final[final.select_dtypes(include=['number']).columns] * 100
 final.to_csv('saved_everything/' + str(args.dataset) + '/selective_results.csv')

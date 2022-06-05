@@ -15,20 +15,73 @@ import os
 #           fulltext_similarity rationale_similarity
 #           posthoc_results/****.json
 
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+ 
 
+xlabel_size = 12
 bigtable_list = []
 task_list = ['agnews', 'xfact', 'factcheck', 'AmazDigiMu', 'AmazPantry', 'yelp'] #, 'AmazDigiMu', 'AmazInstr', 'AmazPantry'
 
-for name in task_list:
+plt.style.use('ggplot')
+fig, axs = plt.subplots(2, 3, figsize=(9, 4.5), sharey=False, sharex=False)
+
+for i, name in enumerate(task_list):
+    
     path = str(name) + '/selective_results.csv'
     df = pd.read_csv(path)
     df['Task']=str(name)
-    bigtable_list.append(df)
+    df['Bert F1'] = df['Bert F1']*100
+    df['FRESH F1'] = df['FRESH F1']*100
 
-all_tasks = pd.concat(bigtable_list, ignore_index=False)
-all_tasks.to_csv('all_tasks_all_selective.csv')
+    
+    if i == 3 or i == 4:
+        SUB_NAME = str(name)
+    else:
+        SUB_NAME = str(name).capitalize()
 
-exit()
+    if i < 3:
+        axs[0, i].plot(df['Domain'], df['Bert F1'], label='BERT', linestyle='dashed')
+        axs[0, i].plot(df['Domain'], df['FRESH F1'], label='FRESH(α∇α)', linestyle='dashed')
+        axs[0, i].plot(df['Domain'], df['SPECTRA F1'], label='SPECTRA')
+        axs[0, i].plot(df['Domain'], df['KUMA F1'], label='HardKUMA')
+        axs[0, i].plot(df['Domain'], df['LSTM F1'], label='LSTM')
+        axs[0, i].set_xlabel(SUB_NAME,fontsize=xlabel_size)
+    else:
+        axs[1, i-3].plot(df['Domain'], df['Bert F1'], label='BERT', linestyle='dashed')
+        axs[1, i-3].plot(df['Domain'], df['FRESH F1'], label='FRESH(α∇α)', linestyle='dashed')
+        axs[1, i-3].plot(df['Domain'], df['SPECTRA F1'], label='SPECTRA')
+        axs[1, i-3].plot(df['Domain'], df['KUMA F1'], label='HardKUMA')
+        axs[1, i-3].plot(df['Domain'], df['LSTM F1'], label='LSTM')
+        axs[1, i-3].set_xlabel(SUB_NAME,fontsize=xlabel_size)
+
+    
+    # plt.plot( df['Domain'], df['Bert F1'], marker='o', markerfacecolor='blue', color='skyblue')
+    # plt.plot( df['Bert F1'], df['Domain'], marker='o', markerfacecolor='blue', markersize=12, color='skyblue', linewidth=4)
+    # plt.plot( 'x_values', 'y2_values', data=df, marker='', color='olive', linewidth=2)
+    # plt.plot( 'x_values', 'y3_values', data=df, marker='', color='olive', linewidth=2, linestyle='dashed', label="toto")
+    
+fig.suptitle('Predictive Performance Comparison of Selective Rationalizations', fontsize=16)
+plt.subplots_adjust(
+    left=0.052,
+    bottom=0.12, 
+    right=0.86, 
+    top=0.871, 
+    wspace=0.24, 
+    hspace=0.364,
+    )
+plt.legend(bbox_to_anchor=(1.02, 1), loc='upper left', borderaxespad=0, fontsize=9)
+plt.show()
+fig1 = plt.gcf()
+fig.savefig('./selective_predictive.png', dpi=250)
+
+# all_tasks = pd.concat(bigtable_list, ignore_index=False)
+# all_tasks.to_csv('all_tasks_all_selective.csv')
+
+
+
+
 for name in task_list:
     path = str(name) + '/posthoc_and_predictive.csv'
     df = pd.read_csv(path)
@@ -37,7 +90,7 @@ for name in task_list:
 all_tasks = pd.concat(bigtable_list, ignore_index=False)
 all_tasks.to_csv('all_tasks_all_posthoc.csv')
 
-
+exit()
 
 
 

@@ -101,6 +101,14 @@ parser.add_argument(
     default=False
 )
 
+
+parser.add_argument(
+    '--save_all_selective_rationales',
+    help='decide which parts are in need',
+    action='store_true',
+    default=False
+)
+
 args = parser.parse_args()
 
 datasets_dir = 'saved_everything/' + str(args.dataset)
@@ -670,6 +678,9 @@ if args.save_for_fresh:
 
 ####################################  KUMA AND LSTM ############################################################
 
+if args.save_all_selective_rationales:
+    args.save_for_kuma_lstm == True
+
 if args.save_for_kuma_lstm:
 
     ## get KUMA of FULL / IN D / OOD1 / OOD2
@@ -701,15 +712,15 @@ if args.save_for_kuma_lstm:
         LSTM_OOD1 = LSTM_OOD1[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
         LSTM_OOD2 = LSTM_OOD2[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
 
-    kuma_FullData['Domain'] = 'Full data'
-    kuma_InDomain['Domain'] = 'InDomain'
-    kuma_OOD1['Domain'] = 'OOD1'
-    kuma_OOD2['Domain'] = 'OOD2'
+    kuma_FullData['Domain'] = 'Full'
+    kuma_InDomain['Domain'] = 'SynD'
+    kuma_OOD1['Domain'] = 'AsyD1'
+    kuma_OOD2['Domain'] = 'AsyD2'
 
-    LSTM_FullData['Domain'] = 'Full data'
-    LSTM_InDomain['Domain'] = 'InDomain'
-    LSTM_OOD1['Domain'] = 'OOD1'
-    LSTM_OOD2['Domain'] = 'OOD2'
+    LSTM_FullData['Domain'] = 'Full'
+    LSTM_InDomain['Domain'] = 'SynD'
+    LSTM_OOD1['Domain'] = 'AsyD1'
+    LSTM_OOD2['Domain'] = 'AsyD2'
 
     kuma_result = pd.concat([kuma_FullData, kuma_InDomain, kuma_OOD1, kuma_OOD2], ignore_index=False, axis=1).T
     kuma_result['Model'] = 'Kuma'
@@ -720,6 +731,58 @@ if args.save_for_kuma_lstm:
 
     final = pd.concat([kuma_result, LSTM_result], ignore_index=False)
     final.to_csv('saved_everything/' + str(args.dataset) + '/KUMA_LSTM_predictive_results.csv')
+
+
+
+task_list = ['agnews', 'xfact', 'factcheck', 'AmazDigiMu', 'AmazPantry', 'yelp']
+
+# if args.save_all_selective_rationales:
+
+#     ## get KUMA of FULL / IN D / OOD1 / OOD2
+#     kuma_FullData = pd.read_json('./kuma_model/' + str(args.dataset) + '_full/kuma-bert_predictive_performances.json')
+#     kuma_InDomain = pd.read_json('./kuma_model/' + str(args.dataset) + '/kuma-bert_predictive_performances.json')
+#     kuma_OOD1 = pd.read_json('./kuma_model/' + str(args.dataset) + '/kuma-bert_predictive_performances-OOD-' + str(
+#         args.dataset) + '_ood1.json')
+#     kuma_OOD2 = pd.read_json('./kuma_model/' + str(args.dataset) + '/kuma-bert_predictive_performances-OOD-' + str(
+#         args.dataset) + '_ood2.json')
+
+#     LSTM_FullData = pd.read_json(
+#         './LSTM_model/' + str(args.dataset) + '_full/full_lstm-bert_predictive_performances.json')
+#     LSTM_InDomain = pd.read_json('./LSTM_model/' + str(args.dataset) + '/full_lstm-bert_predictive_performances.json')
+#     LSTM_OOD1 = pd.read_json('./LSTM_model/' + str(args.dataset) + '/full_lstm-bert_predictive_performances-OOD-' + str(
+#         args.dataset) + '_ood1.json')
+#     LSTM_OOD2 = pd.read_json('./LSTM_model/' + str(args.dataset) + '/full_lstm-bert_predictive_performances-OOD-' + str(
+#         args.dataset) + '_ood2.json')
+
+#     kuma_FullData = kuma_FullData[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
+#     kuma_InDomain = kuma_InDomain[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
+#     kuma_OOD1 = kuma_OOD1[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
+#     kuma_OOD2 = kuma_OOD2[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
+
+#     LSTM_FullData = LSTM_FullData[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
+#     LSTM_InDomain = LSTM_InDomain[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
+#     LSTM_OOD1 = LSTM_OOD1[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
+#     LSTM_OOD2 = LSTM_OOD2[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
+
+#     kuma_FullData['Domain'] = 'Full'
+#     kuma_InDomain['Domain'] = 'SynD'
+#     kuma_OOD1['Domain'] = 'AsyD1'
+#     kuma_OOD2['Domain'] = 'AsyD2'
+
+#     LSTM_FullData['Domain'] = 'Full'
+#     LSTM_InDomain['Domain'] = 'SynD'
+#     LSTM_OOD1['Domain'] = 'AsyD1'
+#     LSTM_OOD2['Domain'] = 'AsyD2'
+
+#     kuma_result = pd.concat([kuma_FullData, kuma_InDomain, kuma_OOD1, kuma_OOD2], ignore_index=False, axis=1).T
+#     LSTM_result = pd.concat([LSTM_FullData, LSTM_InDomain, LSTM_OOD1, LSTM_OOD2], ignore_index=False, axis=1).T
+
+#     LSTM_result = LSTM_result[['mean-f1', 'domain']]
+#     LSTM_result = LSTM_result.rename({'mean-f1': 'LSTM'})
+#     kuma_result = kuma_result[['mean-f1', 'domain']]
+#     kuma_result = kuma_result.rename({'mean-f1': 'KUMA'})
+#     BERT_results = pd.read_csv('saved_everything/' + str(args.dataset) + '/bert_predictive.csv')[['mean-f1', 'Domain']]
+#     BERT_results = BERT_results.rename({'mean-f1': 'BERT'})
 
 
 

@@ -62,7 +62,7 @@ parser.add_argument(
     action='store_true',
     default=False
 )
-rep_posthoc_for_analysis
+
 
 args = parser.parse_args()
 
@@ -175,9 +175,9 @@ LSTM_result = pd.concat([LSTM_FullData, LSTM_InDomain, LSTM_OOD1, LSTM_OOD2], ig
 LSTM_result = LSTM_result.reset_index()[['mean-f1', 'std-f1']]
 LSTM_result = LSTM_result.rename(columns={"mean-f1":"LSTM F1", "std-f1":"LSTM std"})
 
-
+SPECTRA = pd.read_csv('saved_everything/' + str(args.dataset) + '/spectra_mean.csv')['Avg', 'Std'].rename(columns={"Avg":"SPECTRA F1", "Std":"SPECTRA std"})
 
 ##############################
 
-final = pd.concat([bert_result, fresh_result, kuma_result, LSTM_result], axis=1)
-final.to_csv('saved_everything/' + str(args.dataset) + '/key_results.csv')
+final = pd.concat([bert_result, fresh_result, kuma_result, LSTM_result, SPECTRA], axis=1)
+final.to_csv('saved_everything/' + str(args.dataset) + '/selective_results.csv')

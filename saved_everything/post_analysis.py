@@ -28,6 +28,10 @@ task_list = ['agnews', 'xfact', 'factcheck', 'AmazDigiMu', 'AmazPantry', 'yelp']
 plt.style.use('ggplot')
 fig, axs = plt.subplots(2, 3, figsize=(8, 4), sharey=False, sharex=False)
 
+marker_style = dict(color='tab:blue', linestyle=':', marker='d',
+                    #markersize=15, markerfacecoloralt='tab:red',
+                    )
+
 for i, name in enumerate(task_list):
     
     path = './' + str(name) + '/selective_results.csv'
@@ -43,15 +47,15 @@ for i, name in enumerate(task_list):
         SUB_NAME = str(name).capitalize()
 
     if i < 3:
-        axs[0, i].scatter(df['Domain'], df['Bert F1'], label='BERT', marker='v')
-        axs[0, i].scatter(df['Domain'], df['FRESH F1'], label='FRESH(α∇α)', marker='v')
+        axs[0, i].scatter(df['Domain'], df['Bert F1'], label='BERT', marker='x')
+        axs[0, i].scatter(df['Domain'], df['FRESH F1'], label='FRESH(α∇α)', marker='x')
         axs[0, i].scatter(df['Domain'], df['SPECTRA F1'], label='SPECTRA')
         axs[0, i].scatter(df['Domain'], df['KUMA F1'], label='HardKUMA')
         axs[0, i].scatter(df['Domain'], df['LSTM F1'], label='LSTM')
         axs[0, i].set_xlabel(SUB_NAME,fontsize=xlabel_size)
     else:
-        axs[1, i-3].scatter(df['Domain'], df['Bert F1'], label='BERT', marker='v')
-        axs[1, i-3].scatter(df['Domain'], df['FRESH F1'], label='FRESH(α∇α)', marker='v')
+        axs[1, i-3].scatter(df['Domain'], df['Bert F1'], label='BERT', marker='x')
+        axs[1, i-3].scatter(df['Domain'], df['FRESH F1'], label='FRESH(α∇α)', marker='x')
         axs[1, i-3].scatter(df['Domain'], df['SPECTRA F1'], label='SPECTRA')
         axs[1, i-3].scatter(df['Domain'], df['KUMA F1'], label='HardKUMA')
         axs[1, i-3].scatter(df['Domain'], df['LSTM F1'], label='LSTM')

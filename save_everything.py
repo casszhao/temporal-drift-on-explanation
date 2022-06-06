@@ -145,23 +145,16 @@ def df2stat_df(df, domain):
 
 
     if "yelp" in str(args.dataset):
-        df['Temporal Domain'] = str(domain)
-        stat_df = df[['Year', 'Temporal Domain']]
+        df['Temporal Split'] = str(domain)
+        stat_df = df[['Year', 'Temporal Split']]
     else:
         df['Year'] = pd.DatetimeIndex(df['date']).year
-        df['Temporal Domain'] = str(domain)
-        stat_df = df[['Year', 'Temporal Domain']]
+        df['Temporal Split'] = str(domain)
+        stat_df = df[['Year', 'Temporal Split']]
 
 
     return stat_df
-# https://towardsdatascience.com/5-types-of-plots-that-will-help-you-with-time-series-analysis-b63747818705
-# https://www.geeksforgeeks.org/how-to-plot-timeseries-based-charts-using-pandas/
-# *** https://seaborn.pydata.org/tutorial/distributions.html
-# https://pythonguides.com/matplotlib-time-series-plot/
-# https://realpython.com/pandas-plot-python/
-# https://www.kaggle.com/code/kashnitsky/topic-9-part-1-time-series-analysis-in-python/notebook
-# https://www.oreilly.com/library/view/python-data-science/9781491912126/ch04.html
-# *** https://chartio.com/learn/charts/box-plot-complete-guide/
+
 if args.plot_time_distribution:
 ############################# read data in ##################
     if "xfact" in str(args.dataset) or "factcheck" in str(args.dataset):
@@ -194,34 +187,20 @@ if args.plot_time_distribution:
 
     df = pd.concat([full, indomain_train, indomain_test, ood1, ood2]).reset_index(drop=True)
 
-    # kwargs = dict(histtype='step', alpha=0.9)
-    # plt.hist(full['Year'], **kwargs, label='Full')
-    # plt.hist(indomain_test['Year'], **kwargs, label='InDomain Test')
-    # plt.hist(ood1['Year'], **kwargs, label='OOD1 Test')
-    # plt.hist(ood2['Year'], **kwargs, label='OOD2 Test')
-    # plt.legend(bbox_to_anchor=(1, 0.7, 0.2, 0.35), loc='best', borderaxespad=1)
-    # plt.title('Agnews', fontsize=18)
-    # plt.savefig('./TimeDist/'+str(args.dataset)+'_box.png', bbox_inches = 'tight', dpi=250, format='png')
-    # plt.show()
-
-    #  https://mode.com/blog/violin-plot-examples/
-    # density estimation to show the distribution shape of the data
-
-    sns.violinplot(y=df['Year'], x=df['Temporal Domain'], showmedians=True, showextrema=True, 
+    #plt.style.use('ggplot')
+    sns.violinplot(y=df['Year'], x=df['Temporal Split'], showmedians=True, showextrema=True, 
         palette="rocket",scale='width') #,gridsize=10
-    #sns.boxplot(y=df['Year'], x=df['Temporal Domain'], palette="rocket", whis=np.inf)
-    #sns.displot(df, x="Year", hue="Temporal Domain", stat="density", common_norm=False)
 
-    plt.title(str(args.dataset).capitalize(), fontsize=18)
+    plt.title(str(args.dataset).capitalize(), fontsize=18.5)
+    plt.xticks(fontsize=12)
+    plt.yticks(fontsize=12)
+
     if args.dataset == 'yelp':
-        yint = range(2005, 2023)
-        plt.yticks(yint)
+        yint = range(2005, 2023, 3)
+        plt.yticks(yint,fontsize=12)
     # plt.ylabel("Percentage")
     #plt.xlabel("Full size", "InDomain Train", "InDomain Test", "OOD1 Test", "OOD2 Test")
-    #plt.legend(bbox_to_anchor=(1, 1, 0.28, 0.28), loc='best', borderaxespad=1)
     plt.tight_layout()
-    # plt.xticks(fontsize= )
-
     plt.savefig('./TimeDist/'+str(args.dataset)+'_vio.png', bbox_inches = 'tight', dpi=250, format='png')
     plt.show()
 
@@ -796,6 +775,9 @@ if args.predictive_and_posthoc:
 
     merge = pd.merge(posthoc, bert, on = 'Domain')
     #merge = merge.rename(columns={merge.columns[1]: 'Task'},inplace=True)
-    merge['Task'] = str(args.dataset).capitalize()
+    if 'Amaz' in str(args.dataset):
+        merge['Task'] = str(args.dataset)
+    else:
+        merge['Task'] = str(args.dataset).capitalize()
     print(merge)
     merge.to_csv('saved_everything/' + str(args.dataset) + '/posthoc_and_predictive.csv')

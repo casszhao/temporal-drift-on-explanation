@@ -276,9 +276,9 @@ os.makedirs(model_dir, exist_ok=True)
 ##### get rationales ####
 
 thresh_list = []
-for threshold in ['topk', 'contigious']: #'topk',
+for threshold in ['topk']: #'topk', , 'contigious'
     attributes_list = []
-    for attribute_name in ['scaled attention','attention', 'lime', 'deeplift', 'gradients','IG','gradientshap','deepliftshap']:
+    for attribute_name in ['scaled attention','attention', 'lime', 'deeplift', 'gradients','ig','gradientshap','deepliftshap']:
 
         # InD_path_train = './extracted_rationales/'+str(args.dataset)+'/data/'+str(threshold)+'/'+str(attribute_name)+'-train.json'
         InD_path_train = os.path.join('extracted_rationales',str(args.dataset),'data',str(threshold),str(attribute_name)+'-train.json')
@@ -328,8 +328,8 @@ for threshold in ['topk', 'contigious']: #'topk',
 
     thresh_list.append(all_attributes_df)
 
-results = pd.concat([thresh_list[0], thresh_list[1]], ignore_index=True)
-
+#results = pd.concat([thresh_list[0], thresh_list[1]], ignore_index=True)
+results = thresh_list[0]
 results.to_csv(datasets_dir + '/rationale_similarity_vocab' + str(vocab.size) + ' .csv')
 print('saved as:')
 print(datasets_dir + '/rationale_similarity_vocab' + str(vocab.size) + ' .csv')

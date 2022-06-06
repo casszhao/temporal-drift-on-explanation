@@ -7,20 +7,17 @@ from matplotlib.lines import Line2D
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
 df = pd.read_csv("all_tasks_all_posthoc.csv")
-#df = df.pop(df.columns.values[0])
-df = df[df['thresholder'].str.contains('contigious')] # topk
 print(df)
+df = df[df['thresholder'].str.contains('topk')] # topk
 
 
-
-
-data = 'Amazpantry'
+data = 'AmazDigiMu'
 df = df[df['Task'].str.contains(str(data))]
 print(df)
 suff = df[df['Rationales_metrics'].str.contains('AOPC_sufficiency')]
 comp = df[df['Rationales_metrics'].str.contains('AOPC_comprehensiveness')]
 my_range=suff['Domain']
-print(comp)
+print(df)
 
 ALPHA = 0.5
 SIZE = 150
@@ -81,9 +78,13 @@ else:
 
 
 fig, ax = plt.subplots(1, 3, gridspec_kw={'width_ratios': [1.5, 4, 4]}, sharey='all', figsize=(13,2.3))
+temporal_order = ["Full size", "SynD", "AsyD1", "AsyD2"]
 
 
-
+# Set number of ticks for x-axis
+ax[0].set_yticks(range(len(my_range)))
+# Set ticks labels for x-axis
+ax[0].set_yticklabels(my_range)
 
 ax[0].hlines(y=my_range, xmin=bert_min, xmax=bert_max, color='grey', alpha=0.35)
 ax[0].scatter(df['mean-f1'], df['Domain'], color='dimgray', alpha=1, label='F1', marker=">", s=166) # marker='|'
@@ -98,13 +99,14 @@ for x,y in zip(df['mean-f1'],df['Domain']):
                  ) 
 ax[0].set_xlabel('BERT avg macro-F1',fontsize=xlabel_size)
 ax[0].set_ylabel(str(data), fontsize=xlabel_size)
-ax[0].set_yticklabels(my_range, fontsize=13)
+#ax[0].set_yticklabels(my_range, fontsize=13)
+
 plt.plot()
 
 
 ############################################################   SUFF  
 ax[1].hlines(y=my_range, xmin=suff_min, xmax=suff_max, color='grey', alpha=0.35)
-ax[1].scatter(suff['random'], my_range, color='black', alpha=1, label='Random', marker='|', s=364)
+ax[1].scatter(suff['random'], my_range, color='black', alpha=1, label='Random', marker='|', s=370)
 ax[1].scatter(suff['gradients'], my_range, color='red', alpha=ALPHA , label='Gradients', s=SIZE)
 ax[1].scatter(suff['deeplift'], my_range, color='green', alpha=ALPHA , label='Deeplift', s=SIZE)
 ax[1].scatter(suff['ig'], my_range, color='purple', alpha=ALPHA , label='IG', s=SIZE)
@@ -122,7 +124,7 @@ plt.plot()
 
 # The horizontal plot is made using the hline function
 ax[2].hlines(y=my_range, xmin=comp_min, xmax=comp_max, color='grey', alpha=0.35)
-ax[2].scatter(comp['random'], my_range, color='dimgray', alpha=1, label='Random', marker='d', s=262)
+ax[2].scatter(comp['random'], my_range, color='dimgray', alpha=1, label='Random', marker='|', s=370)
 ax[2].scatter(comp['gradients'], my_range, color='red', alpha=ALPHA , label='Gradients', s=SIZE)
 ax[2].scatter(comp['deeplift'], my_range, color='green', alpha=ALPHA , label='Deeplift', s=SIZE)
 ax[2].scatter(comp['ig'], my_range, color='purple', alpha=ALPHA , label='IG', s=SIZE)
@@ -144,8 +146,10 @@ plt.subplots_adjust(
     hspace=0.2,
     )
 
-plt.legend(bbox_to_anchor=(1.02, 1.1), loc='upper left', borderaxespad=0, fontsize=legend_font_size)
 
+
+plt.legend(bbox_to_anchor=(1.02, 1.1), loc='upper left', borderaxespad=0, fontsize=legend_font_size)
+#fig.update_layout(yaxis5=dict(type='category',categoryorder='category ascending'))
 fig1 = plt.gcf()
 
 plt.show()

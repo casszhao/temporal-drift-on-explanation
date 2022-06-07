@@ -24,7 +24,7 @@ df['mean-f1'] = df['mean-f1']*100
 
 print(df)
 
-data = 'Amazdigimu'
+data = 'AmazPantry'
 df = df[df['Task'].str.contains(str(data))]
 print(df)
 suff = df[df['Rationales_metrics'].str.contains('AOPC_sufficiency')]
@@ -67,7 +67,8 @@ elif data == 'Amazdigimu':
     suff_max = 3.5
     comp_min = 0.5
     comp_max = 3
-elif data == 'Amazpantry':
+    task_name = 'AmazDigiMu'
+elif data == 'AmazPantry':
     bert_min = 67
     bert_max = 72
     suff_min = 0.5
@@ -111,7 +112,10 @@ for x,y in zip(df['mean-f1'],df['Domain']):
                  fontsize= 13,
                  ) 
 ax[0].set_xlabel('BERT avg macro-F1',fontsize=xlabel_size)
-ax[0].set_ylabel(str(data), fontsize=xlabel_size)
+if data == 'Amazdigimu':
+    ax[0].set_ylabel('AmazDigiMu', fontsize=xlabel_size)
+else:
+    ax[0].set_ylabel(str(data), fontsize=xlabel_size)
 #ax[0].set_yticklabels(my_range, fontsize=13)
 
 plt.plot()

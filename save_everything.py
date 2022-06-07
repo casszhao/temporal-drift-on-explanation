@@ -115,7 +115,37 @@ datasets_dir = 'saved_everything/' + str(args.dataset)
 os.makedirs(datasets_dir, exist_ok = True)
 
 
+
+
+######################## 1. bert predictive resultes -- on In domain / ood1 / ood2
+if args.save_for_bert:
+    print('.....')
+    Full_data = pd.read_json('./models/' + str(args.dataset) + '_full/bert_predictive_performances.json')
+    InDomain = pd.read_json('./models/' + str(args.dataset) + '/bert_predictive_performances.json')
+    path = os.path.join('./models/', str(args.dataset),'bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
+    OOD1 = pd.read_json(path)
+    path = os.path.join('./models/', str(args.dataset),'bert_predictive_performances-OOD-' + str(args.dataset) + '_ood2.json')
+    OOD2 = pd.read_json(path)
+
+    if args.get_all_seeds_for_predictive:
+        pass
+    else:
+        Full_data = Full_data[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
+        InDomain = InDomain[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
+        OOD1 = OOD1[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
+        OOD2 = OOD2[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
+
+    OOD12 = (OOD1 + OOD2)/2
+    Full_data['Domain'] = 'Full size'
+    InDomain['Domain'] = 'SynD'
+    OOD1['Domain'] = 'AsyD1'
+    OOD2['Domain'] = 'AsyD2'
+    #OOD12['Domain'] = 'AsyD1+2'
     
+
+    result = pd.concat([Full_data, InDomain, OOD1, OOD2], ignore_index=False, axis=1).T
+    result.to_csv('saved_everything/' + str(args.dataset) + '/bert_predictive.csv')
+####################################################################################   
 ######################## plot time distribution
 
 from datetime import datetime
@@ -346,35 +376,6 @@ if args.save_data_stat:
     df.to_csv('./saved_everything/'+ str(args.dataset) +'/dataset_stats.csv')
 
 
-
-######################## 1. bert predictive resultes -- on In domain / ood1 / ood2
-if args.save_for_bert:
-    Full_data = pd.read_json('./models/' + str(args.dataset) + '_full/bert_predictive_performances.json')
-    InDomain = pd.read_json('./models/' + str(args.dataset) + '/bert_predictive_performances.json')
-    path = os.path.join('./models/', str(args.dataset),'bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
-    OOD1 = pd.read_json(path)
-    path = os.path.join('./models/', str(args.dataset),'bert_predictive_performances-OOD-' + str(args.dataset) + '_ood2.json')
-    OOD2 = pd.read_json(path)
-
-    if args.get_all_seeds_for_predictive:
-        pass
-    else:
-        Full_data = Full_data[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
-        InDomain = InDomain[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
-        OOD1 = OOD1[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
-        OOD2 = OOD2[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
-
-    OOD12 = (OOD1 + OOD2)/2
-    Full_data['Domain'] = 'Full'
-    InDomain['Domain'] = 'SynD'
-    OOD1['Domain'] = 'AsyD1'
-    OOD2['Domain'] = 'AsyD2'
-    #OOD12['Domain'] = 'AsyD1+2'
-    
-
-    result = pd.concat([Full_data, InDomain, OOD1, OOD2], ignore_index=False, axis=1).T
-    result.to_csv('saved_everything/' + str(args.dataset) + '/bert_predictive.csv')
-####################################################################################
 
 
 

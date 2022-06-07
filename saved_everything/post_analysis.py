@@ -26,7 +26,7 @@ bigtable_list = []
 task_list = ['agnews', 'xfact', 'factcheck', 'AmazDigiMu', 'AmazPantry', 'yelp'] #, 'AmazDigiMu', 'AmazInstr', 'AmazPantry'
 
 plt.style.use('ggplot')
-fig, axs = plt.subplots(2, 3, figsize=(8, 4), sharey=False, sharex=False)
+fig, axs = plt.subplots(3, 2, figsize=(6, 7), sharey=False, sharex=False)
 
 marker_style = dict(color='tab:blue', linestyle=':', marker='d',
                     #markersize=15, markerfacecoloralt='tab:red',
@@ -46,27 +46,34 @@ for i, name in enumerate(task_list):
     else:
         SUB_NAME = str(name).capitalize()
 
-    if i < 3:
+    if i < 2:
         axs[0, i].scatter(df['Domain'], df['Bert F1'], label='BERT', marker='x')
         axs[0, i].scatter(df['Domain'], df['FRESH F1'], label='FRESH(α∇α)', marker='x')
         axs[0, i].scatter(df['Domain'], df['SPECTRA F1'], label='SPECTRA')
         axs[0, i].scatter(df['Domain'], df['KUMA F1'], label='HardKUMA')
         axs[0, i].scatter(df['Domain'], df['LSTM F1'], label='LSTM')
         axs[0, i].set_xlabel(SUB_NAME,fontsize=xlabel_size)
+    elif i > 3:
+        axs[2, i-4].scatter(df['Domain'], df['Bert F1'], label='BERT', marker='x')
+        axs[2, i-4].scatter(df['Domain'], df['FRESH F1'], label='FRESH(α∇α)', marker='x')
+        axs[2, i-4].scatter(df['Domain'], df['SPECTRA F1'], label='SPECTRA')
+        axs[2, i-4].scatter(df['Domain'], df['KUMA F1'], label='HardKUMA')
+        axs[2, i-4].scatter(df['Domain'], df['LSTM F1'], label='LSTM')
+        axs[2, i-4].set_xlabel(SUB_NAME,fontsize=xlabel_size)
     else:
-        axs[1, i-3].scatter(df['Domain'], df['Bert F1'], label='BERT', marker='x')
-        axs[1, i-3].scatter(df['Domain'], df['FRESH F1'], label='FRESH(α∇α)', marker='x')
-        axs[1, i-3].scatter(df['Domain'], df['SPECTRA F1'], label='SPECTRA')
-        axs[1, i-3].scatter(df['Domain'], df['KUMA F1'], label='HardKUMA')
-        axs[1, i-3].scatter(df['Domain'], df['LSTM F1'], label='LSTM')
-        axs[1, i-3].set_xlabel(SUB_NAME,fontsize=xlabel_size)
+        axs[1, i-2].scatter(df['Domain'], df['Bert F1'], label='BERT', marker='x')
+        axs[1, i-2].scatter(df['Domain'], df['FRESH F1'], label='FRESH(α∇α)', marker='x')
+        axs[1, i-2].scatter(df['Domain'], df['SPECTRA F1'], label='SPECTRA')
+        axs[1, i-2].scatter(df['Domain'], df['KUMA F1'], label='HardKUMA')
+        axs[1, i-2].scatter(df['Domain'], df['LSTM F1'], label='LSTM')
+        axs[1, i-2].set_xlabel(SUB_NAME,fontsize=xlabel_size)
     
 #fig.suptitle('Predictive Performance Comparison of Selective Rationalizations', fontsize=12)
 plt.subplots_adjust(
-    left=0.038,
-    bottom=0.124, 
-    right=0.838, 
-    top=1, 
+    left=0.057,
+    bottom=0.093, 
+    right=0.78, 
+    top=0.983, 
     wspace=0.274, 
     hspace=0.388,
     )

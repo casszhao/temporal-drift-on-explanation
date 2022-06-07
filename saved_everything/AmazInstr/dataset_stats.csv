@@ -1,8 +1,0 @@
-,Task,Label Num,Domain,Start Date,End Date,Time Span(Days),Median Date,Interquartile Time Span(Days),Data Num
-0,AmazInstr,3,Original (full size),2003-10-28,2018-09-28,5449,2015-10-03,864,231344
-0,AmazInstr,3,Original Train,2004-06-01,2018-09-28,5232,2015-10-02,865,185075
-0,AmazInstr,3,Original Test,2004-03-27,2018-09-25,5295,2015-10-01,863,23134
-0,AmazInstr,3,In Domain Train,2003-10-28,2017-02-15,4859,2015-04-05,743,138807
-0,AmazInstr,3,InDomain,2004-11-23,2017-02-15,4467,2015-04-02,747,23135
-0,AmazInstr,3,OOD1,2017-02-15,2017-09-19,216,2017-05-17,111,23134
-0,AmazInstr,3,OOD2,2017-09-19,2018-09-28,374,2018-02-08,130,23134

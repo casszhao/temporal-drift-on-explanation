@@ -616,25 +616,27 @@ if args.plot_radar:
 
 
 ########################### 3. FRESH results
+attributes = ["gradients", "deeplift", "scaled_attention"]
+
 if args.save_for_fresh:
     select_columns = ['mean-acc','std-acc','mean-f1','std-f1','mean-ece','std-ece']
     thresh_hold_list = []
-    for threshold in ['topk', 'contigious']: #
+    for threshold in ['topk']: # , 'contigious'
         attribute_list = []
-        for attribute_name in ["attention", "gradients", "lime", "deeplift", "scaled_attention"]:
+        for attribute_name in attributes:
             path = os.path.join('FRESH_classifiers/', str(args.dataset), str(threshold),
                                 str(attribute_name) + '_bert_predictive_performances.json')
             print(path)
             fresh_InDomain = pd.read_json(path)
             fresh_InDomain = fresh_InDomain[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[1]
             fresh_InDomain['Domain'] = 'InDomain'
-            path1 = './FRESH_classifiers/' + str(args.dataset) + '/topk/attention_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json'
+            path1 = path = os.path.join('FRESH_classifiers/', str(args.dataset), str(threshold),
+                                str(attribute_name) + '_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
             fresh_OOD1 = pd.read_json(path1)
             fresh_OOD1 = fresh_OOD1[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[1]
             fresh_OOD1['Domain'] = 'OOD1'
-
-            path2 = './FRESH_classifiers/' + str(args.dataset) + '/topk/attention_bert_predictive_performances-OOD-' + str(
-                args.dataset) + '_ood2.json'
+            path2 = path = os.path.join('FRESH_classifiers/', str(args.dataset), str(threshold),
+                                str(attribute_name) + '_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood2.json')
             fresh_OOD2 = pd.read_json(path2)
             fresh_OOD2 = fresh_OOD2[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[1]
             fresh_OOD2['Domain'] = 'OOD2'
@@ -644,11 +646,14 @@ if args.save_for_fresh:
             attribute_df['attribute_name'] = str(attribute_name)
             attribute_list.append(attribute_df)
 
-        attribute_results = pd.concat([attribute_list[0], attribute_list[1], attribute_list[2], attribute_list[3], attribute_list[4]], ignore_index=False)
+        attributes_num = len(attributes)
+        attribute_results = pd.concat(attribute_list, ignore_index=False)
+        
         attribute_results['threshold'] = str(threshold)
         thresh_hold_list.append(attribute_results)
 
-    fresh_final_result = pd.concat([thresh_hold_list[0], thresh_hold_list[1]], ignore_index=False)
+    fresh_final_result = pd.concat(thresh_hold_list, ignore_index=False)
+    print(fresh_final_result)
     fresh_final_result.to_csv('saved_everything/' + str(args.dataset) + '/fresh_predictive_results.csv')
 
 

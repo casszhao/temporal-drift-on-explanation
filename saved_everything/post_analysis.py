@@ -22,7 +22,7 @@ import pandas as pd
 
 xlabel_size = 11
 xtick_size = 9
-bigtable_list = []
+
 task_list = ['agnews', 'xfact', 'factcheck', 'AmazDigiMu', 'AmazPantry', 'yelp'] #, 'AmazDigiMu', 'AmazInstr', 'AmazPantry'
 
 plt.style.use('ggplot')
@@ -33,14 +33,12 @@ marker_style = dict(color='tab:blue', linestyle=':', marker='d',
                     )
 
 for i, name in enumerate(task_list):
-    
     path = './' + str(name) + '/selective_results.csv'
     df = pd.read_csv(path)
     df['Task']=str(name)
     df['Bert F1'] = df['Bert F1']*100
     df['FRESH F1'] = df['FRESH F1']*100
 
-    
     if i == 3 or i == 4:
         SUB_NAME = str(name)
     else:
@@ -85,7 +83,8 @@ plt.show()
 fig1 = plt.gcf()
 fig.savefig('./selective_predictive.png', dpi=250)
 
-all_tasks = pd.concat(bigtable_list, ignore_index=False)
+# print(bigtable_list)
+# all_tasks = pd.concat(bigtable_list, ignore_index=False)
 all_tasks.to_csv('all_tasks_all_selective.csv')
 
 

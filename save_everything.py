@@ -624,24 +624,35 @@ if args.save_for_fresh:
     for threshold in ['topk']: # , 'contigious'
         attribute_list = []
         for attribute_name in attributes:
+            print('--------------------')
+            path_full = os.path.join('FRESH_classifiers/', str(args.dataset)+'_full', str(threshold),
+                                str(attribute_name) + '_bert_predictive_performances.json')
+            print(path_full)
+            fresh_full = pd.read_json(path_full)
+            fresh_full = fresh_full[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[1]
+            fresh_full['Domain'] = 'Full'
+
             path = os.path.join('FRESH_classifiers/', str(args.dataset), str(threshold),
                                 str(attribute_name) + '_bert_predictive_performances.json')
             print(path)
             fresh_InDomain = pd.read_json(path)
             fresh_InDomain = fresh_InDomain[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[1]
-            fresh_InDomain['Domain'] = 'InDomain'
+            fresh_InDomain['Domain'] = 'SynD'
+
             path1 = path = os.path.join('FRESH_classifiers/', str(args.dataset), str(threshold),
                                 str(attribute_name) + '_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
+            print(path1)
             fresh_OOD1 = pd.read_json(path1)
             fresh_OOD1 = fresh_OOD1[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[1]
-            fresh_OOD1['Domain'] = 'OOD1'
+            fresh_OOD1['Domain'] = 'AsyD1'
             path2 = path = os.path.join('FRESH_classifiers/', str(args.dataset), str(threshold),
                                 str(attribute_name) + '_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood2.json')
+            print(path2)
             fresh_OOD2 = pd.read_json(path2)
             fresh_OOD2 = fresh_OOD2[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[1]
-            fresh_OOD2['Domain'] = 'OOD2'
+            fresh_OOD2['Domain'] = 'AsyD2'
 
-            attribute_df = pd.concat([fresh_InDomain, fresh_OOD1, fresh_OOD2], axis=1, ignore_index=False).T.reset_index()[
+            attribute_df = pd.concat([fresh_full, fresh_InDomain, fresh_OOD1, fresh_OOD2], axis=1, ignore_index=False).T.reset_index()[
                 ['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece', 'Domain']]
             attribute_df['attribute_name'] = str(attribute_name)
             attribute_list.append(attribute_df)

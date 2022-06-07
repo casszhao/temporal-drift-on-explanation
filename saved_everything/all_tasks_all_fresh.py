@@ -86,4 +86,4 @@ plt.legend(bbox_to_anchor=(1.02, 1), loc='upper left', borderaxespad=0, fontsize
 #plt.xticks(fontsize=xtick_size)
 plt.show()
 fig1 = plt.gcf()
-fig.savefig('./selective_predictive.png', dpi=250)
+fig.savefig('./fresh_compare_attributes.png', dpi=250)

@@ -365,7 +365,7 @@ if args.save_for_bert:
         OOD2 = OOD2[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
 
     OOD12 = (OOD1 + OOD2)/2
-    Full_data['Domain'] = 'Full size'
+    Full_data['Domain'] = 'Full'
     InDomain['Domain'] = 'SynD'
     OOD1['Domain'] = 'AsyD1'
     OOD2['Domain'] = 'AsyD2'
@@ -664,6 +664,9 @@ if args.save_for_fresh:
         thresh_hold_list.append(attribute_results)
 
     fresh_final_result = pd.concat(thresh_hold_list, ignore_index=False)
+    Bert_results = pd.read_csv('saved_everything/' + str(args.dataset) + '/bert_predictive.csv')['Domain', 'mean-f1']
+    Bert_results = Bert_results.rename(columns={'mean-f1': 'BERT'})
+    fresh_final_result = pd.concat([fresh_final_result,Bert_results], axis=1, ignore_index=False)
     print(fresh_final_result)
     fresh_final_result.to_csv('saved_everything/' + str(args.dataset) + '/fresh_predictive_results.csv')
 

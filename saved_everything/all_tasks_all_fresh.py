@@ -1,3 +1,4 @@
+from turtle import color
 import pandas as pd
 from functools import reduce
 import numpy as np
@@ -42,7 +43,7 @@ for i, name in enumerate(task_list):
     bert_path = './' + str(name) + '/bert_predictive.csv'
     bert = pd.read_csv(bert_path)[['mean-f1', 'Domain']]
     bert = bert.rename(columns={'mean-f1':'BERT'})
-    bert['Domain'] = ['Full', 'SynD', 'AsyD1', 'AsyD2']   
+    bert['Domain'] = ['Full size', 'SynD', 'AsyD1', 'AsyD2']   
 
     df = pd.read_csv(path)
     df = df[['mean-f1','Domain','attribute_name']]
@@ -51,12 +52,8 @@ for i, name in enumerate(task_list):
     #print(df)
     grouper = df.groupby('attribute_name')
     df = pd.concat([pd.Series(v['mean-f1'].tolist(), name=k) for k, v in grouper], axis=1)
-<<<<<<< HEAD
-    df['Domain'] = ['Full', 'SynD', 'AsyD1', 'AsyD2']   
-    df['BERT'] = bert['BERT']
-=======
-    df['Domain'] = ['Full size', 'SynD', 'AsyD1', 'AsyD2']   
->>>>>>> 87ae2bf5fd48f30f143ad1fdf23999e3239a494c
+    df['Domain'] = ['Full size', 'SynD', 'AsyD1', 'AsyD2']
+    df['BERT'] = bert['BERT']  
     print(df)
 
     if i == 3 or i == 4:
@@ -66,10 +63,10 @@ for i, name in enumerate(task_list):
 
 
     if i < 2:
-        axs[0, i].scatter(df['Domain'], df['gradients'], label='Gradients') #, marker='x', s=makersize
-        axs[0, i].scatter(df['Domain'], df['deeplift'], label='Deeplift', marker='d')
-        axs[0, i].scatter(df['Domain'], df['scaled attention'], label='Scaled attention', marker='x')
-        axs[0, i].scatter(df['Domain'], df['BERT'], label='BERT', marker='<')
+        axs[0, i].scatter(df['Domain'], df['gradients'], label='Gradients', color='dimgrey') #, marker='x', s=makersize
+        axs[0, i].scatter(df['Domain'], df['deeplift'], label='Deeplift', marker='d', color='darkorange')
+        axs[0, i].scatter(df['Domain'], df['scaled attention'], label='Scaled attention', marker='<', color='steelblue')
+        axs[0, i].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', color='red')
         axs[0, i].set_xlabel(SUB_NAME,fontsize=xlabel_size)
     # elif i > 3:
     #     axs[2, i-4].scatter(df['Domain'], df['Bert F1'], label='BERT', marker='x', s=makersize)
@@ -79,10 +76,10 @@ for i, name in enumerate(task_list):
     #     axs[2, i-4].scatter(df['Domain'], df['LSTM F1'], label='LSTM')
     #     axs[2, i-4].set_xlabel(SUB_NAME,fontsize=xlabel_size)
     else:
-        axs[1, i-2].scatter(df['Domain'], df['gradients'], label='Gradients')
-        axs[1, i-2].scatter(df['Domain'], df['deeplift'], label='Deeplift', marker='d')
-        axs[1, i-2].scatter(df['Domain'], df['scaled attention'], label='Scaled attention', marker='x')
-        axs[1, i-2].scatter(df['Domain'], df['BERT'], label='BERT', marker='<')
+        axs[1, i-2].scatter(df['Domain'], df['gradients'], label='Gradients', color='dimgrey')
+        axs[1, i-2].scatter(df['Domain'], df['deeplift'], label='Deeplift', marker='d', color='darkorange')
+        axs[1, i-2].scatter(df['Domain'], df['scaled attention'], label='Scaled attention', marker='<', color='steelblue')
+        axs[1, i-2].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', color='red')
         axs[1, i-2].set_xlabel(SUB_NAME,fontsize=xlabel_size)
     
 #fig.suptitle('Predictive Performance Comparison of Selective Rationalizations', fontsize=12)

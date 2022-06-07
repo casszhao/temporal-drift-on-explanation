@@ -48,7 +48,7 @@ for i, name in enumerate(task_list):
 
     df['Task']=SUB_NAME
     bigtable_list.append(df)
-    
+
     makersize = 60
 
     if i < 2:
@@ -95,9 +95,19 @@ all_tasks.to_csv('all_tasks_all_selective.csv')
 
 bigtable_list = []
 for name in task_list:
-    path = './' + str(name) + '/posthoc_and_predictive.csv'
-    df = pd.read_csv(path)
-    bigtable_list.append(df)
+
+    bert = pd.read_csv(str(name) + '/bert_predictive.csv')[['mean-f1', 'Domain']]
+    posthoc = pd.read_csv(str(name) + '/posthoc_faithfulness.csv')
+
+    merge = pd.merge(posthoc, bert, on = 'Domain')
+    #merge = merge.rename(columns={merge.columns[1]: 'Task'},inplace=True)
+    if 'Amaz' in str(name):
+        merge['Task'] = str(name)
+    else:
+        merge['Task'] = str(name).capitalize()
+    print(merge)
+    merge.to_csv(str(name)+ '/posthoc_and_predictive.csv')
+    bigtable_list.append(merge)
 
 all_tasks = pd.concat(bigtable_list, ignore_index=False)
 all_tasks.to_csv('all_tasks_all_posthoc.csv')

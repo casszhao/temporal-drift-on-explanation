@@ -1,8 +1,0 @@
-,Task,Label Num,Domain,Start Date,End Date,Time Span(Days),Median Date,Interquartile Time Span(Days),Data Num
-0,binarybragging,2,Original (full size),2019-01-13,2020-12-17,704,2019-12-17,366,5979
-0,binarybragging,2,Original Train,2019-01-13,2020-12-17,704,2019-12-17,355,4783
-0,binarybragging,2,Original Test,2019-01-13,2020-12-17,704,2020-01-29,366,598
-0,binarybragging,2,In Domain Train,2019-01-13,2020-08-19,584,2019-10-08,304,3589
-0,binarybragging,2,InDomain,2019-01-13,2020-08-19,584,2019-10-08,310,598
-0,binarybragging,2,OOD1,2020-08-19,2020-10-19,61,2020-09-29,41,597
-0,binarybragging,2,OOD2,2020-10-19,2020-12-17,59,2020-11-10,37,597

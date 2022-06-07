@@ -1,8 +1,0 @@
-,Task,Label Num,Domain,Start Date,End Date,Time Span(Days),Median Date,Interquartile Time Span(Days),Data Num
-0,complain,2,Original (full size),2011-01-07,2018-02-07,2588,2017-12-11,70,2677
-0,complain,2,Original Train,2011-01-07,2018-02-07,2588,2017-12-12,69,2141
-0,complain,2,Original Test,2011-03-21,2018-02-07,2515,2017-12-10,65,268
-0,complain,2,In Domain Train,2011-01-07,2018-01-20,2570,2017-12-01,95,1607
-0,complain,2,InDomain,2011-08-29,2018-01-20,2336,2017-12-02,46,268
-0,complain,2,OOD1,2018-01-20,2018-01-31,11,2018-01-26,5,267
-0,complain,2,OOD2,2018-01-31,2018-02-07,7,2018-02-04,4,267

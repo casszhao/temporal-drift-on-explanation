@@ -46,7 +46,7 @@ for i, name in enumerate(task_list):
     print(df)
     grouper = df.groupby('attribute_name')
     df = pd.concat([pd.Series(v['mean-f1'].tolist(), name=k) for k, v in grouper], axis=1)
-    df['Domain'] = ['Full', 'SynD', 'AsyD1', 'AsyD2']   
+    df['Domain'] = ['Full size', 'SynD', 'AsyD1', 'AsyD2']   
     print(df)
 
     if i == 3 or i == 4:

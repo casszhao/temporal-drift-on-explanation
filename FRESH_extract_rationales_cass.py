@@ -116,7 +116,7 @@ from src.data_functions.dataholders import BERT_HOLDER as dataholder
 
 data = dataholder(
     args["data_dir"],
-    b_size = 16, # b_size = args["batch_size"], #stage = "eval",
+    b_size = 8, # b_size = args["batch_size"], #stage = "eval",
     return_as_frames = True
 )
 
@@ -145,7 +145,7 @@ torch.cuda.empty_cache()
 ## ood evaluation DATASET 1
 data = dataholder(
     path = args["data_dir"],
-    b_size=16, # b_size = args["batch_size"],
+    b_size=8, # b_size = args["batch_size"],
     ood = True,
     ood_dataset_ = 1,
     return_as_frames = True
@@ -180,7 +180,7 @@ torch.cuda.empty_cache()
 ## ood evaluation DATASET 2
 data = dataholder(
     path = args["data_dir"],
-    b_size=16, # b_size = args["batch_size"],
+    b_size=8, # b_size = args["batch_size"],
     ood = True,
     ood_dataset_ = 2,
     return_as_frames = True

@@ -5,7 +5,7 @@
 #SBATCH --time=6-00:00
 
 # set name of job
-#SBATCH --job-name=YelpFRESH
+#SBATCH --job-name=Pan_rerun_bert
 
 # set number of GPUs
 #SBATCH --gres=gpu:1
@@ -27,7 +27,7 @@ module load python/anaconda3
 module load cuda/10.2
 source activate time_ood
 
-dataset="yelp"
+dataset="AmazPantry"
 model_dir="models/"
 data_dir="datasets/"
 evaluation_dir="posthoc_results/"
@@ -48,13 +48,13 @@ thresholder="topk"
 # echo "done EVALUATION BERT on full data and In Domain"
 
 
-# ##### evaluate POSTHOC BERT for full data and in domain
-# python evaluate_posthoc.py --dataset $dataset$"_full" --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder topk
-# python evaluate_posthoc.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder topk
-# echo "done evaluate faithfulness for topk for both full and indmain"
-# python evaluate_posthoc.py --dataset $dataset$"_full" --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder contigious
-# python evaluate_posthoc.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder contigious
-# echo "done evaluate faithfulness for contigious for both full and indmain"
+##### evaluate POSTHOC BERT for full data and in domain
+python evaluate_posthoc.py --dataset $dataset$"_full" --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder topk
+python evaluate_posthoc.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder topk
+echo "done evaluate faithfulness for topk for both full and indmain"
+python evaluate_posthoc.py --dataset $dataset$"_full" --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder contigious
+python evaluate_posthoc.py --dataset $dataset --model_dir $model_dir --data_dir $data_dir --evaluation_dir $evaluation_dir --thresholder contigious
+echo "done evaluate faithfulness for contigious for both full and indmain"
 
 
 ######## Train Fresh ################### on full dataset and In Domain
@@ -62,10 +62,10 @@ thresholder="topk"
 
 #### extract rationales
 # python FRESH_extract_rationales_cass.py --dataset $dataset$"_full" --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder $thresholder
-#python FRESH_extract_rationales_cass.py --dataset $dataset$"_full" --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder contigious
-python FRESH_extract_rationales_cass.py --dataset $dataset --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder $thresholder
-#python FRESH_extract_rationales_cass.py --dataset $dataset --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder contigious
-echo 'done extract rationales (top and contigious) for FRESH'
+# python FRESH_extract_rationales_cass.py --dataset $dataset$"_full" --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder contigious
+# python FRESH_extract_rationales_cass.py --dataset $dataset --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder $thresholder
+# python FRESH_extract_rationales_cass.py --dataset $dataset --data_dir $data_dir --model_dir $model_dir --extracted_rationale_dir $extracted_rationale_dir --thresholder contigious
+# echo 'done extract rationales (top and contigious) for FRESH'
 
 
 
@@ -93,11 +93,11 @@ echo 'done extract rationales (top and contigious) for FRESH'
 echo "starting training FRESH with: scaled attention"
 for seed in 5 10 15 20 25
 do
-    # python FRESH_train_on_rationales.py --dataset $dataset$"_full" --extracted_rationale_dir $extracted_rationale_dir --rationale_model_dir "FRESH_classifiers/" --thresholder $thresholder --importance_metric "scaled attention" --seed $seed
+    python FRESH_train_on_rationales.py --dataset $dataset$"_full" --extracted_rationale_dir $extracted_rationale_dir --rationale_model_dir "FRESH_classifiers/" --thresholder $thresholder --importance_metric "scaled attention" --seed $seed
     python FRESH_train_on_rationales.py --dataset $dataset --extracted_rationale_dir $extracted_rationale_dir --rationale_model_dir "FRESH_classifiers/" --thresholder $thresholder --importance_metric "scaled attention" --seed $seed
 done
 echo "starting evaluating FRESH with: scaled attention"
-# python FRESH_train_on_rationales.py --dataset $dataset$"_full" --extracted_rationale_dir $extracted_rationale_dir --rationale_model_dir "FRESH_classifiers/" --thresholder $thresholder --importance_metric "scaled attention" --evaluate_models
+python FRESH_train_on_rationales.py --dataset $dataset$"_full" --extracted_rationale_dir $extracted_rationale_dir --rationale_model_dir "FRESH_classifiers/" --thresholder $thresholder --importance_metric "scaled attention" --evaluate_models
 python FRESH_train_on_rationales.py --dataset $dataset --extracted_rationale_dir $extracted_rationale_dir --rationale_model_dir "FRESH_classifiers/" --thresholder $thresholder --importance_metric "scaled attention" --evaluate_models
 
 # thresholder="contigious"

@@ -46,23 +46,25 @@ for i, name in enumerate(task_list):
     else:
         SUB_NAME = str(name).capitalize()
 
+    makersize = 60
+
     if i < 2:
-        axs[0, i].scatter(df['Domain'], df['Bert F1'], label='BERT', marker='x')
-        axs[0, i].scatter(df['Domain'], df['FRESH F1'], label='FRESH(α∇α)', marker='x')
+        axs[0, i].scatter(df['Domain'], df['Bert F1'], label='BERT', marker='x', s=makersize)
+        axs[0, i].scatter(df['Domain'], df['FRESH F1'], label='FRESH(α∇α)', marker='x', s=makersize)
         axs[0, i].scatter(df['Domain'], df['SPECTRA F1'], label='SPECTRA')
         axs[0, i].scatter(df['Domain'], df['KUMA F1'], label='HardKUMA')
         axs[0, i].scatter(df['Domain'], df['LSTM F1'], label='LSTM')
         axs[0, i].set_xlabel(SUB_NAME,fontsize=xlabel_size)
     elif i > 3:
-        axs[2, i-4].scatter(df['Domain'], df['Bert F1'], label='BERT', marker='x')
-        axs[2, i-4].scatter(df['Domain'], df['FRESH F1'], label='FRESH(α∇α)', marker='x')
+        axs[2, i-4].scatter(df['Domain'], df['Bert F1'], label='BERT', marker='x', s=makersize)
+        axs[2, i-4].scatter(df['Domain'], df['FRESH F1'], label='FRESH(α∇α)', marker='x', s=makersize)
         axs[2, i-4].scatter(df['Domain'], df['SPECTRA F1'], label='SPECTRA')
         axs[2, i-4].scatter(df['Domain'], df['KUMA F1'], label='HardKUMA')
         axs[2, i-4].scatter(df['Domain'], df['LSTM F1'], label='LSTM')
         axs[2, i-4].set_xlabel(SUB_NAME,fontsize=xlabel_size)
     else:
-        axs[1, i-2].scatter(df['Domain'], df['Bert F1'], label='BERT', marker='x')
-        axs[1, i-2].scatter(df['Domain'], df['FRESH F1'], label='FRESH(α∇α)', marker='x')
+        axs[1, i-2].scatter(df['Domain'], df['Bert F1'], label='BERT', marker='x', s=makersize+4)
+        axs[1, i-2].scatter(df['Domain'], df['FRESH F1'], label='FRESH(α∇α)', marker='x', s=makersize+4)
         axs[1, i-2].scatter(df['Domain'], df['SPECTRA F1'], label='SPECTRA')
         axs[1, i-2].scatter(df['Domain'], df['KUMA F1'], label='HardKUMA')
         axs[1, i-2].scatter(df['Domain'], df['LSTM F1'], label='LSTM')

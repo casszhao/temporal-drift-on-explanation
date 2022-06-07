@@ -18,7 +18,8 @@ import os
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
- 
+''' generate select-then-predict results together for all tasks'''
+''' generate predictive results together for all tasks'''
 
 xlabel_size = 11
 xtick_size = 9
@@ -32,10 +33,11 @@ marker_style = dict(color='tab:blue', linestyle=':', marker='d',
                     #markersize=15, markerfacecoloralt='tab:red',
                     )
 
+bigtable_list = []
 for i, name in enumerate(task_list):
     path = './' + str(name) + '/selective_results.csv'
     df = pd.read_csv(path)
-    df['Task']=str(name)
+    
     df['Bert F1'] = df['Bert F1']*100
     df['FRESH F1'] = df['FRESH F1']*100
 
@@ -44,6 +46,9 @@ for i, name in enumerate(task_list):
     else:
         SUB_NAME = str(name).capitalize()
 
+    df['Task']=SUB_NAME
+    bigtable_list.append(df)
+    
     makersize = 60
 
     if i < 2:
@@ -84,7 +89,7 @@ fig1 = plt.gcf()
 fig.savefig('./selective_predictive.png', dpi=250)
 
 # print(bigtable_list)
-# all_tasks = pd.concat(bigtable_list, ignore_index=False)
+all_tasks = pd.concat(bigtable_list, ignore_index=False)
 all_tasks.to_csv('all_tasks_all_selective.csv')
 
 

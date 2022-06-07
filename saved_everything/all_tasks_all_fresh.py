@@ -49,7 +49,7 @@ for i, name in enumerate(task_list):
     makersize = 60
 
     if i < 2:
-        axs[0, i].scatter(df['Domain'], df['gradients'], label='Gradients') #, marker='x', s=makersize
+        axs[0, i].scatter(df['Domain'], df[''], label='Gradients') #, marker='x', s=makersize
         axs[0, i].scatter(df['Domain'], df['deeplift'], label='Deeplift')
         axs[0, i].scatter(df['Domain'], df['scaled attention'], label='Scaled attention')
         axs[0, i].set_xlabel(SUB_NAME,fontsize=xlabel_size)

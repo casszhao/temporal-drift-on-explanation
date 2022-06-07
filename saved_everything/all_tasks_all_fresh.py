@@ -49,9 +49,9 @@ for i, name in enumerate(task_list):
     makersize = 60
 
     if i < 2:
-        axs[0, i].scatter(df['Domain'], df['gradients'], label='Gradients') #, marker='x', s=makersize
-        axs[0, i].scatter(df['Domain'], df['deeplift'], label='Deeplift')
-        axs[0, i].scatter(df['Domain'], df['scaled attention'], label='Scaled attention')
+        axs[0, i].scatter(df['Domain'], df['mean-f1'], hue = 'attribute_name') #, marker='x', s=makersize
+        # axs[0, i].scatter(df['Domain'], df['deeplift'], label='Deeplift')
+        # axs[0, i].scatter(df['Domain'], df['scaled attention'], label='Scaled attention')
         axs[0, i].set_xlabel(SUB_NAME,fontsize=xlabel_size)
     # elif i > 3:
     #     axs[2, i-4].scatter(df['Domain'], df['Bert F1'], label='BERT', marker='x', s=makersize)
@@ -61,9 +61,9 @@ for i, name in enumerate(task_list):
     #     axs[2, i-4].scatter(df['Domain'], df['LSTM F1'], label='LSTM')
     #     axs[2, i-4].set_xlabel(SUB_NAME,fontsize=xlabel_size)
     else:
-        axs[1, i-2].scatter(df['Domain'], df['gradients'], label='Gradients')
-        axs[1, i-2].scatter(df['Domain'], df['deeplift'], label='Deeplift')
-        axs[1, i-2].scatter(df['Domain'], df['scaled attention'], label='Scaled attention')
+        axs[1, i-2].scatter(df['Domain'], df['mean-f1'], hue = 'attribute_name')
+        # axs[1, i-2].scatter(df['Domain'], df['deeplift'], label='Deeplift')
+        # axs[1, i-2].scatter(df['Domain'], df['scaled attention'], label='Scaled attention')
         axs[1, i-2].set_xlabel(SUB_NAME,fontsize=xlabel_size)
     
 #fig.suptitle('Predictive Performance Comparison of Selective Rationalizations', fontsize=12)

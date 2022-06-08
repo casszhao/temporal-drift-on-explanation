@@ -172,9 +172,12 @@ fresh_result = fresh_result.rename(columns={"mean-f1":"FRESH F1", "std-f1":"FRES
 
 ## get KUMA of FULL / IN D / OOD1 / OOD2
 kuma_FullData = pd.read_json('./kuma_model/'+str(args.dataset)+'_full/kuma-bert_predictive_performances.json')
-pd.options.display.max_columns = None
-print('    KUMA    FULL ')
-print(kuma_FullData)
+# pd.options.display.max_columns = None
+# print('    KUMA    FULL ')
+# print(kuma_FullData)
+kuma_InDomain_path = os.path.join('kuma_model',str(args.dataset),'/kuma-bert_predictive_performances.json')
+print('    KUMA    kuma_InDomain_path ')
+print(kuma_InDomain_path)
 kuma_InDomain = pd.read_json('./kuma_model/'+str(args.dataset)+'/kuma-bert_predictive_performances.json')
 kuma_OOD1 = pd.read_json('./kuma_model/'+str(args.dataset)+'/kuma-bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
 kuma_OOD2 = pd.read_json('./kuma_model/'+str(args.dataset)+'/kuma-bert_predictive_performances-OOD-' + str(args.dataset) + '_ood2.json')
@@ -214,7 +217,7 @@ SPECTRA = pd.read_csv('saved_everything/' + str(args.dataset) + '/spectra_mean.c
 ##############################
 
 final = pd.concat([bert_result, fresh_result, LSTM_result, kuma_result, SPECTRA], axis=1)
-final['Domain'] = ['Full size', 'SynD', 'AsyD1', 'AsyD2']
+final['Domain'] = ['Full', 'SynD', 'AsyD1', 'AsyD2']
 final = final.rename({'Domain': 'Testing Set'})
 s = final[final.select_dtypes(include=['number']).columns] * 100
 final[s.columns] = s

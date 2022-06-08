@@ -101,7 +101,7 @@ cols = bert_result.columns.tolist()
 cols = cols[-1:] + cols[:-1]
 bert_result = bert_result[cols]
 bert_result = bert_result.reset_index()[['Domain', 'mean-f1', 'std-f1']]
-bert_result = bert_result.rename(columns={"mean-f1":"BERT F1", "std-f1":"Bert std"})
+bert_result = bert_result.rename(columns={"mean-f1":"Bert F1", "std-f1":"Bert std"})
 
 ####################################################################################
 #####################################################################################

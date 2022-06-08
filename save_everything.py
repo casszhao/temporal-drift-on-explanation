@@ -136,7 +136,7 @@ if args.save_for_bert:
         OOD2 = OOD2[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
 
     OOD12 = (OOD1 + OOD2)/2
-    Full_data['Domain'] = 'Full size'
+    Full_data['Domain'] = 'Full'
     InDomain['Domain'] = 'SynD'
     OOD1['Domain'] = 'AsyD1'
     OOD2['Domain'] = 'AsyD2'
@@ -396,7 +396,7 @@ if args.save_for_bert:
         OOD2 = OOD2[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
 
     OOD12 = (OOD1 + OOD2)/2
-    Full_data['Domain'] = 'Full size'
+    Full_data['Domain'] = 'Full'
     InDomain['Domain'] = 'SynD'
     OOD1['Domain'] = 'AsyD1'
     OOD2['Domain'] = 'AsyD2'
@@ -467,7 +467,7 @@ if args.save_posthoc:
                 
 
         full = pd.read_json(full_path)
-        full_df = json2df(full, 'Full size')
+        full_df = json2df(full, 'Full')
         indomain = pd.read_json(indomain_path)
         df = json2df(indomain, 'SynD')
         OOD1 = pd.read_json(ood1_path)

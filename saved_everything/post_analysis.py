@@ -107,7 +107,7 @@ for name in task_list:
         merge['Task'] = str(name)
     else:
         merge['Task'] = str(name).capitalize()
-    #print(merge)
+    print(merge)
     merge.to_csv(str(name)+ '/posthoc_and_predictive.csv')
     bigtable_list.append(merge)
 

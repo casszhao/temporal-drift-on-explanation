@@ -24,13 +24,13 @@ df['mean-f1'] = df['mean-f1']*100
 
 print(df)
 
-data = 'AmazPantry'
+data = 'Agnews'
 df = df[df['Task'].str.contains(str(data))]
 print(df)
 suff = df[df['Rationales_metrics'].str.contains('AOPC_sufficiency')]
 comp = df[df['Rationales_metrics'].str.contains('AOPC_comprehensiveness')]
 my_range=suff['Domain']
-print(df)
+print(my_range)
 
 ALPHA = 0.5
 SIZE = 150
@@ -92,7 +92,6 @@ else:
 
 
 fig, ax = plt.subplots(1, 3, gridspec_kw={'width_ratios': [0.9, 4, 4]}, sharey='all', figsize=(13,2.3))
-temporal_order = ["Full size", "SynD", "AsyD1", "AsyD2"]
 
 
 # Set number of ticks for x-axis
@@ -116,6 +115,7 @@ if data == 'Amazdigimu':
     ax[0].set_ylabel('AmazDigiMu', fontsize=xlabel_size)
 else:
     ax[0].set_ylabel(str(data), fontsize=xlabel_size)
+ax[0].invert_yaxis()
 #ax[0].set_yticklabels(my_range, fontsize=13)
 
 plt.plot()
@@ -135,6 +135,7 @@ ax[1].scatter(suff['deepliftshap'], my_range, color='orange', alpha=ALPHA+0.2, l
 ax[1].scatter(suff['attention'], my_range, color='gold', alpha=ALPHA+0.4, label='Attention', s=SIZE)
 ax[1].scatter(suff['lime'], my_range, color='plum', alpha=ALPHA+0.4, label='Lime', s=SIZE)
 ax[1].set_xlabel('AOPC Sufficiency',fontsize=xlabel_size)
+ax[1].invert_yaxis()
 plt.plot()
 
 
@@ -152,6 +153,7 @@ ax[2].scatter(comp['deepliftshap'], my_range, color='orange', alpha=ALPHA+0.2, l
 ax[2].scatter(comp['attention'], my_range, color='gold', alpha= ALPHA+0.4, label='Attention', s=SIZE)
 ax[2].scatter(comp['lime'], my_range, color='plum', alpha=ALPHA+0.4, label='Lime', s=SIZE)
 ax[2].set_xlabel('AOPC Comprehensiveness',fontsize=xlabel_size)
+ax[2].invert_yaxis()
 plt.plot()
 
 

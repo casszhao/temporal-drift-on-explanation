@@ -43,7 +43,7 @@ for i, name in enumerate(task_list):
     bert_path = './' + str(name) + '/bert_predictive.csv'
     bert = pd.read_csv(bert_path)[['mean-f1', 'Domain']]
     bert = bert.rename(columns={'mean-f1':'BERT'})
-    bert['Domain'] = ['Full size', 'SynD', 'AsyD1', 'AsyD2']   
+    bert['Domain'] = ['Full', 'SynD', 'AsyD1', 'AsyD2']   
 
     df = pd.read_csv(path)
     df = df[['mean-f1','Domain','attribute_name']]
@@ -52,7 +52,7 @@ for i, name in enumerate(task_list):
     #print(df)
     grouper = df.groupby('attribute_name')
     df = pd.concat([pd.Series(v['mean-f1'].tolist(), name=k) for k, v in grouper], axis=1)
-    df['Domain'] = ['Full size', 'SynD', 'AsyD1', 'AsyD2']
+    df['Domain'] = ['Full', 'SynD', 'AsyD1', 'AsyD2']
     df['BERT'] = bert['BERT']  
     print(df)
 

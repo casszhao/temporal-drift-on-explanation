@@ -8,7 +8,7 @@ from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
 df = pd.read_csv("all_tasks_all_posthoc.csv")
 print(df)
-df = df[df['thresholder'].str.contains('topk')] # topk
+df = df[df['thresholder'].str.contains('contigi')] # topk
 
 df['gradients'] = df['gradients']/df['random']
 df['deeplift'] = df['deeplift']/df['random']
@@ -22,11 +22,9 @@ df['ig'] = df['ig']/df['random']
 df['random'] = df['random']/df['random']
 df['mean-f1'] = df['mean-f1']*100
 
-print(df)
-
-data = 'Agnews'
+data = 'Factcheck'
 df = df[df['Task'].str.contains(str(data))]
-print(df)
+
 suff = df[df['Rationales_metrics'].str.contains('AOPC_sufficiency')]
 comp = df[df['Rationales_metrics'].str.contains('AOPC_comprehensiveness')]
 my_range=suff['Domain']
@@ -60,7 +58,7 @@ elif data == 'Agnews':
     suff_max = 1.6
     comp_min = 0.8
     comp_max = 3.4
-elif data == 'Amazdigimu':
+elif data == 'AmazDigiMu':
     bert_min = 55
     bert_max = 75
     suff_min = 0.3
@@ -91,7 +89,7 @@ else:
     comp_max = 0.35
 
 
-fig, ax = plt.subplots(1, 3, gridspec_kw={'width_ratios': [0.9, 4, 4]}, sharey='all', figsize=(13,2.3))
+fig, ax = plt.subplots(1, 3, gridspec_kw={'width_ratios': [0.9, 4, 4]}, sharey='all', figsize=(13,2.1))
 
 
 # Set number of ticks for x-axis
@@ -100,7 +98,7 @@ ax[0].set_yticks(range(len(my_range)))
 ax[0].set_yticklabels(my_range)
 
 ax[0].hlines(y=my_range, xmin=bert_min, xmax=bert_max, color='grey', alpha=0.35)
-ax[0].scatter(df['mean-f1'], df['Domain'], color='dimgray', alpha=1, label='F1', marker=">", s=166) # marker='|'
+ax[0].scatter(df['mean-f1'], df['Domain'], color='dimgray', alpha=1, label='F1', marker=">", s=144) # marker='|'
 for x,y in zip(df['mean-f1'],df['Domain']):
     label = format(x, '.1f')
     ax[0].annotate(label, # this is the text
@@ -120,10 +118,11 @@ ax[0].invert_yaxis()
 
 plt.plot()
 
-
+YMIN = -1
+YMAX = 4
 ############################################################   SUFF  
 ax[1].hlines(y=my_range, xmin=suff_min, xmax=suff_max, color='grey', alpha=0.35)
-ax[1].vlines(x = 1, ymin=0, ymax=3.5, color='black', alpha=1)
+ax[1].vlines(x = 1, ymin=YMIN, ymax=YMAX, color='black', alpha=1)
 ax[1].scatter(suff['random'], my_range, color='black', alpha=1, label='Random', marker='|', s=230)
 
 ax[1].scatter(suff['gradients'], my_range, color='red', alpha=ALPHA , label='Gradients', s=SIZE)
@@ -141,7 +140,7 @@ plt.plot()
 
 ########################################   COM  #################################
 ax[2].hlines(y=my_range, xmin=comp_min, xmax=comp_max, color='grey', alpha=0.35)
-ax[2].vlines(x = 1, ymin=0, ymax=3.5, color='black', alpha=1)
+ax[2].vlines(x = 1, ymin=YMIN, ymax=YMAX, color='black', alpha=1)
 ax[2].scatter(comp['random'], my_range, color='black', alpha=1, label='Random', marker='|', s=230)
 
 ax[2].scatter(comp['gradients'], my_range, color='red', alpha=ALPHA , label='Gradients', s=SIZE)
@@ -158,21 +157,21 @@ plt.plot()
 
 
 plt.subplots_adjust(
-    left=0.074,
-    bottom=0.229, 
-    right=0.843, 
-    top=0.902, 
-    wspace=0.05, 
+    left=0.064,
+    bottom=0.221, 
+    right=0.857, 
+    top=0.91, 
+    wspace=0.076, 
     hspace=0.2,
     )
 
 
 
-plt.legend(bbox_to_anchor=(1.02, 1.1), loc='upper left', borderaxespad=0, fontsize=legend_font_size)
+plt.legend(bbox_to_anchor=(1.05, 1.1), loc='upper left', borderaxespad=0, fontsize=legend_font_size-1.5)
 #fig.update_layout(yaxis5=dict(type='category',categoryorder='category ascending'))
 fig1 = plt.gcf()
 
 plt.show()
 plt.draw()
-fig1.savefig('./plot/'+str(data)+'.png', dpi=250)
+fig1.savefig('./plot/contig'+str(data)+'.png', dpi=250)
 #plt.savefig('./plot/'+str(data), format='png') # bbox_inches = 'tight', dpi=350,

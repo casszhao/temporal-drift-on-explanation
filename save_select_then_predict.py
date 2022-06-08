@@ -92,7 +92,7 @@ OOD1 = OOD1[select_columns].iloc[0]
 OOD2 = OOD2[select_columns].iloc[0]
 
 
-Full_data['Domain'] = 'Full size'
+Full_data['Domain'] = 'Full'
 InDomain['Domain'] = 'SynD'
 OOD1['Domain'] = 'AsyD1'
 OOD2['Domain'] = 'AsyD2'

@@ -35,9 +35,11 @@ marker_style = dict(color='tab:blue', linestyle=':', marker='d',
 
 bigtable_list = []
 for i, name in enumerate(task_list):
+    print('----------------------------')
+    print(name)
     path = './' + str(name) + '/selective_results.csv'
     df = pd.read_csv(path)
-    
+    print(df)
     df['Bert F1'] = df['Bert F1']*100
     df['FRESH F1'] = df['FRESH F1']*100
 
@@ -105,7 +107,7 @@ for name in task_list:
         merge['Task'] = str(name)
     else:
         merge['Task'] = str(name).capitalize()
-    print(merge)
+    #print(merge)
     merge.to_csv(str(name)+ '/posthoc_and_predictive.csv')
     bigtable_list.append(merge)
 

@@ -1,0 +1,43 @@
+{
+    "kuma-bert20": {
+        "model": "/jmain02/home/J2AD003/txk58/zxz22-txk58/extract_rationales/extract_rationales/kuma_model/yelp/kuma-bert20.pt",
+        "f1": 0.1989911248453924,
+        "accuracy": 0.4215456674473068,
+        "loss": 10.303502267766222,
+        "ece-score": 0.033070621013083
+    },
+    "kuma-bert15": {
+        "model": "/jmain02/home/J2AD003/txk58/zxz22-txk58/extract_rationales/extract_rationales/kuma_model/yelp/kuma-bert15.pt",
+        "f1": 0.1956516198341765,
+        "accuracy": 0.40339578454332553,
+        "loss": 10.974416318340836,
+        "ece-score": 0.06291300550417263
+    },
+    "kuma-bert25": {
+        "model": "/jmain02/home/J2AD003/txk58/zxz22-txk58/extract_rationales/extract_rationales/kuma_model/yelp/kuma-bert25.pt",
+        "f1": 0.1956167887454947,
+        "accuracy": 0.4133489461358314,
+        "loss": 10.751929231893236,
+        "ece-score": 0.04507468272637427
+    },
+    "kuma-bert5": {
+        "model": "/jmain02/home/J2AD003/txk58/zxz22-txk58/extract_rationales/extract_rationales/kuma_model/yelp/kuma-bert5.pt",
+        "f1": 0.18484641572067217,
+        "accuracy": 0.3864168618266979,
+        "loss": 10.73275115779627,
+        "ece-score": 0.032970349023018264
+    },
+    "kuma-bert10": {
+        "model": "/jmain02/home/J2AD003/txk58/zxz22-txk58/extract_rationales/extract_rationales/kuma_model/yelp/kuma-bert10.pt",
+        "f1": 0.19584146122191426,
+        "accuracy": 0.41510538641686184,
+        "loss": 10.422170153288084,
+        "ece-score": 0.02314341799366948
+    },
+    "mean-acc": 0.4079625292740047,
+    "std-acc": 0.012244235219831218,
+    "mean-f1": 0.19418948207352998,
+    "std-f1": 0.004842576761521123,
+    "mean-ece": 0.03943441525206352,
+    "std-ece": 0.013643573127379556
+}

@@ -63,6 +63,13 @@ parser.add_argument(
     default=False
 )
 
+parser.add_argument(
+    '--save_accuracy_version',
+    help='decide which parts are in need',
+    action='store_true',
+    default=False
+)
+
 
 args = parser.parse_args()
 
@@ -70,8 +77,10 @@ datasets_dir = 'saved_everything/' + str(args.dataset)
 os.makedirs(datasets_dir, exist_ok = True)
 
 
-
-select_columns = ['mean-f1', 'std-f1']
+if args.save_accuracy_version:
+    select_columns = ['mean-acc', 'std-acc']
+else:
+    select_columns = ['mean-f1', 'std-f1']
 
 
 
@@ -100,8 +109,12 @@ bert_result = pd.concat([Full_data, InDomain, OOD1, OOD2], ignore_index=False, a
 cols = bert_result.columns.tolist()
 cols = cols[-1:] + cols[:-1]
 bert_result = bert_result[cols]
-bert_result = bert_result.reset_index()[['Domain', 'mean-f1', 'std-f1']]
-bert_result = bert_result.rename(columns={"mean-f1":"Bert F1", "std-f1":"Bert std"})
+if args.save_accuracy_version:
+    bert_result = bert_result.reset_index()[['Domain', 'mean-acc', 'std-acc']]
+    bert_result = bert_result.rename(columns={"mean-acc":"BERT ACC", "std-acc":"BERT ACC"})
+else:
+    bert_result = bert_result.reset_index()[['Domain', 'mean-f1', 'std-f1']]
+    bert_result = bert_result.rename(columns={"mean-f1":"Bert F1", "std-f1":"Bert std"})
 
 ####################################################################################
 #####################################################################################
@@ -162,7 +175,10 @@ fresh_OOD2['Domain'] = 'AsyD2'
 
 
 fresh_result = pd.concat([fresh_full_data, fresh_InDomain, fresh_OOD1, fresh_OOD2], axis=1, ignore_index=False).T.reset_index()[select_columns]
-fresh_result = fresh_result.rename(columns={"mean-f1":"FRESH F1", "std-f1":"FRESH std"})
+if args.save_accuracy_version:
+    fresh_result = fresh_result.rename(columns={"mean-acc":"FRESH ACC", "std-acc":"FRESH std"})
+else:
+    fresh_result = fresh_result.rename(columns={"mean-f1":"FRESH F1", "std-f1":"FRESH std"})
 
 
 

@@ -21,6 +21,8 @@ import pandas as pd
 ''' generate select-then-predict results together for all tasks'''
 ''' generate predictive results together for all tasks'''
 
+use_acc = True
+
 xlabel_size = 11
 xtick_size = 9
 
@@ -38,41 +40,48 @@ for i, name in enumerate(task_list):
     print('----------------------------')
     print(name)
 
-    Full_data = pd.read_json('./models/' + str(name) + '_full/bert_predictive_performances.json')
-    InDomain = pd.read_json('./models/' + str(name) + '/bert_predictive_performances.json')
-    path = os.path.join('./models/', str(name),'bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
-    OOD1 = pd.read_json(path)
-    path = os.path.join('./models/', str(name),'bert_predictive_performances-OOD-' + str(args.dataset) + '_ood2.json')
-    OOD2 = pd.read_json(path)
+    # Full_data = pd.read_json('./models/' + str(name) + '_full/bert_predictive_performances.json')
+    # InDomain = pd.read_json('./models/' + str(name) + '/bert_predictive_performances.json')
+    # path = os.path.join('./models/', str(name),'bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
+    # OOD1 = pd.read_json(path)
+    # path = os.path.join('./models/', str(name),'bert_predictive_performances-OOD-' + str(args.dataset) + '_ood2.json')
+    # OOD2 = pd.read_json(path)
 
-    if args.get_all_seeds_for_predictive:
-        pass
-    else:
-        Full_data = Full_data[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
-        InDomain = InDomain[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
-        OOD1 = OOD1[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
-        OOD2 = OOD2[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
+    # if args.get_all_seeds_for_predictive:
+    #     pass
+    # else:
+    #     Full_data = Full_data[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
+    #     InDomain = InDomain[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
+    #     OOD1 = OOD1[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
+    #     OOD2 = OOD2[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[0]
 
-    OOD12 = (OOD1 + OOD2)/2
-    Full_data['Domain'] = 'Full'
-    InDomain['Domain'] = 'SynD'
-    OOD1['Domain'] = 'AsyD1'
-    OOD2['Domain'] = 'AsyD2'
-    #OOD12['Domain'] = 'AsyD1+2'
+    # OOD12 = (OOD1 + OOD2)/2
+    # Full_data['Domain'] = 'Full'
+    # InDomain['Domain'] = 'SynD'
+    # OOD1['Domain'] = 'AsyD1'
+    # OOD2['Domain'] = 'AsyD2'
+    # #OOD12['Domain'] = 'AsyD1+2'
     
 
-    result = pd.concat([Full_data, InDomain, OOD1, OOD2], ignore_index=False, axis=1).T
-    #result.to_csv('saved_everything/' + str(args.dataset) + '/bert_predictive.csv')
+    # result = pd.concat([Full_data, InDomain, OOD1, OOD2], ignore_index=False, axis=1).T
+    # #result.to_csv('saved_everything/' + str(args.dataset) + '/bert_predictive.csv')
 
 
 
 
-
-    path = './' + str(name) + '/selective_results.csv'
-    df = pd.read_csv(path)
-    print(df)
-    df['Bert F1'] = df['Bert F1']*100
-    df['FRESH F1'] = df['FRESH F1']*100
+    if use_acc == True:
+        path = './' + str(name) + '/selective_results_acc.csv'
+        df = pd.read_csv(path)
+        print(df)
+        df['Bert ACC'] = df['Bert ACC']*100
+        df['FRESH ACC'] = df['FRESH ACC']*100
+        df = df.rename(column={'Bert ACC':'BERT', 'FRESH ACC':'FRESH', 'KUMA ACC':'KUMA','LSTM ACC':'LSTM'})
+    else:
+        path = './' + str(name) + '/selective_results.csv'
+        df = pd.read_csv(path)
+        df['Bert F1'] = df['Bert F1']*100
+        df['FRESH F1'] = df['FRESH F1']*100
+        df = df.rename(column={'Bert F1':'BERT', 'FRESH F1':'FRESH', 'KUMA F1':'KUMA','LSTM F1':'LSTM'})
 
     if i == 3 or i == 4:
         SUB_NAME = str(name)
@@ -85,18 +94,18 @@ for i, name in enumerate(task_list):
     makersize = 60
 
     if i < 2:
-        axs[0, i].scatter(df['Domain'], df['Bert F1'], label='BERT', marker='x', s=makersize)
-        axs[0, i].scatter(df['Domain'], df['FRESH F1'], label='FRESH(α∇α)', marker='x', s=makersize)
-        axs[0, i].scatter(df['Domain'], df['SPECTRA F1'], label='SPECTRA')
-        axs[0, i].scatter(df['Domain'], df['KUMA F1'], label='HardKUMA')
-        axs[0, i].scatter(df['Domain'], df['LSTM F1'], label='LSTM')
+        axs[0, i].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', s=makersize)
+        axs[0, i].scatter(df['Domain'], df['FRESH'], label='FRESH(α∇α)', marker='x', s=makersize)
+        axs[0, i].scatter(df['Domain'], df['SPECTRA'], label='SPECTRA')
+        axs[0, i].scatter(df['Domain'], df['KUMA'], label='HardKUMA')
+        axs[0, i].scatter(df['Domain'], df['LSTM'], label='LSTM')
         axs[0, i].set_xlabel(SUB_NAME,fontsize=xlabel_size)
     elif i > 3:
         axs[2, i-4].scatter(df['Domain'], df['Bert F1'], label='BERT', marker='x', s=makersize)
         axs[2, i-4].scatter(df['Domain'], df['FRESH F1'], label='FRESH(α∇α)', marker='x', s=makersize)
         axs[2, i-4].scatter(df['Domain'], df['SPECTRA F1'], label='SPECTRA')
         axs[2, i-4].scatter(df['Domain'], df['KUMA F1'], label='HardKUMA')
-        axs[2, i-4].scatter(df['Domain'], df['LSTM F1'], label='LSTM')
+        axs[2, i-4].scatter(df['Domain'], df['LSTM'], label='LSTM')
         axs[2, i-4].set_xlabel(SUB_NAME,fontsize=xlabel_size)
     else:
         axs[1, i-2].scatter(df['Domain'], df['Bert F1'], label='BERT', marker='x', s=makersize+4)
@@ -124,7 +133,7 @@ fig.savefig('./selective_predictive.png', dpi=250)
 # print(bigtable_list)
 all_tasks = pd.concat(bigtable_list, ignore_index=False)
 all_tasks.to_csv('all_tasks_all_selective.csv')
-
+exit()
 
 bigtable_list = []
 for name in task_list:
@@ -146,7 +155,7 @@ all_tasks = pd.concat(bigtable_list, ignore_index=False)
 all_tasks.to_csv('all_tasks_all_posthoc.csv')
 
 
-exit()
+
 
 
 

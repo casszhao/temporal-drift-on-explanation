@@ -25,6 +25,14 @@ parser.add_argument(
     help = "select dataset / task",
     default = "complain",
 )
+
+parser.add_argument(
+    "--combine_all_tasks",
+    help='combine all',
+    action='store_true',
+    default=False
+)
+
 parser.add_argument(
     '--get_all_seeds_for_predictive',
     help='get all seeds results for bert prediction',
@@ -146,6 +154,8 @@ else:
         fresh_OOD1_path = os.path.join('FRESH_classifiers', str(args.dataset), 'topk/', 'scaled_attention_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
         fresh_OOD2_path = os.path.join('FRESH_classifiers', str(args.dataset), 'topk/', 'scaled_attention_bert_predictive_performances-OOD-' + str(args.dataset) + '_ood2.json')
         file_exists = os.path.exists(fresh_OOD1_path)
+    print('fresh ood path ')
+    print(fresh_OOD1_path)
     fresh_OOD1 = pd.read_json(fresh_OOD1_path)
     fresh_OOD2 = pd.read_json(fresh_OOD2_path)
 
@@ -221,12 +231,16 @@ LSTM_OOD2 = LSTM_OOD2[select_columns].iloc[0]
 
 
 kuma_result = pd.concat([kuma_FullData, kuma_InDomain, kuma_OOD1, kuma_OOD2], ignore_index=False, axis=1).T
-kuma_result = kuma_result.reset_index()[['mean-f1', 'std-f1']]
-kuma_result = kuma_result.rename(columns={"mean-f1":"KUMA F1", "std-f1":"KUMA std"})
-
+kuma_result = kuma_result.reset_index()[select_columns]
 LSTM_result = pd.concat([LSTM_FullData, LSTM_InDomain, LSTM_OOD1, LSTM_OOD2], ignore_index=False, axis=1).T
-LSTM_result = LSTM_result.reset_index()[['mean-f1', 'std-f1']]
-LSTM_result = LSTM_result.rename(columns={"mean-f1":"LSTM F1", "std-f1":"LSTM std"})
+LSTM_result = LSTM_result.reset_index()[select_columns]
+
+if args.save_accuracy_version:
+    kuma_result = kuma_result.rename(columns={"mean-acc":"KUMA ACC", "std-acc":"KUMA std"})
+    LSTM_result = LSTM_result.rename(columns={"mean-acc":"LSTM ACC", "std-acc":"LSTM std"})
+else:
+    kuma_result = kuma_result.rename(columns={"mean-f1":"KUMA F1", "std-f1":"KUMA std"})
+    LSTM_result = LSTM_result.rename(columns={"mean-f1":"LSTM F1", "std-f1":"LSTM std"})
 
 SPECTRA = pd.read_csv('saved_everything/' + str(args.dataset) + '/spectra_mean.csv')[['avg', 'std']].rename(columns={"avg":"SPECTRA F1", "std":"SPECTRA std"})
 
@@ -238,4 +252,5 @@ final = final.rename({'Domain': 'Testing Set'})
 s = final[final.select_dtypes(include=['number']).columns] * 100
 final[s.columns] = s
 print(final)
-final.to_csv('saved_everything/' + str(args.dataset) + '/selective_results.csv')
+final.to_csv('saved_everything/' + str(args.dataset) + '/selective_results_acc.csv')
+

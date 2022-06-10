@@ -24,7 +24,7 @@ import pandas as pd
 xlabel_size = 11
 xtick_size = 9
 
-task_list = ['agnews', 'xfact', 'factcheck', 'AmazDigiMu', 'AmazPantry', 'yelp'] #, 'AmazDigiMu', 'AmazInstr', 'AmazPantry'
+task_list = ['agnews', 'xfact', 'factcheck', 'AmazDigiMu', 'AmazPantry', 'yelp'] #, 'AmazDigiMu', 'AmazPantry'
 
 plt.style.use('ggplot')
 fig, axs = plt.subplots(3, 2, figsize=(6, 7), sharey=False, sharex=False)
@@ -37,11 +37,17 @@ bigtable_list = []
 for i, name in enumerate(task_list):
     print('----------------------------')
     print(name)
-    path = './' + str(name) + '/selective_results.csv'
+    path = './' + str(name) + '/selective_results_acc.csv'
     df = pd.read_csv(path)
     print(df)
-    df['Bert F1'] = df['Bert F1']*100
-    df['FRESH F1'] = df['FRESH F1']*100
+    if 'acc' in path:
+        df['BERT ACC'] = df['BERT ACC']*100
+        df['FRESH ACC'] = df['FRESH ACC']*100
+        df = df.rename(columns={'BERT ACC':'BERT', 'FRESH ACC':'FRESH', 'SPECTRA F1':'SPECTRA', 'KUMA ACC':'KUMA','LSTM ACC':'LSTM'})
+    else:
+        df['Bert F1'] = df['Bert F1']*100
+        df['FRESH F1'] = df['FRESH F1']*100
+        df = df.rename(columns={'Bert F1':'BERT', 'FRESH F1':'FRESH', 'SPECTRA F1':'SPECTRA', 'KUMA F1':'KUMA','LSTM F1':'LSTM'})
 
     if i == 3 or i == 4:
         SUB_NAME = str(name)
@@ -52,27 +58,28 @@ for i, name in enumerate(task_list):
     bigtable_list.append(df)
 
     makersize = 60
+    print(df)
 
     if i < 2:
-        axs[0, i].scatter(df['Domain'], df['Bert F1'], label='BERT', marker='x', s=makersize)
-        axs[0, i].scatter(df['Domain'], df['FRESH F1'], label='FRESH(α∇α)', marker='x', s=makersize)
-        axs[0, i].scatter(df['Domain'], df['SPECTRA F1'], label='SPECTRA')
-        axs[0, i].scatter(df['Domain'], df['KUMA F1'], label='HardKUMA')
-        axs[0, i].scatter(df['Domain'], df['LSTM F1'], label='LSTM')
+        axs[0, i].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', s=makersize)
+        axs[0, i].scatter(df['Domain'], df['FRESH'], label='FRESH(α∇α)', marker='x', s=makersize)
+        #axs[0, i].scatter(df['Domain'], df['SPECTRA'], label='SPECTRA')
+        axs[0, i].scatter(df['Domain'], df['KUMA'], label='HardKUMA', marker='d', color='orange', s=makersize+4)
+        axs[0, i].scatter(df['Domain'], df['LSTM'], label='LSTM')
         axs[0, i].set_xlabel(SUB_NAME,fontsize=xlabel_size)
-    elif i > 3:
-        axs[2, i-4].scatter(df['Domain'], df['Bert F1'], label='BERT', marker='x', s=makersize)
-        axs[2, i-4].scatter(df['Domain'], df['FRESH F1'], label='FRESH(α∇α)', marker='x', s=makersize)
-        axs[2, i-4].scatter(df['Domain'], df['SPECTRA F1'], label='SPECTRA')
-        axs[2, i-4].scatter(df['Domain'], df['KUMA F1'], label='HardKUMA')
-        axs[2, i-4].scatter(df['Domain'], df['LSTM F1'], label='LSTM')
+    # elif i > 3:
+        axs[2, i-4].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', s=makersize)
+        axs[2, i-4].scatter(df['Domain'], df['FRESH'], label='FRESH(α∇α)', marker='x', s=makersize)
+        # axs[2, i-4].scatter(df['Domain'], df['SPECTRA'], label='SPECTRA')
+        # axs[2, i-4].scatter(df['Domain'], df['KUMA'], label='HardKUMA', marker='d', color='orange', s=makersize+4)
+        axs[2, i-4].scatter(df['Domain'], df['LSTM'], label='LSTM')
         axs[2, i-4].set_xlabel(SUB_NAME,fontsize=xlabel_size)
     else:
-        axs[1, i-2].scatter(df['Domain'], df['Bert F1'], label='BERT', marker='x', s=makersize+4)
-        axs[1, i-2].scatter(df['Domain'], df['FRESH F1'], label='FRESH(α∇α)', marker='x', s=makersize+4)
-        axs[1, i-2].scatter(df['Domain'], df['SPECTRA F1'], label='SPECTRA')
-        axs[1, i-2].scatter(df['Domain'], df['KUMA F1'], label='HardKUMA')
-        axs[1, i-2].scatter(df['Domain'], df['LSTM F1'], label='LSTM')
+        axs[1, i-2].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', s=makersize+4)
+        axs[1, i-2].scatter(df['Domain'], df['FRESH'], label='FRESH(α∇α)', marker='x', s=makersize+4)
+        #axs[1, i-2].scatter(df['Domain'], df['SPECTRA'], label='SPECTRA')
+        axs[1, i-2].scatter(df['Domain'], df['KUMA'], label='HardKUMA', marker='d', color='orange', s=makersize+4)
+        axs[1, i-2].scatter(df['Domain'], df['LSTM'], label='LSTM')
         axs[1, i-2].set_xlabel(SUB_NAME,fontsize=xlabel_size)
     
 #fig.suptitle('Predictive Performance Comparison of Selective Rationalizations', fontsize=12)

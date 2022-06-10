@@ -253,8 +253,8 @@ if args.combine_all_data_stat:
 
 
 if args.save_data_stat:
-    def df2stat_df(df, domain):
-        print(df)
+    def df2stat_df(df,domain):
+        #print(df)
         if "xfact" in str(args.dataset):
             df = df[pd.to_datetime(df['claimDate'], errors='coerce').notna()] # claimDate  for xfact
             df = df.dropna().sort_values(by='claimDate', na_position='first') # claimDate  for xfact
@@ -312,6 +312,8 @@ if args.save_data_stat:
 
         return stat_df
 
+    InDomain = df2stat_df(df,domain='InDomain')
+    print(InDomain)
 
 ############################# read data in ##################
     if "xfact" in str(args.dataset):

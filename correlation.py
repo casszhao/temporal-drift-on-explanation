@@ -14,14 +14,14 @@ from sklearn.model_selection import train_test_split
 import robo
 # from robo.fmin import bayesian_optimization
 
-import task_utils
-import data_utils
-import similarity
-import features
-from constants import FEATURE_SETS, SENTIMENT, POS, POS_BILSTM, PARSING,\
-    TASK2TRAIN_EXAMPLES, TASK2DOMAINS, TASKS, POS_PARSING_TRG_DOMAINS,\
-    SENTIMENT_TRG_DOMAINS, BASELINES, BAYES_OPT, RANDOM, MOST_SIMILAR_DOMAIN,\
-    MOST_SIMILAR_EXAMPLES, ALL_SOURCE_DATA, SIMILARITY_FUNCTIONS
+# import task_utils
+# import data_utils
+# import similarity
+# import features
+# from constants import FEATURE_SETS, SENTIMENT, POS, POS_BILSTM, PARSING,\
+#     TASK2TRAIN_EXAMPLES, TASK2DOMAINS, TASKS, POS_PARSING_TRG_DOMAINS,\
+#     SENTIMENT_TRG_DOMAINS, BASELINES, BAYES_OPT, RANDOM, MOST_SIMILAR_DOMAIN,\
+#     MOST_SIMILAR_EXAMPLES, ALL_SOURCE_DATA, SIMILARITY_FUNCTIONS
 
 
 parser = argparse.ArgumentParser()
@@ -30,7 +30,7 @@ parser.add_argument(
     "--dataset",
     type = str,
     help = "select dataset / task",
-    default = "xfact",
+    default = "factcheck",
 )
 args = parser.parse_args()
 
@@ -38,10 +38,8 @@ datasets_dir = 'saved_everything/' + str(args.dataset)
 os.makedirs(datasets_dir, exist_ok = True)
 
 
+print(' ======================= ')
 
-
-'''
-comparing
 '''
 
 def task2_objective_function(task):
@@ -218,10 +216,88 @@ Measure = ['jensen-shannon', 'renyi', 'cosine', 'euclidean', 'variational', 'bha
 feature_set_names = ['similarity', 'topic_similarity']
 feature_names = features.get_feature_names(feature_set_names)
 # for topic modelling:
-
-
 '''
 
+
+suff_diff = pd.read_csv('./saved_everything/factcheck/posthoc_faithfulness_overleaf.csv')
+print(suff_diff)
+suff_In = suff_diff.iloc[1,1]  # row, column
+suff_ood1 = suff_diff.iloc[2,1]
+suff_ood2 = suff_diff.iloc[3,1]
+
+comp_In = suff_diff.iloc[1,9]
+comp_ood1 = suff_diff.iloc[2,9]
+comp_ood2 = suff_diff.iloc[3,9]
+
+suff_diff_1 = abs(suff_In - suff_ood1)
+suff_diff_2 = abs(suff_In - suff_ood2)
+comp_diff_1 = abs(comp_In - comp_ood1)
+comp_diff_2 = abs(comp_In - comp_ood2)
+
+d = {'AsyD1': [suff_diff_1, comp_diff_1], 'AsyD2': [suff_diff_2, comp_diff_2]}
+corre_table = pd.DataFrame(data=d)
+indx = ['Suff_diff', 'Comp_diff']
+
+
+df = 
+
+if "xfact" in str(args.dataset):
+    df = df[pd.to_datetime(df['claimDate'], errors='coerce').notna()] # claimDate  for xfact
+    df = df.dropna().sort_values(by='claimDate', na_position='first') # claimDate  for xfact
+    df['date'] = pd.to_datetime(df['claimDate']).dt.date              # claimDate  for xfact
+else:            
+    df['date'] = pd.to_datetime(df['date'], errors = 'coerce', utc=True).dt.date
+    df = df.dropna().sort_values(by='date', na_position='first') 
+    print(df)
+        
+        label_dist = df['label'].value_counts().to_string()
+        label_num = df['label'].nunique()
+        print(df)
+
+        start_date = df['date'].iloc[0]
+        end_date = df['date'].iloc[-1]
+
+        print(df['date'])
+        print('---', start_date)
+        print('---', end_date)
+        quartile = int(len(df) * 0.25)
+
+        DATE = df['date'].tolist()
+        Interquartile_start = DATE[quartile]
+        Interquartile_Mid = DATE[int(quartile*2)]
+        Interquartile_end = DATE[-quartile]
+
+        duration = end_date - start_date
+        inter_duration = Interquartile_end - Interquartile_start
+        print('---duration ---')
+        print(duration)
+        if int(duration.days) <= 0:
+            start_date = df['date'][len(df) - 1]
+            end_date = df['date'][0]
+            duration = end_date - start_date
+        if int(inter_duration.days) <= 0:
+            Interquartile_start = DATE[-quartile]
+            Interquartile_end = DATE[quartile]
+            inter_duration = Interquartile_end - Interquartile_start
+
+        stat_df = pd.DataFrame({'Domain': [str(domain)], 'Label Num': [label_num], 'Label distribution': [label_dist], 'Interquartile-Oldest': [Interquartile_start],
+                                'Median Date': [Interquartile_Mid], 'Interquartile-Newest': [Interquartile_end],
+                                'Interquartile Time Span(Days)': [inter_duration.days],
+                                'Start Date': [start_date], 'End Date': [end_date], 'Time Span(Days)': [duration.days],
+                                'Data Num': [len(df)],
+                                })
+        
+        stat_df['Interquartile Time Span(Days)'] = pd.to_numeric(stat_df['Interquartile Time Span(Days)'].astype(str).str.replace(r' days$', '', regex=True))
+        stat_df['Time Span(Days)'] = pd.to_numeric(stat_df['Time Span(Days)'].astype(str).str.replace(r' days$', '', regex=True))
+
+        stat_df['TimeDensity'] = stat_df['Data Num']/stat_df['Interquartile Time Span(Days)']
+        stat_df['InterTimeDensity'] = stat_df['Data Num']*0.5/stat_df['Interquartile Time Span(Days)']
+        stat_df['Data Num'] = pd.to_numeric(stat_df['Data Num'])
+
+
+print(df)
+
+exit()
 
 ###################################### 5. domain similarity between:  In domain / ood1 / ood2
 #########################################################################################
@@ -262,9 +338,9 @@ results = pd.concat([baseline_similarity,OOD1_similarity,OOD2_similarity],ignore
 
 results.to_csv(datasets_dir + '/fulltext_similarity_vocab' + str(vocab.size) + ' .csv')
 
+
+
 '''
-
-
 ################################################ 6. rationale similarity between:  In domain / ood1 / ood2
 ###############################################################################################################
 num_iterations = 2000 # for testing, original use 2000? need to check the paper
@@ -281,12 +357,12 @@ for threshold in ['topk']: #'topk', , 'contigious'
     for attribute_name in ['scaled attention','attention', 'lime', 'deeplift', 'gradients','ig','gradientshap','deepliftshap']:
 
         # InD_path_train = './extracted_rationales/'+str(args.dataset)+'/data/'+str(threshold)+'/'+str(attribute_name)+'-train.json'
-        InD_path_train = os.path.join('extracted_rationales',str(args.dataset),'data',str(threshold),str(attribute_name)+'-train.json')
+        InD_path_train = os.path.join('./extracted_rationales',str(args.dataset),'data',str(threshold),str(attribute_name)+'-train.json')
         print(InD_path_train)
         InD_path_test = './extracted_rationales/'+str(args.dataset)+'/data/'+str(threshold)+'/'+str(attribute_name)+'-test.json'
-        OOD1_path = 'extracted_rationales/'+str(args.dataset)+'/data/'+str(threshold)+'/OOD-'+str(args.dataset)+'_ood1-'+str(attribute_name)+'-test.json'
-        OOD2_path = 'extracted_rationales/'+str(args.dataset)+'/data/'+str(threshold)+'/OOD-'+str(args.dataset)+'_ood2-'+str(attribute_name)+'-test.json'
-        InD_train_list = pd.read_json(InD_path_train)['text']
+        OOD1_path = './extracted_rationales/'+str(args.dataset)+'/data/'+str(threshold)+'/OOD-'+str(args.dataset)+'_ood1-'+str(attribute_name)+'-test.json'
+        OOD2_path = './extracted_rationales/'+str(args.dataset)+'/data/'+str(threshold)+'/OOD-'+str(args.dataset)+'_ood2-'+str(attribute_name)+'-test.json'
+        InD_train_list = pd.read_json(InD_path_train)#['text']
         InD_test_list = pd.read_json(InD_path_test)['text']
         OOD1_list = pd.read_json(OOD1_path)['text']
         OOD2_list = pd.read_json(OOD2_path)['text']
@@ -328,13 +404,12 @@ for threshold in ['topk']: #'topk', , 'contigious'
 
     thresh_list.append(all_attributes_df)
 
-#results = pd.concat([thresh_list[0], thresh_list[1]], ignore_index=True)
 results = thresh_list[0]
 results.to_csv(datasets_dir + '/rationale_similarity_vocab' + str(vocab.size) + ' .csv')
 print('saved as:')
 print(datasets_dir + '/rationale_similarity_vocab' + str(vocab.size) + ' .csv')
 
-
+'''
 
 
 ####################################### 7. datasets metadata: train/test/ size, time span, label distribution

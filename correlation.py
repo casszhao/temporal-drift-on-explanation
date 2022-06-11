@@ -16,12 +16,12 @@ import robo
 
 import task_utils
 import data_utils
-import similarity
-import features
-from constants import FEATURE_SETS, SENTIMENT, POS, POS_BILSTM, PARSING,\
-    TASK2TRAIN_EXAMPLES, TASK2DOMAINS, TASKS, POS_PARSING_TRG_DOMAINS,\
-    SENTIMENT_TRG_DOMAINS, BASELINES, BAYES_OPT, RANDOM, MOST_SIMILAR_DOMAIN,\
-    MOST_SIMILAR_EXAMPLES, ALL_SOURCE_DATA, SIMILARITY_FUNCTIONS
+# import similarity
+# import features
+# from constants import FEATURE_SETS, SENTIMENT, POS, POS_BILSTM, PARSING,\
+#     TASK2TRAIN_EXAMPLES, TASK2DOMAINS, TASKS, POS_PARSING_TRG_DOMAINS,\
+#     SENTIMENT_TRG_DOMAINS, BASELINES, BAYES_OPT, RANDOM, MOST_SIMILAR_DOMAIN,\
+#     MOST_SIMILAR_EXAMPLES, ALL_SOURCE_DATA, SIMILARITY_FUNCTIONS
 
 
 parser = argparse.ArgumentParser()
@@ -41,26 +41,31 @@ parser.add_argument(
 )
 args = parser.parse_args()
 
-datasets_dir = 'saved_everything/' + str(args.dataset)
+datasets_dir = 'saved_everything/' + str(args.dataset) + '/'
 os.makedirs(datasets_dir, exist_ok = True)
 
+similarity_method = 'Term renyi'
 
 print(' ======================= ')
 
 if args.combine_all:
-    task_list = ['agnews','xfact','factcheck','AmazDigiMu','AmazPantry']
+    task_list = ['agnews','xfact','factcheck','AmazDigiMu','AmazPantry','yelp']
     df_list = []
     for task in task_list:
-        df = pd.read_csv('./saved_everything/'+str(task)+'/corre_table.csv')
+        df = pd.read_csv('./saved_everything/'+str(task)+'/corre_table.csv')[['AsyD1', 'AsyD2']].T
         df_list.append(df)
-    all_data_corre = pd.concat(df_list).T
-    print(all_data_corre)
-    corr = all_data_corre.corr()
+    df = pd.concat(df_list)
+    print('+++++++++++++')
+    print(df)
+    df.columns = ['suff_diff','comp_diff','temporal_distance','corpus_similarity']
+    corr = df.corr()
+    #corr.to_csv('/saved_everything/'+str(similarity_method)+'_all.csv')
     corr.style.background_gradient(cmap='coolwarm')
+    print(corr)
 
     exit()
 
-
+'''
 def task2_objective_function(task):
     """Returns the objective function of a task."""
     if task == SENTIMENT:
@@ -234,7 +239,7 @@ Measure = ['jensen-shannon', 'renyi', 'cosine', 'euclidean', 'variational', 'bha
 feature_set_names = ['similarity', 'topic_similarity']
 feature_names = features.get_feature_names(feature_set_names)
 # for topic modelling:
-
+'''
 
 
 ##### get suff and comp difference
@@ -319,23 +324,23 @@ indomain_start_date, indomain_end_date, indomain_duration, indomain_Interquartil
 ood1_start_date, ood1_end_date, ood1_duration, ood1_Interquartile_start, ood1_Interquartile_end, ood1_inter_duration, ood1_Mid_day = get_time_span_info(ood1)
 ood2_start_date, ood2_end_date, ood2_duration, ood2_Interquartile_start, ood2_Interquartile_end, ood2_inter_duration, ood2_Mid_day = get_time_span_info(ood2)
 
-print(indomain_start_date)
-print(ood1_start_date)
-print(ood1_start_date-indomain_start_date)
 
-def time_dist(start1, start2, end1, end2):
-    diff = abs(start1-start2) + abs(end1-end2)
+def time_dist(start1, start2, end1, end2, mid1, mid2):
+    diff = abs(start1-start2) + abs(end1-end2) #+ abs(mid1-mid2)
     return int(diff.days)
 
 def time_density(duration1, durantion2):
     return abs(duration1-durantion2)
 
-if args.dataset == 'agnews' or args.dataset == 'yelp':
-    ood1_temporal_dist = time_dist(ood1_start_date, indomain_start_date, ood1_end_date, indomain_end_date)
-    ood2_temporal_dist = time_dist(ood2_start_date, indomain_start_date, ood2_end_date, indomain_end_date)
+if args.dataset == 'agnews':
+    ood1_temporal_dist = time_dist(ood1_start_date, indomain_start_date, ood1_end_date, indomain_end_date, indomain_Mid_day, ood1_Mid_day)
+    ood2_temporal_dist = time_dist(ood2_start_date, indomain_start_date, ood2_end_date, indomain_end_date, indomain_Mid_day, ood2_Mid_day)
+elif args.dataset == 'yelp':
+    ood1_temporal_dist = time_dist(ood1_start_date, indomain_start_date, ood1_end_date, indomain_end_date, indomain_Mid_day, ood1_Mid_day)
+    ood2_temporal_dist = time_dist(ood2_start_date, indomain_start_date, ood2_end_date, indomain_end_date, indomain_Mid_day, ood2_Mid_day)
 else:
-    ood1_temporal_dist = time_dist(ood1_Interquartile_start, indomain_Interquartile_start, ood1_Interquartile_end, indomain_Interquartile_end)
-    ood2_temporal_dist = time_dist(ood2_Interquartile_start, indomain_Interquartile_start, ood2_Interquartile_end, indomain_Interquartile_end)
+    ood1_temporal_dist = time_dist(ood1_Interquartile_start, indomain_Interquartile_start, ood1_Interquartile_end, indomain_Interquartile_end, indomain_Mid_day, ood1_Mid_day)
+    ood2_temporal_dist = time_dist(ood2_Interquartile_start, indomain_Interquartile_start, ood2_Interquartile_end, indomain_Interquartile_end, indomain_Mid_day, ood2_Mid_day)
 
 temporal_distance = pd.DataFrame(data={'AsyD1':[ood1_temporal_dist], 
                                        'AsyD2':[ood2_temporal_dist]})
@@ -350,6 +355,7 @@ print(corre_table)
 
 ############################# domain similarity between:  In domain / ood1 / ood2
 #########################################################################################
+'''
 model_dir = './similarity_models/'+str(args.dataset)+'/'
 num_iterations = 2000 # 2000# for testing, original use 2000? need to check the paper
 VOCAB_SIZE = 20000    # 20000  
@@ -382,19 +388,28 @@ OOD2_reps = features.get_reps_for_one_domain(OOD2_test_list_list, vocab, feature
 OOD1_similarity = pre_post_process(InD_test_reps, OOD1_reps, 'OOD1')
 OOD2_similarity = pre_post_process(InD_test_reps, OOD2_reps, 'OOD2')
 results = pd.concat([OOD1_similarity,OOD2_similarity],ignore_index=True)
+'''
 
-results.to_csv(datasets_dir + '/fulltext_ood2indomain_similarity_vocab' + str(vocab.size) + ' .csv')
+#results.to_csv(datasets_dir + '/fulltext_ood2indomain_similarity_vocab' + str(vocab.size) + ' .csv')
+for fname in os.listdir(datasets_dir):
+    
+    if 'fulltext_ood2indomain_similarity_vocab' in fname:
+        similarity_path = os.path.join(datasets_dir, fname)
+        similairity_df = pd.read_csv(similarity_path)
 
-ood1_term_js = OOD1_similarity.loc[OOD1_similarity['Rep_Mea'] == 'Term jensen-shannon']['Similarity'].item()
-print(ood1_term_js)
-ood2_term_js = OOD2_similarity.loc[OOD2_similarity['Rep_Mea'] == 'Term jensen-shannon']['Similarity'].item()
-corpus_simi = pd.DataFrame({'AsyD1': [ood1_term_js], 'AsyD2': [ood2_term_js]})
+
+ood1_term = similairity_df.loc[(similairity_df['Rep_Mea'] == str(similarity_method)) & (similairity_df['Domain'] == 'OOD1')]['Similarity'].item()
+print(ood1_term)
+ood2_term = similairity_df.loc[(similairity_df['Rep_Mea'] == str(similarity_method)) & (similairity_df['Domain'] == 'OOD2')]['Similarity'].item()
+corpus_simi = pd.DataFrame({'AsyD1': [ood1_term], 'AsyD2': [ood2_term]})
 print(corpus_simi)
+
+
 index_corpus_simi = ['corpus_similarity']
 corre_table = pd.concat([corre_table,temporal_distance,corpus_simi])
 corre_table['Factors'] = index_faithful+index_time + index_corpus_simi
-print(corre_table)
-corre_table.to_csv('./saved_everything/'+str(args.dataset)+'/corre_table.csv')
+corre_table.to_csv(datasets_dir + 'corre_table_' + str(similarity_method) + '.csv')
 
 
+print(datasets_dir + 'corre_table_' + str(similarity_method) + '.csv')
 

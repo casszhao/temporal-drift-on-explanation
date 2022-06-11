@@ -1,0 +1,25 @@
+,Similarity,Representations,Measure,Rep_Mea,Domain
+0,0.16475319348599515,Term distribution,jensen-shannon,Term jensen-shannon,OOD1
+1,22.194331850975544,Term distribution,renyi,Term renyi,OOD1
+2,0.01456295548412656,Term distribution,cosine,Term cosine,OOD1
+3,0.013726958433679036,Term distribution,euclidean,Term euclidean,OOD1
+4,0.6706614088197085,Term distribution,variational,Term variational,OOD1
+5,0.25804451342333423,Term distribution,bhattacharyya,Term bhattacharyya,OOD1
+6,0.02134312503039837,Topic distribution,jensen-shannon,Topic jensen-shannon,OOD1
+7,0.08505878556149572,Topic distribution,renyi,Topic renyi,OOD1
+8,0.06637769937515259,Topic distribution,cosine,Topic cosine,OOD1
+9,0.0865658021620815,Topic distribution,euclidean,Topic euclidean,OOD1
+10,0.3533625602722168,Topic distribution,variational,Topic variational,OOD1
+11,0.021720290184020996,Topic distribution,bhattacharyya,Topic bhattacharyya,OOD1
+12,0.18023348014252066,Term distribution,jensen-shannon,Term jensen-shannon,OOD2
+13,23.293277454995494,Term distribution,renyi,Term renyi,OOD2
+14,0.019773328212353447,Term distribution,cosine,Term cosine,OOD2
+15,0.016564845489014095,Term distribution,euclidean,Term euclidean,OOD2
+16,0.7243871774098849,Term distribution,variational,Term variational,OOD2
+17,0.2869485529903673,Term distribution,bhattacharyya,Term bhattacharyya,OOD2
+18,0.0178175438195467,Topic distribution,jensen-shannon,Topic jensen-shannon,OOD2
+19,0.0703494044645938,Topic distribution,renyi,Topic renyi,OOD2
+20,0.061526358127593994,Topic distribution,cosine,Topic cosine,OOD2
+21,0.08133344530495153,Topic distribution,euclidean,Topic euclidean,OOD2
+22,0.31773728132247925,Topic distribution,variational,Topic variational,OOD2
+23,0.018091751262545586,Topic distribution,bhattacharyya,Topic bhattacharyya,OOD2

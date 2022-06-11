@@ -258,8 +258,8 @@ print(' =========== corre_table ===========')
 print(corre_table)
 index_faithful = ['Suff_diff', 'Comp_diff']
 
-corre_table.to_csv(str(args.dataset) + '/faith_diff.csv')
-
+# corre_table.to_csv('./saved_everything/' + str(args.dataset) + '/faith_diff.csv')
+# exit()
 
 
 

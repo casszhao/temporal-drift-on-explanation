@@ -64,7 +64,7 @@ if args.combine_all:
     full_simi_df_list = []
     for task in task_list:
         df = pd.read_csv('./saved_everything/'+str(task)+'/corre_table_'+str(similarity_method)+'.csv')[['AsyD1', 'AsyD2']].T
-        df.columns = ['suff_diff','comp_diff','temporal_distance','corpus_similarity', 'text avg length']
+        df.columns = ['Suff changes','Comp changes','Temporal distance','Corpus divergence', 'Text length']
         df['Task'] = str(task)
 
         for fname in os.listdir('./saved_everything/'+str(task)+'/'):
@@ -84,24 +84,29 @@ if args.combine_all:
     df.to_csv('./saved_everything/all_tasks_all_factors_onlyAysD.csv')
     print('+++++++++++++')
     print(df)
-<<<<<<< HEAD
     corr = df.corr(method='spearman')
     #corr.to_csv('/saved_everything/'+str(similarity_method)+'_all.csv')
     corr.style.background_gradient(cmap='coolwarm')
-=======
-    df.columns = ['suff_diff','comp_diff','temporal_distance','corpus_similarity']
-    corr = df.corr()
->>>>>>> 8da041495d84804af3318e14f16934b6e696ab9c
     print(corr)
-    plt.figure(figsize=(16, 6))
+    
+    
     import seaborn as sns
     import matplotlib.pyplot as plt
-# Store heatmap object in a variable to easily access it when you want to include more features (such as title).
-# Set the range of values to be displayed on the colormap from -1 to 1, and set the annotation to True to display the correlation values on the heatmap.
-    heatmap = sns.heatmap(corr, vmin=-1, vmax=1, annot=True)
-# Give a title to the heatmap. Pad defines the distance of the title from the top of the heatmap.
-    heatmap.set_title('Correlation Heatmap', fontdict={'fontsize':12}, pad=12)
-
+    plt.figure(figsize=(5.5, 3))
+    heatmap = sns.heatmap(corr, annot=True, annot_kws={'fontsize':10}, cmap="YlGnBu") #vmin=-1, vmax=1, 
+    #heatmap.set_title('Correlation Matrix of Latent Factors', fontdict={'fontsize':13}) #, pad=12
+    fig1 = plt.gcf()
+    fig1.savefig('./saved_everything/correlation.png', dpi=250)
+    plt.xticks(rotation=25, fontsize=10)
+    plt.yticks(fontsize=10)
+    plt.subplots_adjust(left=0.257,
+                        bottom=0.28, 
+                        right=1, 
+                        top=0.971, 
+                        wspace=0.076, 
+                        hspace=0.2,
+                        )
+    plt.show()
     exit()
 
 

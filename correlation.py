@@ -414,6 +414,7 @@ print(corpus_simi)
 index_corpus_simi = ['corpus_similarity']
 corre_table = pd.concat([faith_scores, temporal_distance, corpus_simi, text_length])
 corre_table['Factors'] = index_faithful + index_time + index_corpus_simi + ['text avg length']
+corre_table['Task'] = str(args.dataset)
 corre_table.to_csv(datasets_dir + 'corre_table_' + str(similarity_method) + '.csv')
 
 

@@ -257,7 +257,7 @@ suff_diff_2 = abs(suff_In - suff_ood2)
 comp_diff_1 = abs(comp_In - comp_ood1)
 comp_diff_2 = abs(comp_In - comp_ood2)
 
-d = {'AsyD1': [suff_diff_1, comp_diff_1], 'AsyD2': [suff_diff_2, comp_diff_2]}
+faith_scores = {'AsyD1': [suff_diff_1, comp_diff_1], 'AsyD2': [suff_diff_2, comp_diff_2]}
 print(' =========== ' + str(args.dataset) + '===========')
 print(d)
 index_faithful = ['Suff_diff', 'Comp_diff']
@@ -273,11 +273,11 @@ ood2 = pd.read_json('./datasets/'+str(args.dataset)+'_ood2/data/test.json')
 
 
 ############# text length
-for df in [indomain,ood1,ood2]:
-    #len = df['text'].apply(len).mean()
-    print(df['text'].apply(len).mean())
 
-exit()
+text_length1 = ood1['text'].apply(len).mean()
+text_length2 = ood2['text'].apply(len).mean()
+text_length = {'AsyD1': [text_length1], 'AsyD2': [text_length2]}
+
 
 ############# get time different
 def sort_dates(df):
@@ -412,8 +412,8 @@ print(corpus_simi)
 
 
 index_corpus_simi = ['corpus_similarity']
-corre_table = pd.concat([corre_table,temporal_distance,corpus_simi])
-corre_table['Factors'] = index_faithful+index_time + index_corpus_simi
+corre_table = pd.concat([faith_scores, temporal_distance, corpus_simi, text_length])
+corre_table['Factors'] = index_faithful + index_time + index_corpus_simi + ['text avg length']
 corre_table.to_csv(datasets_dir + 'corre_table_' + str(similarity_method) + '.csv')
 
 

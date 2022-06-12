@@ -1,28 +1,47 @@
 import numpy as np
 import pandas as pd
+import os
 import matplotlib.pyplot as plt
 
 from matplotlib.cm import ScalarMappable
 from matplotlib.lines import Line2D
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
-df = pd.read_csv("all_tasks_all_posthoc.csv")
-print(df)
-df = df[df['thresholder'].str.contains('contigi')] # topk
+# df = pd.read_csv("all_tasks_all_posthoc.csv")
+# print(df)
+# df = df[df['thresholder'].str.contains('contigi')] # topk
 
-df['gradients'] = df['gradients']/df['random']
-df['deeplift'] = df['deeplift']/df['random']
-df['attention'] = df['attention']/df['random']
-df['lime'] = df['lime']/df['random']
-df['gradientshap'] = df['gradientshap']/df['random']
-df['deepliftshap'] = df['deepliftshap']/df['random']
-df['scaled attention'] = df['scaled attention']/df['random']
-df['ig'] = df['ig']/df['random']
+# df['gradients'] = df['gradients']/df['random']
+# df['deeplift'] = df['deeplift']/df['random']
+# df['attention'] = df['attention']/df['random']
+# df['lime'] = df['lime']/df['random']
+# df['gradientshap'] = df['gradientshap']/df['random']
+# df['deepliftshap'] = df['deepliftshap']/df['random']
+# df['scaled attention'] = df['scaled attention']/df['random']
+# df['ig'] = df['ig']/df['random']
 
-df['random'] = df['random']/df['random']
-df['mean-f1'] = df['mean-f1']*100
+# df['random'] = df['random']/df['random']
+# df['mean-f1'] = df['mean-f1']*100
 
 data = 'Factcheck'
+
+for fname in os.listdir('../posthoc_results/factcheck/'):
+    print(fname)
+    if 'ood1' in str(fname):
+        ood1 = pd.read_json('../posthoc_results/factcheck/'+fname)
+        print(ood1)
+    elif 'ood2' in str(fname):
+        ood2 = pd.read_json('../posthoc_results/factcheck/'+fname)
+    else:
+        indomain = pd.read_json('../posthoc_results/factcheck/'+fname)
+
+exit()
+
+
+
+
+
+
 df = df[df['Task'].str.contains(str(data))]
 
 suff = df[df['Rationales_metrics'].str.contains('AOPC_sufficiency')]

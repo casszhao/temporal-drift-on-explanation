@@ -8,7 +8,7 @@
 __pycache__
 /FRESH_classifiers/
 *model*
-/posthoc_results/*.npy
+/posthoc_results/*/*.npy
 *.out
 .env
 ./scibert_scivocab_uncased/*

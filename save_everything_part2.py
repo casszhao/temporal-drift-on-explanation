@@ -220,7 +220,7 @@ feature_names = features.get_feature_names(feature_set_names)
 # for topic modelling:
 
 
-'''
+
 
 
 ###################################### 5. domain similarity between:  In domain / ood1 / ood2
@@ -333,9 +333,8 @@ results = thresh_list[0]
 results.to_csv(datasets_dir + '/rationale_similarity_vocab' + str(vocab.size) + ' .csv')
 print('saved as:')
 print(datasets_dir + '/rationale_similarity_vocab' + str(vocab.size) + ' .csv')
+'''
 
 
 
-
-####################################### 7. datasets metadata: train/test/ size, time span, label distribution
 

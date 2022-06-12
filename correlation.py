@@ -12,16 +12,16 @@ import pandas as pd
 from scipy import stats
 from sklearn.model_selection import train_test_split
 import robo
-# from robo.fmin import bayesian_optimization
+#from robo.fmin import bayesian_optimization
 
 import task_utils
 import data_utils
-# import similarity
-# import features
-# from constants import FEATURE_SETS, SENTIMENT, POS, POS_BILSTM, PARSING,\
-#     TASK2TRAIN_EXAMPLES, TASK2DOMAINS, TASKS, POS_PARSING_TRG_DOMAINS,\
-#     SENTIMENT_TRG_DOMAINS, BASELINES, BAYES_OPT, RANDOM, MOST_SIMILAR_DOMAIN,\
-#     MOST_SIMILAR_EXAMPLES, ALL_SOURCE_DATA, SIMILARITY_FUNCTIONS
+import similarity
+import features
+from constants import FEATURE_SETS, SENTIMENT, POS, POS_BILSTM, PARSING,\
+    TASK2TRAIN_EXAMPLES, TASK2DOMAINS, TASKS, POS_PARSING_TRG_DOMAINS,\
+    SENTIMENT_TRG_DOMAINS, BASELINES, BAYES_OPT, RANDOM, MOST_SIMILAR_DOMAIN,\
+    MOST_SIMILAR_EXAMPLES, ALL_SOURCE_DATA, SIMILARITY_FUNCTIONS
 
 
 parser = argparse.ArgumentParser()
@@ -39,33 +39,59 @@ parser.add_argument(
     action='store_true',
     default= False
 )
+
+parser.add_argument(
+    '--use_saved_simi',
+    help='combine all dataset',
+    action='store_true',
+    default= False
+)
 args = parser.parse_args()
 
 datasets_dir = 'saved_everything/' + str(args.dataset) + '/'
 os.makedirs(datasets_dir, exist_ok = True)
 
-similarity_method = 'Term renyi'
+similarity_method = 'Topic jensen-shannon' # jensen-shannon renyi cosine euclidean variational bhattacharyya
+# term js kind works
+# 'Topic bhattacharyya' works
+# Term bhattacharyya' similar to Topic bhattacharyya'
 
 print(' ======================= ')
 
 if args.combine_all:
     task_list = ['agnews','xfact','factcheck','AmazDigiMu','AmazPantry','yelp']
     df_list = []
+    full_simi_df_list = []
     for task in task_list:
-        df = pd.read_csv('./saved_everything/'+str(task)+'/corre_table.csv')[['AsyD1', 'AsyD2']].T
+        df = pd.read_csv('./saved_everything/'+str(task)+'/corre_table_'+str(similarity_method)+'.csv')[['AsyD1', 'AsyD2']].T
+        df.columns = ['suff_diff','comp_diff','temporal_distance','corpus_similarity', 'text avg length']
+        df['Task'] = str(task)
+
+        for fname in os.listdir('./saved_everything/'+str(task)+'/'):
+            if 'fulltext_similarity_vocab' in fname:
+                
+                full_simi = pd.read_csv('./saved_everything/'+str(task)+'/'+fname)
+                full_simi['Task'] = str(task)
+                #full_simi['Domain'] = ['SynD', 'AsyD1', 'AsyD2']
+                print(full_simi)
         df_list.append(df)
+        full_simi_df_list.append(full_simi)
+
     df = pd.concat(df_list)
+    full_simi=pd.concat(full_simi_df_list)
+    full_simi.to_csv('./saved_everything/all_tasks_full_similarity.csv')
+    
+    df.to_csv('./saved_everything/all_tasks_all_factors_onlyAysD.csv')
     print('+++++++++++++')
     print(df)
-    df.columns = ['suff_diff','comp_diff','temporal_distance','corpus_similarity']
-    corr = df.corr()
+    corr = df.corr(method='spearman')
     #corr.to_csv('/saved_everything/'+str(similarity_method)+'_all.csv')
     corr.style.background_gradient(cmap='coolwarm')
     print(corr)
 
     exit()
 
-'''
+
 def task2_objective_function(task):
     """Returns the objective function of a task."""
     if task == SENTIMENT:
@@ -239,7 +265,7 @@ Measure = ['jensen-shannon', 'renyi', 'cosine', 'euclidean', 'variational', 'bha
 feature_set_names = ['similarity', 'topic_similarity']
 feature_names = features.get_feature_names(feature_set_names)
 # for topic modelling:
-'''
+
 
 
 ##### get suff and comp difference
@@ -257,9 +283,8 @@ suff_diff_2 = abs(suff_In - suff_ood2)
 comp_diff_1 = abs(comp_In - comp_ood1)
 comp_diff_2 = abs(comp_In - comp_ood2)
 
-faith_scores = {'AsyD1': [suff_diff_1, comp_diff_1], 'AsyD2': [suff_diff_2, comp_diff_2]}
+faith_scores = pd.DataFrame({'AsyD1': [suff_diff_1, comp_diff_1], 'AsyD2': [suff_diff_2, comp_diff_2]})
 print(' =========== ' + str(args.dataset) + '===========')
-print(d)
 index_faithful = ['Suff_diff', 'Comp_diff']
 
 # corre_table.to_csv('./saved_everything/' + str(args.dataset) + '/faith_diff.csv')
@@ -276,7 +301,9 @@ ood2 = pd.read_json('./datasets/'+str(args.dataset)+'_ood2/data/test.json')
 
 text_length1 = ood1['text'].apply(len).mean()
 text_length2 = ood2['text'].apply(len).mean()
-text_length = {'AsyD1': [text_length1], 'AsyD2': [text_length2]}
+text_length = pd.DataFrame({'AsyD1': [text_length1], 'AsyD2': [text_length2]})
+print( ' ---------- TEXT LEN -------- ' )
+print(text_length)
 
 
 ############# get time different
@@ -296,7 +323,7 @@ ood2 = sort_dates(ood2)
         
 # label_dist = df['label'].value_counts().to_string()
 # label_num = df['label'].nunique()
-# print(df)
+
 
 def get_time_span_info(df):
     start_date = df['date'].iloc[0]
@@ -355,55 +382,54 @@ temporal_distance = pd.DataFrame(data={'AsyD1':[ood1_temporal_dist],
 
 index_time = ['temporal_distance']
 # corre_table = pd.concat([corre_table,temporal_distance])
-print(corre_table)
 
 
 
 ############################# domain similarity between:  In domain / ood1 / ood2
 #########################################################################################
-'''
-model_dir = './similarity_models/'+str(args.dataset)+'/'
-num_iterations = 2000 # 2000# for testing, original use 2000? need to check the paper
-VOCAB_SIZE = 20000    # 20000  
-os.makedirs(model_dir, exist_ok=True)
+if args.use_saved_simi:
+    pass
+else:
+    model_dir = './similarity_models/'+str(args.dataset)+'/'
+    num_iterations = 2000 # 2000# for testing, original use 2000? need to check the paper
+    VOCAB_SIZE = 20000    # 20000  
+    os.makedirs(model_dir, exist_ok=True)
 
-InD_test_list = indomain['text']
-OOD1_list= ood1['text']
-OOD2_list= ood2['text']
+    InD_test_list = indomain['text']
+    OOD1_list= ood1['text']
+    OOD2_list= ood2['text']
 
-in_domain_test_list_list = convert_to_listoflisttoken(InD_test_list)
-OOD1_test_list_list = convert_to_listoflisttoken(OOD1_list)
-OOD2_test_list_list = convert_to_listoflisttoken(OOD2_list)
+    in_domain_test_list_list = convert_to_listoflisttoken(InD_test_list)
+    OOD1_test_list_list = convert_to_listoflisttoken(OOD1_list)
+    OOD2_test_list_list = convert_to_listoflisttoken(OOD2_list)
 
-list_of_list_of_tokens =  in_domain_test_list_list + OOD1_test_list_list + OOD2_test_list_list
+    list_of_list_of_tokens =  in_domain_test_list_list + OOD1_test_list_list + OOD2_test_list_list
 
-# create the vocabulary or load it if it was already created
-vocab_path = os.path.join(model_dir, 'vocab.txt')
-vocab = data_utils.Vocab(VOCAB_SIZE, vocab_path) # two functions, load and create
-vocab.create(list_of_list_of_tokens, lowercase=True)
+    # create the vocabulary or load it if it was already created
+    vocab_path = os.path.join(model_dir, 'vocab.txt')
+    vocab = data_utils.Vocab(VOCAB_SIZE, vocab_path) # two functions, load and create
+    vocab.create(list_of_list_of_tokens, lowercase=True)
 
-term_dist_path = os.path.join(datasets_dir, 'term_dist.txt')
-topic_vectorizer, lda_model = similarity.train_topic_model(in_domain_test_list_list, vocab, num_topics=50, num_iterations=num_iterations, num_passes=10)
+    term_dist_path = os.path.join(datasets_dir, 'term_dist.txt')
+    topic_vectorizer, lda_model = similarity.train_topic_model(in_domain_test_list_list, vocab, num_topics=50, num_iterations=num_iterations, num_passes=10)
 
-#InD_train_reps = features.get_reps_for_one_domain(in_domain_train_list_list, vocab, feature_names, topic_vectorizer, lda_model, lowercase=True) # 0. term dist 1. topic dist
-InD_test_reps = features.get_reps_for_one_domain(in_domain_test_list_list, vocab, feature_names, topic_vectorizer, lda_model, lowercase=True)
-OOD1_reps = features.get_reps_for_one_domain(OOD1_test_list_list, vocab, feature_names, topic_vectorizer, lda_model, lowercase=True)
-OOD2_reps = features.get_reps_for_one_domain(OOD2_test_list_list, vocab, feature_names, topic_vectorizer, lda_model, lowercase=True)
+    #InD_train_reps = features.get_reps_for_one_domain(in_domain_train_list_list, vocab, feature_names, topic_vectorizer, lda_model, lowercase=True) # 0. term dist 1. topic dist
+    InD_test_reps = features.get_reps_for_one_domain(in_domain_test_list_list, vocab, feature_names, topic_vectorizer, lda_model, lowercase=True)
+    OOD1_reps = features.get_reps_for_one_domain(OOD1_test_list_list, vocab, feature_names, topic_vectorizer, lda_model, lowercase=True)
+    OOD2_reps = features.get_reps_for_one_domain(OOD2_test_list_list, vocab, feature_names, topic_vectorizer, lda_model, lowercase=True)
 
-#baseline_similarity = pre_post_process(InD_test_reps, 'In Domain(Baseline)')
-OOD1_similarity = pre_post_process(InD_test_reps, OOD1_reps, 'OOD1')
-OOD2_similarity = pre_post_process(InD_test_reps, OOD2_reps, 'OOD2')
-results = pd.concat([OOD1_similarity,OOD2_similarity],ignore_index=True)
-'''
+    #baseline_similarity = pre_post_process(InD_test_reps, 'In Domain(Baseline)')
+    OOD1_similarity = pre_post_process(InD_test_reps, OOD1_reps, 'OOD1')
+    OOD2_similarity = pre_post_process(InD_test_reps, OOD2_reps, 'OOD2')
+    results = pd.concat([OOD1_similarity,OOD2_similarity],ignore_index=True)
+
 
 #results.to_csv(datasets_dir + '/fulltext_ood2indomain_similarity_vocab' + str(vocab.size) + ' .csv')
+# use saved similarity directly
 for fname in os.listdir(datasets_dir):
-    
     if 'fulltext_ood2indomain_similarity_vocab' in fname:
         similarity_path = os.path.join(datasets_dir, fname)
         similairity_df = pd.read_csv(similarity_path)
-
-
 ood1_term = similairity_df.loc[(similairity_df['Rep_Mea'] == str(similarity_method)) & (similairity_df['Domain'] == 'OOD1')]['Similarity'].item()
 print(ood1_term)
 ood2_term = similairity_df.loc[(similairity_df['Rep_Mea'] == str(similarity_method)) & (similairity_df['Domain'] == 'OOD2')]['Similarity'].item()
@@ -411,7 +437,24 @@ corpus_simi = pd.DataFrame({'AsyD1': [ood1_term], 'AsyD2': [ood2_term]})
 print(corpus_simi)
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 index_corpus_simi = ['corpus_similarity']
+# for i in [faith_scores, temporal_distance, corpus_simi, text_length]:
+#     print(i)
 corre_table = pd.concat([faith_scores, temporal_distance, corpus_simi, text_length])
 corre_table['Factors'] = index_faithful + index_time + index_corpus_simi + ['text avg length']
 corre_table['Task'] = str(args.dataset)

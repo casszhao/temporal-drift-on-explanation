@@ -59,9 +59,15 @@ if args.combine_all:
     print(df)
     df.columns = ['suff_diff','comp_diff','temporal_distance','corpus_similarity']
     corr = df.corr()
-    #corr.to_csv('/saved_everything/'+str(similarity_method)+'_all.csv')
-    corr.style.background_gradient(cmap='coolwarm')
     print(corr)
+    plt.figure(figsize=(16, 6))
+    import seaborn as sns
+    import matplotlib.pyplot as plt
+# Store heatmap object in a variable to easily access it when you want to include more features (such as title).
+# Set the range of values to be displayed on the colormap from -1 to 1, and set the annotation to True to display the correlation values on the heatmap.
+    heatmap = sns.heatmap(corr, vmin=-1, vmax=1, annot=True)
+# Give a title to the heatmap. Pad defines the distance of the title from the top of the heatmap.
+    heatmap.set_title('Correlation Heatmap', fontdict={'fontsize':12}, pad=12)
 
     exit()
 

@@ -258,9 +258,8 @@ comp_diff_1 = abs(comp_In - comp_ood1)
 comp_diff_2 = abs(comp_In - comp_ood2)
 
 d = {'AsyD1': [suff_diff_1, comp_diff_1], 'AsyD2': [suff_diff_2, comp_diff_2]}
-corre_table = pd.DataFrame(data=d)
-print(' =========== corre_table ===========')
-print(corre_table)
+print(' =========== ' + str(args.dataset) + '===========')
+print(d)
 index_faithful = ['Suff_diff', 'Comp_diff']
 
 # corre_table.to_csv('./saved_everything/' + str(args.dataset) + '/faith_diff.csv')
@@ -272,6 +271,13 @@ indomain = pd.read_json('./datasets/'+str(args.dataset)+'/data/test.json')
 ood1 = pd.read_json('./datasets/'+str(args.dataset)+'_ood1/data/test.json')
 ood2 = pd.read_json('./datasets/'+str(args.dataset)+'_ood2/data/test.json')
 
+
+############# text length
+for df in [indomain,ood1,ood2]:
+    #len = df['text'].apply(len).mean()
+    print(df['text'].apply(len).mean())
+
+exit()
 
 ############# get time different
 def sort_dates(df):

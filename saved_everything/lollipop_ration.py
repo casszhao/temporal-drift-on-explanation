@@ -7,35 +7,35 @@ from matplotlib.cm import ScalarMappable
 from matplotlib.lines import Line2D
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
-# df = pd.read_csv("all_tasks_all_posthoc.csv")
-# print(df)
-# df = df[df['thresholder'].str.contains('contigi')] # topk
+df = pd.read_csv("all_tasks_all_posthoc.csv")
+print(df)
+df = df[df['thresholder'].str.contains('contigi')] # topk
 
-# df['gradients'] = df['gradients']/df['random']
-# df['deeplift'] = df['deeplift']/df['random']
-# df['attention'] = df['attention']/df['random']
-# df['lime'] = df['lime']/df['random']
-# df['gradientshap'] = df['gradientshap']/df['random']
-# df['deepliftshap'] = df['deepliftshap']/df['random']
-# df['scaled attention'] = df['scaled attention']/df['random']
-# df['ig'] = df['ig']/df['random']
+df['gradients'] = df['gradients']/df['random']
+df['deeplift'] = df['deeplift']/df['random']
+df['attention'] = df['attention']/df['random']
+df['lime'] = df['lime']/df['random']
+df['gradientshap'] = df['gradientshap']/df['random']
+df['deepliftshap'] = df['deepliftshap']/df['random']
+df['scaled attention'] = df['scaled attention']/df['random']
+df['ig'] = df['ig']/df['random']
 
-# df['random'] = df['random']/df['random']
-# df['mean-f1'] = df['mean-f1']*100
+df['random'] = df['random']/df['random']
+df['mean-f1'] = df['mean-f1']*100
 
 data = 'Factcheck'
 
-for fname in os.listdir('../posthoc_results/factcheck/'):
-    print(fname)
-    if 'ood1' in str(fname):
-        ood1 = pd.read_json('../posthoc_results/factcheck/'+fname)
-        print(ood1)
-    elif 'ood2' in str(fname):
-        ood2 = pd.read_json('../posthoc_results/factcheck/'+fname)
-    else:
-        indomain = pd.read_json('../posthoc_results/factcheck/'+fname)
+# for fname in os.listdir('../posthoc_results/factcheck/'):
+#     print(fname)
+#     if 'ood1' in str(fname):
+#         ood1 = pd.read_json('../posthoc_results/factcheck/'+fname)
+#         print(ood1)
+#     elif 'ood2' in str(fname):
+#         ood2 = pd.read_json('../posthoc_results/factcheck/'+fname)
+#     else:
+#         indomain = pd.read_json('../posthoc_results/factcheck/'+fname)
 
-exit()
+# exit()
 
 
 
@@ -50,7 +50,7 @@ my_range=suff['Domain']
 print(my_range)
 
 ALPHA = 0.5
-SIZE = 150
+SIZE = 111
 xlabel_size = 13
 ylabel_size = 15
 domainlabel_size = 20
@@ -117,7 +117,7 @@ ax[0].set_yticks(range(len(my_range)))
 ax[0].set_yticklabels(my_range)
 
 ax[0].hlines(y=my_range, xmin=bert_min, xmax=bert_max, color='grey', alpha=0.35)
-ax[0].scatter(df['mean-f1'], df['Domain'], color='dimgray', alpha=1, label='F1', marker=">", s=144) # marker='|'
+ax[0].scatter(df['mean-f1'], df['Domain'], color='dimgray', alpha=1, label='F1', marker="o", s=130) # marker='|'
 for x,y in zip(df['mean-f1'],df['Domain']):
     label = format(x, '.1f')
     ax[0].annotate(label, # this is the text
@@ -143,15 +143,16 @@ YMAX = 4
 ax[1].hlines(y=my_range, xmin=suff_min, xmax=suff_max, color='grey', alpha=0.35)
 ax[1].vlines(x = 1, ymin=YMIN, ymax=YMAX, color='black', alpha=1)
 ax[1].scatter(suff['random'], my_range, color='black', alpha=1, label='Random', marker='|', s=230)
-
+ax[1].scatter(suff['scaled attention'], my_range, color='blue', alpha=ALPHA , label='Scaled Attention', s=SIZE)
 ax[1].scatter(suff['gradients'], my_range, color='red', alpha=ALPHA , label='Gradients', s=SIZE)
 ax[1].scatter(suff['deeplift'], my_range, color='green', alpha=ALPHA , label='Deeplift', s=SIZE)
 ax[1].scatter(suff['ig'], my_range, color='purple', alpha=ALPHA , label='IG', s=SIZE)
 ax[1].scatter(suff['gradientshap'], my_range, color='saddlebrown', alpha=ALPHA , label='Gradientshap', s=SIZE)
-ax[1].scatter(suff['scaled attention'], my_range, color='blue', alpha=ALPHA , label='Scaled Attention', s=SIZE)
+
 ax[1].scatter(suff['deepliftshap'], my_range, color='orange', alpha=ALPHA+0.2, label='Deepliftshap', s=SIZE)
 ax[1].scatter(suff['attention'], my_range, color='gold', alpha=ALPHA+0.4, label='Attention', s=SIZE)
 ax[1].scatter(suff['lime'], my_range, color='plum', alpha=ALPHA+0.4, label='Lime', s=SIZE)
+
 ax[1].set_xlabel('AOPC Sufficiency',fontsize=xlabel_size)
 ax[1].invert_yaxis()
 plt.plot()
@@ -161,15 +162,18 @@ plt.plot()
 ax[2].hlines(y=my_range, xmin=comp_min, xmax=comp_max, color='grey', alpha=0.35)
 ax[2].vlines(x = 1, ymin=YMIN, ymax=YMAX, color='black', alpha=1)
 ax[2].scatter(comp['random'], my_range, color='black', alpha=1, label='Random', marker='|', s=230)
+ax[2].scatter(comp['scaled attention'], my_range, color='blue', alpha=ALPHA , label=r'$\alpha\nabla\alpha$', s=SIZE, marker="s")
+ax[2].scatter(comp['attention'], my_range, color='gold', alpha= ALPHA+0.4, label=r'$\alpha$', s=SIZE-21, marker="D")
 
-ax[2].scatter(comp['gradients'], my_range, color='red', alpha=ALPHA , label='Gradients', s=SIZE)
-ax[2].scatter(comp['deeplift'], my_range, color='green', alpha=ALPHA , label='Deeplift', s=SIZE)
-ax[2].scatter(comp['ig'], my_range, color='purple', alpha=ALPHA , label='IG', s=SIZE)
-ax[2].scatter(comp['gradientshap'], my_range, color='saddlebrown', alpha=ALPHA , label='Gradientshap', s=SIZE)
-ax[2].scatter(comp['scaled attention'], my_range, color='blue', alpha=ALPHA , label='Scaled Attention', s=SIZE)
-ax[2].scatter(comp['deepliftshap'], my_range, color='orange', alpha=ALPHA+0.2, label='Deepliftshap', s=SIZE)
-ax[2].scatter(comp['attention'], my_range, color='gold', alpha= ALPHA+0.4, label='Attention', s=SIZE)
-ax[2].scatter(comp['lime'], my_range, color='plum', alpha=ALPHA+0.4, label='Lime', s=SIZE)
+ax[2].scatter(comp['gradients'], my_range, color='red', alpha=ALPHA+0.3, label=r'$x\nabla x $', s=SIZE+22, marker="1")
+ax[2].scatter(comp['ig'], my_range, color='purple', alpha=ALPHA+0.3, label='IG', s=SIZE+22, marker="2")
+ax[2].scatter(comp['gradientshap'], my_range, color='saddlebrown', alpha=ALPHA+0.35, label='Gsp', s=SIZE, marker="3")
+
+ax[2].scatter(comp['deeplift'], my_range, color='green', alpha=ALPHA , label='DL', s=SIZE)
+ax[2].scatter(comp['deepliftshap'], my_range, color='orange', alpha=ALPHA+0.2, label='Dsp', s=SIZE+22)
+
+
+ax[2].scatter(comp['lime'], my_range, color='plum', alpha=ALPHA+0.4, label='LIME', s=SIZE)
 ax[2].set_xlabel('AOPC Comprehensiveness',fontsize=xlabel_size)
 ax[2].invert_yaxis()
 plt.plot()

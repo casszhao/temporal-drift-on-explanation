@@ -1,0 +1,174 @@
+2022-06-13 21:20:17 INFO     Running on cuda : True
+2022-06-13 21:20:17 INFO     config  : 
+ ----------------------
+2022-06-13 21:20:17 INFO     dataset : yelp_rationales
+2022-06-13 21:20:17 INFO     data_dir : /home/cass/PycharmProjects/ood_time/extract_rationales/datasets/yelp_rationales/data/
+2022-06-13 21:20:17 INFO     model_dir : /home/cass/PycharmProjects/ood_time/extract_rationales/models/yelp_rationales/
+2022-06-13 21:20:17 INFO     seed : 25
+2022-06-13 21:20:17 INFO     evaluate_models : True
+2022-06-13 21:20:17 INFO     inherently_faithful : None
+2022-06-13 21:20:17 INFO     use_tasc : False
+2022-06-13 21:20:17 INFO     importance_metric : None
+2022-06-13 21:20:17 INFO     rationale_length : 0.2
+2022-06-13 21:20:17 INFO     batch_size : 8
+2022-06-13 21:20:17 INFO     lr_bert : 1e-05
+2022-06-13 21:20:17 INFO     lr_classifier : 0.0001
+2022-06-13 21:20:17 INFO     model : bert-base-uncased
+2022-06-13 21:20:17 INFO     ood_dataset_1 : yelp_rationales_ood1
+2022-06-13 21:20:17 INFO     ood_dataset_2 : yelp_rationales_ood2
+2022-06-13 21:20:17 INFO     epochs : 5
+2022-06-13 21:20:17 INFO     model_abbreviation : bert
+2022-06-13 21:20:17 INFO     evaluation_dir : None
+2022-06-13 21:20:17 INFO     extracted_rationale_dir : None
+2022-06-13 21:20:17 INFO     query : False
+2022-06-13 21:20:17 INFO     stage_of_proj : train
+2022-06-13 21:20:17 INFO     ood_rat_1 : 0.2
+2022-06-13 21:20:17 INFO     ood_rat_2 : 0.2
+2022-06-13 21:20:17 INFO     embed_model : None
+2022-06-13 21:20:17 INFO     
+
+ ----------------------
+2022-06-13 21:20:36 INFO     dataset : yelp_rationales
+2022-06-13 21:20:36 INFO     data_dir : /home/cass/PycharmProjects/ood_time/extract_rationales/datasets/yelp_rationales/data/
+2022-06-13 21:20:36 INFO     model_dir : /home/cass/PycharmProjects/ood_time/extract_rationales/models/yelp_rationales/
+2022-06-13 21:20:36 INFO     seed : 25
+2022-06-13 21:20:36 INFO     evaluate_models : True
+2022-06-13 21:20:36 INFO     inherently_faithful : None
+2022-06-13 21:20:36 INFO     use_tasc : False
+2022-06-13 21:20:36 INFO     importance_metric : None
+2022-06-13 21:20:36 INFO     rationale_length : 0.2
+2022-06-13 21:20:36 INFO     batch_size : 8
+2022-06-13 21:20:36 INFO     lr_bert : 1e-05
+2022-06-13 21:20:36 INFO     lr_classifier : 0.0001
+2022-06-13 21:20:36 INFO     model : bert-base-uncased
+2022-06-13 21:20:36 INFO     ood_dataset_1 : yelp_rationales_ood1
+2022-06-13 21:20:36 INFO     ood_dataset_2 : yelp_rationales_ood2
+2022-06-13 21:20:36 INFO     epochs : 5
+2022-06-13 21:20:36 INFO     model_abbreviation : bert
+2022-06-13 21:20:36 INFO     evaluation_dir : None
+2022-06-13 21:20:36 INFO     extracted_rationale_dir : None
+2022-06-13 21:20:36 INFO     query : False
+2022-06-13 21:20:36 INFO     stage_of_proj : train
+2022-06-13 21:20:36 INFO     ood_rat_1 : 0.2
+2022-06-13 21:20:36 INFO     ood_rat_2 : 0.2
+2022-06-13 21:20:36 INFO     embed_model : None
+2022-06-13 21:20:36 INFO     
+ ----------------------
+2022-06-13 21:20:38 INFO     -------------------------------------scaled 
+2022-06-13 21:20:38 INFO     evaluating trained models
+2022-06-13 21:20:41 INFO     Loading model: /home/cass/PycharmProjects/ood_time/extract_rationales/models/yelp_rationales/bert25.pt
+2022-06-13 21:20:44 INFO     Seed: '25' -- Test loss: '4.693' -- Test accuracy: '0.749'
+2022-06-13 21:20:44 INFO      ----------- in domain -----------
+2022-06-13 21:20:44 INFO     {'25': {'model': '/home/cass/PycharmProjects/ood_time/extract_rationales/models/yelp_rationales/bert25.pt', 'f1': 0.7490765533009309, 'accuracy': 0.7921545667447307, 'loss': 4.6928906552145415, 'ece-score': 0.12792825826227805}, 'mean-acc': 0.7921545667447307, 'std-acc': 0.0, 'mean-f1': 0.7490765533009309, 'std-f1': 0.0, 'mean-ece': 0.12792825826227805, 'std-ece': 0.0}
+2022-06-13 21:20:44 INFO     **** Loading dataset OOD --> yelp_rationales_ood1
+2022-06-13 21:20:45 INFO     -------------------------------------
+2022-06-13 21:20:45 INFO     evaluating trained models
+2022-06-13 21:20:46 INFO     Loading model: /home/cass/PycharmProjects/ood_time/extract_rationales/models/yelp_rationales/bert25.pt
+2022-06-13 21:20:48 INFO     Seed: '25' -- Test loss: '4.244' -- Test accuracy: '0.698'
+2022-06-13 21:20:48 INFO      ----------- OOD1 -----------
+2022-06-13 21:20:48 INFO     {'25': {'model': '/home/cass/PycharmProjects/ood_time/extract_rationales/models/yelp_rationales/bert25.pt', 'f1': 0.6981661956335714, 'accuracy': 0.7968384074941453, 'loss': 4.243697080099694, 'ece-score': 0.11060313252291579}, 'mean-acc': 0.7968384074941453, 'std-acc': 0.0, 'mean-f1': 0.6981661956335714, 'std-f1': 0.0, 'mean-ece': 0.11060313252291579, 'std-ece': 0.0}
+2022-06-13 21:20:48 INFO     **** Loading dataset OOD --> yelp_rationales_ood2
+2022-06-13 21:20:49 INFO     -------------------------------------
+2022-06-13 21:20:49 INFO     evaluating trained models
+2022-06-13 21:20:51 INFO     Loading model: /home/cass/PycharmProjects/ood_time/extract_rationales/models/yelp_rationales/bert25.pt
+2022-06-13 21:20:53 INFO     Seed: '25' -- Test loss: '4.383' -- Test accuracy: '0.71'
+2022-06-13 21:20:53 INFO      ----------- OOD2 -----------
+2022-06-13 21:20:53 INFO     {'25': {'model': '/home/cass/PycharmProjects/ood_time/extract_rationales/models/yelp_rationales/bert25.pt', 'f1': 0.7103113119808644, 'accuracy': 0.800351288056206, 'loss': 4.38310701769089, 'ece-score': 0.11721531092352831}, 'mean-acc': 0.800351288056206, 'std-acc': 0.0, 'mean-f1': 0.7103113119808644, 'std-f1': 0.0, 'mean-ece': 0.11721531092352831, 'std-ece': 0.0}
+2022-06-13 21:24:02 INFO     Running on cuda : True
+2022-06-13 21:24:02 INFO     config  : 
+ ----------------------
+2022-06-13 21:24:02 INFO     dataset : yelp_rationales
+2022-06-13 21:24:02 INFO     data_dir : /home/cass/PycharmProjects/ood_time/extract_rationales/datasets/yelp_rationales/data/
+2022-06-13 21:24:02 INFO     model_dir : /home/cass/PycharmProjects/ood_time/extract_rationales/models/yelp_rationales/
+2022-06-13 21:24:02 INFO     seed : 25
+2022-06-13 21:24:02 INFO     evaluate_models : True
+2022-06-13 21:24:02 INFO     inherently_faithful : None
+2022-06-13 21:24:02 INFO     use_tasc : False
+2022-06-13 21:24:02 INFO     importance_metric : None
+2022-06-13 21:24:02 INFO     rationale_length : 0.2
+2022-06-13 21:24:02 INFO     batch_size : 8
+2022-06-13 21:24:02 INFO     lr_bert : 1e-05
+2022-06-13 21:24:02 INFO     lr_classifier : 0.0001
+2022-06-13 21:24:02 INFO     model : bert-base-uncased
+2022-06-13 21:24:02 INFO     ood_dataset_1 : yelp_rationales_ood1
+2022-06-13 21:24:02 INFO     ood_dataset_2 : yelp_rationales_ood2
+2022-06-13 21:24:02 INFO     epochs : 5
+2022-06-13 21:24:02 INFO     model_abbreviation : bert
+2022-06-13 21:24:02 INFO     evaluation_dir : None
+2022-06-13 21:24:02 INFO     extracted_rationale_dir : None
+2022-06-13 21:24:02 INFO     query : False
+2022-06-13 21:24:02 INFO     stage_of_proj : train
+2022-06-13 21:24:02 INFO     ood_rat_1 : 0.2
+2022-06-13 21:24:02 INFO     ood_rat_2 : 0.2
+2022-06-13 21:24:02 INFO     embed_model : None
+2022-06-13 21:24:02 INFO     
+ ----------------------
+2022-06-13 21:24:04 INFO     ------------------------------------- deeplift
+2022-06-13 21:24:04 INFO     evaluating trained models
+2022-06-13 21:24:08 INFO     Loading model: /home/cass/PycharmProjects/ood_time/extract_rationales/models/yelp_rationales/bert25.pt
+2022-06-13 21:24:10 INFO     Seed: '25' -- Test loss: '8.406' -- Test accuracy: '0.499'
+2022-06-13 21:24:10 INFO      ----------- in domain -----------
+2022-06-13 21:24:10 INFO     {'25': {'model': '/home/cass/PycharmProjects/ood_time/extract_rationales/models/yelp_rationales/bert25.pt', 'f1': 0.49890202646187126, 'accuracy': 0.5286885245901639, 'loss': 8.405887460040155, 'ece-score': 0.060954558311915784}, 'mean-acc': 0.5286885245901639, 'std-acc': 0.0, 'mean-f1': 0.49890202646187126, 'std-f1': 0.0, 'mean-ece': 0.060954558311915784, 'std-ece': 0.0}
+2022-06-13 21:24:10 INFO     **** Loading dataset OOD --> yelp_rationales_ood1
+2022-06-13 21:24:11 INFO     -------------------------------------
+2022-06-13 21:24:11 INFO     evaluating trained models
+2022-06-13 21:24:13 INFO     Loading model: /home/cass/PycharmProjects/ood_time/extract_rationales/models/yelp_rationales/bert25.pt
+2022-06-13 21:24:15 INFO     Seed: '25' -- Test loss: '8.312' -- Test accuracy: '0.484'
+2022-06-13 21:24:15 INFO      ----------- OOD1 -----------
+2022-06-13 21:24:15 INFO     {'25': {'model': '/home/cass/PycharmProjects/ood_time/extract_rationales/models/yelp_rationales/bert25.pt', 'f1': 0.48449800721376146, 'accuracy': 0.5509367681498829, 'loss': 8.312185724204946, 'ece-score': 0.10014208856385542}, 'mean-acc': 0.5509367681498829, 'std-acc': 0.0, 'mean-f1': 0.48449800721376146, 'std-f1': 0.0, 'mean-ece': 0.10014208856385542, 'std-ece': 0.0}
+2022-06-13 21:24:15 INFO     **** Loading dataset OOD --> yelp_rationales_ood2
+2022-06-13 21:24:16 INFO     -------------------------------------
+2022-06-13 21:24:16 INFO     evaluating trained models
+2022-06-13 21:24:18 INFO     Loading model: /home/cass/PycharmProjects/ood_time/extract_rationales/models/yelp_rationales/bert25.pt
+2022-06-13 21:24:20 INFO     Seed: '25' -- Test loss: '8.791' -- Test accuracy: '0.477'
+2022-06-13 21:24:20 INFO      ----------- OOD2 -----------
+2022-06-13 21:24:20 INFO     {'25': {'model': '/home/cass/PycharmProjects/ood_time/extract_rationales/models/yelp_rationales/bert25.pt', 'f1': 0.47736927867714396, 'accuracy': 0.5333723653395784, 'loss': 8.790609402077221, 'ece-score': 0.10310119788317268}, 'mean-acc': 0.5333723653395784, 'std-acc': 0.0, 'mean-f1': 0.47736927867714396, 'std-f1': 0.0, 'mean-ece': 0.10310119788317268, 'std-ece': 0.0}
+2022-06-13 21:24:47 INFO     Running on cuda : True
+2022-06-13 21:24:47 INFO     config  : 
+ ----------------------
+2022-06-13 21:24:47 INFO     dataset : yelp_rationales
+2022-06-13 21:24:47 INFO     data_dir : /home/cass/PycharmProjects/ood_time/extract_rationales/datasets/yelp_rationales/data/
+2022-06-13 21:24:47 INFO     model_dir : /home/cass/PycharmProjects/ood_time/extract_rationales/models/yelp_rationales/
+2022-06-13 21:24:47 INFO     seed : 25
+2022-06-13 21:24:47 INFO     evaluate_models : True
+2022-06-13 21:24:47 INFO     inherently_faithful : None
+2022-06-13 21:24:47 INFO     use_tasc : False
+2022-06-13 21:24:47 INFO     importance_metric : None
+2022-06-13 21:24:47 INFO     rationale_length : 0.2
+2022-06-13 21:24:47 INFO     batch_size : 8
+2022-06-13 21:24:47 INFO     lr_bert : 1e-05
+2022-06-13 21:24:47 INFO     lr_classifier : 0.0001
+2022-06-13 21:24:47 INFO     model : bert-base-uncased
+2022-06-13 21:24:47 INFO     ood_dataset_1 : yelp_rationales_ood1
+2022-06-13 21:24:47 INFO     ood_dataset_2 : yelp_rationales_ood2
+2022-06-13 21:24:47 INFO     epochs : 5
+2022-06-13 21:24:47 INFO     model_abbreviation : bert
+2022-06-13 21:24:47 INFO     evaluation_dir : None
+2022-06-13 21:24:47 INFO     extracted_rationale_dir : None
+2022-06-13 21:24:47 INFO     query : False
+2022-06-13 21:24:47 INFO     stage_of_proj : train
+2022-06-13 21:24:47 INFO     ood_rat_1 : 0.2
+2022-06-13 21:24:47 INFO     ood_rat_2 : 0.2
+2022-06-13 21:24:47 INFO     embed_model : None
+2022-06-13 21:24:47 INFO     
+ ----------------------
+2022-06-13 21:24:49 INFO     ------------------------------------- gradients
+2022-06-13 21:24:49 INFO     evaluating trained models
+2022-06-13 21:24:53 INFO     Loading model: /home/cass/PycharmProjects/ood_time/extract_rationales/models/yelp_rationales/bert25.pt
+2022-06-13 21:24:55 INFO     Seed: '25' -- Test loss: '9.119' -- Test accuracy: '0.447'
+2022-06-13 21:24:55 INFO      ----------- in domain -----------
+2022-06-13 21:24:55 INFO     {'25': {'model': '/home/cass/PycharmProjects/ood_time/extract_rationales/models/yelp_rationales/bert25.pt', 'f1': 0.4471375343944615, 'accuracy': 0.49004683840749413, 'loss': 9.118857844967708, 'ece-score': 0.07833681522543591}, 'mean-acc': 0.49004683840749413, 'std-acc': 0.0, 'mean-f1': 0.4471375343944615, 'std-f1': 0.0, 'mean-ece': 0.07833681522543591, 'std-ece': 0.0}
+2022-06-13 21:24:55 INFO     **** Loading dataset OOD --> yelp_rationales_ood1
+2022-06-13 21:24:56 INFO     -------------------------------------
+2022-06-13 21:24:56 INFO     evaluating trained models
+2022-06-13 21:24:58 INFO     Loading model: /home/cass/PycharmProjects/ood_time/extract_rationales/models/yelp_rationales/bert25.pt
+2022-06-13 21:25:00 INFO     Seed: '25' -- Test loss: '8.52' -- Test accuracy: '0.446'
+2022-06-13 21:25:00 INFO      ----------- OOD1 -----------
+2022-06-13 21:25:00 INFO     {'25': {'model': '/home/cass/PycharmProjects/ood_time/extract_rationales/models/yelp_rationales/bert25.pt', 'f1': 0.44585409113817276, 'accuracy': 0.5374707259953162, 'loss': 8.520267601325132, 'ece-score': 0.10928856485481843}, 'mean-acc': 0.5374707259953162, 'std-acc': 0.0, 'mean-f1': 0.44585409113817276, 'std-f1': 0.0, 'mean-ece': 0.10928856485481843, 'std-ece': 0.0}
+2022-06-13 21:25:00 INFO     **** Loading dataset OOD --> yelp_rationales_ood2
+2022-06-13 21:25:01 INFO     -------------------------------------
+2022-06-13 21:25:01 INFO     evaluating trained models
+2022-06-13 21:25:02 INFO     Loading model: /home/cass/PycharmProjects/ood_time/extract_rationales/models/yelp_rationales/bert25.pt
+2022-06-13 21:25:04 INFO     Seed: '25' -- Test loss: '8.808' -- Test accuracy: '0.443'
+2022-06-13 21:25:04 INFO      ----------- OOD2 -----------
+2022-06-13 21:25:04 INFO     {'25': {'model': '/home/cass/PycharmProjects/ood_time/extract_rationales/models/yelp_rationales/bert25.pt', 'f1': 0.4429932649541982, 'accuracy': 0.5199063231850117, 'loss': 8.807694925326054, 'ece-score': 0.1112753895113563}, 'mean-acc': 0.5199063231850117, 'std-acc': 0.0, 'mean-f1': 0.4429932649541982, 'std-f1': 0.0, 'mean-ece': 0.1112753895113563, 'std-ece': 0.0}

@@ -40,6 +40,33 @@
         "ood_dataset_1": "factcheck_ood1",
         "ood_dataset_2": "factcheck"
     },
+    "factcheck_rationales" : {
+        "rationale_length" : 0.2,
+        "batch_size": 64,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "factcheck_rationales_ood1",
+        "ood_dataset_2": "factcheck_rationales_ood2"
+    },
+    "factcheck_rationales_ood1" : {
+        "rationale_length" : 0.2,
+        "batch_size": 64,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "factcheck",
+        "ood_dataset_2": "factcheck_ood2"
+    },
+    "factcheck_rationales_ood2" : {
+        "rationale_length" : 0.2,
+        "batch_size": 64,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "factcheck_ood1",
+        "ood_dataset_2": "factcheck"
+    },
     "xfact_full" : {
         "rationale_length" : 0.2,
         "batch_size": 64,
@@ -68,6 +95,33 @@
         "ood_dataset_2": "xfact_ood2"
     },
     "xfact_ood2" : {
+        "rationale_length" : 0.2,
+        "batch_size": 64,
+        "lr_bert" : 2e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "xfact_ood1",
+        "ood_dataset_2": "xfact"
+    },
+    "xfact_rationales" : {
+        "rationale_length" : 0.2,
+        "batch_size": 64,
+        "lr_bert" : 2e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "xfact_ood1",
+        "ood_dataset_2": "xfact_ood2"
+    },
+    "xfact_rationales_ood1" : {
+        "rationale_length" : 0.2,
+        "batch_size": 64,
+        "lr_bert" : 2e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "xfact",
+        "ood_dataset_2": "xfact_ood2"
+    },
+    "xfact_rationales_ood2" : {
         "rationale_length" : 0.2,
         "batch_size": 64,
         "lr_bert" : 2e-5,
@@ -238,6 +292,33 @@
         "ood_dataset_1": "yelp",
         "ood_dataset_2": "yelp_ood2"
     },
+    "yelp_rationales" : {
+        "rationale_length" : 0.2,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4, 
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "yelp_rationales_ood1",
+        "ood_dataset_2": "yelp_rationales_ood2"
+    },
+    "yelp_rationales_ood1" : {
+        "rationale_length" : 0.2,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4, 
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "yelp",
+        "ood_dataset_2": "yelp_ood2"
+    },
+    "yelp_rationales_ood2" : {
+        "rationale_length" : 0.2,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4, 
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "yelp",
+        "ood_dataset_2": "yelp_ood2"
+    },
     "AmazDigiMu": {
         "rationale_length" : 0.2,
         "batch_size": 8,
@@ -338,6 +419,33 @@
         "ood_dataset_2": "agnews_ood2"
     },
     "agnews_ood2" : {
+        "rationale_length" : 0.2,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "agnews",
+        "ood_dataset_2": "agnews_ood1"
+    },
+    "agnews_rationales" : {
+        "rationale_length" : 0.2,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4, 
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "agnews_rationales_ood1",
+        "ood_dataset_2": "agnews_rationales_ood2"
+    },
+    "agnews_rationales_ood1" : {
+        "rationale_length" : 0.2,
+        "batch_size": 8,
+        "lr_bert" : 1e-5,
+        "lr_classifier" : 1e-4,
+        "model" : "bert-base-uncased",
+        "ood_dataset_1": "agnews",
+        "ood_dataset_2": "agnews_ood2"
+    },
+    "agnews_rationales_ood2" : {
         "rationale_length" : 0.2,
         "batch_size": 8,
         "lr_bert" : 1e-5,

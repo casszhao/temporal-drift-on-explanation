@@ -41,7 +41,7 @@ IMDB = {
     }
 }
 
-yelp = yelp_full = yelp_ood1 = yelp_ood2 = {
+yelp = yelp_full = yelp_ood1 = yelp_ood2 = yelp_rationales = yelp_rationales_ood1 = yelp_rationales_ood2 = {
     "OPTIM_ARGS_" : {     ## for Adam Loss
         "lr" : 0.0001, ##0.00001
         "weight_decay" : 0.00001,
@@ -203,5 +203,8 @@ get_ = {
     "healthfact_full": healthfact_full,
     "healthfact_ood1": healthfact_ood1,
     "healthfact_ood2": healthfact_ood2,
+    "yelp_rationales": yelp,
+    "yelp_rationales_ood1": yelp_ood1,
+    "yelp_rationales_ood2": yelp_ood2,
 }
 

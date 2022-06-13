@@ -1,0 +1,147 @@
+2022-06-13 21:45:23 INFO     Running on cuda : True
+2022-06-13 21:45:23 INFO     config  : 
+ ----------------------
+2022-06-13 21:45:23 INFO     dataset : agnews_rationales
+2022-06-13 21:45:23 INFO     data_dir : /home/cass/PycharmProjects/ood_time/extract_rationales/datasets/agnews_rationales/data/
+2022-06-13 21:45:23 INFO     model_dir : /home/cass/PycharmProjects/ood_time/extract_rationales/models/agnews_rationales/
+2022-06-13 21:45:23 INFO     seed : 25
+2022-06-13 21:45:23 INFO     evaluate_models : True
+2022-06-13 21:45:23 INFO     inherently_faithful : None
+2022-06-13 21:45:23 INFO     use_tasc : False
+2022-06-13 21:45:23 INFO     importance_metric : None
+2022-06-13 21:45:23 INFO     rationale_length : 0.2
+2022-06-13 21:45:23 INFO     batch_size : 8
+2022-06-13 21:45:23 INFO     lr_bert : 1e-05
+2022-06-13 21:45:23 INFO     lr_classifier : 0.0001
+2022-06-13 21:45:23 INFO     model : bert-base-uncased
+2022-06-13 21:45:23 INFO     ood_dataset_1 : agnews_rationales_ood1
+2022-06-13 21:45:23 INFO     ood_dataset_2 : agnews_rationales_ood2
+2022-06-13 21:45:23 INFO     epochs : 5
+2022-06-13 21:45:23 INFO     model_abbreviation : bert
+2022-06-13 21:45:23 INFO     evaluation_dir : None
+2022-06-13 21:45:23 INFO     extracted_rationale_dir : None
+2022-06-13 21:45:23 INFO     query : False
+2022-06-13 21:45:23 INFO     stage_of_proj : train
+2022-06-13 21:45:23 INFO     ood_rat_1 : 0.2
+2022-06-13 21:45:23 INFO     ood_rat_2 : 0.2
+2022-06-13 21:45:23 INFO     embed_model : None
+2022-06-13 21:45:23 INFO     
+ ----------------------
+2022-06-13 21:45:28 INFO     ------------------------------------- scaged
+2022-06-13 21:45:28 INFO     evaluating trained models
+2022-06-13 21:45:32 INFO     Loading model: /home/cass/PycharmProjects/ood_time/extract_rationales/models/agnews_rationales/bert25.pt
+2022-06-13 21:45:43 INFO     Seed: '25' -- Test loss: '2.501' -- Test accuracy: '0.912'
+2022-06-13 21:45:43 INFO      ----------- in domain -----------
+2022-06-13 21:45:43 INFO     {'25': {'model': '/home/cass/PycharmProjects/ood_time/extract_rationales/models/agnews_rationales/bert25.pt', 'f1': 0.9117886947305832, 'accuracy': 0.9156871126309041, 'loss': 2.5005260130724847, 'ece-score': 0.039923335203224566}, 'mean-acc': 0.9156871126309041, 'std-acc': 0.0, 'mean-f1': 0.9117886947305832, 'std-f1': 0.0, 'mean-ece': 0.039923335203224566, 'std-ece': 0.0}
+2022-06-13 21:45:43 INFO     **** Loading dataset OOD --> agnews_rationales_ood1
+2022-06-13 21:45:47 INFO     -------------------------------------
+2022-06-13 21:45:47 INFO     evaluating trained models
+2022-06-13 21:45:49 INFO     Loading model: /home/cass/PycharmProjects/ood_time/extract_rationales/models/agnews_rationales/bert25.pt
+2022-06-13 21:46:00 INFO     Seed: '25' -- Test loss: '2.499' -- Test accuracy: '0.906'
+2022-06-13 21:46:00 INFO      ----------- OOD1 -----------
+2022-06-13 21:46:00 INFO     {'25': {'model': '/home/cass/PycharmProjects/ood_time/extract_rationales/models/agnews_rationales/bert25.pt', 'f1': 0.9062249113907328, 'accuracy': 0.9115195554605685, 'loss': 2.4990611557761193, 'ece-score': 0.04198968811762793}, 'mean-acc': 0.9115195554605685, 'std-acc': 0.0, 'mean-f1': 0.9062249113907328, 'std-f1': 0.0, 'mean-ece': 0.04198968811762793, 'std-ece': 0.0}
+2022-06-13 21:46:00 INFO     **** Loading dataset OOD --> agnews_rationales_ood2
+2022-06-13 21:46:05 INFO     -------------------------------------
+2022-06-13 21:46:05 INFO     evaluating trained models
+2022-06-13 21:46:06 INFO     Loading model: /home/cass/PycharmProjects/ood_time/extract_rationales/models/agnews_rationales/bert25.pt
+2022-06-13 21:46:17 INFO     Seed: '25' -- Test loss: '2.953' -- Test accuracy: '0.901'
+2022-06-13 21:46:18 INFO      ----------- OOD2 -----------
+2022-06-13 21:46:18 INFO     {'25': {'model': '/home/cass/PycharmProjects/ood_time/extract_rationales/models/agnews_rationales/bert25.pt', 'f1': 0.9010269306036311, 'accuracy': 0.9014746740756572, 'loss': 2.9528377100252188, 'ece-score': 0.048746457891500915}, 'mean-acc': 0.9014746740756572, 'std-acc': 0.0, 'mean-f1': 0.9010269306036311, 'std-f1': 0.0, 'mean-ece': 0.048746457891500915, 'std-ece': 0.0}
+2022-06-13 21:49:25 INFO     Running on cuda : True
+2022-06-13 21:49:25 INFO     config  : 
+ ----------------------
+2022-06-13 21:49:25 INFO     dataset : agnews_rationales
+2022-06-13 21:49:25 INFO     data_dir : /home/cass/PycharmProjects/ood_time/extract_rationales/datasets/agnews_rationales/data/
+2022-06-13 21:49:25 INFO     model_dir : /home/cass/PycharmProjects/ood_time/extract_rationales/models/agnews_rationales/
+2022-06-13 21:49:25 INFO     seed : 25
+2022-06-13 21:49:25 INFO     evaluate_models : True
+2022-06-13 21:49:25 INFO     inherently_faithful : None
+2022-06-13 21:49:25 INFO     use_tasc : False
+2022-06-13 21:49:25 INFO     importance_metric : None
+2022-06-13 21:49:25 INFO     rationale_length : 0.2
+2022-06-13 21:49:25 INFO     batch_size : 8
+2022-06-13 21:49:25 INFO     lr_bert : 1e-05
+2022-06-13 21:49:25 INFO     lr_classifier : 0.0001
+2022-06-13 21:49:25 INFO     model : bert-base-uncased
+2022-06-13 21:49:25 INFO     ood_dataset_1 : agnews_rationales_ood1
+2022-06-13 21:49:25 INFO     ood_dataset_2 : agnews_rationales_ood2
+2022-06-13 21:49:25 INFO     epochs : 5
+2022-06-13 21:49:25 INFO     model_abbreviation : bert
+2022-06-13 21:49:25 INFO     evaluation_dir : None
+2022-06-13 21:49:25 INFO     extracted_rationale_dir : None
+2022-06-13 21:49:25 INFO     query : False
+2022-06-13 21:49:25 INFO     stage_of_proj : train
+2022-06-13 21:49:25 INFO     ood_rat_1 : 0.2
+2022-06-13 21:49:25 INFO     ood_rat_2 : 0.2
+2022-06-13 21:49:25 INFO     embed_model : None
+2022-06-13 21:49:25 INFO     
+ ----------------------
+2022-06-13 21:49:30 INFO     ------------------------------------- deeplift
+2022-06-13 21:49:30 INFO     evaluating trained models
+2022-06-13 21:49:33 INFO     Loading model: /home/cass/PycharmProjects/ood_time/extract_rationales/models/agnews_rationales/bert25.pt
+2022-06-13 21:49:44 INFO     Seed: '25' -- Test loss: '9.625' -- Test accuracy: '0.685'
+2022-06-13 21:49:45 INFO      ----------- in domain -----------
+2022-06-13 21:49:45 INFO     {'25': {'model': '/home/cass/PycharmProjects/ood_time/extract_rationales/models/agnews_rationales/bert25.pt', 'f1': 0.6850978638652716, 'accuracy': 0.6885018166274846, 'loss': 9.624637788865302, 'ece-score': 0.18242342403541903}, 'mean-acc': 0.6885018166274846, 'std-acc': 0.0, 'mean-f1': 0.6850978638652716, 'std-f1': 0.0, 'mean-ece': 0.18242342403541903, 'std-ece': 0.0}
+2022-06-13 21:49:45 INFO     **** Loading dataset OOD --> agnews_rationales_ood1
+2022-06-13 21:49:49 INFO     -------------------------------------
+2022-06-13 21:49:49 INFO     evaluating trained models
+2022-06-13 21:49:51 INFO     Loading model: /home/cass/PycharmProjects/ood_time/extract_rationales/models/agnews_rationales/bert25.pt
+2022-06-13 21:50:02 INFO     Seed: '25' -- Test loss: '8.06' -- Test accuracy: '0.713'
+2022-06-13 21:50:02 INFO      ----------- OOD1 -----------
+2022-06-13 21:50:02 INFO     {'25': {'model': '/home/cass/PycharmProjects/ood_time/extract_rationales/models/agnews_rationales/bert25.pt', 'f1': 0.7133904223485512, 'accuracy': 0.7362684334259457, 'loss': 8.060033692569178, 'ece-score': 0.1577446996006453}, 'mean-acc': 0.7362684334259457, 'std-acc': 0.0, 'mean-f1': 0.7133904223485512, 'std-f1': 0.0, 'mean-ece': 0.1577446996006453, 'std-ece': 0.0}
+2022-06-13 21:50:02 INFO     **** Loading dataset OOD --> agnews_rationales_ood2
+2022-06-13 21:50:06 INFO     -------------------------------------
+2022-06-13 21:50:06 INFO     evaluating trained models
+2022-06-13 21:50:08 INFO     Loading model: /home/cass/PycharmProjects/ood_time/extract_rationales/models/agnews_rationales/bert25.pt
+2022-06-13 21:50:18 INFO     Seed: '25' -- Test loss: '8.847' -- Test accuracy: '0.71'
+2022-06-13 21:50:19 INFO      ----------- OOD2 -----------
+2022-06-13 21:50:19 INFO     {'25': {'model': '/home/cass/PycharmProjects/ood_time/extract_rationales/models/agnews_rationales/bert25.pt', 'f1': 0.7101403194772808, 'accuracy': 0.7245137849967942, 'loss': 8.847200694393653, 'ece-score': 0.16637218206783316}, 'mean-acc': 0.7245137849967942, 'std-acc': 0.0, 'mean-f1': 0.7101403194772808, 'std-f1': 0.0, 'mean-ece': 0.16637218206783316, 'std-ece': 0.0}
+2022-06-13 21:53:15 INFO     Running on cuda : True
+2022-06-13 21:53:15 INFO     config  : 
+ ----------------------
+2022-06-13 21:53:15 INFO     dataset : agnews_rationales
+2022-06-13 21:53:15 INFO     data_dir : /home/cass/PycharmProjects/ood_time/extract_rationales/datasets/agnews_rationales/data/
+2022-06-13 21:53:15 INFO     model_dir : /home/cass/PycharmProjects/ood_time/extract_rationales/models/agnews_rationales/
+2022-06-13 21:53:15 INFO     seed : 25
+2022-06-13 21:53:15 INFO     evaluate_models : True
+2022-06-13 21:53:15 INFO     inherently_faithful : None
+2022-06-13 21:53:15 INFO     use_tasc : False
+2022-06-13 21:53:15 INFO     importance_metric : None
+2022-06-13 21:53:15 INFO     rationale_length : 0.2
+2022-06-13 21:53:15 INFO     batch_size : 8
+2022-06-13 21:53:15 INFO     lr_bert : 1e-05
+2022-06-13 21:53:15 INFO     lr_classifier : 0.0001
+2022-06-13 21:53:15 INFO     model : bert-base-uncased
+2022-06-13 21:53:15 INFO     ood_dataset_1 : agnews_rationales_ood1
+2022-06-13 21:53:15 INFO     ood_dataset_2 : agnews_rationales_ood2
+2022-06-13 21:53:15 INFO     epochs : 5
+2022-06-13 21:53:15 INFO     model_abbreviation : bert
+2022-06-13 21:53:15 INFO     evaluation_dir : None
+2022-06-13 21:53:15 INFO     extracted_rationale_dir : None
+2022-06-13 21:53:15 INFO     query : False
+2022-06-13 21:53:15 INFO     stage_of_proj : train
+2022-06-13 21:53:15 INFO     ood_rat_1 : 0.2
+2022-06-13 21:53:15 INFO     ood_rat_2 : 0.2
+2022-06-13 21:53:15 INFO     embed_model : None
+2022-06-13 21:53:15 INFO     
+ ----------------------
+2022-06-13 21:53:20 INFO     -------------------------------------grad
+2022-06-13 21:53:20 INFO     evaluating trained models
+2022-06-13 21:53:24 INFO     Loading model: /home/cass/PycharmProjects/ood_time/extract_rationales/models/agnews_rationales/bert25.pt
+2022-06-13 21:53:35 INFO     Seed: '25' -- Test loss: '12.851' -- Test accuracy: '0.64'
+2022-06-13 21:53:35 INFO      ----------- in domain -----------
+2022-06-13 21:53:35 INFO     {'25': {'model': '/home/cass/PycharmProjects/ood_time/extract_rationales/models/agnews_rationales/bert25.pt', 'f1': 0.6403449309331947, 'accuracy': 0.645757640521479, 'loss': 12.851182914085877, 'ece-score': 0.2672121054336642}, 'mean-acc': 0.645757640521479, 'std-acc': 0.0, 'mean-f1': 0.6403449309331947, 'std-f1': 0.0, 'mean-ece': 0.2672121054336642, 'std-ece': 0.0}
+2022-06-13 21:53:35 INFO     **** Loading dataset OOD --> agnews_rationales_ood1
+2022-06-13 21:53:40 INFO     -------------------------------------
+2022-06-13 21:53:40 INFO     evaluating trained models
+2022-06-13 21:53:41 INFO     Loading model: /home/cass/PycharmProjects/ood_time/extract_rationales/models/agnews_rationales/bert25.pt
+2022-06-13 21:53:52 INFO     Seed: '25' -- Test loss: '7.46' -- Test accuracy: '0.75'
+2022-06-13 21:53:52 INFO      ----------- OOD1 -----------
+2022-06-13 21:53:52 INFO     {'25': {'model': '/home/cass/PycharmProjects/ood_time/extract_rationales/models/agnews_rationales/bert25.pt', 'f1': 0.7497856618431238, 'accuracy': 0.7631972643727292, 'loss': 7.459567642418874, 'ece-score': 0.15995077336285457}, 'mean-acc': 0.7631972643727292, 'std-acc': 0.0, 'mean-f1': 0.7497856618431238, 'std-f1': 0.0, 'mean-ece': 0.15995077336285457, 'std-ece': 0.0}
+2022-06-13 21:53:52 INFO     **** Loading dataset OOD --> agnews_rationales_ood2
+2022-06-13 21:53:57 INFO     -------------------------------------
+2022-06-13 21:53:57 INFO     evaluating trained models
+2022-06-13 21:53:58 INFO     Loading model: /home/cass/PycharmProjects/ood_time/extract_rationales/models/agnews_rationales/bert25.pt
+2022-06-13 21:54:09 INFO     Seed: '25' -- Test loss: '8.537' -- Test accuracy: '0.731'
+2022-06-13 21:54:09 INFO      ----------- OOD2 -----------
+2022-06-13 21:54:09 INFO     {'25': {'model': '/home/cass/PycharmProjects/ood_time/extract_rationales/models/agnews_rationales/bert25.pt', 'f1': 0.7306667353296429, 'accuracy': 0.7295362256892498, 'loss': 8.536608062213302, 'ece-score': 0.1896459487264649}, 'mean-acc': 0.7295362256892498, 'std-acc': 0.0, 'mean-f1': 0.7306667353296429, 'std-f1': 0.0, 'mean-ece': 0.1896459487264649, 'std-ece': 0.0}

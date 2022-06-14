@@ -106,32 +106,6 @@ class evaluate():
                 print(' ++++++++++++ START extracting for ', data_split_name, ' ++++++++++++++')
 
                 
-                extract_importance_(
-                    model = model,
-                    data_split_name = data_split_name,
-                    data = data_split,
-                    model_random_seed = self.model_random_seed,
-                    ood = self.ood,
-                    ood_dataset_ = self.ood_dataset_
-                )
-                torch.cuda.empty_cache()
-                print(' \\ +++++++++ DONE {} s attributes of ig/scale attention/attention...'.format(data_split_name))
-
-                extract_lime_scores_(
-                    model = model,
-                    data = data_split,
-                    data_split_name = data_split_name,
-                    model_random_seed = self.model_random_seed,
-                    no_of_labels = data.nu_of_labels,
-                    max_seq_len = data.max_len,
-                    tokenizer = data.tokenizer,
-                    ood = self.ood,
-                    ood_dataset_ = self.ood_dataset_
-                )
-                
-                torch.cuda.empty_cache()
-                print(' \\ +++++++++ DONE {} s lime '.format(data_split_name))
-
                 extract_deeplift_values_(
                     model = model,
                     data = data_split,
@@ -142,6 +116,18 @@ class evaluate():
                 )
                 torch.cuda.empty_cache()
                 print(' \\ +++++++++ DONE {} s deeplift '.format(data_split_name))
+                
+                
+                extract_importance_(
+                    model = model,
+                    data_split_name = data_split_name,
+                    data = data_split,
+                    model_random_seed = self.model_random_seed,
+                    ood = self.ood,
+                    ood_dataset_ = self.ood_dataset_
+                )
+                torch.cuda.empty_cache()
+                print(' \\ +++++++++ DONE {} s attributes of ig/scale attention/attention...'.format(data_split_name))
 
 
                 extract_deepliftshap_values_(
@@ -166,6 +152,21 @@ class evaluate():
                 )
                 torch.cuda.empty_cache()
                 print(' \\ +++++++++ DONE {} s gradientshap '.format(data_split_name))
+
+                extract_lime_scores_(
+                    model = model,
+                    data = data_split,
+                    data_split_name = data_split_name,
+                    model_random_seed = self.model_random_seed,
+                    no_of_labels = data.nu_of_labels,
+                    max_seq_len = data.max_len,
+                    tokenizer = data.tokenizer,
+                    ood = self.ood,
+                    ood_dataset_ = self.ood_dataset_
+                )
+                
+                torch.cuda.empty_cache()
+                print(' \\ +++++++++ DONE {} s lime '.format(data_split_name))
 
 
         return 

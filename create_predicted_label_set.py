@@ -39,17 +39,27 @@ def change_label_and_create_new_df(model_output_array, extracted_rationales_path
 
 
 def generate_for_one_task_one_feature(data, features, seed):
-    model_output_path_ind: str = f'models/{data}_rationales/bert-output_seed-{seed}.npy'
+    model_output_path_ind: str = f'models/{data}/bert-output_seed-{seed}.npy'
     rationales_path_ind: str = f'extracted_rationales/{data}/data/topk/{features}-test.json'
-    new_data_path_ind: str = f'datasets/{data}_rationales/data/'
+    new_data_path_ind: str = f'datasets_{feature}/{data}/data/'
 
-    model_output_path_ood1: str = f'models/{data}_rationales/bert-output_seed-{seed}-OOD-{data}_ood1.npy'
+    model_output_path_ood1: str = f'models/{data}/bert-output_seed-{seed}-OOD-{data}_ood1.npy'
     rationales_path_ood1: str = f'extracted_rationales/{data}/data/topk/OOD-{data}_ood1-{features}-test.json'
-    new_data_path_ood1: str = f'datasets/{data}_rationales_ood1/data/'
+    new_data_path_ood1: str = f'datasets_{feature}/{data}_ood1/data/'
 
-    model_output_path_ood2: str = f'models/{data}_rationales/bert-output_seed-{seed}-OOD-{data}_ood2.npy'
+    model_output_path_ood2: str = f'models/{data}/bert-output_seed-{seed}-OOD-{data}_ood2.npy'
     rationales_path_ood2: str = f'extracted_rationales/{data}/data/topk/OOD-{data}_ood2-{features}-test.json'
-    new_data_path_ood2: str = f'datasets/{data}_rationales_ood2/data/'
+    new_data_path_ood2: str = f'datasets_{feature}/{data}_ood2/data/'
+
+    import os
+
+    for path in (
+                    new_data_path_ind, 
+                    new_data_path_ood1,
+                    new_data_path_ood2
+                ):
+
+        os.makedirs(path, exist_ok=True)
 
 
     change_label_and_create_new_df(model_output_path_ind, rationales_path_ind, new_data_path_ind)
@@ -58,7 +68,41 @@ def generate_for_one_task_one_feature(data, features, seed):
 
 # can do task list in batch
 # can only do feature by feature
-data = 'factcheck' # yelp 25 / agnews 25 / xfact 5 / factcheck 5 / AmazDigiMu 20 / AmazPantry 15
-feature = 'gradients' #scaled attention # deeplift # gradients 
-seed = 5
+# data = 'factcheck' # yelp 25 / agnews 25 / xfact 5 / factcheck 5 / AmazDigiMu 20 / AmazPantry 15
+# feature = 'gradients' #scaled attention # deeplift # gradients 
+# seed = 5
+
+import argparse
+parser = argparse.ArgumentParser()
+
+parser.add_argument(
+    "--dataset", 
+    type = str, 
+    help = "select dataset / task", 
+    default = "yelp", 
+)
+
+parser.add_argument(
+    "--feature", 
+    type = str, 
+    help = "select dataset / task", 
+    default = "yelp", 
+)
+
+arguments = vars(parser.parse_args())
+
+seeds = {
+    "factcheck" : 5,
+    "yelp" : 25,
+    "agnews" : 25,
+    "xfact" : 5,
+    "factcheck" : 5,
+    "AmazDigiMu" : 20,
+    "AmaziPantry" : 20
+}
+
+data = arguments["dataset"]
+seed = seeds[data]
+feature = arguments["feature"]
+
 generate_for_one_task_one_feature(data, feature, 5)

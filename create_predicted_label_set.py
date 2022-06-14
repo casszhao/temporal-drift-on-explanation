@@ -18,19 +18,7 @@ def change_label_and_create_new_df(model_output_array, extracted_rationales_path
         predicted =  model_output_array[docid]['predicted'].argmax()
         doc['label'] = int(predicted)
 
-    with open(new_save_path+'train.json', 'w') as file:
-        json.dump(
-            data,
-            file,
-            indent = 4)
-
-    with open(new_save_path+'dev.json', 'w') as file:
-        json.dump(
-            data,
-            file,
-            indent = 4)
-
-    with open(new_save_path+'test.json', 'w') as file:
+    with open(new_save_path, 'w') as file:
         json.dump(
             data,
             file,
@@ -105,4 +93,4 @@ data = arguments["dataset"]
 seed = seeds[data]
 feature = arguments["feature"]
 
-generate_for_one_task_one_feature(data, feature, 5)
+generate_for_one_task_one_feature(data, feature, seed)

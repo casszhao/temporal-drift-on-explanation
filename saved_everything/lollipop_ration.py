@@ -23,7 +23,7 @@ df['ig'] = df['ig']/df['random']
 df['random'] = df['random']/df['random']
 df['mean-f1'] = df['mean-f1']*100
 
-data = 'Factcheck'
+
 
 # for fname in os.listdir('../posthoc_results/factcheck/'):
 #     print(fname)
@@ -39,7 +39,7 @@ data = 'Factcheck'
 
 
 
-
+data = 'Yelp'
 
 
 df = df[df['Task'].str.contains(str(data))]
@@ -108,7 +108,7 @@ else:
     comp_max = 0.35
 
 
-fig, ax = plt.subplots(1, 3, gridspec_kw={'width_ratios': [0.9, 4, 4]}, sharey='all', figsize=(13,2.1))
+fig, ax = plt.subplots(1, 3, gridspec_kw={'width_ratios': [0.9, 4, 4]}, sharey='all', figsize=(12,2.1))
 
 
 # Set number of ticks for x-axis
@@ -117,7 +117,7 @@ ax[0].set_yticks(range(len(my_range)))
 ax[0].set_yticklabels(my_range)
 
 ax[0].hlines(y=my_range, xmin=bert_min, xmax=bert_max, color='grey', alpha=0.35)
-ax[0].scatter(df['mean-f1'], df['Domain'], color='dimgray', alpha=1, label='F1', marker="o", s=130) # marker='|'
+ax[0].scatter(df['mean-f1'], df['Domain'], color='dimgray', alpha=0.66, label='F1', marker="o", s=89) # marker='|'
 for x,y in zip(df['mean-f1'],df['Domain']):
     label = format(x, '.1f')
     ax[0].annotate(label, # this is the text
@@ -125,7 +125,7 @@ for x,y in zip(df['mean-f1'],df['Domain']):
                  textcoords="offset points", # how to position the text
                  xytext=(0,10), # distance from text to points (x,y)
                  ha='center',
-                 fontsize= 13,
+                 fontsize= 12,
                  ) 
 ax[0].set_xlabel('BERT avg macro-F1',fontsize=xlabel_size)
 if data == 'Amazdigimu':
@@ -143,15 +143,14 @@ YMAX = 4
 ax[1].hlines(y=my_range, xmin=suff_min, xmax=suff_max, color='grey', alpha=0.35)
 ax[1].vlines(x = 1, ymin=YMIN, ymax=YMAX, color='black', alpha=1)
 ax[1].scatter(suff['random'], my_range, color='black', alpha=1, label='Random', marker='|', s=230)
-ax[1].scatter(suff['scaled attention'], my_range, color='blue', alpha=ALPHA , label='Scaled Attention', s=SIZE)
-ax[1].scatter(suff['gradients'], my_range, color='red', alpha=ALPHA , label='Gradients', s=SIZE)
-ax[1].scatter(suff['deeplift'], my_range, color='green', alpha=ALPHA , label='Deeplift', s=SIZE)
-ax[1].scatter(suff['ig'], my_range, color='purple', alpha=ALPHA , label='IG', s=SIZE)
-ax[1].scatter(suff['gradientshap'], my_range, color='saddlebrown', alpha=ALPHA , label='Gradientshap', s=SIZE)
-
-ax[1].scatter(suff['deepliftshap'], my_range, color='orange', alpha=ALPHA+0.2, label='Deepliftshap', s=SIZE)
-ax[1].scatter(suff['attention'], my_range, color='gold', alpha=ALPHA+0.4, label='Attention', s=SIZE)
-ax[1].scatter(suff['lime'], my_range, color='plum', alpha=ALPHA+0.4, label='Lime', s=SIZE)
+ax[1].scatter(suff['deeplift'], my_range, color='green', alpha=ALPHA , label='DL', s=SIZE, marker='p')
+ax[1].scatter(suff['deepliftshap'], my_range, color='orange', alpha=ALPHA+0.2, label='Dsp', s=SIZE, marker='<')
+ax[1].scatter(suff['lime'], my_range, color='plum', alpha=ALPHA+0.4, label='LIME', s=SIZE)
+ax[1].scatter(suff['attention'], my_range, color='gold', alpha= ALPHA+0.45, label=r'$\alpha$', s=SIZE-21, marker="D")
+ax[1].scatter(suff['scaled attention'], my_range, color='blue', alpha=ALPHA , label=r'$\alpha\nabla\alpha$', s=SIZE, marker="s")
+ax[1].scatter(suff['gradients'], my_range, color='red', alpha=1, label=r'$x\nabla x $', s=SIZE+33, marker="1")
+ax[1].scatter(suff['ig'], my_range, color='purple', alpha=1, label='IG', s=SIZE+33, marker="2")
+ax[1].scatter(suff['gradientshap'], my_range, color='saddlebrown', alpha=1, label='Gsp', s=SIZE+33, marker="3")
 
 ax[1].set_xlabel('AOPC Sufficiency',fontsize=xlabel_size)
 ax[1].invert_yaxis()
@@ -161,29 +160,28 @@ plt.plot()
 ########################################   COM  #################################
 ax[2].hlines(y=my_range, xmin=comp_min, xmax=comp_max, color='grey', alpha=0.35)
 ax[2].vlines(x = 1, ymin=YMIN, ymax=YMAX, color='black', alpha=1)
+
+
 ax[2].scatter(comp['random'], my_range, color='black', alpha=1, label='Random', marker='|', s=230)
-ax[2].scatter(comp['scaled attention'], my_range, color='blue', alpha=ALPHA , label=r'$\alpha\nabla\alpha$', s=SIZE, marker="s")
-ax[2].scatter(comp['attention'], my_range, color='gold', alpha= ALPHA+0.4, label=r'$\alpha$', s=SIZE-21, marker="D")
-
-ax[2].scatter(comp['gradients'], my_range, color='red', alpha=ALPHA+0.3, label=r'$x\nabla x $', s=SIZE+22, marker="1")
-ax[2].scatter(comp['ig'], my_range, color='purple', alpha=ALPHA+0.3, label='IG', s=SIZE+22, marker="2")
-ax[2].scatter(comp['gradientshap'], my_range, color='saddlebrown', alpha=ALPHA+0.35, label='Gsp', s=SIZE, marker="3")
-
-ax[2].scatter(comp['deeplift'], my_range, color='green', alpha=ALPHA , label='DL', s=SIZE)
-ax[2].scatter(comp['deepliftshap'], my_range, color='orange', alpha=ALPHA+0.2, label='Dsp', s=SIZE+22)
-
-
+ax[2].scatter(comp['deeplift'], my_range, color='green', alpha=ALPHA , label='DL', s=SIZE, marker='p')
+ax[2].scatter(comp['deepliftshap'], my_range, color='orange', alpha=ALPHA+0.2, label='Dsp', s=SIZE, marker='<')
 ax[2].scatter(comp['lime'], my_range, color='plum', alpha=ALPHA+0.4, label='LIME', s=SIZE)
+ax[2].scatter(comp['attention'], my_range, color='gold', alpha= ALPHA+0.45, label=r'$\alpha$', s=SIZE-21, marker="D")
+ax[2].scatter(comp['scaled attention'], my_range, color='blue', alpha=ALPHA , label=r'$\alpha\nabla\alpha$', s=SIZE, marker="s")
+ax[2].scatter(comp['gradients'], my_range, color='red', alpha=1, label=r'$x\nabla x $', s=SIZE+33, marker="1")
+ax[2].scatter(comp['ig'], my_range, color='purple', alpha=1, label='IG', s=SIZE+33, marker="2")
+ax[2].scatter(comp['gradientshap'], my_range, color='saddlebrown', alpha=1, label='Gsp', s=SIZE+33, marker="3")
+
 ax[2].set_xlabel('AOPC Comprehensiveness',fontsize=xlabel_size)
 ax[2].invert_yaxis()
 plt.plot()
 
 
 plt.subplots_adjust(
-    left=0.064,
+    left=0.07,
     bottom=0.221, 
-    right=0.857, 
-    top=0.91, 
+    right=0.893, 
+    top=0.914, 
     wspace=0.076, 
     hspace=0.2,
     )
@@ -191,10 +189,11 @@ plt.subplots_adjust(
 
 
 plt.legend(bbox_to_anchor=(1.05, 1.1), loc='upper left', borderaxespad=0, fontsize=legend_font_size-1.5)
+#plt.legend(bbox_to_anchor=(-0.3, -0.3), loc='upper center', borderaxespad=0, fontsize=11,fancybox=True,ncol=9)
 #fig.update_layout(yaxis5=dict(type='category',categoryorder='category ascending'))
 fig1 = plt.gcf()
 
 plt.show()
 plt.draw()
-fig1.savefig('./plot/contig'+str(data)+'.png', dpi=250)
+fig1.savefig('./plot/'+str(data)+'.png', dpi=660)
 #plt.savefig('./plot/'+str(data), format='png') # bbox_inches = 'tight', dpi=350,

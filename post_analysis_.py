@@ -128,7 +128,7 @@ plt.legend(bbox_to_anchor=(1.02, 1), loc='upper left', borderaxespad=0, fontsize
 plt.xticks(fontsize=xtick_size)
 plt.show()
 fig1 = plt.gcf()
-fig.savefig('./selective_predictive.png', dpi=250)
+fig.savefig('./selective_predictive.png', dpi=600)
 
 # print(bigtable_list)
 all_tasks = pd.concat(bigtable_list, ignore_index=False)

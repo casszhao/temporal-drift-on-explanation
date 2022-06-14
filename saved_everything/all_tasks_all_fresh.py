@@ -15,7 +15,7 @@ import numpy as np
 import pandas as pd
 
 
-task_list = ['agnews', 'xfact', 'factcheck', 'yelp'] # 'AmazDigiMu', 'AmazPantry', 
+task_list = ['agnews', 'xfact', 'factcheck', 'yelp', 'AmazPantry', 'AmazPantry'] # 'AmazDigiMu', 'AmazPantry', 
 
 # for i, task in enumerate(task_list):
 #         if i == 0:
@@ -68,19 +68,18 @@ for i, name in enumerate(task_list):
         axs[0, i].scatter(df['Domain'], df['scaled attention'], label='Scaled attention', marker='<', color='steelblue')
         axs[0, i].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', color='red')
         axs[0, i].set_xlabel(SUB_NAME,fontsize=xlabel_size)
-    # elif i > 3:
-    #     axs[2, i-4].scatter(df['Domain'], df['Bert F1'], label='BERT', marker='x', s=makersize)
-    #     axs[2, i-4].scatter(df['Domain'], df['FRESH F1'], label='FRESH(α∇α)', marker='x', s=makersize)
-    #     axs[2, i-4].scatter(df['Domain'], df['SPECTRA F1'], label='SPECTRA')
-    #     axs[2, i-4].scatter(df['Domain'], df['KUMA F1'], label='HardKUMA')
-    #     axs[2, i-4].scatter(df['Domain'], df['LSTM F1'], label='LSTM')
-    #     axs[2, i-4].set_xlabel(SUB_NAME,fontsize=xlabel_size)
-    else:
+    elif i > 2:
         axs[1, i-2].scatter(df['Domain'], df['gradients'], label='Gradients', color='dimgrey')
         axs[1, i-2].scatter(df['Domain'], df['deeplift'], label='Deeplift', marker='d', color='darkorange')
         axs[1, i-2].scatter(df['Domain'], df['scaled attention'], label='Scaled attention', marker='<', color='steelblue')
         axs[1, i-2].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', color='red')
         axs[1, i-2].set_xlabel(SUB_NAME,fontsize=xlabel_size)
+    else:
+        axs[2, i-4].scatter(df['Domain'], df['gradients'], label='Gradients', color='dimgrey')
+        axs[2, i-4].scatter(df['Domain'], df['deeplift'], label='Deeplift', marker='d', color='darkorange')
+        axs[2, i-4].scatter(df['Domain'], df['scaled attention'], label='Scaled attention', marker='<', color='steelblue')
+        axs[2, i-4].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', color='red')
+        axs[2, i-4].set_xlabel(SUB_NAME,fontsize=xlabel_size)
     
 #fig.suptitle('Predictive Performance Comparison of Selective Rationalizations', fontsize=12)
 plt.subplots_adjust(

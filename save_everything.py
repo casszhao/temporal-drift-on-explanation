@@ -661,8 +661,8 @@ if args.save_for_fresh:
             print('--------------------')
             path_full = os.path.join('FRESH_classifiers/', str(args.dataset)+'_full', str(threshold),
                                 str(attribute_name) + '_bert_predictive_performances.json')
-            for f in os.listdir('FRESH_classifiers/'+ str(args.dataset)+'_full/'+str(threshold)+'/'):
-                if 
+            # for f in os.listdir('FRESH_classifiers/'+ str(args.dataset)+'_full/'+str(threshold)+'/'):
+            #     if 
             print(path_full)
             fresh_full = pd.read_json(path_full)
             fresh_full = fresh_full[['mean-acc', 'std-acc', 'mean-f1', 'std-f1', 'mean-ece', 'std-ece']].iloc[1]

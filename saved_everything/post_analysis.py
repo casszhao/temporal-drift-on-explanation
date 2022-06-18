@@ -35,22 +35,29 @@ marker_style = dict(color='tab:blue', linestyle=':', marker='d',
                     #markersize=15, markerfacecoloralt='tab:red',
                     )
 
+
+bigdf = pd.read_csv('all_tasks_all_selective.csv')
+bigdf = bigdf.rename(columns={'BERT F1':'BERT', 'FRESH F1':'FRESH', 'SPECTRA F1':'SPECTRA', 'KUMA F1':'KUMA','LSTM F1':'LSTM'})
+
 bigtable_list = []
 for i, name in enumerate(task_list):
     print('----------------------------')
     print(name)
-    path = './' + str(name) + '/selective_results.csv'
-    df = pd.read_csv(path)
-    print(df)
-    if 'acc' in path:
-        df['BERT ACC'] = df['BERT ACC']*100
-        df['FRESH ACC'] = df['FRESH ACC']*100
-        df = df.rename(columns={'BERT ACC':'BERT', 'FRESH ACC':'FRESH', 'SPECTRA F1':'SPECTRA', 'KUMA ACC':'KUMA','LSTM ACC':'LSTM'})
-    else:
-        df['Bert F1'] = df['Bert F1']*100
-        df['FRESH F1'] = df['FRESH F1']*100
-        df = df.rename(columns={'Bert F1':'BERT', 'FRESH F1':'FRESH', 'SPECTRA F1':'SPECTRA', 'KUMA F1':'KUMA','LSTM F1':'LSTM'})
+    ''''' if not use the all tasks big table, run this part '''
+    # path = './' + str(name) + '/selective_results.csv'
+    # df = pd.read_csv(path)
+    # print(df)
+    # if 'acc' in path:
+    #     df['BERT ACC'] = df['BERT ACC']*100
+    #     df['FRESH ACC'] = df['FRESH ACC']*100
+    #     df = df.rename(columns={'BERT ACC':'BERT', 'FRESH ACC':'FRESH', 'SPECTRA F1':'SPECTRA', 'KUMA ACC':'KUMA','LSTM ACC':'LSTM'})
+    # else:
+    #     df['Bert F1'] = df['Bert F1']*100
+    #     df['FRESH F1'] = df['FRESH F1']*100
+    #     df = df.rename(columns={'Bert F1':'BERT', 'FRESH F1':'FRESH', 'SPECTRA F1':'SPECTRA', 'KUMA F1':'KUMA','LSTM F1':'LSTM'})
 
+    df = bigdf[bigdf['Task']==str(name)]
+    
     if i == 3 or i == 4:
         SUB_NAME = str(name)
     else:
@@ -63,25 +70,25 @@ for i, name in enumerate(task_list):
     print(df)
 
     if i < 2:
-        axs[0, i].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', s=makersize+4)
-        axs[0, i].scatter(df['Domain'], df['FRESH'], label='FRESH(α∇α)', marker='x', s=makersize+4)
-        axs[0, i].scatter(df['Domain'], df['SPECTRA'], label='SPECTRA')
-        axs[0, i].scatter(df['Domain'], df['KUMA'], label='HardKUMA', color='orange')
-        axs[0, i].scatter(df['Domain'], df['LSTM'], label='LSTM')
+        axs[0, i].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', color='red', s=makersize+4)
+        axs[0, i].scatter(df['Domain'], df['FRESH'], label='FRESH(α∇α)', marker='x', color='royalblue', s=makersize+4)
+        axs[0, i].scatter(df['Domain'], df['SPECTRA'], label='SPECTRA', color='gold')
+        axs[0, i].scatter(df['Domain'], df['KUMA'], label='HardKUMA', color='darkorange')
+        axs[0, i].scatter(df['Domain'], df['LSTM'], label='LSTM', color='dimgrey')
         axs[0, i].set_xlabel(SUB_NAME,fontsize=xlabel_size)
     elif i > 3:
-        axs[2, i-4].scatter(df['Domain'], df['SPECTRA'], label='SPECTRA')
-        axs[2, i-4].scatter(df['Domain'], df['KUMA'], label='HardKUMA', color='orange')
-        axs[2, i-4].scatter(df['Domain'], df['LSTM'], label='LSTM')
+        axs[2, i-4].scatter(df['Domain'], df['SPECTRA'], label='SPECTRA', color='gold')
+        axs[2, i-4].scatter(df['Domain'], df['KUMA'], label='HardKUMA', color='darkorange')
+        axs[2, i-4].scatter(df['Domain'], df['LSTM'], label='LSTM', color='dimgrey')
+        axs[2, i-4].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', color='red', s=makersize+4)
+        axs[2, i-4].scatter(df['Domain'], df['FRESH'], label='FRESH(α∇α)', marker='x', color='royalblue', s=makersize+4)
         axs[2, i-4].set_xlabel(SUB_NAME,fontsize=xlabel_size)
-        axs[2, i-4].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', s=makersize+4)
-        axs[2, i-4].scatter(df['Domain'], df['FRESH'], label='FRESH(α∇α)', marker='x', s=makersize+4)
     else:
-        axs[1, i-2].scatter(df['Domain'], df['SPECTRA'], label='SPECTRA')
-        axs[1, i-2].scatter(df['Domain'], df['KUMA'], label='HardKUMA', color='orange')
-        axs[1, i-2].scatter(df['Domain'], df['LSTM'], label='LSTM')
-        axs[1, i-2].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', s=makersize+4)
-        axs[1, i-2].scatter(df['Domain'], df['FRESH'], label='FRESH(α∇α)', marker='x', s=makersize+4)
+        axs[1, i-2].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', color='red', s=makersize+4)
+        axs[1, i-2].scatter(df['Domain'], df['FRESH'], label='FRESH(α∇α)', marker='x', color='royalblue', s=makersize+4)
+        axs[1, i-2].scatter(df['Domain'], df['LSTM'], label='LSTM', color='dimgrey')
+        axs[1, i-2].scatter(df['Domain'], df['SPECTRA'], label='SPECTRA', color='gold')
+        axs[1, i-2].scatter(df['Domain'], df['KUMA'], label='HardKUMA', color='darkorange')
         axs[1, i-2].set_xlabel(SUB_NAME,fontsize=xlabel_size)
     
 #fig.suptitle('Predictive Performance Comparison of Selective Rationalizations', fontsize=12)
@@ -100,15 +107,13 @@ plt.show()
 fig1 = plt.gcf()
 fig.savefig('./selective_predictive.png', dpi=450)
 
-# print(bigtable_list)
-all_tasks = pd.concat(bigtable_list, ignore_index=False)
-all_tasks.to_csv('all_tasks_all_selective.csv')
 
 
 bigtable_list = []
 for name in task_list:
 
-    bert = pd.read_csv(str(name) + '/bert_predictive.csv')[['mean-f1', 'Domain']]
+    #bert = pd.read_csv(str(name) + '/bert_predictive.csv')[['mean-f1', 'Domain']]
+    bert = bigdf[bigdf['Task']==str(name)][['BERT F1', 'Domain']]
     posthoc = pd.read_csv(str(name) + '/posthoc_faithfulness.csv')
 
     merge = pd.merge(posthoc, bert, on = 'Domain')

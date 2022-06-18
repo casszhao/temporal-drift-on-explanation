@@ -21,13 +21,15 @@ import pandas as pd
 ''' generate select-then-predict results together for all tasks'''
 ''' generate predictive results together for all tasks'''
 
-xlabel_size = 11
-xtick_size = 9
+xlabel_size = 12
+xtick_size = 22
+ytick_size = 22
+makersize = 66
 
 task_list = ['agnews', 'xfact', 'factcheck', 'AmazDigiMu', 'AmazPantry', 'yelp'] #, 'AmazDigiMu', 'AmazPantry'
 
 plt.style.use('ggplot')
-fig, axs = plt.subplots(3, 2, figsize=(6, 7), sharey=False, sharex=False)
+fig, axs = plt.subplots(3, 2, figsize=(5.5, 7), sharey=False, sharex=False)
 
 marker_style = dict(color='tab:blue', linestyle=':', marker='d',
                     #markersize=15, markerfacecoloralt='tab:red',
@@ -37,7 +39,7 @@ bigtable_list = []
 for i, name in enumerate(task_list):
     print('----------------------------')
     print(name)
-    path = './' + str(name) + '/selective_results_acc.csv'
+    path = './' + str(name) + '/selective_results.csv'
     df = pd.read_csv(path)
     print(df)
     if 'acc' in path:
@@ -63,39 +65,40 @@ for i, name in enumerate(task_list):
     if i < 2:
         axs[0, i].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', s=makersize)
         axs[0, i].scatter(df['Domain'], df['FRESH'], label='FRESH(α∇α)', marker='x', s=makersize)
-        #axs[0, i].scatter(df['Domain'], df['SPECTRA'], label='SPECTRA')
+        axs[0, i].scatter(df['Domain'], df['SPECTRA'], label='SPECTRA')
         axs[0, i].scatter(df['Domain'], df['KUMA'], label='HardKUMA', marker='d', color='orange', s=makersize+4)
         axs[0, i].scatter(df['Domain'], df['LSTM'], label='LSTM')
         axs[0, i].set_xlabel(SUB_NAME,fontsize=xlabel_size)
-    # elif i > 3:
+    elif i > 3:
         axs[2, i-4].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', s=makersize)
         axs[2, i-4].scatter(df['Domain'], df['FRESH'], label='FRESH(α∇α)', marker='x', s=makersize)
-        # axs[2, i-4].scatter(df['Domain'], df['SPECTRA'], label='SPECTRA')
-        # axs[2, i-4].scatter(df['Domain'], df['KUMA'], label='HardKUMA', marker='d', color='orange', s=makersize+4)
+        axs[2, i-4].scatter(df['Domain'], df['SPECTRA'], label='SPECTRA')
+        axs[2, i-4].scatter(df['Domain'], df['KUMA'], label='HardKUMA', marker='d', color='orange', s=makersize+4)
         axs[2, i-4].scatter(df['Domain'], df['LSTM'], label='LSTM')
         axs[2, i-4].set_xlabel(SUB_NAME,fontsize=xlabel_size)
     else:
         axs[1, i-2].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', s=makersize+4)
         axs[1, i-2].scatter(df['Domain'], df['FRESH'], label='FRESH(α∇α)', marker='x', s=makersize+4)
-        #axs[1, i-2].scatter(df['Domain'], df['SPECTRA'], label='SPECTRA')
+        axs[1, i-2].scatter(df['Domain'], df['SPECTRA'], label='SPECTRA')
         axs[1, i-2].scatter(df['Domain'], df['KUMA'], label='HardKUMA', marker='d', color='orange', s=makersize+4)
         axs[1, i-2].scatter(df['Domain'], df['LSTM'], label='LSTM')
         axs[1, i-2].set_xlabel(SUB_NAME,fontsize=xlabel_size)
     
 #fig.suptitle('Predictive Performance Comparison of Selective Rationalizations', fontsize=12)
 plt.subplots_adjust(
-    left=0.057,
-    bottom=0.093, 
-    right=0.78, 
-    top=0.983, 
-    wspace=0.274, 
-    hspace=0.388,
+    left=0.09,
+    bottom=0.126, 
+    right=0.883, 
+    top=0.995, 
+    wspace=0.345, 
+    hspace=0.471,
     )
-plt.legend(bbox_to_anchor=(1.02, 1), loc='upper left', borderaxespad=0, fontsize=9)
-plt.xticks(fontsize=xtick_size)
+plt.legend(bbox_to_anchor=(-0.14, -0.4), loc='upper center', borderaxespad=0, fontsize=8.8,
+            fancybox=True,ncol=5)
+#plt.xticks(fontsize=xtick_size)
 plt.show()
 fig1 = plt.gcf()
-fig.savefig('./selective_predictive.png', dpi=250)
+fig.savefig('./selective_predictive.png', dpi=450)
 
 # print(bigtable_list)
 all_tasks = pd.concat(bigtable_list, ignore_index=False)

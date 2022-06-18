@@ -15,7 +15,7 @@ import numpy as np
 import pandas as pd
 
 
-task_list = ['agnews', 'xfact', 'factcheck', 'yelp', 'AmazPantry', 'AmazPantry'] # 'AmazDigiMu', 'AmazPantry', 
+task_list = ['agnews', 'xfact', 'factcheck', 'AmazPantry', 'AmazPantry', 'yelp'] # 'AmazDigiMu', 'AmazPantry', 
 
 # for i, task in enumerate(task_list):
 #         if i == 0:
@@ -30,13 +30,14 @@ task_list = ['agnews', 'xfact', 'factcheck', 'yelp', 'AmazPantry', 'AmazPantry']
 # df.to_csv('all_tasks_all_fresh_results.csv')
 
 plt.style.use('ggplot')
-fig, axs = plt.subplots(3, 2, figsize=(6, 7), sharey=False, sharex=False)
+fig, axs = plt.subplots(3, 2, figsize=(4.3, 7), sharey=False, sharex=False)
 
 marker_style = dict(color='tab:blue', linestyle=':', marker='d',
                     #markersize=15, markerfacecoloralt='tab:red',
                     )
 xlabel_size = 12
 xtick_size = 22
+ytick_size = 22
 makersize = 66
 for i, name in enumerate(task_list):
     path = './' + str(name) + '/fresh_predictive_results.csv'
@@ -56,7 +57,7 @@ for i, name in enumerate(task_list):
     df['BERT'] = bert['BERT']  
     print(df)
 
-    if i == 3 or i == 4:
+    if 'Amaz' in name:
         SUB_NAME = str(name)
     else:
         SUB_NAME = str(name).capitalize()
@@ -74,24 +75,35 @@ for i, name in enumerate(task_list):
         axs[1, i-2].scatter(df['Domain'], df['scaled attention'], label=r'$\alpha\nabla\alpha$', marker='<', color='steelblue')
         axs[1, i-2].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', color='red')
         axs[1, i-2].set_xlabel(SUB_NAME,fontsize=xlabel_size)
+<<<<<<< HEAD
     else:
         axs[2, i-4].scatter(df['Domain'], df['gradients'], label=r'$x\nabla x $', color='dimgrey')
         axs[2, i-4].scatter(df['Domain'], df['deeplift'], label='DL', marker='d', color='darkorange')
         axs[2, i-4].scatter(df['Domain'], df['scaled attention'], label=r'$\alpha\nabla\alpha$', marker='<', color='steelblue')
         axs[2, i-4].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', color='red')
         axs[2, i-4].set_xlabel(SUB_NAME,fontsize=xlabel_size)
+||||||| merged common ancestors
+    else:
+        axs[2, i-4].scatter(df['Domain'], df['gradients'], label='Gradients', color='dimgrey')
+        axs[2, i-4].scatter(df['Domain'], df['deeplift'], label='Deeplift', marker='d', color='darkorange')
+        axs[2, i-4].scatter(df['Domain'], df['scaled attention'], label='Scaled attention', marker='<', color='steelblue')
+        axs[2, i-4].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', color='red')
+        axs[2, i-4].set_xlabel(SUB_NAME,fontsize=xlabel_size)
+=======
+>>>>>>> 692b647951c042483d8ea6cde087ca762e744a3e
     
 #fig.suptitle('Predictive Performance Comparison of Selective Rationalizations', fontsize=12)
 plt.subplots_adjust(
-    left=0.057,
-    bottom=0.093, 
-    right=0.78, 
-    top=0.983, 
-    wspace=0.274, 
-    hspace=0.388,
+    left=0.1,
+    bottom=0.126, 
+    right=0.963, 
+    top=0.995, 
+    wspace=0.388, 
+    hspace=0.471,
     )
-plt.legend(bbox_to_anchor=(1.02, 1), loc='upper left', borderaxespad=0, fontsize=9)
+plt.legend(bbox_to_anchor=(-0.19, -0.4), loc='upper center', borderaxespad=0, fontsize=10,
+            fancybox=True,ncol=5)
 #plt.xticks(fontsize=xtick_size)
 plt.show()
 fig1 = plt.gcf()
-fig.savefig('./fresh_compare_attributes.png', dpi=250)
+fig.savefig('./fresh_compare_attributes.png', dpi=600)

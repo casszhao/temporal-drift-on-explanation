@@ -218,12 +218,14 @@ if args.plot_time_distribution:
     df = pd.concat([full, indomain_train, indomain_test, ood1, ood2]).reset_index(drop=True)
 
     #plt.style.use('ggplot')
-    sns.violinplot(y=df['Year'], x=df['Temporal Split'], showmedians=True, showextrema=True, 
+    b = sns.violinplot(y=df['Year'], x=df['Temporal Split'], showmedians=True, showextrema=True, 
         palette="rocket",scale='width') #,gridsize=10
 
     plt.title(str(args.dataset).capitalize(), fontsize=18.5)
     plt.xticks(fontsize=12)
     plt.yticks(fontsize=12)
+    b.set_xlabel('Temporal Split', fontsize=14)
+    b.set_ylabel('Year', fontsize=14)
 
     if args.dataset == 'yelp':
         yint = range(2005, 2023, 3)
@@ -231,7 +233,7 @@ if args.plot_time_distribution:
     # plt.ylabel("Percentage")
     #plt.xlabel("Full size", "InDomain Train", "InDomain Test", "OOD1 Test", "OOD2 Test")
     plt.tight_layout()
-    plt.savefig('./TimeDist/'+str(args.dataset)+'_vio.png', bbox_inches = 'tight', dpi=250, format='png')
+    plt.savefig('./TimeDist/'+str(args.dataset)+'_vio.png', bbox_inches = 'tight', dpi=450, format='png')
     plt.show()
 
 # https://stackoverflow.com/questions/59346731/no-handles-with-labels-found-to-put-in-legend

@@ -1,30 +1,37 @@
 import json
 import numpy as np
+import pandas as pd
+from turtle import color
+from functools import reduce
+import matplotlib.pyplot as plt
+import matplotlib as mpl
+import seaborn as sns
+import matplotlib.ticker as mticker
+import fnmatch
+import os
 
 
 # change indomain
 
+# def change_label_and_create_new_df(model_output_array, extracted_rationales_path, new_save_path):  
 
+#     model_output_array = np.load(model_output_array, allow_pickle= True).item()  
 
-def change_label_and_create_new_df(model_output_array, extracted_rationales_path, new_save_path):  
+#     with open(extracted_rationales_path) as file:
+#         data = json.load(file)
 
-    model_output_array = np.load(model_output_array, allow_pickle= True).item()  
-
-    with open(extracted_rationales_path) as file:
-        data = json.load(file)
-
-    for doc in data:
-        docid = doc['annotation_id']
-        predicted =  model_output_array[docid]['predicted'].argmax()
-        doc['label'] = int(predicted)
+#     for doc in data:
+#         docid = doc['annotation_id']
+#         predicted =  model_output_array[docid]['predicted'].argmax()
+#         doc['label'] = int(predicted)
     
-    print(data)
+#     print(data)
 
-    with open(new_save_path, 'w') as file:
-        json.dump(
-            data,
-            file,
-            indent = 4)
+#     with open(new_save_path, 'w') as file:
+#         json.dump(
+#             data,
+#             file,
+#             indent = 4)
 
 
 
@@ -79,6 +86,15 @@ parser.add_argument(
     default = "yelp", 
 )
 
+parser.add_argument(
+    '--combine_and_get_f1',
+    help='decide which parts are in need',
+    action='store_true',
+    default=False
+)
+
+args = parser.parse_args()
+
 arguments = vars(parser.parse_args())
 
 seeds = {
@@ -88,11 +104,164 @@ seeds = {
     "xfact" : 5,
     "factcheck" : 5,
     "AmazDigiMu" : 20,
-    "AmaziPantry" : 20
+    "AmazPantry" : 20
 }
 
 data = arguments["dataset"]
 seed = seeds[data]
 feature = arguments["feature"]
 
-generate_for_one_task_one_feature(data, feature, seed)
+
+
+if args.combine_and_get_f1:
+    plt.style.use('ggplot')
+    fig, axs = plt.subplots(3, 2, figsize=(4.3, 7), sharey=False, sharex=False)
+
+    marker_style = dict(color='tab:blue', linestyle=':', marker='d',
+                        #markersize=15, markerfacecoloralt='tab:red',
+                        )
+    xlabel_size = 12
+    xtick_size = 22
+    ytick_size = 22
+    makersize = 66
+    from sklearn.metrics import f1_score
+
+    task_list = ['agnews', 'xfact', 'factcheck', 'AmazDigiMu', 'AmazPantry', 'yelp']
+    result_list = []
+    for i, name in enumerate(task_list):
+        full_results = pd.read_csv('./saved_everything/'+str(name)+'/fresh_bert_pred_compare.csv')
+        if 'Amaz' in name:
+            SUB_NAME = str(name)
+        else:
+            SUB_NAME = str(name).capitalize()
+        scaled_attention_f1_list = []
+        deeplift_f1_list = []
+        gradients_f1_list = []
+        domain_list = ['Full', 'SynD', 'AsyD1', 'AsyD2']
+        for domain in domain_list:
+            domain_df = full_results[full_results['Domain']==str(domain)]
+            scaled_attention_f1 = f1_score(domain_df['BERT'], domain_df['Scaled attention'], average='macro')
+            deeplift_f1 = f1_score(domain_df['BERT'], domain_df['DeepLift'], average='macro')
+            gradients_f1 = f1_score(domain_df['BERT'], domain_df['Gradients'], average='macro')
+
+            scaled_attention_f1_list.append(scaled_attention_f1*100)
+            deeplift_f1_list.append(deeplift_f1*100)
+            gradients_f1_list.append(gradients_f1*100)
+
+        df = pd.DataFrame({'scaled attention':scaled_attention_f1, 'deeplift': deeplift_f1,
+                            'gradients':gradients_f1, 'Domain':domain_list})
+
+        if i < 2:
+            axs[0, i].scatter(df['Domain'], df['gradients'], label=r'$x\nabla x $', color='dimgrey') #, marker='x', s=makersize
+            axs[0, i].scatter(df['Domain'], df['deeplift'], label='DL', marker='d', color='darkorange')
+            axs[0, i].scatter(df['Domain'], df['scaled attention'], label=r'$\alpha\nabla\alpha$', marker='<', color='steelblue')
+            #axs[0, i].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', color='red')
+            axs[0, i].set_xlabel(SUB_NAME,fontsize=xlabel_size)
+        elif 4 > i > 1:
+            axs[1, i-2].scatter(df['Domain'], df['gradients'], label=r'$x\nabla x $', color='dimgrey')
+            axs[1, i-2].scatter(df['Domain'], df['deeplift'], label='DL', marker='d', color='darkorange')
+            axs[1, i-2].scatter(df['Domain'], df['scaled attention'], label=r'$\alpha\nabla\alpha$', marker='<', color='steelblue')
+            #axs[1, i-2].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', color='red')
+            axs[1, i-2].set_xlabel(SUB_NAME,fontsize=xlabel_size)
+        else:
+            axs[2, i-4].scatter(df['Domain'], df['gradients'], label=r'$x\nabla x $', color='dimgrey')
+            axs[2, i-4].scatter(df['Domain'], df['deeplift'], label='DL', marker='d', color='darkorange')
+            axs[2, i-4].scatter(df['Domain'], df['scaled attention'], label=r'$\alpha\nabla\alpha$', marker='<', color='steelblue')
+            #axs[2, i-4].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', color='red')
+            axs[2, i-4].set_xlabel(SUB_NAME,fontsize=xlabel_size)
+        
+    #fig.suptitle('Predictive Performance Comparison of Selective Rationalizations', fontsize=12)
+    plt.subplots_adjust(
+        left=0.1,
+        bottom=0.126, 
+        right=0.963, 
+        top=0.995, 
+        wspace=0.388, 
+        hspace=0.471,
+        )
+    plt.legend(bbox_to_anchor=(-0.19, -0.4), loc='upper center', borderaxespad=0, fontsize=10,
+                fancybox=True,ncol=5)
+    #plt.xticks(fontsize=xtick_size)
+    plt.show()
+
+    exit()
+
+        
+
+
+
+
+
+
+
+
+def change_label_and_create_new_df(model_output_array, scaled_attention_path, deeplift_path, gradients_path):  #extracted_rationales_path, 
+    data = arguments["dataset"]
+    seed = seeds[data]
+    feature = arguments["feature"]
+
+    # model_output_array = 
+    model_output_df = pd.DataFrame(np.load(model_output_array, allow_pickle= True).item()).T
+    scaled_attention_df = pd.DataFrame(np.load(scaled_attention_path, allow_pickle= True).item()).T
+    deeplift_df = pd.DataFrame(np.load(deeplift_path, allow_pickle= True).item()).T
+    gradients_df = pd.DataFrame(np.load(gradients_path, allow_pickle= True).item()).T
+
+    BERT_pred_list = []
+    scaled_list = []
+    deeplift_list = []
+    gradients_list = []
+    for i, row in enumerate(model_output_df['predicted']):
+        bert_pred = row.argmax()
+        scaled_pred = scaled_attention_df['predicted'][i].argmax()
+        deeplift_pred = deeplift_df['predicted'][i].argmax()
+        gradients_pred = gradients_df['predicted'][i].argmax()
+        BERT_pred_list.append(bert_pred)
+        scaled_list.append(scaled_pred)
+        deeplift_list.append(deeplift_pred)
+        gradients_list.append(gradients_pred)
+
+    print(len(BERT_pred_list))
+    print(len(scaled_list))
+    print(len(deeplift_list))
+    print(len(gradients_list))
+
+    fresh_bert_pred = pd.DataFrame({'Actual':model_output_df['actual'],'BERT':BERT_pred_list, 'Scaled attention':scaled_list,
+                                    'DeepLift': deeplift_list, 'Gradients':gradients_list})
+
+
+    return fresh_bert_pred
+
+
+
+model_output_array='./models/'+str(data)+'_full/bert-output_seed-'+str(seed)+'.npy'
+scaled_attention_path='./FRESH_classifiers/'+str(data)+'_full/topk/scaled attention-bert-output_seed-scaled attention_'+str(seed)+'.npy'
+deeplift_path='./FRESH_classifiers/'+str(data)+'_full/topk/deeplift-bert-output_seed-deeplift_'+str(seed)+'.npy'
+gradients_attention_path='./FRESH_classifiers/'+str(data)+'_full/topk/gradients-bert-output_seed-gradients_'+str(seed)+'.npy'
+full_df = change_label_and_create_new_df(model_output_array, scaled_attention_path, deeplift_path, gradients_attention_path)
+full_df['Domain'] = str('Full')
+
+model_output_array='./models/'+str(data)+'/bert-output_seed-'+str(seed)+'.npy'
+scaled_attention_path='./FRESH_classifiers/'+str(data)+'/topk/scaled attention-bert-output_seed-scaled attention_'+str(seed)+'.npy'
+deeplift_path='./FRESH_classifiers/'+str(data)+'/topk/deeplift-bert-output_seed-deeplift_'+str(seed)+'.npy'
+gradients_attention_path='./FRESH_classifiers/'+str(data)+'/topk/gradients-bert-output_seed-gradients_'+str(seed)+'.npy'
+synd_df = change_label_and_create_new_df(model_output_array, scaled_attention_path, deeplift_path, gradients_attention_path)
+synd_df['Domain'] = str('SynD')
+
+model_output_array='./models/'+str(data)+'/bert-output_seed-'+str(seed)+'-OOD-'+str(data)+'_ood1.npy'
+scaled_attention_path='./FRESH_classifiers/'+str(data)+'/topk/scaled attention-bert-output_seed-scaled attention_'+str(seed)+'-OOD-'+str(data)+'_ood1.npy'
+deeplift_path='./FRESH_classifiers/'+str(data)+'/topk/deeplift-bert-output_seed-deeplift_'+str(seed)+'-OOD-'+str(data)+'_ood1.npy'
+gradients_attention_path='./FRESH_classifiers/'+str(data)+'/topk/gradients-bert-output_seed-gradients_'+str(seed)+'-OOD-'+str(data)+'_ood1.npy'
+asyd1_df = change_label_and_create_new_df(model_output_array, scaled_attention_path, deeplift_path, gradients_attention_path)
+asyd1_df['Domain'] = str('AsyD1')
+
+model_output_array='./models/'+str(data)+'/bert-output_seed-'+str(seed)+'-OOD-'+str(data)+'_ood2.npy'
+scaled_attention_path='./FRESH_classifiers/'+str(data)+'/topk/scaled attention-bert-output_seed-scaled attention_'+str(seed)+'-OOD-'+str(data)+'_ood2.npy'
+deeplift_path='./FRESH_classifiers/'+str(data)+'/topk/deeplift-bert-output_seed-deeplift_'+str(seed)+'-OOD-'+str(data)+'_ood2.npy'
+gradients_attention_path='./FRESH_classifiers/'+str(data)+'/topk/gradients-bert-output_seed-gradients_'+str(seed)+'-OOD-'+str(data)+'_ood2.npy'
+asyd2_df = change_label_and_create_new_df(model_output_array, scaled_attention_path, deeplift_path, gradients_attention_path)
+asyd2_df['Domain'] = str('AsyD2')
+
+one_dataset = pd.concat([full_df, synd_df, asyd1_df, asyd2_df], ignore_index = True)
+one_dataset.to_csv('./saved_everything/'+str(data)+'/fresh_bert_pred_compare.csv')
+
+

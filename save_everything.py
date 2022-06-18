@@ -455,7 +455,7 @@ if args.save_posthoc:
     df_list = []
     for thresh in ['topk', 'contigious']:
 
-        for fname in os.listdir('posthoc_results/' + str(args.dataset)):
+        for fname in os.listdir('./posthoc_results/' + str(args.dataset)+'/'):
             if str(thresh) in fname and 'description.json' in fname:
                 if 'ood1' in fname:
                     ood1_path = os.path.join('posthoc_results', str(args.dataset), fname)

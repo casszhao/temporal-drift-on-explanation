@@ -21,7 +21,7 @@ import pandas as pd
 ''' generate select-then-predict results together for all tasks'''
 ''' generate predictive results together for all tasks'''
 
-use_acc = True
+use_acc = False
 
 xlabel_size = 11
 xtick_size = 9

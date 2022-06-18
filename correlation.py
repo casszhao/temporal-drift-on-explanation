@@ -59,32 +59,35 @@ similarity_method = 'Topic jensen-shannon' # jensen-shannon renyi cosine euclide
 print(' ======================= ')
 
 if args.combine_all:
-    task_list = ['agnews','xfact','factcheck','AmazDigiMu','AmazPantry','yelp']
-    df_list = []
-    full_simi_df_list = []
-    for task in task_list:
-        df = pd.read_csv('./saved_everything/'+str(task)+'/corre_table_'+str(similarity_method)+'.csv')[['AsyD1', 'AsyD2']].T
-        df.columns = ['Suff changes','Comp changes','Temporal distance','Corpus divergence', 'Text length']
-        df['Task'] = str(task)
+    # task_list = ['agnews','xfact','factcheck','AmazDigiMu','AmazPantry','yelp']
+    # df_list = []
+    # full_simi_df_list = []
+    # for task in task_list:
+    #     df = pd.read_csv('./saved_everything/'+str(task)+'/corre_table_'+str(similarity_method)+'.csv')[['AsyD1', 'AsyD2']].T
+    #     df.columns = ['Suff changes','Comp changes','Temporal distance','Corpus divergence', 'Text length']
+    #     df['Task'] = str(task)
 
-        for fname in os.listdir('./saved_everything/'+str(task)+'/'):
-            if 'fulltext_similarity_vocab' in fname:
+    #     for fname in os.listdir('./saved_everything/'+str(task)+'/'):
+    #         if 'fulltext_similarity_vocab' in fname:
                 
-                full_simi = pd.read_csv('./saved_everything/'+str(task)+'/'+fname)
-                full_simi['Task'] = str(task)
-                #full_simi['Domain'] = ['SynD', 'AsyD1', 'AsyD2']
-                print(full_simi)
-        df_list.append(df)
-        full_simi_df_list.append(full_simi)
+    #             full_simi = pd.read_csv('./saved_everything/'+str(task)+'/'+fname)
+    #             full_simi['Task'] = str(task)
+    #             #full_simi['Domain'] = ['SynD', 'AsyD1', 'AsyD2']
+    #             print(full_simi)
+    #     df_list.append(df)
+    #     full_simi_df_list.append(full_simi)
 
-    df = pd.concat(df_list)
-    full_simi=pd.concat(full_simi_df_list)
-    full_simi.to_csv('./saved_everything/all_tasks_full_similarity.csv')
+    # df = pd.concat(df_list)
+    # full_simi=pd.concat(full_simi_df_list)
+    # full_simi.to_csv('./saved_everything/all_tasks_full_similarity.csv')
     
-    df.to_csv('./saved_everything/all_tasks_all_factors_onlyAysD.csv')
-    print('+++++++++++++')
+    # df.to_csv('./saved_everything/all_tasks_all_factors_onlyAysD.csv')
+    # print('+++++++++++++')
+    # print(df)
+
+    df = pd.read_csv('./saved_everything/all_task_all_sentiment_and_corre.csv')[['Suff Diff','Comp Diff','Temp Diff','Corp Diff','Text Len']] # ,'Sent Div'
     print(df)
-    corr = df.corr(method='spearman')
+    corr = df.corr(method='kendall')
     #corr.to_csv('/saved_everything/'+str(similarity_method)+'_all.csv')
     corr.style.background_gradient(cmap='coolwarm')
     print(corr)
@@ -92,20 +95,21 @@ if args.combine_all:
     
     import seaborn as sns
     import matplotlib.pyplot as plt
-    plt.figure(figsize=(5.5, 3))
+    plt.figure(figsize=(4.5, 2.5))
     heatmap = sns.heatmap(corr, annot=True, annot_kws={'fontsize':10}, cmap="YlGnBu") #vmin=-1, vmax=1, 
     #heatmap.set_title('Correlation Matrix of Latent Factors', fontdict={'fontsize':13}) #, pad=12
-    fig1 = plt.gcf()
-    fig1.savefig('./saved_everything/correlation.png', dpi=250)
+
     plt.xticks(rotation=25, fontsize=10)
     plt.yticks(fontsize=10)
-    plt.subplots_adjust(left=0.257,
-                        bottom=0.28, 
+    plt.subplots_adjust(left=0.183,
+                        bottom=0.214, 
                         right=1, 
                         top=0.971, 
                         wspace=0.076, 
                         hspace=0.2,
                         )
+    fig1 = plt.gcf()
+    fig1.savefig('./saved_everything/correlation.png', dpi=550)
     plt.show()
     exit()
 

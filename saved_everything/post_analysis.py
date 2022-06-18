@@ -113,7 +113,7 @@ bigtable_list = []
 for name in task_list:
 
     #bert = pd.read_csv(str(name) + '/bert_predictive.csv')[['mean-f1', 'Domain']]
-    bert = bigdf[bigdf['Task']==str(name)][['BERT F1', 'Domain']]
+    bert = bigdf[bigdf['Task']==str(name)][['BERT', 'Domain']]
     posthoc = pd.read_csv(str(name) + '/posthoc_faithfulness.csv')
 
     merge = pd.merge(posthoc, bert, on = 'Domain')

@@ -14,6 +14,7 @@ import config.cfg
 import os
 import argparse
 import fnmatch
+import numpy as np
 
 
 
@@ -79,10 +80,31 @@ parser.add_argument(
 )
 
 
+
+
+### 最完整的版本，直接提json的结果 最近期的
 args = parser.parse_args()
 
 datasets_dir = 'saved_everything/' + str(args.dataset)
 os.makedirs(datasets_dir, exist_ok = True)
+
+if args.combine_all_tasks:
+    task_list = ['agnews', 'xfact', 'factcheck', 'AmazDigiMu', 'AmazPantry', 'yelp']
+    result_list = []
+    for task in task_list:
+        result = pd.read_csv('saved_everything/' + str(task) + '/selective_results.csv')
+        result['Task'] = str(task)
+
+        result_list.append(result)
+    final = pd.concat(result_list)
+    print(final)
+    print(final.dtypes)
+    final.to_csv('./saved_everything/test.csv')
+
+    exit()
+
+
+
 
 
 if args.save_accuracy_version:
@@ -122,8 +144,11 @@ if args.save_accuracy_version:
     bert_result = bert_result.rename(columns={"mean-acc":"BERT ACC", "std-acc":"BERT ACC"})
 else:
     bert_result = bert_result.reset_index()[['Domain', 'mean-f1', 'std-f1']]
-    bert_result = bert_result.rename(columns={"mean-f1":"Bert F1", "std-f1":"Bert std"})
+    bert_result = bert_result.rename(columns={"mean-f1":"BERT F1", "std-f1":"BERT std"})
 
+bert_result['BERT F1'] = bert_result['BERT F1'].astype(float, errors = 'raise')
+bert_result['BERT std'] = bert_result['BERT std'].astype(float, errors = 'raise')
+#bert_result.to_csv('./saved_everything/'+str(args.dataset)+'/bert_predictive.csv')  # less column
 ####################################################################################
 #####################################################################################
 
@@ -136,8 +161,8 @@ import os.path
 if args.dataset == 'AmazDigiMu':
     fresh_OOD1 = pd.read_json('FRESH_classifiers/AmazDigiMu/topk/scaled attention_bert_predictive_performances-OOD-AmazDigiMu_ood1.json')
     fresh_OOD2 = pd.read_json('FRESH_classifiers/AmazDigiMu/topk/scaled attention_bert_predictive_performances-OOD-AmazDigiMu_ood2.json')
-    fresh_full_data = pd.read_json('./FRESH_classifiers/AmazDigiMu_full/topk/scaled_attention_bert_predictive_performances.json')
-    fresh_InDomain = pd.read_json('./FRESH_classifiers/AmazDigiMu/topk/scaled_attention_bert_predictive_performances.json')
+    fresh_full_data = pd.read_json('./FRESH_classifiers/AmazDigiMu_full/topk/scaled attention_bert_predictive_performances.json')
+    fresh_InDomain = pd.read_json('./FRESH_classifiers/AmazDigiMu/topk/scaled attention_bert_predictive_performances.json')
 
 elif args.dataset == 'AmazPantry':
     fresh_OOD1 = pd.read_json('FRESH_classifiers/AmazPantry/topk/scaled attention_bert_predictive_performances-OOD-AmazPantry_ood1.json')
@@ -190,7 +215,9 @@ if args.save_accuracy_version:
 else:
     fresh_result = fresh_result.rename(columns={"mean-f1":"FRESH F1", "std-f1":"FRESH std"})
 
-
+fresh_result['FRESH F1'] = fresh_result['FRESH F1'].astype(float, errors = 'raise')
+fresh_result['FRESH std'] = fresh_result['FRESH std'].astype(float, errors = 'raise')
+#fresh_result.to_csv('./saved_everything/'+str(args.dataset)+'/bert_predictive.csv')
 
 
 
@@ -201,9 +228,9 @@ kuma_FullData = pd.read_json('./kuma_model/'+str(args.dataset)+'_full/kuma-bert_
 # pd.options.display.max_columns = None
 # print('    KUMA    FULL ')
 # print(kuma_FullData)
-kuma_InDomain_path = os.path.join('kuma_model',str(args.dataset),'/kuma-bert_predictive_performances.json')
-print('    KUMA    kuma_InDomain_path ')
-print(kuma_InDomain_path)
+# kuma_InDomain_path = os.path.join('kuma_model',str(args.dataset),'/kuma-bert_predictive_performances.json')
+# print('    KUMA    kuma_InDomain_path ')
+# print(kuma_InDomain_path)
 kuma_InDomain = pd.read_json('./kuma_model/'+str(args.dataset)+'/kuma-bert_predictive_performances.json')
 kuma_OOD1 = pd.read_json('./kuma_model/'+str(args.dataset)+'/kuma-bert_predictive_performances-OOD-' + str(args.dataset) + '_ood1.json')
 kuma_OOD2 = pd.read_json('./kuma_model/'+str(args.dataset)+'/kuma-bert_predictive_performances-OOD-' + str(args.dataset) + '_ood2.json')
@@ -242,15 +269,53 @@ else:
     kuma_result = kuma_result.rename(columns={"mean-f1":"KUMA F1", "std-f1":"KUMA std"})
     LSTM_result = LSTM_result.rename(columns={"mean-f1":"LSTM F1", "std-f1":"LSTM std"})
 
-SPECTRA = pd.read_csv('saved_everything/' + str(args.dataset) + '/spectra_mean.csv')[['avg', 'std']].rename(columns={"avg":"SPECTRA F1", "std":"SPECTRA std"})
+def one_domain_len(domain):
+    overall = np.zeros(5)
+    for _j_, seed in enumerate([5,10,15,20,25]):
+        if 'ood' in str(domain):
+            path_to_file : str = f'kuma_model/{args.dataset}/kuma-bert-output_seed-kuma-bert{seed}-OOD-{args.dataset}_{domain}.npy'
+        elif 'full' in str(domain):
+            path_to_file : str = f'kuma_model/{args.dataset}_full/kuma-bert-output_seed-kuma-bert{seed}.npy'
+        else:
+            path_to_file : str = f'kuma_model/{args.dataset}/kuma-bert-output_seed-kuma-bert{seed}.npy'
+        
+        file_data = np.load(path_to_file, allow_pickle=True).item()
+        aggregated_ratio = np.zeros(len(file_data))
 
+        for _i_, (docid, metadata) in enumerate(file_data.items()):
+
+            rationale_ratio = min( 
+                1.,
+                metadata['rationale'].sum()/metadata['full text length']
+            )
+
+            aggregated_ratio[_i_] = rationale_ratio
+
+        overall[_j_] = aggregated_ratio.mean()
+    
+    return overall.mean(), overall.std(), overall
+
+
+Full_len_mean, Full_len_std, Full_len_overall = one_domain_len('full')
+InDomain_len_mean, InDomain_len_std, InDomain_len_overall = one_domain_len('InDomain')
+ood1_len_mean, ood1_len_std, ood1_len_overall= one_domain_len('ood1')
+ood2_len_mean, ood2_len_std, ood2_len_overall= one_domain_len('ood2')
+
+kuma_result['KUMA Len'] = [Full_len_mean,InDomain_len_mean,ood1_len_mean,ood2_len_mean]
+
+#############################
+SPECTRA = pd.read_csv('saved_everything/' + str(args.dataset) + '/spectra_mean.csv')[['avg', 'std']].rename(columns={"avg":"SPECTRA F1", "std":"SPECTRA std"})
 ##############################
 
 final = pd.concat([bert_result, fresh_result, LSTM_result, kuma_result, SPECTRA], axis=1)
 final['Domain'] = ['Full', 'SynD', 'AsyD1', 'AsyD2']
 final = final.rename({'Domain': 'Testing Set'})
-s = final[final.select_dtypes(include=['number']).columns] * 100
+s = final[final.select_dtypes(exclude=['object']).columns] * 100
 final[s.columns] = s
+print(final.dtypes)
 print(final)
-final.to_csv('saved_everything/' + str(args.dataset) + '/selective_results_acc.csv')
+if args.save_accuracy_version:
+    final.to_csv('saved_everything/' + str(args.dataset) + '/selective_results_acc.csv')
+else:    
+    final.to_csv('saved_everything/' + str(args.dataset) + '/selective_results.csv')
 

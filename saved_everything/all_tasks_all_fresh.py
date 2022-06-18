@@ -39,22 +39,27 @@ xlabel_size = 12
 xtick_size = 22
 ytick_size = 22
 makersize = 66
+
+bigdf = pd.read_csv('all_tasks_all_selective.csv')
 for i, name in enumerate(task_list):
     path = './' + str(name) + '/fresh_predictive_results.csv'
-    bert_path = './' + str(name) + '/bert_predictive.csv'
-    bert = pd.read_csv(bert_path)[['mean-f1', 'Domain']]
-    bert = bert.rename(columns={'mean-f1':'BERT'})
-    bert['Domain'] = ['Full', 'SynD', 'AsyD1', 'AsyD2']   
+    print(' ---------', str(name))
+
+    bert = bigdf[bigdf['Task']==str(name)][['BERT F1', 'Domain']]
+    bert = bert.rename(columns={'BERT F1':'BERT'})
+    print(bert)
+    #bert['Domain'] = ['Full', 'SynD', 'AsyD1', 'AsyD2']   
 
     df = pd.read_csv(path)
     df = df[['mean-f1','Domain','attribute_name']]
     attribute_list = df['attribute_name']
     df["attribute_name"].replace({"scaled_attention": "scaled attention"}, inplace=True)
-    #print(df)
+    print(df)
     grouper = df.groupby('attribute_name')
     df = pd.concat([pd.Series(v['mean-f1'].tolist(), name=k) for k, v in grouper], axis=1)
+    df = df * 100
     df['Domain'] = ['Full', 'SynD', 'AsyD1', 'AsyD2']
-    df['BERT'] = bert['BERT']  
+    df = pd.merge(bert, df, how='right', on=['Domain']) 
     print(df)
 
     if 'Amaz' in name:
@@ -69,28 +74,18 @@ for i, name in enumerate(task_list):
         axs[0, i].scatter(df['Domain'], df['scaled attention'], label=r'$\alpha\nabla\alpha$', marker='<', color='steelblue')
         axs[0, i].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', color='red')
         axs[0, i].set_xlabel(SUB_NAME,fontsize=xlabel_size)
-    elif i > 2:
+    elif 4 > i > 1:
         axs[1, i-2].scatter(df['Domain'], df['gradients'], label=r'$x\nabla x $', color='dimgrey')
         axs[1, i-2].scatter(df['Domain'], df['deeplift'], label='DL', marker='d', color='darkorange')
         axs[1, i-2].scatter(df['Domain'], df['scaled attention'], label=r'$\alpha\nabla\alpha$', marker='<', color='steelblue')
         axs[1, i-2].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', color='red')
         axs[1, i-2].set_xlabel(SUB_NAME,fontsize=xlabel_size)
-<<<<<<< HEAD
     else:
         axs[2, i-4].scatter(df['Domain'], df['gradients'], label=r'$x\nabla x $', color='dimgrey')
         axs[2, i-4].scatter(df['Domain'], df['deeplift'], label='DL', marker='d', color='darkorange')
         axs[2, i-4].scatter(df['Domain'], df['scaled attention'], label=r'$\alpha\nabla\alpha$', marker='<', color='steelblue')
         axs[2, i-4].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', color='red')
         axs[2, i-4].set_xlabel(SUB_NAME,fontsize=xlabel_size)
-||||||| merged common ancestors
-    else:
-        axs[2, i-4].scatter(df['Domain'], df['gradients'], label='Gradients', color='dimgrey')
-        axs[2, i-4].scatter(df['Domain'], df['deeplift'], label='Deeplift', marker='d', color='darkorange')
-        axs[2, i-4].scatter(df['Domain'], df['scaled attention'], label='Scaled attention', marker='<', color='steelblue')
-        axs[2, i-4].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', color='red')
-        axs[2, i-4].set_xlabel(SUB_NAME,fontsize=xlabel_size)
-=======
->>>>>>> 692b647951c042483d8ea6cde087ca762e744a3e
     
 #fig.suptitle('Predictive Performance Comparison of Selective Rationalizations', fontsize=12)
 plt.subplots_adjust(

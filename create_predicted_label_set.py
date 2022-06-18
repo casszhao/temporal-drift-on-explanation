@@ -17,6 +17,8 @@ def change_label_and_create_new_df(model_output_array, extracted_rationales_path
         docid = doc['annotation_id']
         predicted =  model_output_array[docid]['predicted'].argmax()
         doc['label'] = int(predicted)
+    
+    print(data)
 
     with open(new_save_path, 'w') as file:
         json.dump(

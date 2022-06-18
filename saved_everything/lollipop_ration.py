@@ -39,7 +39,7 @@ df['mean-f1'] = df['mean-f1']*100
 
 
 
-data = 'Yelp'
+data = 'AmazPantry'
 
 
 df = df[df['Task'].str.contains(str(data))]

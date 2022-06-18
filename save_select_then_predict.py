@@ -99,7 +99,7 @@ if args.combine_all_tasks:
     final = pd.concat(result_list)
     print(final)
     print(final.dtypes)
-    final.to_csv('./saved_everything/test.csv')
+    final.to_csv('./saved_everything/all_tasks_all_selective.csv')
 
     exit()
 

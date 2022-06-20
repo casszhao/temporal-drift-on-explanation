@@ -140,9 +140,9 @@ if args.combine_and_get_f1:
         domain_list = ['Full', 'SynD', 'AsyD1', 'AsyD2']
         for domain in domain_list:
             domain_df = full_results[full_results['Domain']==str(domain)]
-            scaled_attention_f1 = f1_score(domain_df['BERT'], domain_df['Scaled attention'], average='macro')
-            deeplift_f1 = f1_score(domain_df['BERT'], domain_df['DeepLift'], average='macro')
-            gradients_f1 = f1_score(domain_df['BERT'], domain_df['Gradients'], average='macro')
+            scaled_attention_f1 = f1_score(domain_df['bert_pred_label'], domain_df['scaled_pred_label'], average='macro')
+            deeplift_f1 = f1_score(domain_df['bert_pred_label'], domain_df['deeplift_pred_label'], average='macro')
+            gradients_f1 = f1_score(domain_df['bert_pred_label'], domain_df['gradients_pred_label'], average='macro')
 
             scaled_attention_f1_list.append(scaled_attention_f1*100)
             deeplift_f1_list.append(deeplift_f1*100)
@@ -205,6 +205,9 @@ def change_label_and_create_new_df(model_output_array, scaled_attention_path, de
     scaled_attention_df = pd.DataFrame(np.load(scaled_attention_path, allow_pickle= True).item()).T
     deeplift_df = pd.DataFrame(np.load(deeplift_path, allow_pickle= True).item()).T
     gradients_df = pd.DataFrame(np.load(gradients_path, allow_pickle= True).item()).T
+    print('------ df loaded from npy example --------')
+    print(deeplift_df)
+    
 
     BERT_pred_list = []
     scaled_list = []
@@ -220,14 +223,29 @@ def change_label_and_create_new_df(model_output_array, scaled_attention_path, de
         deeplift_list.append(deeplift_pred)
         gradients_list.append(gradients_pred)
 
-    print(len(BERT_pred_list))
-    print(len(scaled_list))
-    print(len(deeplift_list))
-    print(len(gradients_list))
+    model_output_df['bert_pred_label'] = BERT_pred_list
+    scaled_attention_df['scaled_pred_label'] = scaled_list
+    deeplift_df['deeplift_pred_label'] = deeplift_list
+    gradients_df['gradients_pred_label'] = gradients_list
 
-    fresh_bert_pred = pd.DataFrame({'Actual':model_output_df['actual'],'BERT':BERT_pred_list, 'Scaled attention':scaled_list,
-                                    'DeepLift': deeplift_list, 'Gradients':gradients_list})
+    # print('testing scale')
+    # print(scaled_attention_df.loc['test_1075', 'scaled_pred_label'])
+    # print(scaled_attention_df.loc['test_1075', 'actual'])
 
+    # print('testing bert')
+    # print(model_output_df.loc['test_1075', 'bert_pred_label'])
+    # print(model_output_df.loc['test_1075', 'actual'])
+
+
+
+    fresh_bert_pred = pd.merge(model_output_df[['bert_pred_label','actual']], scaled_attention_df['scaled_pred_label'], left_index=True, right_index=True)
+    fresh_bert_pred = pd.merge(fresh_bert_pred, deeplift_df['deeplift_pred_label'], left_index=True, right_index=True)
+    fresh_bert_pred = pd.merge(fresh_bert_pred, gradients_df['gradients_pred_label'], left_index=True, right_index=True)
+
+    # print('testing scale')
+    # print(fresh_bert_pred.loc['test_1075', 'scaled_pred_label'])
+    # print('testing bert')
+    # print(fresh_bert_pred.loc['test_1075', 'bert_pred_label'])
 
     return fresh_bert_pred
 

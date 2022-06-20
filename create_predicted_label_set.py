@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 import seaborn as sns
 import matplotlib.ticker as mticker
+from matplotlib.ticker import FormatStrFormatter
 import fnmatch
 import os
 
@@ -90,7 +91,7 @@ parser.add_argument(
     '--combine_and_get_f1',
     help='decide which parts are in need',
     action='store_true',
-    default=False
+    default=True, 
 )
 
 args = parser.parse_args()
@@ -115,7 +116,7 @@ feature = arguments["feature"]
 
 if args.combine_and_get_f1:
     plt.style.use('ggplot')
-    fig, axs = plt.subplots(3, 2, figsize=(4.3, 7), sharey=False, sharex=False)
+    fig, axs = plt.subplots(3, 2, figsize=(4.8, 6.5), sharey=False, sharex=False)
 
     marker_style = dict(color='tab:blue', linestyle=':', marker='d',
                         #markersize=15, markerfacecoloralt='tab:red',
@@ -124,7 +125,7 @@ if args.combine_and_get_f1:
     xtick_size = 22
     ytick_size = 22
     makersize = 66
-    from sklearn.metrics import f1_score
+    from sklearn.metrics import f1_score, accuracy_score
 
     task_list = ['agnews', 'xfact', 'factcheck', 'AmazDigiMu', 'AmazPantry', 'yelp']
     result_list = []
@@ -140,16 +141,21 @@ if args.combine_and_get_f1:
         domain_list = ['Full', 'SynD', 'AsyD1', 'AsyD2']
         for domain in domain_list:
             domain_df = full_results[full_results['Domain']==str(domain)]
-            scaled_attention_f1 = f1_score(domain_df['BERT'], domain_df['Scaled attention'], average='macro')
-            deeplift_f1 = f1_score(domain_df['BERT'], domain_df['DeepLift'], average='macro')
-            gradients_f1 = f1_score(domain_df['BERT'], domain_df['Gradients'], average='macro')
+            print(domain_df.head(5))
+            # scaled_attention_f1 = f1_score(domain_df['BERT'], domain_df['Scaled attention'], average='macro')
+            # deeplift_f1 = f1_score(domain_df['BERT'], domain_df['DeepLift'], average='macro')
+            # gradients_f1 = f1_score(domain_df['BERT'], domain_df['Gradients'], average='macro')
+            scaled_attention_f1 = accuracy_score(domain_df['BERT'], domain_df['Scaled attention'])
+            deeplift_f1 = accuracy_score(domain_df['BERT'], domain_df['DeepLift'])
+            gradients_f1 = accuracy_score(domain_df['BERT'], domain_df['Gradients'])
 
             scaled_attention_f1_list.append(scaled_attention_f1*100)
             deeplift_f1_list.append(deeplift_f1*100)
             gradients_f1_list.append(gradients_f1*100)
 
-        df = pd.DataFrame({'scaled attention':scaled_attention_f1, 'deeplift': deeplift_f1,
-                            'gradients':gradients_f1, 'Domain':domain_list})
+        df = pd.DataFrame({'scaled attention':scaled_attention_f1_list, 'deeplift': deeplift_f1_list,
+                            'gradients':gradients_f1_list, 'Domain':domain_list})
+        print(df)
 
         if i < 2:
             axs[0, i].scatter(df['Domain'], df['gradients'], label=r'$x\nabla x $', color='dimgrey') #, marker='x', s=makersize
@@ -157,32 +163,37 @@ if args.combine_and_get_f1:
             axs[0, i].scatter(df['Domain'], df['scaled attention'], label=r'$\alpha\nabla\alpha$', marker='<', color='steelblue')
             #axs[0, i].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', color='red')
             axs[0, i].set_xlabel(SUB_NAME,fontsize=xlabel_size)
+            axs[0, i].yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
         elif 4 > i > 1:
             axs[1, i-2].scatter(df['Domain'], df['gradients'], label=r'$x\nabla x $', color='dimgrey')
             axs[1, i-2].scatter(df['Domain'], df['deeplift'], label='DL', marker='d', color='darkorange')
             axs[1, i-2].scatter(df['Domain'], df['scaled attention'], label=r'$\alpha\nabla\alpha$', marker='<', color='steelblue')
             #axs[1, i-2].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', color='red')
             axs[1, i-2].set_xlabel(SUB_NAME,fontsize=xlabel_size)
+            axs[1, i-2].yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
         else:
             axs[2, i-4].scatter(df['Domain'], df['gradients'], label=r'$x\nabla x $', color='dimgrey')
             axs[2, i-4].scatter(df['Domain'], df['deeplift'], label='DL', marker='d', color='darkorange')
             axs[2, i-4].scatter(df['Domain'], df['scaled attention'], label=r'$\alpha\nabla\alpha$', marker='<', color='steelblue')
             #axs[2, i-4].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', color='red')
             axs[2, i-4].set_xlabel(SUB_NAME,fontsize=xlabel_size)
+            axs[2, i-4].yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
         
     #fig.suptitle('Predictive Performance Comparison of Selective Rationalizations', fontsize=12)
     plt.subplots_adjust(
-        left=0.1,
+        left=0.09,
         bottom=0.126, 
         right=0.963, 
-        top=0.995, 
-        wspace=0.388, 
-        hspace=0.471,
+        top=0.983, 
+        wspace=0.433, 
+        hspace=0.49,
         )
-    plt.legend(bbox_to_anchor=(-0.19, -0.4), loc='upper center', borderaxespad=0, fontsize=10,
-                fancybox=True,ncol=5)
+    plt.legend(bbox_to_anchor=(-0.3, -0.37), loc='upper center', borderaxespad=0, fontsize=10,
+                fancybox=True,ncol=3)
     #plt.xticks(fontsize=xtick_size)
     plt.show()
+    fig1 = plt.gcf()
+    fig.savefig('./fresh_compare_to_bert_attributes.png', dpi=600)
 
     exit()
 

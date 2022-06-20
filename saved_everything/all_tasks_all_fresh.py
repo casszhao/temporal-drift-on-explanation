@@ -1,21 +1,16 @@
 from turtle import color
 import pandas as pd
 from functools import reduce
-import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
-import matplotlib.pyplot as plt
-import numpy as np
 import seaborn as sns
 import matplotlib.ticker as mticker
 import fnmatch
 import os
-import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
 
 
-task_list = ['agnews', 'xfact', 'factcheck', 'AmazPantry', 'AmazPantry', 'yelp'] # 'AmazDigiMu', 'AmazPantry', 
+task_list = ['agnews', 'xfact', 'factcheck', 'AmazDigiMu', 'AmazPantry', 'yelp'] # 'AmazDigiMu', 'AmazPantry', 
 
 # for i, task in enumerate(task_list):
 #         if i == 0:

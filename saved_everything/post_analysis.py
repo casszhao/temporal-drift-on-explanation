@@ -108,7 +108,7 @@ fig1 = plt.gcf()
 fig.savefig('./selective_predictive.png', dpi=450)
 
 
-
+exit()
 bigtable_list = []
 for name in task_list:
 
@@ -130,7 +130,7 @@ all_tasks = pd.concat(bigtable_list, ignore_index=False)
 all_tasks.to_csv('all_tasks_all_posthoc.csv')
 
 
-exit()
+
 
 
 

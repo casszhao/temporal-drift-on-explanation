@@ -46,7 +46,7 @@ for i, name in enumerate(task_list):
     #bert['Domain'] = ['Full', 'SynD', 'AsyD1', 'AsyD2']   
 
     df = pd.read_csv(path)
-    df = df[['mean-f1','Domain','attribute_name']]
+    df = df[['mean-f1','std-f1','Domain','attribute_name']]
     attribute_list = df['attribute_name']
     df["attribute_name"].replace({"scaled_attention": "scaled attention"}, inplace=True)
     print(df)
@@ -56,6 +56,7 @@ for i, name in enumerate(task_list):
     df['Domain'] = ['Full', 'SynD', 'AsyD1', 'AsyD2']
     df = pd.merge(bert, df, how='right', on=['Domain']) 
     print(df)
+    exit()
 
     if 'Amaz' in name:
         SUB_NAME = str(name)

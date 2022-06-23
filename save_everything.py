@@ -182,7 +182,6 @@ def df2stat_df(df, domain):
         df['Temporal Split'] = str(domain)
         stat_df = df[['Year', 'Temporal Split']]
 
-
     return stat_df
 
 if args.plot_time_distribution:
@@ -209,11 +208,11 @@ if args.plot_time_distribution:
     ood1_df = pd.read_json('datasets/'+ str(args.dataset) +'_ood1/data/test.json')
     ood2_df = pd.read_json('datasets/'+ str(args.dataset) +'_ood2/data/test.json')
 
-    full = df2stat_df(full_df, 'Full-size')
-    indomain_train = df2stat_df(indomain_train_df, 'SynD Train')
-    indomain_test = df2stat_df(indomain_test_df, 'SynD Test')
-    ood1 = df2stat_df(ood1_df, 'AsyD1 Test')
-    ood2 = df2stat_df(ood2_df, 'AsyD2 Test')
+    full = df2stat_df(full_df, 'OSyn Full')
+    indomain_train = df2stat_df(indomain_train_df, 'Syn Train')
+    indomain_test = df2stat_df(indomain_test_df, 'Syn Test')
+    ood1 = df2stat_df(ood1_df, 'Asy1 Test')
+    ood2 = df2stat_df(ood2_df, 'Asy2 Test')
 
     df = pd.concat([full, indomain_train, indomain_test, ood1, ood2]).reset_index(drop=True)
 
@@ -221,19 +220,32 @@ if args.plot_time_distribution:
     b = sns.violinplot(y=df['Year'], x=df['Temporal Split'], showmedians=True, showextrema=True, 
         palette="rocket",scale='width') #,gridsize=10
 
-    plt.title(str(args.dataset).capitalize(), fontsize=18.5)
-    plt.xticks(fontsize=12)
-    plt.yticks(fontsize=12)
-    b.set_xlabel('Temporal Split', fontsize=14)
-    b.set_ylabel('Year', fontsize=14)
+    dataset_title_size = 19
+    if str(args.dataset) == 'agnews':
+        plt.title('AGNews', fontsize=dataset_title_size)
+    elif str(args.dataset) == 'xfact':
+        plt.title('X-FACT', fontsize=dataset_title_size)
+    elif str(args.dataset) == 'factcheck':
+        plt.title('FactCheck', fontsize=dataset_title_size)
+    elif str(args.dataset) == 'yelp':
+        plt.title('YELP', fontsize=dataset_title_size)
+    else:
+        plt.title(str(args.dataset), fontsize=dataset_title_size)
+    
+
+    
+    plt.xticks(fontsize=14)
+    plt.yticks(fontsize=15)
+    b.set_xlabel('Temporal Splits', fontsize=16)
+    b.set_ylabel('Year', fontsize=16)
 
     if args.dataset == 'yelp':
         yint = range(2005, 2023, 3)
-        plt.yticks(yint,fontsize=12)
+        plt.yticks(yint,fontsize=13)
     # plt.ylabel("Percentage")
     #plt.xlabel("Full size", "InDomain Train", "InDomain Test", "OOD1 Test", "OOD2 Test")
     plt.tight_layout()
-    plt.savefig('./TimeDist/'+str(args.dataset)+'_vio.png', bbox_inches = 'tight', dpi=450, format='png')
+    plt.savefig('./TimeDist/'+str(args.dataset)+'_vio.png', bbox_inches = 'tight', dpi=550, format='png')
     plt.show()
 
 # https://stackoverflow.com/questions/59346731/no-handles-with-labels-found-to-put-in-legend

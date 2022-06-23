@@ -44,7 +44,7 @@ parser.add_argument(
     '--use_saved_simi',
     help='combine all dataset',
     action='store_true',
-    default= False
+    default= True
 )
 args = parser.parse_args()
 
@@ -69,7 +69,6 @@ if args.combine_all:
             for c in df.columns:
                 pvalues[r][c] = round(pearsonr(df[r], df[c])[1], 4)
         return pvalues
-
     task_list = ['agnews','xfact','factcheck','AmazDigiMu','AmazPantry','yelp']
     df_list = []
     full_simi_df_list = []
@@ -110,11 +109,7 @@ if args.combine_all:
     corr = df.corr(method='spearman')
     print('----- p value -----')
     print(calculate_pvalues(df))
-    
     matrix = np.triu(corr)
-    print(matrix)
-    matrix[1][0] = 1
-
 
 
     #corr.to_csv('/saved_everything/'+str(similarity_method)+'_all.csv')
@@ -124,34 +119,23 @@ if args.combine_all:
     
     import seaborn as sns
     import matplotlib.pyplot as plt
-    plt.figure(figsize=(4.1, 2.5))
-    heatmap = sns.heatmap(corr, annot=True, annot_kws={'fontsize':10}, cmap="YlGnBu", mask=matrix, xticklabels = ['Suff Diff', 'Comp Diff', 'Temp Diff', 'Topic Diff', ''],
-                            yticklabels = [' ', ' ', 'Temp Diff', 'Topic Diff', 'Text Len'],
-                            cbar_kws = dict(use_gridspec=False,location="top")) #vmin=-1, vmax=1, 
-    from matplotlib.patches import Rectangle
-    #ax = heatmap.ax_heatmap
-
-    # heatmap.add_patch(Rectangle((0, 0), 1, 1, fill=False, edgecolor='blue', lw=3))
-    # heatmap = sns.heatmap(corr, annot=True, annot_kws={'fontsize':10}, cmap="YlGnBu", mask=matrix, xticklabels = ['Suff Diff', 'Comp Diff', 'Temp Diff', 'Topic Diff', ''],
-    #                         yticklabels = [' ', ' ', 'Temp Diff', 'Topic Diff', 'Text Len'],
-    #                         cbar_kws = dict(use_gridspec=False,location="top")) #vmin=-1, vmax=1, 
-    plt.show()
+    plt.figure(figsize=(4.3, 2.3))
+    heatmap = sns.heatmap(corr, annot=True, annot_kws={'fontsize':10}, cmap="YlGnBu", mask=matrix) #vmin=-1, vmax=1, 
     # using the upper triangle matrix as mask 
 
     #heatmap.set_title('Correlation Matrix of Latent Factors', fontdict={'fontsize':13}) #, pad=12
 
     plt.xticks(rotation=25, fontsize=10)
     plt.yticks(fontsize=10)
-    plt.subplots_adjust(left=0.22,
-                        bottom=0.28, 
+    plt.subplots_adjust(left=0.183,
+                        bottom=0.214, 
                         right=1, 
-                        top=1, 
+                        top=0.971, 
                         wspace=0.076, 
                         hspace=0.2,
                         )
-    #plt.legend(bbox_to_anchor=(-0.3, -0.37), borderaxespad=0, fontsize=10, fancybox=True) # loc='upper center',
     fig1 = plt.gcf()
-    fig1.savefig('./saved_everything/correlation2.png', dpi=550)
+    fig1.savefig('./saved_everything/correlation_len.png', dpi=550)
     plt.show()
     exit()
 
@@ -349,12 +333,12 @@ comp_diff_2 = comp_In - comp_ood2
 
 index_faithful = ['Suff_diff', 'Comp_diff']
 corre_table = pd.DataFrame({'AsyD1': [suff_diff_1, comp_diff_1], 'AsyD2': [suff_diff_2, comp_diff_2]}, index=index_faithful)
-print(' =========== ' + str(args.dataset) + '===========')
+print(' =========== ' + str(args.dataset) + ' ===========')
 
 print(corre_table)
 
-corre_table.to_csv('./saved_everything/' + str(args.dataset) + '/corre_table_non.csv')
-exit()
+# corre_table.to_csv('./saved_everything/corre_table_len.csv')
+
 
 
 
@@ -364,12 +348,14 @@ ood2 = pd.read_json('./datasets/'+str(args.dataset)+'_ood2/data/test.json')
 
 
 ############# text length
-
+text_length = indomain['text'].apply(len).mean()
+print(text_length)
 text_length1 = ood1['text'].apply(len).mean()
 text_length2 = ood2['text'].apply(len).mean()
-text_length = pd.DataFrame({'AsyD1': [text_length1], 'AsyD2': [text_length2]})
+text_length = pd.DataFrame({'AsyD1': [abs(text_length-text_length1)], 'AsyD2': [abs(text_length-text_length2)]})
 print( ' ---------- TEXT LEN -------- ' )
 print(text_length)
+exit()
 
 
 ############# get time different

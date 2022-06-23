@@ -150,7 +150,7 @@ if args.combine_and_get_f1:
             gradients_f1_list.append(gradients_f1*100)
 
         df = pd.DataFrame({'scaled attention':scaled_attention_f1_list, 'deeplift': deeplift_f1_list,
-                            'gradients':gradients_f1_list, 'Domain':domain_list})
+                            'gradients':gradients_f1_list, 'Domain':['OSyn', 'Syn', 'Asy1', 'Asy2']})
         print(df)
 
         if i < 2:
@@ -177,12 +177,12 @@ if args.combine_and_get_f1:
         
     #fig.suptitle('Predictive Performance Comparison of Selective Rationalizations', fontsize=12)
     plt.subplots_adjust(
-        left=0.09,
-        bottom=0.126, 
+        left=0.083,
+        bottom=0.129, 
         right=0.963, 
         top=0.983, 
-        wspace=0.433, 
-        hspace=0.49,
+        wspace=0.448, 
+        hspace=0.53,
         )
     plt.legend(bbox_to_anchor=(-0.3, -0.37), loc='upper center', borderaxespad=0, fontsize=10,
                 fancybox=True,ncol=3)

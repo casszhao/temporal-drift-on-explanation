@@ -8,7 +8,7 @@ from matplotlib.lines import Line2D
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
 df = pd.read_csv("all_tasks_all_posthoc.csv")
-print(df)
+
 df = df[df['thresholder'].str.contains('contigi')] # topk
 
 df['gradients'] = df['gradients']/df['random']
@@ -22,7 +22,7 @@ df['ig'] = df['ig']/df['random']
 
 df['random'] = df['random']/df['random']
 df['mean-f1'] = df['mean-f1']*100
-
+print(df)
 
 
 # for fname in os.listdir('../posthoc_results/factcheck/'):
@@ -39,15 +39,17 @@ df['mean-f1'] = df['mean-f1']*100
 
 
 
-data = 'AmazPantry'
+data = 'Yelp'
 
+my_range = ['OSyn', 'Syn', 'Asy1', 'Asy2']
 
 df = df[df['Task'].str.contains(str(data))]
-
+print(df)
+df['Domain'].replace({'Full':'OSyn', 'SynD':'Syn', 'AsyD1':'Asy1', 'AsyD2':'Asy2'}, inplace=True)
+print(df)
 suff = df[df['Rationales_metrics'].str.contains('AOPC_sufficiency')]
 comp = df[df['Rationales_metrics'].str.contains('AOPC_comprehensiveness')]
-my_range=suff['Domain']
-print(my_range)
+
 
 ALPHA = 0.5
 SIZE = 111
@@ -63,6 +65,7 @@ if data == 'Xfact':
     suff_max = 1.3
     comp_min = 0.8
     comp_max = 1.8
+    ylabel_name = 'X-FACT'
 elif data == 'Factcheck':
     bert_min = 70
     bert_max = 75
@@ -70,6 +73,7 @@ elif data == 'Factcheck':
     suff_max = 2.9
     comp_min = 0.2
     comp_max = 4.9
+    ylabel_name = 'FactCheck'
 elif data == 'Agnews':
     bert_min = 84
     bert_max = 91
@@ -77,6 +81,7 @@ elif data == 'Agnews':
     suff_max = 1.6
     comp_min = 0.8
     comp_max = 3.4
+    ylabel_name = 'AGNews'
 elif data == 'AmazDigiMu':
     bert_min = 55
     bert_max = 75
@@ -84,7 +89,7 @@ elif data == 'AmazDigiMu':
     suff_max = 3.5
     comp_min = 0.5
     comp_max = 3
-    task_name = 'AmazDigiMu'
+    ylabel_name = 'AmazDigiMu'
 elif data == 'AmazPantry':
     bert_min = 67
     bert_max = 72
@@ -92,6 +97,7 @@ elif data == 'AmazPantry':
     suff_max = 2.5
     comp_min = 0.6
     comp_max = 2.3
+    ylabel_name = 'AmazPantry'
 elif data == 'Yelp':
     bert_min = 59
     bert_max = 62
@@ -99,6 +105,7 @@ elif data == 'Yelp':
     suff_max = 2.7
     comp_min = 0.6
     comp_max = 2.8
+    ylabel_name = 'Yelp'
 else:
     bert_min = 0.37
     bert_max = 0.39
@@ -106,6 +113,7 @@ else:
     suff_max = 0.5
     comp_min = 0.1
     comp_max = 0.35
+    ylabel_name = ' '
 
 
 fig, ax = plt.subplots(1, 3, gridspec_kw={'width_ratios': [0.9, 4, 4]}, sharey='all', figsize=(12,2.1))
@@ -128,10 +136,7 @@ for x,y in zip(df['mean-f1'],df['Domain']):
                  fontsize= 12,
                  ) 
 ax[0].set_xlabel('BERT avg macro-F1',fontsize=xlabel_size)
-if data == 'Amazdigimu':
-    ax[0].set_ylabel('AmazDigiMu', fontsize=xlabel_size)
-else:
-    ax[0].set_ylabel(str(data), fontsize=xlabel_size)
+ax[0].set_ylabel(str(ylabel_name), fontsize=xlabel_size)
 ax[0].invert_yaxis()
 #ax[0].set_yticklabels(my_range, fontsize=13)
 

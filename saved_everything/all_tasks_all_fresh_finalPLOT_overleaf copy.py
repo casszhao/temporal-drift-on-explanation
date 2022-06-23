@@ -42,16 +42,20 @@ for i, name in enumerate(task_list):
 
     bert = bigdf[bigdf['Task']==str(name)][['BERT F1','FRESH F1','LSTM F1','KUMA F1','SPECTRA F1','Domain']]
     bert = bert.rename(columns={'BERT F1':'BERT','FRESH F1':'FRESH','LSTM F1':'LSTM','KUMA F1':'KUMA','SPECTRA F1':'SPECTRA'})
+    bert['Domain'] = ['OSyn', 'Syn', 'Asy1', 'Asy2']
     #bert['Domain'] = ['Full', 'SynD', 'AsyD1', 'AsyD2']   
 
     df = pd.read_csv(path)
-    df = df[['mean-f1','Domain','attribute_name']]
-    attribute_list = df['attribute_name']
+
+    df = df[['mean-f1','std-f1', 'Domain','attribute_name']]
+    #attribute_list = df['attribute_name']
+
     df["attribute_name"].replace({"scaled_attention": "scaled attention"}, inplace=True)
     grouper = df.groupby('attribute_name')
     df = pd.concat([pd.Series(v['mean-f1'].tolist(), name=k) for k, v in grouper], axis=1)
+
     df = df * 100
-    df['Domain'] = ['Full', 'SynD', 'AsyD1', 'AsyD2']
+    df['Domain'] = ['OSyn', 'Syn', 'Asy1', 'Asy2']
     df = pd.merge(bert, df, how='right', on=['Domain']) 
     print(df)
 
@@ -100,7 +104,7 @@ plt.subplots_adjust(
     left=0.1,
     bottom=0.183, 
     right=0.924, 
-    top=0.95, 
+    top=1, 
     wspace=0.388, 
     hspace=0.471,
     )

@@ -55,8 +55,7 @@ for i, name in enumerate(task_list):
     df = df * 100
     df['Domain'] = ['Full', 'SynD', 'AsyD1', 'AsyD2']
     df = pd.merge(bert, df, how='right', on=['Domain']) 
-    print(df)
-    exit()
+
 
     if 'Amaz' in name:
         SUB_NAME = str(name)

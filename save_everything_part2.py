@@ -229,7 +229,7 @@ num_iterations = 2000 # for testing, original use 2000? need to check the paper
 VOCAB_SIZE = 20000
 model_dir = 'similarity_models/full_text/'+ str(args.dataset) + '/vocab/' + str(VOCAB_SIZE)
 os.makedirs(model_dir, exist_ok=True)
-
+'''
 InD_train_list = pd.read_json('./datasets/'+str(args.dataset)+'/data/train.json')['text']
 InD_test_list = pd.read_json('./datasets/'+str(args.dataset)+'/data/test.json')['text']
 OOD1_list= pd.read_json('./datasets/'+str(args.dataset)+'_ood1/data/test.json')['text']
@@ -278,7 +278,7 @@ os.makedirs(model_dir, exist_ok=True)
 thresh_list = []
 for threshold in ['topk']: #'topk', , 'contigious'
     attributes_list = []
-    for attribute_name in ['scaled attention','attention', 'lime', 'deeplift', 'gradients','ig','gradientshap','deepliftshap']:
+    for attribute_name in ['scaled attention']: #,'attention', 'lime', 'deeplift', 'gradients','ig','gradientshap','deepliftshap'
 
         # InD_path_train = './extracted_rationales/'+str(args.dataset)+'/data/'+str(threshold)+'/'+str(attribute_name)+'-train.json'
         InD_path_train = os.path.join('extracted_rationales',str(args.dataset),'data',str(threshold),str(attribute_name)+'-train.json')
@@ -317,23 +317,24 @@ for threshold in ['topk']: #'topk', , 'contigious'
         OOD1_similarity = pre_post_process(OOD1_reps, 'OOD1')
         OOD2_similarity = pre_post_process(OOD2_reps, 'OOD2')
         results = pd.concat([baseline_similarity,OOD1_similarity,OOD2_similarity],ignore_index=True)
+        results.to_csv(datasets_dir + '/rationale_similarity_vocab' + str(vocab.size) + ' .csv')
 
-        results['attribute_name'] = str(attribute_name)
+        #results['attribute_name'] = str(attribute_name)
 
-        print('done for ', str(attribute_name), str(threshold) )
+        #print('done for ', str(attribute_name), str(threshold) )
 
-        attributes_list.append(results)
-    all_attributes_df = pd.concat([attributes_list[0], attributes_list[1], attributes_list[2], attributes_list[3], attributes_list[4]], ignore_index=False)
-    all_attributes_df['threshold'] = str(threshold)
+        #attributes_list.append(results)
+    #all_attributes_df = pd.concat([attributes_list[0], attributes_list[1], attributes_list[2], attributes_list[3], attributes_list[4]], ignore_index=False)
+    #all_attributes_df['threshold'] = str(threshold)
 
-    thresh_list.append(all_attributes_df)
+#     thresh_list.append(all_attributes_df)
 
-#results = pd.concat([thresh_list[0], thresh_list[1]], ignore_index=True)
-results = thresh_list[0]
-results.to_csv(datasets_dir + '/rationale_similarity_vocab' + str(vocab.size) + ' .csv')
-print('saved as:')
-print(datasets_dir + '/rationale_similarity_vocab' + str(vocab.size) + ' .csv')
-'''
+# #results = pd.concat([thresh_list[0], thresh_list[1]], ignore_index=True)
+# results = thresh_list[0]
+# results.to_csv(datasets_dir + '/rationale_similarity_vocab' + str(vocab.size) + ' .csv')
+# print('saved as:')
+# print(datasets_dir + '/rationale_similarity_vocab' + str(vocab.size) + ' .csv')
+
 
 
 

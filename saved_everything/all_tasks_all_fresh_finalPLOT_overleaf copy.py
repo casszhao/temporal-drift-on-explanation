@@ -67,36 +67,42 @@ for i, name in enumerate(task_list):
 
     if i < 2:
         axs[0, i].scatter(df['Domain'], df['LSTM'], label='LSTM', color='black')
-        axs[0, i].scatter(df['Domain'], df['SPECTRA'], label='SPECTRA', color='dimgrey')
+        axs[0, i].scatter(df['Domain'], df['SPECTRA'], label='SPECTRA', color='dimgray')
         axs[0, i].scatter(df['Domain'], df['KUMA'], label='HardKUMA', color='royalblue')
-        axs[0, i].scatter(df['Domain'], df['gradients'], label=r'$x\nabla x $', marker='x', color='crimson') 
-        axs[0, i].scatter(df['Domain'], df['BERT'], label='BERT', color='brown', marker='x')
-        axs[0, i].scatter(df['Domain'], df['deeplift'], label='DL', color='gold', marker='x')
-        axs[0, i].scatter(df['Domain'], df['scaled attention'], color='darkorange', marker='x', label=r'$\alpha\nabla\alpha$')
+        
+        axs[0, i].scatter(df['Domain'], df['BERT'], label='BERT', marker='x', color='black')
+        axs[0, i].scatter(df['Domain'], df['deeplift'], label='DL', color='forestgreen', marker='x')
+        
+        axs[0, i].scatter(df['Domain'], df['gradients'], label=r'$x\nabla x $', marker='x', color='darkorange') 
+        axs[0, i].scatter(df['Domain'], df['scaled attention'], color='crimson', marker='x', label=r'$\alpha\nabla\alpha$') #f0e442
         axs[0, i].set_xlabel(SUB_NAME,fontsize=xlabel_size)
 
 
     elif 4 > i > 1:
         axs[1, i-2].scatter(df['Domain'], df['LSTM'], label='LSTM', color='black')
-        axs[1, i-2].scatter(df['Domain'], df['SPECTRA'], label='SPECTRA', color='dimgrey')
+        axs[1, i-2].scatter(df['Domain'], df['SPECTRA'], label='SPECTRA', color='dimgray')
         axs[1, i-2].scatter(df['Domain'], df['KUMA'], label='HardKUMA', color='royalblue')
-        axs[1, i-2].scatter(df['Domain'], df['gradients'], label=r'$x\nabla x $', marker='x', color='crimson') 
-        axs[1, i-2].scatter(df['Domain'], df['BERT'], label='BERT', color='brown', marker='x')
-        axs[1, i-2].scatter(df['Domain'], df['deeplift'], label='DL', color='gold', marker='x')
-        axs[1, i-2].scatter(df['Domain'], df['scaled attention'], color='darkorange', marker='x', label=r'$\alpha\nabla\alpha$')
+
+        axs[1, i-2].scatter(df['Domain'], df['BERT'], label='BERT', color='black', marker='x')
+        axs[1, i-2].scatter(df['Domain'], df['deeplift'], label='DL', color='forestgreen', marker='x')
+
+        axs[1, i-2].scatter(df['Domain'], df['gradients'], label=r'$x\nabla x $', marker='x', color='darkorange') 
+        axs[1, i-2].scatter(df['Domain'], df['scaled attention'], color='crimson', marker='x', label=r'$\alpha\nabla\alpha$')
 
         axs[1, i-2].set_xlabel(SUB_NAME,fontsize=xlabel_size)
 
 
     else:
         axs[2, i-4].scatter(df['Domain'], df['LSTM'], label='LSTM', color='black')
-        axs[2, i-4].scatter(df['Domain'], df['SPECTRA'], label='SPECTRA', color='dimgrey')
+        axs[2, i-4].scatter(df['Domain'], df['SPECTRA'], label='SPECTRA', color='dimgray')
         axs[2, i-4].scatter(df['Domain'], df['KUMA'], label='HardKUMA', color='royalblue')
-        
-        axs[2, i-4].scatter(df['Domain'], df['gradients'], label=r'FRESH($x\nabla x $)', marker='x', color='crimson') 
-        axs[2, i-4].scatter(df['Domain'], df['deeplift'], label='FRESH(DL)', color='gold', marker='x')
-        axs[2, i-4].scatter(df['Domain'], df['scaled attention'], color='darkorange', marker='x', label=r'FRESH($\alpha\nabla\alpha$)')
-        axs[2, i-4].scatter(df['Domain'], df['BERT'], label='BERT', color='brown', marker='x')
+
+        axs[2, i-4].scatter(df['Domain'], df['BERT'], label='BERT', color='black', marker='x')
+        axs[2, i-4].scatter(df['Domain'], df['deeplift'], label='FRESH(DL)', color='forestgreen', marker='x')
+
+        axs[2, i-4].scatter(df['Domain'], df['gradients'], label=r'FRESH($x\nabla x $)', marker='x', color='darkorange') 
+        axs[2, i-4].scatter(df['Domain'], df['scaled attention'], color='crimson', marker='x', label=r'FRESH($\alpha\nabla\alpha$)')
+
         axs[2, i-4].set_xlabel(SUB_NAME,fontsize=xlabel_size)
     
 #fig.suptitle('Predictive Performance Comparison of Selective Rationalizations', fontsize=12)

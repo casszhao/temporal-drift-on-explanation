@@ -1,8 +1,0 @@
-,Task,Label Num,Domain,Start Date,End Date,Time Span(Days),Median Date,Interquartile Time Span(Days),Data Num
-0,AmazPantry,3,Original (full size),2006-04-09,2018-10-04,4561,2016-09-27,485,137611
-0,AmazPantry,3,Original Train,2006-04-09,2018-09-28,4555,2016-09-27,486,110088
-0,AmazPantry,3,Original Test,2006-10-14,2018-10-04,4373,2016-09-24,474,13761
-0,AmazPantry,3,In Domain Train,2006-04-28,2017-07-30,4111,2016-07-06,413,82566
-0,AmazPantry,3,InDomain,2006-12-22,2017-07-30,3873,2016-07-08,406,13762
-0,AmazPantry,3,OOD1,2017-07-30,2018-01-21,175,2017-10-16,92,13761
-0,AmazPantry,3,OOD2,2018-01-21,2018-10-04,256,2018-04-12,94,13761

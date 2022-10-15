@@ -1,8 +1,0 @@
-,Task,Label Num,Domain,Start Date,End Date,Time Span(Days),Median Date,Interquartile Time Span(Days),Data Num
-0,factcheck,2,Original (full size),1995-09-25,2021-07-19,9429,2016-12-29,1519,12640
-0,factcheck,2,Original Train,1996-02-27,2021-07-19,9274,2016-12-29,1527,10086
-0,factcheck,2,Original Test,1995-09-25,2021-06-23,9403,2016-12-16,1515,1277
-0,factcheck,2,In Domain Train,1995-09-25,2019-05-01,8619,2016-04-14,1437,7446
-0,factcheck,2,InDomain,1996-08-02,2019-05-01,8307,2016-03-09,1319,1241
-0,factcheck,2,OOD1,2019-05-02,2020-05-15,379,2019-11-18,182,1368
-0,factcheck,2,OOD2,2020-05-15,2021-07-19,430,2020-10-12,132,1368

@@ -1,6 +1,0 @@
-,AsyD1,AsyD2,Factors,Task
-0,1.648785240302247,1.543992723169915,Suff_diff,factcheck
-1,1.861502343049865,1.7843982691875586,Comp_diff,factcheck
-0,3113.0,3739.0,temporal_distance,factcheck
-0,0.0156737435609102,0.0248343180865049,corpus_similarity,factcheck
-0,2373.405701754386,2629.8318713450294,text avg length,factcheck

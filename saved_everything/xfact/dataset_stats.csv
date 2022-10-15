@@ -1,8 +1,0 @@
-,Task,Label Num,Domain,Start Date,End Date,Time Span(Days),Median Date,Interquartile Time Span(Days),Data Num
-0,xfact,6,Original (full size),2007-01-04,2018-11-12,4330,2013-06-27,1727,12050
-0,xfact,6,Original Train,2007-01-04,2018-11-12,4330,2013-08-19,1769,9639
-0,xfact,6,Original Test,2007-04-26,2018-11-07,4213,2013-09-19,1727,1206
-0,xfact,6,In Domain Train,1995-04-01,2016-08-31,7823,2012-08-30,1296,7232
-0,xfact,6,InDomain,2007-01-04,2016-08-31,3527,2012-08-17,1320,1204
-0,xfact,6,OOD1,2016-08-31,2017-09-30,395,2017-02-24,216,1205
-0,xfact,6,OOD2,2017-09-30,2018-11-12,408,2018-05-10,209,1204

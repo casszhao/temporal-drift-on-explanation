@@ -1,8 +1,0 @@
-,Task,Label Num,Domain,Start Date,End Date,Time Span(Days),Median Date,Interquartile Time Span(Days),Data Num
-0,AmazDigiMu,3,Original (full size),1998-07-09,2018-09-26,7384,2015-01-19,789,169623
-0,AmazDigiMu,3,Original Train,1998-07-09,2018-09-26,7384,2015-01-20,788,135698
-0,AmazDigiMu,3,Original Test,1998-08-21,2018-09-20,7335,2015-01-08,794,16962
-0,AmazDigiMu,3,In Domain Train,1998-08-21,2016-05-07,6469,2014-09-20,673,101774
-0,AmazDigiMu,3,InDomain,1998-12-17,2016-05-07,6351,2014-09-18,669,16963
-0,AmazDigiMu,3,OOD1,2016-05-07,2016-12-30,237,2016-08-12,120,16962
-0,AmazDigiMu,3,OOD2,2016-12-30,2018-09-26,635,2017-08-07,290,16962

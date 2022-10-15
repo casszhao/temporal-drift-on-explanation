@@ -81,7 +81,6 @@ data="AmazDigiMu" # example
 
 shopt -s nullglob
 
-# python -m rationalizers train --config configs/cus/seed25.yaml
 
 for i in $(find ./experiments/$data/ -type f -iname "*.ckpt"); do
 echo $i

@@ -120,12 +120,7 @@ data = dataholder(
     return_as_frames = True
 )
 
-# data = dataholder(
-#     args["data_dir"],
-#     b_size = args["batch_size"],
-#     stage = "eval",
-#     return_as_frames = True
-# )
+
 
 evaluator = evaluation_pipeline.evaluate(
     model_path = args["model_dir"], 

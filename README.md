@@ -63,6 +63,9 @@ python train_fulltext_and_kuma.py
                             --model_dir models/ 
                             --evaluate_models
 ```
+## Using SPECTRA to extrat rationalization
+Please refer to the original [SPECTRA repo](https://github.com/deep-spin/spectra-rationalization)
+
 
 ## Evaluating post-hoc explanation faithfulness 
 

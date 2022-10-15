@@ -67,14 +67,7 @@ python train_fulltext_and_kuma.py
 Please refer to the original [SPECTRA repo](https://github.com/deep-spin/spectra-rationalization)
 To run different seeds:
 
-
 ```shell
-#!/bin/bash
-#
-source /home/cass/anaconda3/bin/activate
-conda activate spectra
-
-
 
 python -m rationalizers train --config configs/cus/seed5.yaml
 python -m rationalizers train --config configs/cus/seed10.yaml
@@ -82,8 +75,20 @@ python -m rationalizers train --config configs/cus/seed15.yaml
 python -m rationalizers train --config configs/cus/seed20.yaml
 python -m rationalizers train --config configs/cus/seed25.yaml
 ```
+to extract rationales
+```shell
+data="AmazDigiMu" # example
 
+shopt -s nullglob
 
+# python -m rationalizers train --config configs/cus/seed25.yaml
+
+for i in $(find ./experiments/$data/ -type f -iname "*.ckpt"); do
+echo $i
+python -m rationalizers predict --config configs/cus/seed25.yaml --ckpt $i # example
+done
+
+```
 
 ## Evaluating post-hoc explanation faithfulness 
 

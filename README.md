@@ -44,7 +44,7 @@ You can train the following models with [train_fulltext_and_kuma.py]() script:
 
 * evaluate_models : *used for evaluating trained models on test set*
 
-* inherently_faithful : *{"kuma", "rl", "full_lstm", None}* 如果要测kuma， 使用这个parameters
+* inherently_faithful : *{"kuma", "rl", "full_lstm", None}*
 
 
 

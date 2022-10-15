@@ -1,4 +1,4 @@
-Repository for the paper *"An Empirical Study on Explanations in Out-of-Domain Settings"*. 
+Repository for the paper *"On the Impact of Temporal Concept Drift on Model Explanations" (EMNLP2022)*. 
 
 ## Prerequisites
 
@@ -48,9 +48,6 @@ You can train the following models with [train_fulltext_and_kuma.py]() script:
 
 
 
-Example script:
-（ 跑5个seed，每个seed先跑模型 + save模型，然后跑那个模型的evaluation（结果在目录 ./models/SST/model_run_stats/dev-stats-bert:5.json 中， 如使用的哪个epoch等） + 存下所有checkpoint。）
-
 ``` shell
 for seed in 5 10 15 20 25
 do	
@@ -84,8 +81,6 @@ You can run sufficiency and comprehensiveness tests using the  [evaluate_posthoc
 * inherently_faithful : *{None}*
 
   
-Example script:
-（ 因为在 train_fulltext_and_kuma.py中，设置了 keep_best_model_(keep_models = False) 。 所以只使用seed中最好的模型的checkpoint去生成posthoc。）
 
 ```shell
 python evaluate_posthoc.py 
